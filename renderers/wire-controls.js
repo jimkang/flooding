@@ -6,6 +6,7 @@ var startContainerSel = select('#start-container');
 var { on } = OLPE();
 
 function wireControls({ onStart }) {
+  startContainerSel.attr('disable', false);
   on('#start-button', 'click', onStartClick);
 
   function onStartClick() {

@@ -6,10 +6,12 @@ import ContextKeeper from 'audio-context-singleton';
 //import { queue } from 'd3-queue';
 import wireControls from './renderers/wire-controls';
 import { Ticker } from './updaters/ticker';
+import { SampleDownloader } from './tasks/sample-downloader';
 
 var routeState;
 var { getCurrentContext } = ContextKeeper();
 var ticker;
+var sampleDownloader;
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -39,7 +41,19 @@ async function followRoute({ }) {
     startTicks: 0,
   }); 
 
-  wireControls({ onStart });
+  sampleDownloader = SampleDownloader({
+    sampleFiles: ['bagpipe-c.wav', 'flute-G4-edit.wav', 'trumpet-D2.wav'],
+    localMode: true,
+    onComplete,
+    handleError
+  });
+  sampleDownloader.startDownloads();
+
+  function onComplete({ buffers }) {
+    console.log(buffers);
+    // TODO: Test non-locally.
+    wireControls({ onStart });
+  }
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
