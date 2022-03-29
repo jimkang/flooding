@@ -7,11 +7,18 @@ import ContextKeeper from 'audio-context-singleton';
 import wireControls from './renderers/wire-controls';
 import { Ticker } from './updaters/ticker';
 import { SampleDownloader } from './tasks/sample-downloader';
+import seedrandom from 'seedrandom';
+import RandomId from '@jimkang/randomid';
+import { createProbable as Probable } from 'probable';
+import { ChordPlayer } from './updaters/chord-player';
 
+var randomId = RandomId();
 var routeState;
 var { getCurrentContext } = ContextKeeper();
 var ticker;
 var sampleDownloader;
+var prob;
+var chordPlayer;
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -24,7 +31,13 @@ var sampleDownloader;
   routeState.routeFromHash();
 })();
 
-async function followRoute({ }) {
+async function followRoute({ seed }) {
+  if (!seed) {
+    routeState.addToRoute({ seed: randomId(8) });
+    return;
+  }
+
+  // TODO: This whole context getting thing is too unwieldy.
   var { error, values } = await ep(getCurrentContext);
   if (error) {
     handleError(error);
@@ -33,6 +46,9 @@ async function followRoute({ }) {
 
   var ctx = values[0];
   console.log(ctx);
+
+  var random = seedrandom(seed);
+  prob = Probable({ random });
 
   ticker = new Ticker({
     onTick,
@@ -49,9 +65,10 @@ async function followRoute({ }) {
   });
   sampleDownloader.startDownloads();
 
+  // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
-    // TODO: Test non-locally.
+    chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
     wireControls({ onStart });
   }
 }
@@ -73,4 +90,5 @@ function onStart() {
 
 function onTick(tick) {
   console.log(tick); 
+  chordPlayer.play({ detunes: [ 0, -50 ] });
 }

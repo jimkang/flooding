@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
+    es2019: true
   },
   extends: 'eslint:recommended',
   rules: {
