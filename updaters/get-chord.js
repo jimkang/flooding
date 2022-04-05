@@ -1,11 +1,21 @@
 import { intervals } from '../consts';
 
-const densificationPeriod = 40;
+const densificationPeriod = 30;
+var descendingMode = false;
 
 export function getChord({ tick }) {
   //var detunes = range(0, Math.floor(tick/densificationPeriod * 24) * 24)
   //.map(x => x * 100/24);
-  const denseness = tick/densificationPeriod % densificationPeriod;
+  var periodTick = tick % densificationPeriod;
+  // Tick down in descendingMode, tick up otherwise.
+  if (descendingMode) {
+    periodTick = densificationPeriod - periodTick;
+    descendingMode = periodTick > 1;
+  } else {
+    descendingMode = periodTick >= densificationPeriod - 1;
+  }
+   
+  const denseness = periodTick/densificationPeriod % densificationPeriod;
   const chordPitchCount = Math.round(denseness * intervals.length);
   return { rates: intervals.slice(0, chordPitchCount) };
 }
