@@ -4,8 +4,6 @@ const densificationPeriod = 30;
 var descendingMode = false;
 
 export function getChord({ tick }) {
-  //var detunes = range(0, Math.floor(tick/densificationPeriod * 24) * 24)
-  //.map(x => x * 100/24);
   var periodTick = tick % densificationPeriod;
   // Tick down in descendingMode, tick up otherwise.
   if (descendingMode) {

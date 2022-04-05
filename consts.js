@@ -8,6 +8,7 @@ export const bigTempoWaveAmp = 0.15;
 // quarter of a minute.
 
 export var intervals = [
+  1, // root
   2, // octave
   1.5, // fifth
   4 / 3, // fourth
