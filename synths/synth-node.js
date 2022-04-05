@@ -118,6 +118,12 @@ export class Sampler extends SynthNode {
     if (params.sampleDetune) {
       this.node.detune.value = params.sampleDetune;
     }
+    if (params.playbackRate) {
+      this.node.playbackRate.value = params.playbackRate;
+    }
+    if (params.loop) {
+      this.node.loop = params.loop;
+    }
   }
   play({ startTime, endTime }) {
     this.node.start(startTime);

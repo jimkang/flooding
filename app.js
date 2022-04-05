@@ -11,6 +11,7 @@ import seedrandom from 'seedrandom';
 import RandomId from '@jimkang/randomid';
 import { createProbable as Probable } from 'probable';
 import { ChordPlayer } from './updaters/chord-player';
+import { getChord } from './updaters/get-chord';
 
 var randomId = RandomId();
 var routeState;
@@ -49,6 +50,7 @@ async function followRoute({ seed }) {
 
   var random = seedrandom(seed);
   prob = Probable({ random });
+  prob.roll(2);
 
   ticker = new Ticker({
     onTick,
@@ -90,5 +92,6 @@ function onStart() {
 
 function onTick(tick) {
   console.log(tick); 
-  chordPlayer.play({ detunes: [ 0, -50 ] });
+  chordPlayer.play(getChord({ tick }));
 }
+
