@@ -1,11 +1,11 @@
-import { Sampler, Gain } from '../synths/synth-node';
+import { Sampler, Envelope } from '../synths/synth-node';
+import { timeNeededForEnvelopeDecay, envelopePeakRateK, envelopeDecayRateK } from '../consts';
 
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };
 
-  function play({ detunes, rates, currentTickLengthSeconds }) {
-    var samplerChains = rates ?
-      rates.map(rateToSamplerChain) : detunes.map(detuneToSamplerChain);
+  function play({ rates, currentTickLengthSeconds }) {
+    var samplerChains = rates.map(rateToSamplerChain);
     samplerChains.forEach(
       connectLastToDest
       //chain => chain?[chain.length - 1]?.connect({ audioNode: ctx.destination }
@@ -28,20 +28,21 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
         sampleBuffer,
         playbackRate: rate,
         loop: true,
-        timeNeededForEnvelopeDecay: 0
+        timeNeededForEnvelopeDecay 
       }
     );
-    var gain = new Gain(ctx, { gain: 1.0/rates.length });  
-    sampler.connect({ synthNode: gain });
-    return [sampler, gain];
+    const maxGain = 1.0/rates.length;
+    var envelope = new Envelope(ctx, { envelopeMaxGain: maxGain });
+    sampler.connect({ synthNode: envelope });
+    return [sampler, envelope];
   }
 
-  function detuneToSamplerChain(detune, i, detunes) {
-    var sampler = new Sampler(ctx, { sampleBuffer, sampleDetune: detune, timeNeededForEnvelopeDecay: 0 });
-    var gain = new Gain(ctx, { gain: 1.0/detunes.length });  
-    sampler.connect({ synthNode: gain });
-    return [sampler, gain];
-  }
+  //function detuneToSamplerChain(detune, i, detunes) {
+  //var sampler = new Sampler(ctx, { sampleBuffer, sampleDetune: detune, timeNeededForEnvelopeDecay: 0 });
+  //var gain = new Gain(ctx, { gain: 1.0/detunes.length });  
+  //sampler.connect({ synthNode: gain });
+  //return [sampler, gain];
+  //}
 
   function connectLastToDest(chain) {
     // TODO: Connect to limiter instead.

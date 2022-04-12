@@ -67,16 +67,15 @@ export class Envelope extends SynthNode {
     this.node = this.ctx.createGain();
   }
   play({ startTime, endTime }) {
+    const peakTime = this.params.peakTimeProportion * (endTime - startTime);
     this.node.gain.value = 0;
-    this.node.gain.setTargetAtTime(
+    this.node.gain.exponentialRampToValueAtTime(
       this.params.envelopeMaxGain,
-      startTime,
-      this.params.envelopePeakRateK
+      peakTime,
     );
-    this.node.gain.setTargetAtTime(
+    this.node.gain.exponentialRampToValueAtTime(
       0,
-      Math.max(endTime - this.params.timeNeededForEnvelopeDecay, startTime),
-      this.params.envelopeDecayRateK
+      endTime
     );
   }
 }
