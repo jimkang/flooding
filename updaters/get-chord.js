@@ -15,6 +15,7 @@ export function getChord({ tick }) {
    
   const denseness = periodTick/densificationPeriod % densificationPeriod;
   const chordPitchCount = Math.round(denseness * intervals.length);
+  // TODO: Slightly off start times?
   return { rates: intervals.slice(0, chordPitchCount) };
 }
 
