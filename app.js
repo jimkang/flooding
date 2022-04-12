@@ -90,8 +90,8 @@ function onStart() {
   ticker.resume();
 }
 
-function onTick(tick) {
-  console.log(tick); 
-  chordPlayer.play(getChord({ tick }));
+function onTick({ ticks, currentTickLengthSeconds }) {
+  console.log(ticks, currentTickLengthSeconds); 
+  chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks })));
 }
 

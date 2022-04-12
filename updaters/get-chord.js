@@ -1,10 +1,9 @@
-import { intervals } from '../consts';
+import { densificationPeriod, startingIntervals } from '../consts';
 
-const densificationPeriod = 30;
 var descendingMode = false;
 
-export function getChord({ tick }) {
-  var periodTick = tick % densificationPeriod;
+export function getChord({ ticks }) {
+  var periodTick = ticks % densificationPeriod;
   // Tick down in descendingMode, tick up otherwise.
   if (descendingMode) {
     periodTick = densificationPeriod - periodTick;
@@ -14,8 +13,8 @@ export function getChord({ tick }) {
   }
    
   const denseness = periodTick/densificationPeriod % densificationPeriod;
-  const chordPitchCount = Math.round(denseness * intervals.length);
+  const chordPitchCount = Math.round(denseness * startingIntervals.length);
   // TODO: Slightly off start times?
-  return { rates: intervals.slice(0, chordPitchCount) };
+  return { rates: startingIntervals.slice(0, chordPitchCount) };
 }
 

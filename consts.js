@@ -1,13 +1,11 @@
-const secondsPerCompactUnit = 16;
-const ticksPerCompactUnit = 16;
-export const secondsPerTick = secondsPerCompactUnit / ticksPerCompactUnit;
-export const totalTicks = ticksPerCompactUnit * 16;
 export const bigTempoWaveAmp = 0.15;
+export const densificationPeriod = 30;
+export const totalTicks = densificationPeriod;
 
 // At about 60 bpm, the 16-beat riff takes up about a
 // quarter of a minute.
 
-export var intervals = [
+export var startingIntervals = [
   1, // root
   2, // octave
   1.5, // fifth

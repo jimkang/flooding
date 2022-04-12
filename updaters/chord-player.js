@@ -3,7 +3,7 @@ import { Sampler, Gain } from '../synths/synth-node';
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };
 
-  function play({ detunes, rates }) {
+  function play({ detunes, rates, currentTickLengthSeconds }) {
     var samplerChains = rates ?
       rates.map(rateToSamplerChain) : detunes.map(detuneToSamplerChain);
     samplerChains.forEach(
@@ -12,6 +12,13 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
     );
     // TODO: parameterize start and end times.
     samplerChains.forEach(chain => playSampler(chain[0]));
+
+    function playSampler(sampler) {
+      const startTime = ctx.currentTime + 0;
+      const endTime = startTime + currentTickLengthSeconds;
+      sampler.play({ startTime, endTime });
+    }
+
   }
 
   function rateToSamplerChain(rate, i, rates) {
@@ -34,12 +41,6 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
     var gain = new Gain(ctx, { gain: 1.0/detunes.length });  
     sampler.connect({ synthNode: gain });
     return [sampler, gain];
-  }
-
-  function playSampler(sampler) {
-    const startTime = ctx.currentTime + 0;
-    const endTime = startTime + 1.0;
-    sampler.play({ startTime, endTime });
   }
 
   function connectLastToDest(chain) {

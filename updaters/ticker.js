@@ -14,7 +14,7 @@ export function Ticker({
   }
 
   var timeoutKey;
-  var currentTickLength = 1;
+  var currentTickLengthSeconds = 1;
 
   return {
     getTicks,
@@ -32,7 +32,7 @@ export function Ticker({
 
   function setTicks(val) {
     ticks = Math.round(val);
-    onTick(ticks);
+    onTick({ ticks, currentTickLengthSeconds });
   }
 
   function pause() {
@@ -53,7 +53,7 @@ export function Ticker({
   }
 
   function tick() {
-    onTick(ticks);
+    onTick({ ticks, currentTickLengthSeconds });
     ticks += 1;
     const progress = ticks / totalTicks;
     var factor = 1;
@@ -68,8 +68,8 @@ export function Ticker({
       factor = bigWaveY + smallWaveY;
       //console.log(ticks, 'factor', factor);
     }
-    currentTickLength = (secondsPerCompactUnit / ticksPerCompactUnit) * factor;
-    timeoutKey = setTimeout(tick, currentTickLength * 1000);
+    currentTickLengthSeconds = (secondsPerCompactUnit / ticksPerCompactUnit) * factor;
+    timeoutKey = setTimeout(tick, currentTickLengthSeconds * 1000);
   }
 
   function isPaused() {
@@ -77,7 +77,7 @@ export function Ticker({
   }
 
   function getCurrentTickLength() {
-    return currentTickLength;
+    return currentTickLengthSeconds;
   }
 }
 
