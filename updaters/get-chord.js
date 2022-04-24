@@ -1,4 +1,4 @@
-import { densificationPeriod, startingIntervals } from '../consts';
+import { densificationPeriod, tonalityDiamondPitches } from '../consts';
 
 var descendingMode = false;
 
@@ -11,10 +11,12 @@ export function getChord({ ticks }) {
   } else {
     descendingMode = periodTick >= densificationPeriod - 1;
   }
-   
+  
+  // TODO: Don't go all the way to max denseness every single time. 
   const denseness = periodTick/densificationPeriod % densificationPeriod;
-  const chordPitchCount = Math.round(denseness * startingIntervals.length);
+  const chordPitchCount = Math.round(denseness * tonalityDiamondPitches.length);
+  console.log('chordPitchCount', chordPitchCount);
   // TODO: Slightly off start times?
-  return { rates: startingIntervals.slice(0, chordPitchCount) };
+  return { rates: tonalityDiamondPitches.slice(0, chordPitchCount) };
 }
 

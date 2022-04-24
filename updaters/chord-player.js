@@ -1,5 +1,5 @@
 import { Sampler, Envelope } from '../synths/synth-node';
-import { timeNeededForEnvelopeDecay, envelopePeakRateK, envelopeDecayRateK } from '../consts';
+import { timeNeededForEnvelopeDecay } from '../consts';
 
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };

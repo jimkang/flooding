@@ -73,6 +73,7 @@ export class Envelope extends SynthNode {
       this.params.envelopeMaxGain,
       peakTime,
     );
+    // How do I start it at peakTime? AudioParam.setValueCurveAtTime()
     this.node.gain.exponentialRampToValueAtTime(
       0,
       endTime
