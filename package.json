@@ -1,6 +1,6 @@
 {
   "name": "flooding",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Blend some audio in a really literal way",
   "main": "index.js",
   "prifloodinge": true,
