@@ -13,6 +13,7 @@ export function getChord({ ticks }) {
   }
   
   // TODO: Don't go all the way to max denseness every single time. 
+  // Ride up a little bit, then go more each time.
   const denseness = periodTick/densificationPeriod % densificationPeriod;
   const chordPitchCount = Math.round(denseness * tonalityDiamondPitches.length);
   console.log('chordPitchCount', chordPitchCount);
