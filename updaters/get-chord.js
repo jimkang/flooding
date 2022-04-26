@@ -16,7 +16,6 @@ export function getChord({ ticks }) {
     descendingMode = periodTick >= densificationPeriod - 1;
   }
   
-  // TODO: Don't go all the way to max denseness every single time. 
   const denseness = (periodTick/densificationPeriod % densificationPeriod) * densificationCoeff;
   const chordPitchCount = Math.round(denseness * tonalityDiamondPitches.length) || 1;
   console.log('chordPitchCount', chordPitchCount);
