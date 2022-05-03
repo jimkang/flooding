@@ -92,6 +92,6 @@ function onStart() {
 
 function onTick({ ticks, currentTickLengthSeconds }) {
   console.log(ticks, currentTickLengthSeconds); 
-  chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks })));
+  chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob })));
 }
 

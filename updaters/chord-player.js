@@ -4,17 +4,18 @@ import { timeNeededForEnvelopeDecay } from '../consts';
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };
 
-  function play({ rates, currentTickLengthSeconds }) {
+  function play({ rates, delays, currentTickLengthSeconds }) {
     var samplerChains = rates.map(rateToSamplerChain);
     samplerChains.forEach(
       connectLastToDest
       //chain => chain?[chain.length - 1]?.connect({ audioNode: ctx.destination }
     );
     // TODO: parameterize start and end times.
-    samplerChains.forEach(chain => playSampler(chain[0]));
+    samplerChains.forEach((chain, i) => playSampler(chain[0], delays[i]));
 
-    function playSampler(sampler) {
-      const startTime = ctx.currentTime + 0;
+    function playSampler(sampler, delay) {
+      // TODO: This should be connected to the tick length.
+      const startTime = ctx.currentTime + delay;
       const endTime = startTime + currentTickLengthSeconds;
       sampler.play({ startTime, endTime });
     }
