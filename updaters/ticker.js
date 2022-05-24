@@ -57,6 +57,7 @@ export function Ticker({
     ticks += 1;
     const progress = ticks / totalTicks;
     var factor = 1;
+    // TODO: Tempo wave should be connected to the point in the densification period.
     if (progress > 0.175) {
       const bigWaveY =
         bigTempoWaveAmp * Math.cos(2.5 * Math.PI * (progress - 0.2)) +

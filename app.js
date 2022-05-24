@@ -12,6 +12,9 @@ import RandomId from '@jimkang/randomid';
 import { createProbable as Probable } from 'probable';
 import { ChordPlayer } from './updaters/chord-player';
 import { getChord } from './updaters/get-chord';
+import { renderDensityCanvas } from './renderers/render-density-canvas';
+import { range } from 'd3-array';
+import { tonalityDiamondPitches } from './tonality-diamond';
 
 var randomId = RandomId();
 var routeState;
@@ -66,6 +69,11 @@ async function followRoute({ seed }) {
     handleError
   });
   sampleDownloader.startDownloads();
+
+  renderDensityCanvas({
+    densityOverTimeArray: range(800).map(() => 0),
+    densityMax: tonalityDiamondPitches.length
+  });
 
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
