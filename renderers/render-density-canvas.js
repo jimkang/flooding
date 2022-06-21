@@ -10,6 +10,7 @@ const height = +canvas.getAttribute('height');
 
 export function renderDensityCanvas({ densityOverTimeArray, densityMin = 1, densityMax }) {
   var x, y;
+  var lastIndexFilled = 0;
 
   if (!wired) {
     canvas.addEventListener('mousedown', onMouseDown);
@@ -45,10 +46,23 @@ export function renderDensityCanvas({ densityOverTimeArray, densityMin = 1, dens
       return;
     }
 
-    densityOverTimeArray[Math.floor(x.invert(e.offsetX))] = y.invert(e.offsetY);
+    fillToPoint(Math.floor(x.invert(e.offsetX)), y.invert(e.offsetY));
     //console.log(e.offsetX, e.offsetY);
     console.log(densityOverTimeArray);
     requestAnimationFrame(drawDensities);
+  }
+
+  // We need to interpolate to fill in gaps in the array.
+  function fillToPoint(index, val) {
+    const anchorVal = densityOverTimeArray[lastIndexFilled];
+    const fillDirection = index > lastIndexFilled ? 1 : -1;
+    for (let interpIndex = lastIndexFilled; interpIndex !== index; interpIndex += fillDirection) {
+      // This can be something fancier than linear, if it helps.
+      const interpVal = anchorVal + (interpIndex - lastIndexFilled)/(index - lastIndexFilled) * (val - anchorVal);
+      densityOverTimeArray[interpIndex] = interpVal;
+    }
+    densityOverTimeArray[index] = val;
+    lastIndexFilled = index;
   }
 
   function drawDensities() {
