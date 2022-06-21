@@ -50,6 +50,7 @@ async function followRoute({ seed }) {
 
   var ctx = values[0];
   console.log(ctx);
+  var densityOverTimeArray = range(800).map(() => 0);
 
   var random = seedrandom(seed);
   prob = Probable({ random });
@@ -71,7 +72,7 @@ async function followRoute({ seed }) {
   sampleDownloader.startDownloads();
 
   renderDensityCanvas({
-    densityOverTimeArray: range(800).map(() => 0),
+    densityOverTimeArray,
     densityMax: tonalityDiamondPitches.length
   });
 
@@ -81,6 +82,12 @@ async function followRoute({ seed }) {
     chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
     wireControls({ onStart });
   }
+
+  function onTick({ ticks, currentTickLengthSeconds }) {
+    console.log(ticks, currentTickLengthSeconds); 
+    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob, densityOverTimeArray })));
+  }
+
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
@@ -96,10 +103,5 @@ function renderVersion() {
 
 function onStart() {
   ticker.resume();
-}
-
-function onTick({ ticks, currentTickLengthSeconds }) {
-  console.log(ticks, currentTickLengthSeconds); 
-  chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob })));
 }
 

@@ -1,4 +1,4 @@
-import { totalPeriods } from '../consts';
+import { totalPeriods, totalTicks } from '../consts';
 import { tonalityDiamondPitches } from '../tonality-diamond';
 import { range } from 'd3-array';
 
@@ -6,12 +6,15 @@ const magK = 50;
 const peakV = 26;
 
 // TODO: Different curve for each period, multiple periods.
-export function getChord({ ticks, probable }) {
-  
+export function getChord({ ticks, probable, densityOverTimeArray }) {
   const mag = magK * Math.sqrt(ticks/(totalPeriods * peakV));
+
   // TODO: Find out how to calculate c.
-  const chordPitchCount = Math.round(mag * Math.sin(mag + 1.5*Math.PI) + mag) || 1;
+  //const chordPitchCount = Math.round(mag * Math.sin(mag + 1.5*Math.PI) + mag) || 1;
   //const chordPitchCount = Math.round(denseness * tonalityDiamondPitches.length) || 1;
+
+  const chordPitchCount = densityOverTimeArray[Math.floor(ticks/totalTicks * densityOverTimeArray.length)];
+
   console.log('chordPitchCount', chordPitchCount, 'mag', mag);
   // Slightly off start times.
   var delays = range(chordPitchCount).map(() => probable.roll(2) === 0 ? 0 : probable.roll(10)/10 *1); 

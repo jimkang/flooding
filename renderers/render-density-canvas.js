@@ -48,7 +48,7 @@ export function renderDensityCanvas({ densityOverTimeArray, densityMin = 1, dens
 
     fillToPoint(Math.floor(x.invert(e.offsetX)), y.invert(e.offsetY));
     //console.log(e.offsetX, e.offsetY);
-    console.log(densityOverTimeArray);
+    //console.log(densityOverTimeArray);
     requestAnimationFrame(drawDensities);
   }
 
