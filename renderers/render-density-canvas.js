@@ -60,8 +60,8 @@ export function renderDensityCanvas({ densityOverTimeArray, densityMin = 1, dens
       const xTime = x(i);
       canvasCtx.beginPath();
       canvasCtx.strokeStyle = 'green';
-      canvasCtx.moveTo(xTime, 0);
-      canvasCtx.lineTo(xTime, y(densityOverTimeArray[i]));
+      canvasCtx.moveTo(xTime, y(densityOverTimeArray[i]));
+      canvasCtx.lineTo(xTime, height);
       canvasCtx.stroke();
     }
 
