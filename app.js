@@ -51,8 +51,12 @@ async function followRoute({ seed }) {
   }
 
   var ctx = values[0];
-  console.log(ctx);
+
   var densityOverTimeArray = range(800).map(() => 0);
+  if (localStorage.densityOverTimeArray) {
+    console.log(JSON.parse(localStorage.densityOverTimeArray));
+    densityOverTimeArray = JSON.parse(localStorage.densityOverTimeArray);
+  }
 
   var random = seedrandom(seed);
   prob = Probable({ random });
@@ -84,6 +88,7 @@ async function followRoute({ seed }) {
     if (pastDensityOverTimeArrays.length > densityHistoryLimit) {
       pastDensityOverTimeArrays.shift();
     }
+    localStorage.setItem('densityOverTimeArray', JSON.stringify(densityOverTimeArray));
   }
 
   // TODO: Test non-locally.
@@ -99,6 +104,8 @@ async function followRoute({ seed }) {
   }
 
   function onUndo() {
+    // TODO: Avoid "going back" to the most recent change, which is sort
+    // of not undoing at all.
     var prevDensityOverTimeArray = pastDensityOverTimeArrays.pop();
     if (prevDensityOverTimeArray) {
       densityOverTimeArray = prevDensityOverTimeArray;

@@ -22,12 +22,12 @@ export function renderDensityCanvas({
 
   if (!wired) {
     canvas.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mouseup', onMouseUp);
+    canvas.addEventListener('mouseup', onMouseUp);
     window.addEventListener('mousemove', onMouseMove);
 
     canvas.addEventListener('touchstart', onMouseDown);
-    window.addEventListener('touchend', onMouseUp);
-    window.addEventListener('touchcancel', onMouseUp);
+    canvas.addEventListener('touchend', onMouseUp);
+    canvas.addEventListener('touchcancel', onMouseUp);
     window.addEventListener('touchmove', onMouseMove);
 
     x = scaleLinear().domain([0, theDensityOverTimeArray.length]).range([0, width]);
@@ -47,7 +47,7 @@ export function renderDensityCanvas({
 
   function onMouseUp() {
     if (drawing) {
-      setTimeout(() => debouncedOnChange(theDensityOverTimeArray.slice()), 0);
+      debouncedOnChange(theDensityOverTimeArray.slice());
     }
     drawing = false;
   }
