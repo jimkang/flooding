@@ -23,6 +23,8 @@ var ticker;
 var sampleDownloader;
 var prob;
 var chordPlayer;
+var pastDensityOverTimeArrays = [];
+const densityHistoryLimit = 20;
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -73,14 +75,22 @@ async function followRoute({ seed }) {
 
   renderDensityCanvas({
     densityOverTimeArray,
-    densityMax: tonalityDiamondPitches.length
+    densityMax: tonalityDiamondPitches.length,
+    onChange
   });
+
+  function onChange(newDensityOverTimeArray) {
+    pastDensityOverTimeArrays.push(newDensityOverTimeArray);
+    if (pastDensityOverTimeArrays.length > densityHistoryLimit) {
+      pastDensityOverTimeArrays.shift();
+    }
+  }
 
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
     chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
-    wireControls({ onStart });
+    wireControls({ onStart, onUndo });
   }
 
   function onTick({ ticks, currentTickLengthSeconds }) {
@@ -88,6 +98,17 @@ async function followRoute({ seed }) {
     chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob, densityOverTimeArray })));
   }
 
+  function onUndo() {
+    var prevDensityOverTimeArray = pastDensityOverTimeArrays.pop();
+    if (prevDensityOverTimeArray) {
+      densityOverTimeArray = prevDensityOverTimeArray;
+      renderDensityCanvas({
+        densityOverTimeArray,
+        densityMax: tonalityDiamondPitches.length,
+        onChange
+      });
+    }
+  }
 }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
