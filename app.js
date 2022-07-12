@@ -65,8 +65,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks }) {
 
   ticker = new Ticker({
     onTick,
-    secondsPerCompactUnit: 1,
-    ticksPerCompactUnit: 1,
+    secondsPerTick: 1,
     startTicks: 0,
     totalTicks
   }); 

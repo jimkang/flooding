@@ -2,8 +2,7 @@ import { bigTempoWaveAmp } from '../consts';
 
 export function Ticker({
   onTick,
-  secondsPerCompactUnit,
-  ticksPerCompactUnit,
+  secondsPerTick,
   startTicks,
   onPause,
   onResume,
@@ -70,7 +69,7 @@ export function Ticker({
       factor = bigWaveY + smallWaveY;
       //console.log(ticks, 'factor', factor);
     }
-    currentTickLengthSeconds = (secondsPerCompactUnit / ticksPerCompactUnit) * factor;
+    currentTickLengthSeconds = secondsPerTick * factor;
     timeoutKey = setTimeout(tick, currentTickLengthSeconds * 1000);
   }
 
