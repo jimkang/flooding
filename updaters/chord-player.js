@@ -19,7 +19,6 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
       const endTime = startTime + currentTickLengthSeconds;
       sampler.play({ startTime, endTime });
     }
-
   }
 
   function rateToSamplerChain(rate, i, rates) {

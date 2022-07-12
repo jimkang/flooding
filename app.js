@@ -15,6 +15,7 @@ import { getChord } from './updaters/get-chord';
 import { renderDensityCanvas } from './renderers/render-density-canvas';
 import { range } from 'd3-array';
 import { tonalityDiamondPitches } from './tonality-diamond';
+import { defaultTotalTicks } from './consts';
 
 var randomId = RandomId();
 var routeState;
@@ -24,7 +25,7 @@ var sampleDownloader;
 var prob;
 var chordPlayer;
 var pastDensityOverTimeArrays = [];
-const densityHistoryLimit = 20;
+const densityHistoryLimit = 200;
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -37,7 +38,7 @@ const densityHistoryLimit = 20;
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed }) {
+async function followRoute({ seed, totalTicks = defaultTotalTicks }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -67,6 +68,7 @@ async function followRoute({ seed }) {
     secondsPerCompactUnit: 1,
     ticksPerCompactUnit: 1,
     startTicks: 0,
+    totalTicks
   }); 
 
   sampleDownloader = SampleDownloader({
@@ -95,12 +97,12 @@ async function followRoute({ seed }) {
   function onComplete({ buffers }) {
     console.log(buffers);
     chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
-    wireControls({ onStart, onUndo });
+    wireControls({ onStart, onUndo, onPieceLengthChange, totalTicks });
   }
 
   function onTick({ ticks, currentTickLengthSeconds }) {
     console.log(ticks, currentTickLengthSeconds); 
-    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob, densityOverTimeArray })));
+    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob, densityOverTimeArray, totalTicks })));
   }
 
   function onUndo() {
@@ -115,6 +117,10 @@ async function followRoute({ seed }) {
         onChange
       });
     }
+  }
+
+  function onPieceLengthChange(length) {
+    routeState.addToRoute({ totalTicks: length });
   }
 }
 

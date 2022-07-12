@@ -1,4 +1,4 @@
-import { totalTicks, bigTempoWaveAmp } from '../consts';
+import { bigTempoWaveAmp } from '../consts';
 
 export function Ticker({
   onTick,
@@ -7,6 +7,7 @@ export function Ticker({
   startTicks,
   onPause,
   onResume,
+  totalTicks
 }) {
   var ticks = 0;
   if (!isNaN(startTicks) && startTicks > -1) {
