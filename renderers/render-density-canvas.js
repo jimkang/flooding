@@ -12,9 +12,11 @@ const height = +canvas.getAttribute('height');
 var x, y;
 var lastIndexFilled = 0;
 var debouncedOnChange; 
+var strokeTimeInEvents = 0;
 
 export function renderDensityCanvas({
-  densityOverTimeArray, densityMin = 1, densityMax, onChange
+  densityOverTimeArray, densityMin = 1, densityMax, onChange,
+  maxEventCountForStroke = 50
 }) {
   theDensityOverTimeArray = densityOverTimeArray;
   debouncedOnChange = debounce(onChange, 300);
@@ -43,10 +45,12 @@ export function renderDensityCanvas({
   function onMouseDown(e) {
     e.preventDefault();
     drawing = true;
+    strokeTimeInEvents = 0;
   }
 
   function onMouseUp() {
     if (drawing) {
+      strokeTimeInEvents = 0;
       debouncedOnChange(theDensityOverTimeArray.slice());
     }
     drawing = false;
@@ -57,10 +61,16 @@ export function renderDensityCanvas({
       return;
     }
 
+    strokeTimeInEvents += 1;
     fillToPoint(Math.floor(x.invert(e.offsetX)), y.invert(e.offsetY));
     //console.log(e.offsetX, e.offsetY);
     //console.log(theDensityOverTimeArray);
     requestAnimationFrame(drawDensities);
+    if (strokeTimeInEvents >= maxEventCountForStroke) {
+      //console.log('Forcing stroke commit', strokeTimeInEvents);
+      debouncedOnChange(theDensityOverTimeArray.slice());
+      strokeTimeInEvents = 0;
+    }
   }
 
   // We need to interpolate to fill in gaps in the array.
