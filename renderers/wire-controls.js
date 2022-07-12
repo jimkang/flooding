@@ -4,14 +4,17 @@ var OLPE = require('one-listener-per-element');
 
 var { on } = OLPE();
 var pieceLengthInput = document.getElementById('piece-length-field');
+var secondsPerTickInput = document.getElementById('tick-length-field');
 
-function wireControls({ onStart, onUndo, onPieceLengthChange, totalTicks }) {
+function wireControls({ onStart, onUndo, onPieceLengthChange, onTickLengthChange, totalTicks, secondsPerTick }) {
   pieceLengthInput.value = totalTicks;
+  secondsPerTickInput.value = secondsPerTick;
 
   select('#start-button').attr('disabled', null);
   on('#start-button', 'click', onStartClick);
   on('#undo-button', 'click', onUndoClick);
   on('#piece-length-field', 'change', onPieceLengthFieldChange);
+  on('#tick-length-field', 'change', onTickLengthFieldChange);
 
   function onStartClick() {
     onStart();
@@ -23,6 +26,10 @@ function wireControls({ onStart, onUndo, onPieceLengthChange, totalTicks }) {
 
   function onPieceLengthFieldChange() {
     onPieceLengthChange(+pieceLengthInput.value);
+  }
+
+  function onTickLengthFieldChange() {
+    onTickLengthChange(+secondsPerTickInput.value);
   }
 }
 

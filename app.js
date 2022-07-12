@@ -15,7 +15,7 @@ import { getChord } from './updaters/get-chord';
 import { renderDensityCanvas } from './renderers/render-density-canvas';
 import { range } from 'd3-array';
 import { tonalityDiamondPitches } from './tonality-diamond';
-import { defaultTotalTicks } from './consts';
+import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
 
 var randomId = RandomId();
 var routeState;
@@ -38,7 +38,7 @@ const densityHistoryLimit = 200;
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed, totalTicks = defaultTotalTicks }) {
+async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTick = defaultSecondsPerTick }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -65,7 +65,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks }) {
 
   ticker = new Ticker({
     onTick,
-    secondsPerTick: 1,
+    secondsPerTick,
     startTicks: 0,
     totalTicks
   }); 
@@ -96,7 +96,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks }) {
   function onComplete({ buffers }) {
     console.log(buffers);
     chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
-    wireControls({ onStart, onUndo, onPieceLengthChange, totalTicks });
+    wireControls({ onStart, onUndo, onPieceLengthChange, onTickLengthChange, totalTicks, secondsPerTick });
   }
 
   function onTick({ ticks, currentTickLengthSeconds }) {
@@ -120,6 +120,10 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks }) {
 
   function onPieceLengthChange(length) {
     routeState.addToRoute({ totalTicks: length });
+  }
+
+  function onTickLengthChange(length) {
+    routeState.addToRoute({ secondsPerTick: length });
   }
 }
 
