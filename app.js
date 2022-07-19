@@ -12,7 +12,7 @@ import RandomId from '@jimkang/randomid';
 import { createProbable as Probable } from 'probable';
 import { ChordPlayer } from './updaters/chord-player';
 import { getChord } from './updaters/get-chord';
-import { renderDensityCanvas } from './renderers/render-density-canvas';
+import { RenderTimeControlGraph } from './renderers/render-time-control-graph';
 import { range } from 'd3-array';
 import { tonalityDiamondPitches } from './tonality-diamond';
 import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
@@ -26,6 +26,8 @@ var prob;
 var chordPlayer;
 var pastDensityOverTimeArrays = [];
 const densityHistoryLimit = 200;
+
+var renderDensityCanvas = RenderTimeControlGraph({ canvasId: 'density-canvas' });
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -79,8 +81,8 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
   sampleDownloader.startDownloads();
 
   renderDensityCanvas({
-    densityOverTimeArray,
-    densityMax: tonalityDiamondPitches.length,
+    valueOverTimeArray: densityOverTimeArray,
+    valueMax: tonalityDiamondPitches.length,
     onChange
   });
 
@@ -111,8 +113,8 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
     if (prevDensityOverTimeArray) {
       densityOverTimeArray = prevDensityOverTimeArray;
       renderDensityCanvas({
-        densityOverTimeArray,
-        densityMax: tonalityDiamondPitches.length,
+        valueOverTimeArray: densityOverTimeArray,
+        valueMax: tonalityDiamondPitches.length,
         onChange
       });
     }
