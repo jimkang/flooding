@@ -15,12 +15,17 @@
 
     <div class="intro-description">Let's flood!</div>
 
+    <h2>Density</h2>
     <canvas id="density-canvas" width="900" height="600"></canvas>
+
+    <h2>Tempo</h2>
+    <canvas id="tempo-canvas" width="900" height="600"></canvas>
 
     <label for="piece-length-field">Length of piece in ticks:</label><input id="piece-length-field" type="number">
     <label for="tick-length-field">Tick length in seconds:</label><input id="tick-length-field" type="number" step="0.1">
     <button id="start-button" disabled="true">Flood</button>
-    <button id="undo-button">Undo last stroke</button>
+    <button id="undo-density-button">Undo last density stroke</button>
+    <button id="undo-tempo-button">Undo last tempo stroke</button>
 
     <div id="version-info"></div>
 

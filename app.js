@@ -13,9 +13,9 @@ import { createProbable as Probable } from 'probable';
 import { ChordPlayer } from './updaters/chord-player';
 import { getChord } from './updaters/get-chord';
 import { RenderTimeControlGraph } from './renderers/render-time-control-graph';
-import { range } from 'd3-array';
 import { tonalityDiamondPitches } from './tonality-diamond';
 import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
+import { Undoer } from './updaters/undoer';
 
 var randomId = RandomId();
 var routeState;
@@ -24,10 +24,17 @@ var ticker;
 var sampleDownloader;
 var prob;
 var chordPlayer;
-var pastDensityOverTimeArrays = [];
-const densityHistoryLimit = 200;
 
 var renderDensityCanvas = RenderTimeControlGraph({ canvasId: 'density-canvas' });
+var densityUndoer = Undoer({ onUpdateValue: callRenderDensityCanvas, storageKey: 'densityOverTimeArray' });
+
+function callRenderDensityCanvas(newValue, undoer) {
+  renderDensityCanvas({
+    valueOverTimeArray: newValue,
+    valueMax: tonalityDiamondPitches.length,
+    onChange: undoer.onChange
+  });
+}
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -55,12 +62,6 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
 
   var ctx = values[0];
 
-  var densityOverTimeArray = range(800).map(() => 0);
-  if (localStorage.densityOverTimeArray) {
-    console.log(JSON.parse(localStorage.densityOverTimeArray));
-    densityOverTimeArray = JSON.parse(localStorage.densityOverTimeArray);
-  }
-
   var random = seedrandom(seed);
   prob = Probable({ random });
   prob.roll(2);
@@ -81,43 +82,21 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
   sampleDownloader.startDownloads();
 
   renderDensityCanvas({
-    valueOverTimeArray: densityOverTimeArray,
+    valueOverTimeArray: densityUndoer.getCurrentValue(),
     valueMax: tonalityDiamondPitches.length,
-    onChange
+    onChange: densityUndoer.onChange
   });
-
-  function onChange(newDensityOverTimeArray) {
-    pastDensityOverTimeArrays.push(newDensityOverTimeArray);
-    if (pastDensityOverTimeArrays.length > densityHistoryLimit) {
-      pastDensityOverTimeArrays.shift();
-    }
-    localStorage.setItem('densityOverTimeArray', JSON.stringify(densityOverTimeArray));
-  }
 
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
     chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
-    wireControls({ onStart, onUndo, onPieceLengthChange, onTickLengthChange, totalTicks, secondsPerTick });
+    wireControls({ onStart, onUndoDensity: densityUndoer.onUndo, onPieceLengthChange, onTickLengthChange, totalTicks, secondsPerTick });
   }
 
   function onTick({ ticks, currentTickLengthSeconds }) {
     console.log(ticks, currentTickLengthSeconds); 
-    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob, densityOverTimeArray, totalTicks })));
-  }
-
-  function onUndo() {
-    // TODO: Avoid "going back" to the most recent change, which is sort
-    // of not undoing at all.
-    var prevDensityOverTimeArray = pastDensityOverTimeArrays.pop();
-    if (prevDensityOverTimeArray) {
-      densityOverTimeArray = prevDensityOverTimeArray;
-      renderDensityCanvas({
-        valueOverTimeArray: densityOverTimeArray,
-        valueMax: tonalityDiamondPitches.length,
-        onChange
-      });
-    }
+    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, getChord({ ticks, probable: prob, densityOverTimeArray: densityUndoer.getCurrentValue(), totalTicks })));
   }
 
   function onPieceLengthChange(length) {
