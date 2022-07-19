@@ -14,7 +14,7 @@ import { ChordPlayer } from './updaters/chord-player';
 import { getChord } from './updaters/get-chord';
 import { RenderTimeControlGraph } from './renderers/render-time-control-graph';
 import { tonalityDiamondPitches } from './tonality-diamond';
-import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
+import { defaultTotalTicks, defaultSecondsPerTick, maxTempo } from './consts';
 import { Undoer } from './updaters/undoer';
 
 var randomId = RandomId();
@@ -27,11 +27,21 @@ var chordPlayer;
 
 var renderDensityCanvas = RenderTimeControlGraph({ canvasId: 'density-canvas' });
 var densityUndoer = Undoer({ onUpdateValue: callRenderDensityCanvas, storageKey: 'densityOverTimeArray' });
+var renderTempoCanvas = RenderTimeControlGraph({ canvasId: 'tempo-canvas' });
+var tempoUndoer = Undoer({ onUpdateValue: callRenderTempoCanvas, storageKey: 'tempoOverTimeArray' });
 
 function callRenderDensityCanvas(newValue, undoer) {
   renderDensityCanvas({
     valueOverTimeArray: newValue,
     valueMax: tonalityDiamondPitches.length,
+    onChange: undoer.onChange
+  });
+}
+
+function callRenderTempoCanvas(newValue, undoer) {
+  renderTempoCanvas({
+    valueOverTimeArray: newValue,
+    valueMax: maxTempo,
     onChange: undoer.onChange
   });
 }
@@ -86,12 +96,25 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
     valueMax: tonalityDiamondPitches.length,
     onChange: densityUndoer.onChange
   });
+  renderTempoCanvas({
+    valueOverTimeArray: tempoUndoer.getCurrentValue(),
+    valueMax: maxTempo,
+    onChange: tempoUndoer.onChange
+  });
 
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
     chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
-    wireControls({ onStart, onUndoDensity: densityUndoer.onUndo, onPieceLengthChange, onTickLengthChange, totalTicks, secondsPerTick });
+    wireControls({
+      onStart,
+      onUndoDensity: densityUndoer.onUndo,
+      onUndoTempo: tempoUndoer.onUndo,
+      onPieceLengthChange,
+      onTickLengthChange,
+      totalTicks,
+      secondsPerTick
+    });
   }
 
   function onTick({ ticks, currentTickLengthSeconds }) {
