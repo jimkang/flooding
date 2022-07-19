@@ -27,7 +27,7 @@ var chordPlayer;
 
 var renderDensityCanvas = RenderTimeControlGraph({ canvasId: 'density-canvas' });
 var densityUndoer = Undoer({ onUpdateValue: callRenderDensityCanvas, storageKey: 'densityOverTimeArray' });
-var renderTempoCanvas = RenderTimeControlGraph({ canvasId: 'tempo-canvas' });
+var renderTempoCanvas = RenderTimeControlGraph({ canvasId: 'tempo-canvas', lineColor: 'hsl(10, 60%, 40%)' });
 var tempoUndoer = Undoer({ onUpdateValue: callRenderTempoCanvas, storageKey: 'tempoOverTimeArray' });
 
 function callRenderDensityCanvas(newValue, undoer) {
