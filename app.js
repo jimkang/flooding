@@ -14,7 +14,7 @@ import { ChordPlayer } from './updaters/chord-player';
 import { getChord } from './updaters/get-chord';
 import { RenderTimeControlGraph } from './renderers/render-time-control-graph';
 import { tonalityDiamondPitches } from './tonality-diamond';
-import { defaultTotalTicks, defaultSecondsPerTick, maxTempo } from './consts';
+import { defaultTotalTicks, defaultSecondsPerTick, maxTickLength } from './consts';
 import { Undoer } from './updaters/undoer';
 
 var randomId = RandomId();
@@ -41,7 +41,7 @@ function callRenderDensityCanvas(newValue, undoer) {
 function callRenderTempoCanvas(newValue, undoer) {
   renderTempoCanvas({
     valueOverTimeArray: newValue,
-    valueMax: maxTempo,
+    valueMax: maxTickLength,
     onChange: undoer.onChange
   });
 }
@@ -78,9 +78,9 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
 
   ticker = new Ticker({
     onTick,
-    secondsPerTick,
     startTicks: 0,
-    totalTicks
+    totalTicks,
+    getTickLength
   }); 
 
   sampleDownloader = SampleDownloader({
@@ -128,6 +128,11 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
 
   function onTickLengthChange(length) {
     routeState.addToRoute({ secondsPerTick: length });
+  }
+
+  function getTickLength(tickNumber) {
+    var lengths = tempoUndoer.getCurrentValue();
+    return lengths[Math.floor(tickNumber/totalTicks * lengths.length)];
   }
 }
 

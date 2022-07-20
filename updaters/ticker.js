@@ -1,12 +1,10 @@
-import { bigTempoWaveAmp } from '../consts';
-
 export function Ticker({
   onTick,
-  secondsPerTick,
   startTicks,
   onPause,
   onResume,
-  totalTicks
+  totalTicks,
+  getTickLength
 }) {
   var ticks = 0;
   if (!isNaN(startTicks) && startTicks > -1) {
@@ -53,23 +51,16 @@ export function Ticker({
   }
 
   function tick() {
+    // Don't update tick length anywhere else.
+    if (getTickLength) {
+      currentTickLengthSeconds = getTickLength(ticks);
+    }
     onTick({ ticks, currentTickLengthSeconds });
     ticks += 1;
-    const progress = ticks / totalTicks;
-    var factor = 1;
-    // TODO: Tempo wave should be connected to the point in the densification period.
-    if (progress > 0.175) {
-      const bigWaveY =
-        bigTempoWaveAmp * Math.cos(2.5 * Math.PI * (progress - 0.2)) +
-        1 -
-        bigTempoWaveAmp;
-      const smallWaveY =
-        (1 / (20 * progress)) *
-        Math.cos(((2 * Math.PI * 40) / progress) * (progress - 0.2));
-      factor = bigWaveY + smallWaveY;
-      //console.log(ticks, 'factor', factor);
+    if (ticks >= totalTicks) {
+      return;
     }
-    currentTickLengthSeconds = secondsPerTick * factor;
+
     timeoutKey = setTimeout(tick, currentTickLengthSeconds * 1000);
   }
 
