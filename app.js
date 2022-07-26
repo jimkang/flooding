@@ -98,7 +98,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
   });
   renderTempoCanvas({
     valueOverTimeArray: tempoUndoer.getCurrentValue(),
-    valueMax: maxTempo,
+    valueMax: maxTickLength, 
     onChange: tempoUndoer.onChange
   });
 
