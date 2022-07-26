@@ -31,7 +31,7 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
         timeNeededForEnvelopeDecay 
       }
     );
-    const maxGain = 1.0/rates.length;
+    const maxGain = 0.8/Math.pow(rates.length, 3);
     var envelope = new Envelope(ctx, { envelopeMaxGain: maxGain });
     sampler.connect({ synthNode: envelope });
     return [sampler, envelope];
