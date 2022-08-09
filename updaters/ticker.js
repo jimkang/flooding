@@ -3,7 +3,6 @@ export function Ticker({
   startTicks,
   onPause,
   onResume,
-  totalTicks,
   getTickLength
 }) {
   var ticks = 0;
@@ -57,10 +56,6 @@ export function Ticker({
     }
     onTick({ ticks, currentTickLengthSeconds });
     ticks += 1;
-    if (ticks >= totalTicks) {
-      return;
-    }
-
     timeoutKey = setTimeout(tick, currentTickLengthSeconds * 1000);
   }
 
