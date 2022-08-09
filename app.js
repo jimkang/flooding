@@ -10,7 +10,7 @@ import { SampleDownloader } from './tasks/sample-downloader';
 import RandomId from '@jimkang/randomid';
 import { ChordPlayer } from './updaters/chord-player';
 import { Director } from './updaters/director';
-import { defaultSecondsPerTick } from './consts';
+import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
 
 var randomId = RandomId();
 var routeState;
@@ -30,7 +30,7 @@ var chordPlayer;
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed, secondsPerTick = defaultSecondsPerTick }) {
+async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTick = defaultSecondsPerTick }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -49,7 +49,8 @@ async function followRoute({ seed, secondsPerTick = defaultSecondsPerTick }) {
   ticker = new Ticker({
     onTick,
     startTicks: 0,
-    getTickLength: director.getTickLength
+    getTickLength: director.getTickLength,
+    totalTicks
   }); 
 
   sampleDownloader = SampleDownloader({
@@ -66,7 +67,9 @@ async function followRoute({ seed, secondsPerTick = defaultSecondsPerTick }) {
     chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
     wireControls({
       onStart,
+      onPieceLengthChange,
       onTickLengthChange,
+      totalTicks,
       secondsPerTick
     });
   }
@@ -74,6 +77,10 @@ async function followRoute({ seed, secondsPerTick = defaultSecondsPerTick }) {
   function onTick({ ticks, currentTickLengthSeconds }) {
     console.log(ticks, currentTickLengthSeconds); 
     chordPlayer.play(Object.assign({ currentTickLengthSeconds }, director.getChord({ ticks })));
+  }
+
+  function onPieceLengthChange(length) {
+    routeState.addToRoute({ totalTicks: length });
   }
 
   function onTickLengthChange(length) {

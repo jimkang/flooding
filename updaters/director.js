@@ -54,7 +54,7 @@ export function Director({ seed }) {
   function getTickLength() {
     var tickLength = 1;
     if (pastPitchCounts.length > 0) {
-      tickLength = pastPitchCounts[pastPitchCounts.length - 1]/tonalityDiamondPitches.length;
+      tickLength = pastPitchCounts[pastPitchCounts.length - 1]/tonalityDiamondPitches.length * (0.8 + 0.4 * prob.roll(100)/100);
     }
     console.log('tickLength:', tickLength);
     return tickLength;
