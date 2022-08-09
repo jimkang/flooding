@@ -5,7 +5,7 @@ import { range } from 'd3-array';
 
 const boredomDischargeThreshold = 3;
 
-export function Director({ seed }) {
+export function Director({ seed, tempoFactor = 1 }) {
   var harshnessDischargeThreshold = 4;
   var harshnessBattery = 0;
   var boredomBattery = 0;
@@ -40,7 +40,10 @@ export function Director({ seed }) {
         chordPitchCount = tonalityDiamondPitches.length - 1;
       } 
       boredomBattery -= 1;
+    } else {
+      boredomBattery += 1;
     }
+
     // TODO: Use rest of pastPitchCounts.
     pastPitchCounts.push(chordPitchCount);
     
@@ -56,6 +59,7 @@ export function Director({ seed }) {
     if (pastPitchCounts.length > 0) {
       tickLength = pastPitchCounts[pastPitchCounts.length - 1]/tonalityDiamondPitches.length * (0.8 + 0.4 * prob.roll(100)/100);
     }
+    tickLength *= tempoFactor;
     console.log('tickLength:', tickLength);
     return tickLength;
   }

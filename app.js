@@ -30,7 +30,7 @@ var chordPlayer;
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTick = defaultSecondsPerTick }) {
+async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor = defaultSecondsPerTick }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -44,7 +44,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
   }
 
   var ctx = values[0];
-  var director = Director({ seed });
+  var director = Director({ seed, tempoFactor });
 
   ticker = new Ticker({
     onTick,
@@ -68,9 +68,9 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
     wireControls({
       onStart,
       onPieceLengthChange,
-      onTickLengthChange,
+      onTempoFactorChange,
       totalTicks,
-      secondsPerTick
+      tempoFactor
     });
   }
 
@@ -83,8 +83,8 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, secondsPerTic
     routeState.addToRoute({ totalTicks: length });
   }
 
-  function onTickLengthChange(length) {
-    routeState.addToRoute({ secondsPerTick: length });
+  function onTempoFactorChange(length) {
+    routeState.addToRoute({ tempoFactor: length });
   }
 }
 
