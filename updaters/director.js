@@ -47,11 +47,14 @@ export function Director({ seed, tempoFactor = 1 }) {
     // TODO: Use rest of pastPitchCounts.
     pastPitchCounts.push(chordPitchCount);
     
-    console.log('harshnessBattery:', harshnessBattery, 'harshnessDischargeThreshold:', harshnessDischargeThreshold, 'boredomBattery:', boredomBattery, 'direction:', direction, 'chordPitchCount:', chordPitchCount);
-
     // Slightly off start times.
+
     var delays = range(chordPitchCount).map(() => prob.roll(2) === 0 ? 0 : prob.roll(10)/10 *1); 
-    return { rates: tonalityDiamondPitches.slice(0, chordPitchCount), delays };
+    return { 
+      rates: tonalityDiamondPitches.slice(0, chordPitchCount), 
+      delays, 
+      meta:{harshnessBattery, harshnessDischargeThreshold, boredomBattery, direction, chordPitchCount}
+    };
   }
 
   function getTickLength() {
@@ -60,7 +63,6 @@ export function Director({ seed, tempoFactor = 1 }) {
       tickLength = pastPitchCounts[pastPitchCounts.length - 1]/tonalityDiamondPitches.length * (0.8 + 0.4 * prob.roll(100)/100);
     }
     tickLength *= tempoFactor;
-    console.log('tickLength:', tickLength);
     return tickLength;
   }
 }

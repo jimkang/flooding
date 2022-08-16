@@ -11,6 +11,7 @@ import RandomId from '@jimkang/randomid';
 import { ChordPlayer } from './updaters/chord-player';
 import { Director } from './updaters/director';
 import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
+import { preRunDirector } from './updaters/pre-run-director';
 
 var randomId = RandomId();
 var routeState;
@@ -30,6 +31,7 @@ var chordPlayer;
   routeState.routeFromHash();
 })();
 
+// TODO: Add "Too uncomfortable"/"too comfortable" controls.
 async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor = defaultSecondsPerTick }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -45,6 +47,8 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
 
   var ctx = values[0];
   var director = Director({ seed, tempoFactor });
+  var runs = preRunDirector({ director, totalTicks });
+  console.table('runs', runs);
 
   ticker = new Ticker({
     onTick,
