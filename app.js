@@ -74,7 +74,6 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
       onPieceLengthChange,
       onTempoFactorChange,
       totalTicks,
-      tempoFactor
     });
   }
 

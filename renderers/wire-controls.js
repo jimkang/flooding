@@ -8,8 +8,6 @@ var tempoFactorInput = document.getElementById('tempo-factor-field');
 
 function wireControls({
   onStart,
-  onUndoDensity,
-  onUndoTempo,
   onPieceLengthChange,
   onTempoFactorChange,
   totalTicks,
@@ -20,21 +18,11 @@ function wireControls({
 
   select('#start-button').attr('disabled', null);
   on('#start-button', 'click', onStartClick);
-  on('#undo-density-button', 'click', onUndoDensityClick);
-  on('#undo-tempo-button', 'click', onUndoTempoClick);
   on('#piece-length-field', 'change', onPieceLengthFieldChange);
   on('#tempo-factor-field', 'change', onTempoFactorFieldChange);
 
   function onStartClick() {
     onStart();
-  }
-
-  function onUndoDensityClick() {
-    onUndoDensity();
-  }
-
-  function onUndoTempoClick() {
-    onUndoTempo();
   }
 
   function onPieceLengthFieldChange() {
