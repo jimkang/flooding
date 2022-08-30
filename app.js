@@ -13,6 +13,7 @@ import { Director } from './updaters/director';
 import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
 import { preRunDirector } from './updaters/pre-run-director';
 import { RenderDensityOverTime } from './renderers/render-density-over-time';
+import { renderEventDirection } from './renderers/render-event-direction';
 
 var randomId = RandomId();
 var routeState;
@@ -85,7 +86,13 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
 
   function onTick({ ticks, currentTickLengthSeconds }) {
     console.log(ticks, currentTickLengthSeconds); 
-    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, director.getChord({ ticks })));
+    var chord = director.getChord({ ticks });
+    renderEventDirection({
+      tickIndex: ticks,
+      tickLength: currentTickLengthSeconds,
+      chordSize: chord.rates.length
+    });
+    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, chord));
   }
 
   function onPieceLengthChange(length) {

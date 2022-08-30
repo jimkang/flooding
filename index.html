@@ -17,6 +17,13 @@
 
     <label for="piece-length-field">Length of piece in ticks:</label><input id="piece-length-field" type="number">
     <label for="tempo-factor-field">Tempo factor:</label><input id="tempo-factor-field" type="number" step="0.1">
+
+    <div class="current-info">
+      <div><span>Current tick:</span> <span id="current-tick-field"></span></div>
+      <div><span>Current tick length:</span> <span id="current-tick-length-field"></span></div>
+      <div><span>Current chord size:</span> <span id="current-chord-size-field"></span></div>
+    </div>
+
     <button id="start-button" disabled="true">Flood</button>
 
     <div class="graphs">
