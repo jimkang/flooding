@@ -12,6 +12,7 @@ import { ChordPlayer } from './updaters/chord-player';
 import { Director } from './updaters/director';
 import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
 import { preRunDirector } from './updaters/pre-run-director';
+import { RenderDensityOverTime } from './renderers/render-density-over-time';
 
 var randomId = RandomId();
 var routeState;
@@ -19,6 +20,9 @@ var { getCurrentContext } = ContextKeeper();
 var ticker;
 var sampleDownloader;
 var chordPlayer;
+var renderDensityOverTime = RenderDensityOverTime({
+  canvasId: 'density-canvas', color: 'hsl(60, 50%, 50%)'
+});
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -47,8 +51,9 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
 
   var ctx = values[0];
   var director = Director({ seed, tempoFactor });
-  var runs = preRunDirector({ director, totalTicks });
-  console.table('runs', runs);
+  var eventDirectionObjects = preRunDirector({ director, totalTicks });
+  console.table('eventDirectionObjects', eventDirectionObjects);
+  renderDensityOverTime({ eventDirectionObjects }); 
 
   ticker = new Ticker({
     onTick,
