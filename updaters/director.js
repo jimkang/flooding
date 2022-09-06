@@ -3,7 +3,7 @@ import seedrandom from 'seedrandom';
 import { tonalityDiamondPitches } from '../tonality-diamond';
 import { range } from 'd3-array';
 
-const boredomDischargeThreshold = 3;
+const boredomDischargeThreshold = 2;
 
 export function Director({ seed, tempoFactor = 1 }) {
   var harshnessDischargeThreshold = 4;
@@ -53,7 +53,13 @@ export function Director({ seed, tempoFactor = 1 }) {
     return { 
       rates: tonalityDiamondPitches.slice(0, chordPitchCount), 
       delays, 
-      meta:{harshnessBattery, harshnessDischargeThreshold, boredomBattery, direction, chordPitchCount}
+      meta: {
+        harshnessBattery,
+        harshnessDischargeThreshold,
+        boredomBattery,
+        direction,
+        chordPitchCount
+      }
     };
   }
 
