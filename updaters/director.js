@@ -30,6 +30,9 @@ export function Director({ seed, tempoFactor = 1 }) {
       direction = -1;
       harshnessDischargeThreshold += 1;
     }
+
+    harshnessBattery += direction;
+
     if (boredomBattery >= boredomDischargeThreshold) {
       chordPitchCount += direction;
       if (chordPitchCount === 0) {
