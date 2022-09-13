@@ -15,23 +15,31 @@
 
     <div class="intro-description">Let's flood!</div>
 
-    <div class="graphs">
-      <div class="graph">
-        <h2>Density</h2>
-        <canvas id="density-canvas" width="900" height="600"></canvas>
-        <button id="undo-density-button">Undo last density stroke</button>
-      </div>
+    <label for="piece-length-field">Length of piece in ticks:</label><input id="piece-length-field" type="number">
+    <label for="tempo-factor-field">Tempo factor:</label><input id="tempo-factor-field" type="number" step="0.1">
 
-      <div class="graph">
-        <h2>Tempo</h2>
-        <canvas id="tempo-canvas" width="900" height="600"></canvas>
-        <button id="undo-tempo-button">Undo last tempo stroke</button>
-      </div>
+    <div class="current-info">
+      <div><span>Current tick:</span> <span id="current-tick-field"></span></div>
+      <div><span>Current tick length:</span> <span id="current-tick-length-field"></span></div>
+      <div><span>Current chord size:</span> <span id="current-chord-size-field"></span></div>
     </div>
 
-    <label for="piece-length-field">Length of piece in ticks:</label><input id="piece-length-field" type="number">
-    <label for="tick-length-field">Tick length in seconds:</label><input id="tick-length-field" type="number" step="0.1">
     <button id="start-button" disabled="true">Flood</button>
+
+    <div class="graphs">
+      <div class="graph">
+        <h2>Density over time</h2>
+        <canvas id="density-canvas" width="1000" height="600"></canvas>
+      </div>
+      <div class="graph">
+        <h2>Harshness charge</h2>
+        <canvas id="harshness-canvas" width="1000" height="200"></canvas>
+      </div>
+      <div class="graph">
+        <h2>Boredom change</h2>
+        <canvas id="boredom-canvas" width="1000" height="200"></canvas>
+      </div>
+    </div>
 
     <div id="version-info"></div>
 

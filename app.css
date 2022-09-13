@@ -61,42 +61,10 @@ a:visited {
   display: none;
 }
 
-.generation svg {
-  width: 640;
-  height: 320;
-  border: solid 1px #222;
-}
-
-.generation text {
-  fill: #444;
-  font-size: 2.5;
-  text-anchor: middle;
-}
-
-.generation circle {
-}
-
-.generation span {
-  margin-right: 0.5em;
-}
-
-.substrates circle {
-  fill: #fff;
-}
-
-.substrates {
-  border: 8px solid hsl(210, 50%, 50%);
-  font-weight: bold;
-}
-
-.enzymes circle {
-  stroke: #444;
-  stroke-width: 0.1;
-  fill: hsla(0, 0%, 0%, 0.05);
-}
-
-.enzymes text {
-  font-style: italic;
+.current-info {
+  background-color: hsl(80, 40%, 60%);
+  padding: 0.25em;
+  border-radius: 8px;
 }
 
 @media all and (max-height: 568px) {
