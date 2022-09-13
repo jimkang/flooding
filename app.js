@@ -12,8 +12,9 @@ import { ChordPlayer } from './updaters/chord-player';
 import { Director } from './updaters/director';
 import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
 import { preRunDirector } from './updaters/pre-run-director';
-import { RenderDensityOverTime } from './renderers/render-density-over-time';
+import { RenderTimeSeries } from './renderers/render-time-series/';
 import { renderEventDirection } from './renderers/render-event-direction';
+import { tonalityDiamondPitches } from './tonality-diamond';
 
 var randomId = RandomId();
 var routeState;
@@ -21,8 +22,14 @@ var { getCurrentContext } = ContextKeeper();
 var ticker;
 var sampleDownloader;
 var chordPlayer;
-var renderDensityOverTime = RenderDensityOverTime({
-  canvasId: 'density-canvas', color: 'hsl(60, 50%, 50%)'
+var renderDensity = RenderTimeSeries({
+  canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
+});
+var renderHarshness = RenderTimeSeries({
+  canvasId: 'harshness-canvas', color: 'hsl(10, 50%, 50%)'
+});
+var renderBoredom = RenderTimeSeries({
+  canvasId: 'boredom-canvas', color: 'hsl(240, 50%, 50%)'
 });
 
 (async function go() {
@@ -54,7 +61,25 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
   var director = Director({ seed, tempoFactor });
   var eventDirectionObjects = preRunDirector({ director, totalTicks });
   console.table('eventDirectionObjects', eventDirectionObjects);
-  renderDensityOverTime({ eventDirectionObjects }); 
+  const totalTime = eventDirectionObjects.reduce(
+    (total, direction) => total + direction.tickLength,
+    0
+  );
+  renderDensity({
+    valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chordSize }) => ({ time: tickLength, value: chordSize })),
+    totalTime,
+    valueMax: tonalityDiamondPitches.length
+  }); 
+  renderHarshness({
+    valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.harshnessBattery })),
+    totalTime,
+    valueMax: 10
+  }); 
+  renderBoredom({
+    valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.boredomBattery })),
+    totalTime,
+    valueMax: 10
+  }); 
 
   ticker = new Ticker({
     onTick,
