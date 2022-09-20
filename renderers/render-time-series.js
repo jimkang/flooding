@@ -10,7 +10,7 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
   return renderTimeSeriesCanvas;
 
   function renderTimeSeriesCanvas({
-    valueOverTimeArray, totalTime, valueMin = 0, valueMax
+    valueOverTimeArray, totalTime, valueMin = 0, valueMax, currentTick
   }) {
     var x = scaleLinear().domain([0, totalTime]).range([0, width]);
     var y = scaleLinear().domain([valueMin, valueMax]).range([0, height]);
@@ -23,10 +23,16 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
       var barX = 0;
       valueOverTimeArray.forEach(drawTimeSpan);
 
-      function drawTimeSpan({ time, value }) {
+      function drawTimeSpan({ time, value }, i) {
         const barWidth = x(time);
         const barHeight = y(value);
+        if (i === currentTick) {
+          canvasCtx.fillStyle = 'hsl(60, 100%, 50%)';
+        }
         canvasCtx.fillRect(barX, height - barHeight, barWidth, barHeight);
+        if (i === currentTick) {
+          canvasCtx.fillStyle = color;
+        }
         barX += barWidth;
       }
     }

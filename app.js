@@ -106,17 +106,21 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
     renderDensity({
       valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chordSize }) => ({ time: tickLength, value: chordSize })),
       totalTime,
-      valueMax: tonalityDiamondPitches.length
+      valueMax: tonalityDiamondPitches.length,
+      currentTick: ticks
     }); 
     renderHarshness({
       valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.harshnessBattery })),
       totalTime,
-      valueMax: 10
+      valueMax: 10,
+      currentTick: ticks
+
     }); 
     renderBoredom({
       valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.boredomBattery })),
       totalTime,
-      valueMax: 10
+      valueMax: 10,
+      currentTick: ticks
     }); 
 
     chordPlayer.play(Object.assign({ currentTickLengthSeconds }, chord));
