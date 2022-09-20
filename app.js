@@ -65,21 +65,6 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
     (total, direction) => total + direction.tickLength,
     0
   );
-  renderDensity({
-    valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chordSize }) => ({ time: tickLength, value: chordSize })),
-    totalTime,
-    valueMax: tonalityDiamondPitches.length
-  }); 
-  renderHarshness({
-    valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.harshnessBattery })),
-    totalTime,
-    valueMax: 10
-  }); 
-  renderBoredom({
-    valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.boredomBattery })),
-    totalTime,
-    valueMax: 10
-  }); 
 
   ticker = new Ticker({
     onTick,
@@ -117,6 +102,23 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
       tickLength: currentTickLengthSeconds,
       chordSize: chord.rates.length
     });
+
+    renderDensity({
+      valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chordSize }) => ({ time: tickLength, value: chordSize })),
+      totalTime,
+      valueMax: tonalityDiamondPitches.length
+    }); 
+    renderHarshness({
+      valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.harshnessBattery })),
+      totalTime,
+      valueMax: 10
+    }); 
+    renderBoredom({
+      valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.boredomBattery })),
+      totalTime,
+      valueMax: 10
+    }); 
+
     chordPlayer.play(Object.assign({ currentTickLengthSeconds }, chord));
   }
 

@@ -18,7 +18,6 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
 
     function drawValues() {
       canvasCtx.clearRect(0, 0, width, height);
-      canvasCtx.fillRect(0, 0, width, height);
       canvasCtx.fillStyle = color;
   
       var barX = 0;
