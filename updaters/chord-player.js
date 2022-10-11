@@ -1,5 +1,4 @@
 import { Sampler, Envelope } from '../synths/synth-node';
-import { timeNeededForEnvelopeDecay } from '../consts';
 
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };
@@ -10,31 +9,31 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
       connectLastToDest
       //chain => chain?[chain.length - 1]?.connect({ audioNode: ctx.destination }
     );
+    const baseStartTime = ctx.currentTime;
     // TODO: parameterize start and end times.
     samplerChains.forEach((chain, i) => playSampler(chain[0], delays[i]));
 
     function playSampler(sampler, delay) {
-      // TODO: This should be connected to the tick length.
-      const startTime = ctx.currentTime + delay;
+      const startTime = baseStartTime  + delay;
       const endTime = startTime + currentTickLengthSeconds;
       sampler.play({ startTime, endTime });
     }
-  }
 
-  function rateToSamplerChain(rate, i, rates) {
-    var sampler = new Sampler(
-      ctx,
-      {      
-        sampleBuffer,
-        playbackRate: rate,
-        loop: true,
-        timeNeededForEnvelopeDecay 
-      }
-    );
-    const maxGain = 0.8/Math.pow(rates.length, 3);
-    var envelope = new Envelope(ctx, { envelopeMaxGain: maxGain });
-    sampler.connect({ synthNode: envelope });
-    return [sampler, envelope];
+    function rateToSamplerChain(rate, i, rates) {
+      var sampler = new Sampler(
+        ctx,
+        {      
+          sampleBuffer,
+          playbackRate: rate,
+          loop: true,
+          timeNeededForEnvelopeDecay: currentTickLengthSeconds
+        }
+      );
+      const maxGain = 0.8/Math.pow(rates.length, 3);
+      var envelope = new Envelope(ctx, { envelopeMaxGain: maxGain });
+      sampler.connect({ synthNode: envelope });
+      return [sampler, envelope];
+    }
   }
 
   //function detuneToSamplerChain(detune, i, detunes) {
