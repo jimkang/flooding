@@ -78,6 +78,7 @@ export class Envelope extends SynthNode {
       0,
       endTime
     );
+    this.node.gain.setValueAtTime(0, endTime);
   }
 }
 
