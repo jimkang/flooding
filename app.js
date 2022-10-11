@@ -15,6 +15,7 @@ import { preRunDirector } from './updaters/pre-run-director';
 import { RenderTimeSeries } from './renderers/render-time-series/';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
+import { maxBoredomThreshold } from './consts';
 
 var randomId = RandomId();
 var routeState;
@@ -96,7 +97,8 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
 
   function onTick({ ticks, currentTickLengthSeconds }) {
     console.log(ticks, currentTickLengthSeconds); 
-    var chord = director.getChord({ ticks });
+    //var chord = director.getChord({ ticks });
+    var chord = eventDirectionObjects[ticks].chord;
     renderEventDirection({
       tickIndex: ticks,
       tickLength: currentTickLengthSeconds,
@@ -119,7 +121,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
     renderBoredom({
       valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.boredomBattery })),
       totalTime,
-      valueMax: 10,
+      valueMax: maxBoredomThreshold,
       currentTick: ticks
     }); 
 
