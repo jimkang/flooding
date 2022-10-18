@@ -67,10 +67,12 @@ export class Envelope extends SynthNode {
     this.node = this.ctx.createGain();
   }
   play({ startTime, endTime }) {
-    this.node.gain.value = 0;
+    this.node.gain.value = 0.001;
     const peakTime = this.params.peakTimeProportion * (endTime - startTime);
-    this.node.exponentialRampToValueAtTime(this.params.envelopeMaxGain, peakTime);
-    this.node.setTargetAtTime(0, endTime, 0.5);
+    this.node.gain.exponentialRampToValueAtTime(this.params.envelopeMaxGain, peakTime);
+    // The value to ramp FROM must be positive. So, setting the gain to 0.001 initially
+    // seems necessary?!
+    this.node.gain.exponentialRampToValueAtTime(0.001, endTime);
   }
 }
 
