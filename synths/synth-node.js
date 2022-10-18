@@ -67,18 +67,10 @@ export class Envelope extends SynthNode {
     this.node = this.ctx.createGain();
   }
   play({ startTime, endTime }) {
-    const peakTime = this.params.peakTimeProportion * (endTime - startTime);
     this.node.gain.value = 0;
-    this.node.gain.exponentialRampToValueAtTime(
-      this.params.envelopeMaxGain,
-      peakTime,
-    );
-    // How do I start it at peakTime? AudioParam.setValueCurveAtTime()
-    this.node.gain.exponentialRampToValueAtTime(
-      0,
-      endTime
-    );
-    this.node.gain.setValueAtTime(0, endTime);
+    const peakTime = this.params.peakTimeProportion * (endTime - startTime);
+    this.node.exponentialRampToValueAtTime(this.params.envelopeMaxGain, peakTime);
+    this.node.setTargetAtTime(0, endTime, 0.5);
   }
 }
 
