@@ -11,12 +11,13 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
     );
     const baseStartTime = ctx.currentTime;
     // TODO: parameterize start and end times.
-    samplerChains.forEach((chain, i) => playSampler(chain[0], delays[i]));
+    samplerChains.forEach(playSamplerChain);
 
-    function playSampler(sampler, delay) {
+    function playSamplerChain(synths, i) {
+      const delay = delays[i];
       const startTime = baseStartTime  + delay;
       const endTime = startTime + currentTickLengthSeconds;
-      sampler.play({ startTime, endTime });
+      synths.forEach(synth => synth.play({ startTime, endTime }));
     }
 
     function rateToSamplerChain(rate, i, rates) {
