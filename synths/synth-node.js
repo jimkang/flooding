@@ -1,5 +1,7 @@
 //var SoundbankReverb = require('soundbank-reverb');
 
+var adsrCurve = new Float32Array([0, 0.8, 1, 1, 1, 1, 0.6, 0.3, 0.1, 0]);
+
 export class SynthNode {
   constructor(ctx, params) {
     this.ctx = ctx;
@@ -67,12 +69,8 @@ export class Envelope extends SynthNode {
     this.node = this.ctx.createGain();
   }
   play({ startTime, endTime }) {
-    this.node.gain.value = 0.001;
-    const peakTime = this.params.peakTimeProportion * (endTime - startTime);
-    this.node.gain.exponentialRampToValueAtTime(this.params.envelopeMaxGain, peakTime);
-    // The value to ramp FROM must be positive. So, setting the gain to 0.001 initially
-    // seems necessary?!
-    this.node.gain.exponentialRampToValueAtTime(0.001, endTime);
+    this.node.gain.value = 0;
+    this.node.gain.setValueCurveAtTime(adsrCurve, startTime, endTime - startTime);
   }
 }
 
@@ -118,6 +116,8 @@ export class Sampler extends SynthNode {
     }
     if (params.loop) {
       this.node.loop = params.loop;
+      this.node.loopStart = params.loopStart;
+      this.node.loopEnd = params.loopEnd;
     }
   }
   play({ startTime, endTime }) {

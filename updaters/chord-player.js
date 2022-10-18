@@ -26,7 +26,9 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
         {      
           sampleBuffer,
           playbackRate: rate,
-          loop: false,
+          loop: true,
+          loopStart: 0.1,
+          loopEnd: 2.5,
           timeNeededForEnvelopeDecay: currentTickLengthSeconds
         }
       );
