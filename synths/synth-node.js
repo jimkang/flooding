@@ -1,6 +1,21 @@
 //var SoundbankReverb = require('soundbank-reverb');
 
-var adsrCurve = new Float32Array([0, 0.8, 1, 1, 1, 1, 0.6, 0.3, 0.1, 0]);
+var adsrCurve = new Float32Array([
+  0,
+  0.5,
+  1,
+  1,
+  1,
+  1,
+  0.95,
+  0.9,
+  0.8,
+  0.72,
+  0.6,
+  0.3,
+  0.1,
+  0
+]);
 
 export class SynthNode {
   constructor(ctx, params) {
@@ -70,7 +85,11 @@ export class Envelope extends SynthNode {
   }
   play({ startTime, endTime }) {
     this.node.gain.value = 0;
-    this.node.gain.setValueCurveAtTime(adsrCurve, startTime, endTime - startTime);
+    var envelopeLength = endTime - startTime;
+    if (this.params.envelopeLengthProportionToEvent) {
+      envelopeLength *= this.params.envelopeLengthProportionToEvent;
+    }
+    this.node.gain.setValueCurveAtTime(adsrCurve, startTime, envelopeLength);
   }
 }
 
