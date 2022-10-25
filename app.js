@@ -70,7 +70,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
   ticker = new Ticker({
     onTick,
     startTicks: 0,
-    getTickLength: director.getTickLength,
+    getTickLength,
     totalTicks
   }); 
 
@@ -98,11 +98,15 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
   function onTick({ ticks, currentTickLengthSeconds }) {
     console.log(ticks, currentTickLengthSeconds); 
     //var chord = director.getChord({ ticks });
-    var chord = eventDirectionObjects[ticks].chord;
+    var eventDirection = eventDirectionObjects[ticks];
+    var tickLength = currentTickLengthSeconds;
+    if (!isNaN(eventDirection.tickLength)) {
+      tickLength = eventDirection.tickLength;
+    }
     renderEventDirection({
       tickIndex: ticks,
-      tickLength: currentTickLengthSeconds,
-      chordSize: chord.rates.length
+      tickLength,
+      chordSize: eventDirection.chord.rates.length
     });
 
     renderDensity({
@@ -111,21 +115,20 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
       valueMax: tonalityDiamondPitches.length,
       currentTick: ticks
     }); 
-    renderHarshness({
-      valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.harshnessBattery })),
-      totalTime,
-      valueMax: 10,
-      currentTick: ticks
 
-    }); 
-    renderBoredom({
-      valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chord }) => ({ time: tickLength, value: chord.meta.boredomBattery })),
-      totalTime,
-      valueMax: maxBoredomThreshold,
-      currentTick: ticks
-    }); 
+    chordPlayer.play(
+      Object.assign({ tickLengthSeconds: tickLength }, eventDirection.chord)
+    );
+  }
 
-    chordPlayer.play(Object.assign({ currentTickLengthSeconds }, chord));
+  function getTickLength(ticks) {
+    if (ticks < eventDirectionObjects.length) {
+      var tickLength = eventDirectionObjects[ticks].tickLength;
+      if (!isNaN(tickLength)) {
+        return tickLength;
+      }
+    }
+    return director.getTickLength(ticks);
   }
 
   function onPieceLengthChange(length) {

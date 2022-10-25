@@ -3,7 +3,7 @@ import { Sampler, Envelope } from '../synths/synth-node';
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };
 
-  function play({ rates, delays, currentTickLengthSeconds }) {
+  function play({ rates, delays, tickLengthSeconds }) {
     var samplerChains = rates.map(rateToSamplerChain);
     samplerChains.forEach(
       connectLastToDest
@@ -15,8 +15,8 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
 
     function playSamplerChain(synths, i) {
       const delay = delays[i];
-      const startTime = baseStartTime  + delay;
-      const endTime = startTime + currentTickLengthSeconds;
+      const startTime = baseStartTime + delay;
+      const endTime = startTime + tickLengthSeconds;
       synths.forEach(synth => synth.play({ startTime, endTime }));
     }
 
@@ -29,7 +29,7 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
           loop: true,
           loopStart: 0.1,
           loopEnd: 2.5,
-          timeNeededForEnvelopeDecay: currentTickLengthSeconds
+          timeNeededForEnvelopeDecay: tickLengthSeconds
         }
       );
       const maxGain = 0.8/Math.pow(rates.length, 3);

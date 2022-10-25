@@ -54,14 +54,14 @@ export function Director({ seed, tempoFactor = 1 }) {
     };
   }
 
-  // TODO: An envelope needs to enforce the really short tick lengths.
   function getTickLength() {
     var tickLength = 1;
     if (pastPitchCounts.length > 0) {
       const pastPitchCount = pastPitchCounts[pastPitchCounts.length - 1];
-      tickLength = (pastPitchCount > 0 ? pastPitchCount : 1) /
-          tonalityDiamondPitches.length * 
-          (0.8 + 0.4 * prob.roll(100)/100);
+      const tickLengthNumerator = (pastPitchCount > 0 ? pastPitchCount : 1);
+      const proportionOfDiamondUsed = tickLengthNumerator/tonalityDiamondPitches.length;
+      tickLength = proportionOfDiamondUsed;
+      //(0.8 + 0.4 * prob.roll(100)/100);
     }
     tickLength *= tempoFactor;
     return tickLength;
