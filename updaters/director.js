@@ -60,7 +60,7 @@ export function Director({ seed, tempoFactor = 1 }) {
       const pastPitchCount = pastPitchCounts[pastPitchCounts.length - 1];
       const tickLengthNumerator = (pastPitchCount > 0 ? pastPitchCount : 1);
       const proportionOfDiamondUsed = tickLengthNumerator/tonalityDiamondPitches.length;
-      tickLength = proportionOfDiamondUsed;
+      tickLength = 1.0/proportionOfDiamondUsed / tonalityDiamondPitches.length;
       //(0.8 + 0.4 * prob.roll(100)/100);
     }
     tickLength *= tempoFactor;
