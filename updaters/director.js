@@ -3,6 +3,8 @@ import seedrandom from 'seedrandom';
 import { tonalityDiamondPitches } from '../tonality-diamond';
 import { range } from 'd3-array';
 
+const maxPitchCount = tonalityDiamondPitches.length;
+
 export function Director({ seed, tempoFactor = 1 }) {
   var harshnessDischargeThreshold = 4;
   var harshnessBattery = 0;
@@ -58,9 +60,8 @@ export function Director({ seed, tempoFactor = 1 }) {
     var tickLength = 1;
     if (pastPitchCounts.length > 0) {
       const pastPitchCount = pastPitchCounts[pastPitchCounts.length - 1];
-      const tickLengthNumerator = (pastPitchCount > 0 ? pastPitchCount : 1);
-      const proportionOfDiamondUsed = tickLengthNumerator/tonalityDiamondPitches.length;
-      tickLength = 1.0/proportionOfDiamondUsed / tonalityDiamondPitches.length;
+      const propOfDiamondUnused = (maxPitchCount - pastPitchCount)/maxPitchCount;
+      tickLength = tickLength * Math.pow(propOfDiamondUnused, 3);
       //(0.8 + 0.4 * prob.roll(100)/100);
     }
     tickLength *= tempoFactor;
