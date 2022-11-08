@@ -9,13 +9,14 @@ import { Ticker } from './updaters/ticker';
 import { SampleDownloader } from './tasks/sample-downloader';
 import RandomId from '@jimkang/randomid';
 import { ChordPlayer } from './updaters/chord-player';
-import { Director } from './updaters/director';
+//import { Director } from './updaters/director';
+import { DataDirector } from './updaters/data-director';
 import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
 import { preRunDirector } from './updaters/pre-run-director';
 import { RenderTimeSeries } from './renderers/render-time-series/';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
-import { maxBoredomThreshold } from './consts';
+import biscayneTides from './data/biscayne-tides.json';
 
 var randomId = RandomId();
 var routeState;
@@ -25,12 +26,6 @@ var sampleDownloader;
 var chordPlayer;
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
-});
-var renderHarshness = RenderTimeSeries({
-  canvasId: 'harshness-canvas', color: 'hsl(10, 50%, 50%)'
-});
-var renderBoredom = RenderTimeSeries({
-  canvasId: 'boredom-canvas', color: 'hsl(240, 50%, 50%)'
 });
 
 (async function go() {
@@ -59,7 +54,15 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
   }
 
   var ctx = values[0];
-  var director = Director({ seed, tempoFactor });
+  
+  //var director = Director({ seed, tempoFactor });
+  var director = DataDirector({
+    tempoFactor,
+    data: biscayneTides.data,
+    chordProp: 'v',
+    chordXFloor: 0.95,
+    chordXCeil: 4.0
+  });
   var eventDirectionObjects = preRunDirector({ director, totalTicks });
   console.table('eventDirectionObjects', eventDirectionObjects);
   const totalTime = eventDirectionObjects.reduce(
@@ -75,7 +78,7 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
   }); 
 
   sampleDownloader = SampleDownloader({
-    sampleFiles: ['bagpipe-c.wav', 'flute-G4-edit.wav', 'trumpet-D2.wav'],
+    sampleFiles: ['bagpipe-c.wav', 'flute-G4-edit.wav', 'trumpet-D2.wav', 'Vibraphone.sustain.ff.D4.wav'],
     localMode: true,
     onComplete,
     handleError

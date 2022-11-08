@@ -21,3 +21,6 @@ sync:
 
 set-up-server-dir:
 	ssh $(USER)@$(SERVER) "mkdir -p $(APPDIR)"
+
+get-biscayne-tides:
+	wget "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=water_level&application=NOS.COOPS.TAC.WL&begin_date=20221007&end_date=20221107&datum=MLLW&station=8723214&time_zone=GMT&units=english&format=json" -O data/biscayne-tides.json
