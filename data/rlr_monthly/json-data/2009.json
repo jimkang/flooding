@@ -1,0 +1,476 @@
+[
+  {
+    "date": "2003-06-01T04:00:00.000Z",
+    "year": "2003",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 7037
+  },
+  {
+    "date": "2003-07-01T04:00:00.000Z",
+    "year": "  2003",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7152
+  },
+  {
+    "date": "2003-08-01T04:00:00.000Z",
+    "year": "  2003",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7130
+  },
+  {
+    "date": "2003-09-01T04:00:00.000Z",
+    "year": "  2003",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7069
+  },
+  {
+    "date": "2003-10-01T04:00:00.000Z",
+    "year": "  2003",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 7053
+  },
+  {
+    "date": "2003-11-01T05:00:00.000Z",
+    "year": "  2003",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 6988
+  },
+  {
+    "date": "2003-12-01T05:00:00.000Z",
+    "year": "  2003",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 6964
+  },
+  {
+    "date": "2004-01-01T05:00:00.000Z",
+    "year": "  2004",
+    "month": 0.5004,
+    "meanSeaLevelDeltaMM": 7067
+  },
+  {
+    "date": "2004-02-01T05:00:00.000Z",
+    "year": "  2004",
+    "month": 1.5,
+    "meanSeaLevelDeltaMM": 6936
+  },
+  {
+    "date": "2004-03-01T05:00:00.000Z",
+    "year": "  2004",
+    "month": 2.4996,
+    "meanSeaLevelDeltaMM": 6858
+  },
+  {
+    "date": "2004-04-01T05:00:00.000Z",
+    "year": "  2004",
+    "month": 3.5004,
+    "meanSeaLevelDeltaMM": 6905
+  },
+  {
+    "date": "2004-05-01T04:00:00.000Z",
+    "year": "  2004",
+    "month": 4.5,
+    "meanSeaLevelDeltaMM": 7014
+  },
+  {
+    "date": "2004-06-01T04:00:00.000Z",
+    "year": "  2004",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 6995
+  },
+  {
+    "date": "2004-07-01T04:00:00.000Z",
+    "year": "  2004",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7082
+  },
+  {
+    "date": "2004-08-01T04:00:00.000Z",
+    "year": "  2004",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7150
+  },
+  {
+    "date": "2004-09-01T04:00:00.000Z",
+    "year": "  2004",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7071
+  },
+  {
+    "date": "2004-10-01T04:00:00.000Z",
+    "year": "  2004",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 7042
+  },
+  {
+    "date": "2004-11-01T05:00:00.000Z",
+    "year": "  2004",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 6994
+  },
+  {
+    "date": "2004-12-01T05:00:00.000Z",
+    "year": "  2004",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 6879
+  },
+  {
+    "date": "2005-01-01T05:00:00.000Z",
+    "year": "  2005",
+    "month": 0.5004,
+    "meanSeaLevelDeltaMM": 6904
+  },
+  {
+    "date": "2005-02-01T05:00:00.000Z",
+    "year": "  2005",
+    "month": 1.5,
+    "meanSeaLevelDeltaMM": 6892
+  },
+  {
+    "date": "2005-03-01T05:00:00.000Z",
+    "year": "  2005",
+    "month": 2.4996,
+    "meanSeaLevelDeltaMM": 6911
+  },
+  {
+    "date": "2005-04-01T05:00:00.000Z",
+    "year": "  2005",
+    "month": 3.5004,
+    "meanSeaLevelDeltaMM": 6906
+  },
+  {
+    "date": "2005-05-01T04:00:00.000Z",
+    "year": "  2005",
+    "month": 4.5,
+    "meanSeaLevelDeltaMM": 6945
+  },
+  {
+    "date": "2005-06-01T04:00:00.000Z",
+    "year": "  2005",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 7021
+  },
+  {
+    "date": "2005-07-01T04:00:00.000Z",
+    "year": "  2005",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7105
+  },
+  {
+    "date": "2005-08-01T04:00:00.000Z",
+    "year": "  2005",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7144
+  },
+  {
+    "date": "2005-09-01T04:00:00.000Z",
+    "year": "  2005",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7073
+  },
+  {
+    "date": "2005-10-01T04:00:00.000Z",
+    "year": "  2005",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 6970
+  },
+  {
+    "date": "2005-11-01T05:00:00.000Z",
+    "year": "  2005",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 6903
+  },
+  {
+    "date": "2005-12-01T05:00:00.000Z",
+    "year": "  2005",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 6943
+  },
+  {
+    "date": "2006-01-01T05:00:00.000Z",
+    "year": "  2006",
+    "month": 0.5004,
+    "meanSeaLevelDeltaMM": 6857
+  },
+  {
+    "date": "2006-02-01T05:00:00.000Z",
+    "year": "  2006",
+    "month": 1.5,
+    "meanSeaLevelDeltaMM": 6888
+  },
+  {
+    "date": "2006-03-01T05:00:00.000Z",
+    "year": "  2006",
+    "month": 2.4996,
+    "meanSeaLevelDeltaMM": 6960
+  },
+  {
+    "date": "2006-04-01T05:00:00.000Z",
+    "year": "  2006",
+    "month": 3.5004,
+    "meanSeaLevelDeltaMM": 6938
+  },
+  {
+    "date": "2006-05-01T04:00:00.000Z",
+    "year": "  2006",
+    "month": 4.5,
+    "meanSeaLevelDeltaMM": 0
+  },
+  {
+    "date": "2006-06-01T04:00:00.000Z",
+    "year": "  2006",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 6966
+  },
+  {
+    "date": "2006-07-01T04:00:00.000Z",
+    "year": "  2006",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7087
+  },
+  {
+    "date": "2006-08-01T04:00:00.000Z",
+    "year": "  2006",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7134
+  },
+  {
+    "date": "2006-09-01T04:00:00.000Z",
+    "year": "  2006",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7074
+  },
+  {
+    "date": "2006-10-01T04:00:00.000Z",
+    "year": "  2006",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 7069
+  },
+  {
+    "date": "2006-11-01T05:00:00.000Z",
+    "year": "  2006",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 6997
+  },
+  {
+    "date": "2006-12-01T05:00:00.000Z",
+    "year": "  2006",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 6781
+  },
+  {
+    "date": "2007-01-01T05:00:00.000Z",
+    "year": "  2007",
+    "month": 0.5004,
+    "meanSeaLevelDeltaMM": 6793
+  },
+  {
+    "date": "2007-02-01T05:00:00.000Z",
+    "year": "  2007",
+    "month": 1.5,
+    "meanSeaLevelDeltaMM": 6889
+  },
+  {
+    "date": "2007-03-01T05:00:00.000Z",
+    "year": "  2007",
+    "month": 2.4996,
+    "meanSeaLevelDeltaMM": 6860
+  },
+  {
+    "date": "2007-04-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 3.5004,
+    "meanSeaLevelDeltaMM": 6830
+  },
+  {
+    "date": "2007-05-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 4.5,
+    "meanSeaLevelDeltaMM": 6896
+  },
+  {
+    "date": "2007-06-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 7039
+  },
+  {
+    "date": "2007-07-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7081
+  },
+  {
+    "date": "2007-08-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7131
+  },
+  {
+    "date": "2007-09-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7048
+  },
+  {
+    "date": "2007-10-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 6995
+  },
+  {
+    "date": "2007-11-01T04:00:00.000Z",
+    "year": "  2007",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 6995
+  },
+  {
+    "date": "2007-12-01T05:00:00.000Z",
+    "year": "  2007",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 6951
+  },
+  {
+    "date": "2008-01-01T05:00:00.000Z",
+    "year": "  2008",
+    "month": 0.5004,
+    "meanSeaLevelDeltaMM": 6850
+  },
+  {
+    "date": "2008-02-01T05:00:00.000Z",
+    "year": "  2008",
+    "month": 1.5,
+    "meanSeaLevelDeltaMM": 6754
+  },
+  {
+    "date": "2008-03-01T05:00:00.000Z",
+    "year": "  2008",
+    "month": 2.4996,
+    "meanSeaLevelDeltaMM": 6881
+  },
+  {
+    "date": "2008-04-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 3.5004,
+    "meanSeaLevelDeltaMM": 6963
+  },
+  {
+    "date": "2008-05-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 4.5,
+    "meanSeaLevelDeltaMM": 0
+  },
+  {
+    "date": "2008-06-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 6999
+  },
+  {
+    "date": "2008-07-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7092
+  },
+  {
+    "date": "2008-08-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7120
+  },
+  {
+    "date": "2008-09-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7075
+  },
+  {
+    "date": "2008-10-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 6980
+  },
+  {
+    "date": "2008-11-01T04:00:00.000Z",
+    "year": "  2008",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 6977
+  },
+  {
+    "date": "2008-12-01T05:00:00.000Z",
+    "year": "  2008",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 6965
+  },
+  {
+    "date": "2009-01-01T05:00:00.000Z",
+    "year": "  2009",
+    "month": 0.5004,
+    "meanSeaLevelDeltaMM": 6836
+  },
+  {
+    "date": "2009-02-01T05:00:00.000Z",
+    "year": "  2009",
+    "month": 1.5,
+    "meanSeaLevelDeltaMM": 7008
+  },
+  {
+    "date": "2009-03-01T05:00:00.000Z",
+    "year": "  2009",
+    "month": 2.4996,
+    "meanSeaLevelDeltaMM": 6928
+  },
+  {
+    "date": "2009-04-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 3.5004,
+    "meanSeaLevelDeltaMM": 6912
+  },
+  {
+    "date": "2009-05-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 4.5,
+    "meanSeaLevelDeltaMM": 6931
+  },
+  {
+    "date": "2009-06-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 7041
+  },
+  {
+    "date": "2009-07-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7133
+  },
+  {
+    "date": "2009-08-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7102
+  },
+  {
+    "date": "2009-09-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7083
+  },
+  {
+    "date": "2009-10-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 7029
+  },
+  {
+    "date": "2009-11-01T04:00:00.000Z",
+    "year": "  2009",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 7060
+  },
+  {
+    "date": "2009-12-01T05:00:00.000Z",
+    "year": "  2009",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 7132
+  }
+]

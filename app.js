@@ -16,7 +16,8 @@ import { preRunDirector } from './updaters/pre-run-director';
 import { RenderTimeSeries } from './renderers/render-time-series/';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
-import biscayneTides from './data/biscayne-tides.json';
+//import biscayneTides from './data/biscayne-tides.json';
+import tofinoMSL from './data/rlr_monthly/json-data/165.json';
 
 var randomId = RandomId();
 var routeState;
@@ -58,10 +59,10 @@ async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor =
   //var director = Director({ seed, tempoFactor });
   var director = DataDirector({
     tempoFactor,
-    data: biscayneTides.data,
-    chordProp: 'v',
-    chordXFloor: 0.95,
-    chordXCeil: 4.0
+    data: tofinoMSL,
+    chordProp: 'meanSeaLevelDeltaMM',
+    chordXFloor: 6824,
+    chordXCeil: 7624
   });
   var eventDirectionObjects = preRunDirector({ director, totalTicks });
   console.table('eventDirectionObjects', eventDirectionObjects);
