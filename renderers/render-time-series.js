@@ -25,9 +25,13 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
       .attr('transform', getBarTransform);
 
     function getBarTransform(ed, i) {
-      const left = i * x(ed.time);
+      const left = x(getTotalTimeUpToIndex(i));
       const top = height - y(ed.value);
       return `translate(${left}, ${top})`;
+    }
+
+    function getTotalTimeUpToIndex(i) {
+      return valueOverTimeArray.slice(0, i).reduce((total, ed) => ed.time + total, 0);
     }
   }
 }
