@@ -11,7 +11,7 @@ import RandomId from '@jimkang/randomid';
 import { ChordPlayer } from './updaters/chord-player';
 //import { Director } from './updaters/director';
 import { DataDirector } from './updaters/data-director';
-import { defaultTotalTicks, defaultSecondsPerTick } from './consts';
+import { defaultSecondsPerTick } from './consts';
 import { preRunDirector } from './updaters/pre-run-director';
 import { RenderTimeSeries } from './renderers/render-time-series/';
 import { renderEventDirection } from './renderers/render-event-direction';
@@ -41,9 +41,13 @@ var renderDensity = RenderTimeSeries({
 })();
 
 // TODO: Add "Too uncomfortable"/"too comfortable" controls.
-async function followRoute({ seed, totalTicks = defaultTotalTicks, tempoFactor = defaultSecondsPerTick }) {
+async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
+    return;
+  }
+  if (!totalTicks) {
+    routeState.addToRoute({ totalTicks: bostonMSL.length});
     return;
   }
 
