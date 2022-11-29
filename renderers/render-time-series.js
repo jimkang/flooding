@@ -17,7 +17,7 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
 
     var bars = root.selectAll('.event-bar').data(valueOverTimeArray);
     bars.exit().remove();
-    var newBars = bars.enter().append('rect');
+    var newBars = bars.enter().append('rect').classed('event-bar', true);
     var currentBars = bars.merge(newBars);
     currentBars
       .attr('width', ed => x(ed.time))
