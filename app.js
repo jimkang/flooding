@@ -40,7 +40,6 @@ var renderDensity = RenderTimeSeries({
   routeState.routeFromHash();
 })();
 
-// TODO: Add "Too uncomfortable"/"too comfortable" controls.
 async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
