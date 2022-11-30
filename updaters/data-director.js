@@ -19,6 +19,14 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
 
   function getChord() {
     var chordPitchCount = chordScale(+data[index][chordProp]);
+    if (chordPitchCount < 1) {
+      console.log('Bad data point', index, chordProp, +data[index][chordProp]);
+      if (index > 0) {
+        chordPitchCount = pastPitchCounts[index - 1];
+      } else {
+        chordPitchCount = 1;
+      }
+    }
     pastPitchCounts.push(chordPitchCount);
     var delays = range(chordPitchCount).map(() => 
       0
