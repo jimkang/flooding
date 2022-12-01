@@ -4,7 +4,7 @@ import { range } from 'd3-array';
 import { scalePow } from 'd3-scale';
 
 const maxPitchCount = tonalityDiamondPitches.length;
-const beginningLengthAsAProportion = 0.05;
+const beginningLengthAsAProportion = 0.025;
 
 export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, chordXCeil }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
@@ -55,14 +55,15 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
     // Start slow, then get faster.
     const progress = pastPitchCount/data.length;
     var progressFactor;
-    //if (progress < 0.515) {
+    //if (progress > 0.05) {
     //progressFactor = 10 * Math.log10(4 * progress + 2.7) + 3;
-    progressFactor = 10 * Math.exp(2 * -progress) - 0.5;
+    progressFactor = 5 * Math.pow(Math.exp(-4 * progress), 2) - 0;
     //} else {
-    //progressFactor = 0.5 * Math.cos(2 * Math.PI - Math.PI) + 1;
+    ////progressFactor = 0.5 * Math.cos(2 * Math.PI - Math.PI) + 1;
+    //progressFactor = 1;
     //}
     if (progress < beginningLengthAsAProportion) {
-      const factorBoost = (1 - progress/beginningLengthAsAProportion) * 30;
+      const factorBoost = (1 - progress/beginningLengthAsAProportion) * 10;
       progressFactor += factorBoost;
     }
 
