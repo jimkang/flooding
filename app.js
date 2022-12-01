@@ -28,6 +28,9 @@ var chordPlayer;
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
 });
+var renderTickLengths = RenderTimeSeries({
+  canvasId: 'ticklength-canvas', color: 'hsl(50, 50%, 50%)'
+});
 
 (async function go() {
   window.onerror = reportTopLevelError;
@@ -126,6 +129,16 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
       valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chordSize }) => ({ time: tickLength, value: chordSize })),
       totalTime,
       valueMax: tonalityDiamondPitches.length,
+      currentTick: ticks
+    }); 
+
+    renderTickLengths({
+      valueOverTimeArray: eventDirectionObjects.map(({ tickLength }) => ({ time: 1, value: tickLength })),
+      totalTime: eventDirectionObjects.length,
+      valueMax: eventDirectionObjects.reduce(
+        (max, direction) => direction.tickLength > max ? direction.tickLength : max,
+        0
+      ),
       currentTick: ticks
     }); 
 
