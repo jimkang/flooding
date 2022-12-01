@@ -2,12 +2,14 @@ import { tonalityDiamondPitches } from '../tonality-diamond';
 import { range } from 'd3-array';
 //import { scaleLinear } from 'd3-scale';
 import { scalePow } from 'd3-scale';
+import { createProbable as Probable } from 'probable';
+import seedrandom from 'seedrandom';
 
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.125;
 
-export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, chordXCeil }) {
+export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, chordXCeil, seed }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   var chordScale = 
     scalePow().exponent(25)
@@ -15,11 +17,13 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
       .domain([chordXFloor, chordXCeil]).range([1, maxPitchCount]);
   var index = 0;
   var pastPitchCounts = [];
+  var random = seedrandom(seed);
+  var prob = Probable({ random });
 
   return { getChord, getTickLength };
 
   function getChord() {
-    var chordPitchCount = chordScale(+data[index][chordProp]);
+    var chordPitchCount = Math.round(chordScale(+data[index][chordProp]));
     if (chordPitchCount < 1) {
       console.log('Bad data point', index, chordProp, +data[index][chordProp]);
       if (index > 0) {
@@ -31,13 +35,23 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
     pastPitchCounts.push(chordPitchCount);
     var delays = range(chordPitchCount).map(() => 
       0
-    ); 
+    );
+   
+    var pans = [0];
+    if (chordPitchCount > 1) {
+      const maxWidth = chordPitchCount/maxPitchCount * 0.7 + 0.3;
+      const leftmost = -maxWidth;
+      const panIncrement = 2 * maxWidth/(chordPitchCount - 1);
+      pans = range(chordPitchCount).map(i => leftmost + i * panIncrement);
+    }
+    //pans = prob.shuffle(pans);
 
     index += 1;
 
     return { 
       rates: tonalityDiamondPitches.slice(0, chordPitchCount), 
-      delays, 
+      delays,
+      pans,
       meta: {
         chordPitchCount
       }

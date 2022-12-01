@@ -68,7 +68,8 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     data: bostonMSL,
     chordProp: 'meanSeaLevelDeltaMM',
     chordXFloor: 6809,
-    chordXCeil: 7387
+    chordXCeil: 7387,
+    seed
   });
   var eventDirectionObjects = preRunDirector({ director, totalTicks });
   console.table('eventDirectionObjects', eventDirectionObjects);

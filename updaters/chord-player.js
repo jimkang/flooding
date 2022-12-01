@@ -3,7 +3,7 @@ import { Sampler, Envelope } from '../synths/synth-node';
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };
 
-  function play({ rates, delays, tickLengthSeconds }) {
+  function play({ rates, delays, tickLengthSeconds, pans }) {
     var samplerChains = rates.map(rateToSamplerChain);
     samplerChains.forEach(
       connectLastToDest
