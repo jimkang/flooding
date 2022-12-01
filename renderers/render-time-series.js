@@ -10,23 +10,29 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
   const height = +canvas.attr('height');
   var root = canvas.select('.root');
   wireZoom({ x: 0, y: 0, k: 1.0 });
+  var graphInfoBox = select('.graph-info');
 
   return renderTimeSeriesCanvas;
 
   function renderTimeSeriesCanvas({
-    valueOverTimeArray, totalTime, valueMin = 0, valueMax//, currentTick
+    valueOverTimeArray, totalTime, valueMin = 0, valueMax, currentTick
   }) {
     var x = scaleLinear().domain([0, totalTime]).range([0, width]);
     var y = scaleLinear().domain([valueMin, valueMax]).range([0, height]);
 
     var bars = root.selectAll('.event-bar').data(valueOverTimeArray);
     bars.exit().remove();
-    var newBars = bars.enter().append('rect').classed('event-bar', true);
+
+    var newBars = bars.enter().append('rect')
+      .classed('event-bar', true);
+
     var currentBars = bars.merge(newBars);
     currentBars
       .attr('width', ed => x(ed.time))
       .attr('height', ed => y(ed.value))
-      .attr('transform', getBarTransform);
+      .attr('transform', getBarTransform)
+      .attr('fill', (ed, i) => i === currentTick ? 'white' : color)
+      .on('click', renderEventInfo);
 
     function getBarTransform(ed, i) {
       const left = x(getTotalTimeUpToIndex(i));
@@ -49,6 +55,12 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
     function zoomed(zoomEvent) {
       root.attr('transform', zoomEvent.transform);
     }
+  }
+
+  function renderEventInfo(e, { time, value}) {
+    graphInfoBox.select('*').remove();
+    graphInfoBox.append('div').text('Tick length: ' + time);
+    graphInfoBox.append('div').text('Chord pitch count: ' + value);
   }
 }
 
