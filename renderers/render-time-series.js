@@ -59,7 +59,7 @@ export function RenderTimeSeries({ canvasId, color = 'green' }) {
 
   function renderEventInfo(e, { time, value}) {
     graphInfoBox.style('background-color', color);
-    graphInfoBox.select('*').remove();
+    graphInfoBox.selectAll('*').remove();
     graphInfoBox.append('div').text('Time: ' + time);
     graphInfoBox.append('div').text('Value: ' + value);
   }
