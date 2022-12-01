@@ -5,6 +5,7 @@ import { scalePow } from 'd3-scale';
 
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
+const minTickLength = 0.125;
 
 export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, chordXCeil }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
@@ -68,6 +69,11 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
     }
 
     tickLength *= progressFactor;
+    if (tickLength < minTickLength) {
+      //console.log('flooring', pastPitchCounts.length);
+      tickLength = minTickLength;
+    }
+
     return tickLength;
   }
 }

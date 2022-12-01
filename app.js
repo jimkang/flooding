@@ -75,7 +75,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   );
   console.log('totalTime in minutes', totalTime/60);
   console.log('Starting tick lengths', eventDirectionObjects.slice(0, 8).map(d => d.tickLength));
-  var firstBadEventDirection = eventDirectionObjects.find(ed => !ed.chord.delays);
+  var firstBadEventDirection = eventDirectionObjects.find(ed => !ed.chord.delays || ed.tickLength <= 0);
   if (firstBadEventDirection) {
     throw new Error(`Event direction is bad: ${JSON.stringify(firstBadEventDirection, null, 2)}`);
   }
