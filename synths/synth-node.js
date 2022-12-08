@@ -145,3 +145,12 @@ export class Sampler extends SynthNode {
   }
 }
 
+export class Panner extends SynthNode {
+  constructor(ctx, params) {
+    super(ctx, params);
+    this.node = new StereoPannerNode(this.ctx, { pan: params.pan });
+  }
+  play() {}
+}
+
+

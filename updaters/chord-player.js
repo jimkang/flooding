@@ -1,4 +1,4 @@
-import { Sampler, Envelope } from '../synths/synth-node';
+import { Sampler, Envelope, Panner } from '../synths/synth-node';
 
 export function ChordPlayer({ ctx, sampleBuffer }) {
   return { play };
@@ -37,8 +37,11 @@ export function ChordPlayer({ ctx, sampleBuffer }) {
         ctx,
         { envelopeMaxGain: maxGain, envelopeLengthProportionToEvent: 1.2 }
       );
+      var panner = new Panner(ctx, { pan: pans[i] });
+
       sampler.connect({ synthNode: envelope });
-      return [sampler, envelope];
+      envelope.connect({ synthNode: panner });
+      return [sampler, envelope, panner];
     }
   }
 

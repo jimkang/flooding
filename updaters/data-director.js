@@ -43,6 +43,8 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
       const leftmost = -maxWidth;
       const panIncrement = 2 * maxWidth/(chordPitchCount - 1);
       pans = range(chordPitchCount).map(i => leftmost + i * panIncrement);
+      // Uncomment to check to see if panning is working.
+      //pans = range(chordPitchCount).map(i => (leftmost + i * panIncrement) > 0 ? 1 : -1);
     }
     //pans = prob.shuffle(pans);
 
