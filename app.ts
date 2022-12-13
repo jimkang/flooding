@@ -13,7 +13,7 @@ import { ChordPlayer } from './updaters/chord-player';
 import { DataDirector } from './updaters/data-director';
 import { defaultSecondsPerTick } from './consts';
 import { preRunDirector } from './updaters/pre-run-director';
-import { RenderTimeSeries } from './renderers/render-time-series/';
+import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
 //import biscayneTides from './data/biscayne-tides.json';
@@ -84,7 +84,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     throw new Error(`Event direction is bad: ${JSON.stringify(firstBadEventDirection, null, 2)}`);
   }
 
-  ticker = new Ticker({
+  ticker = Ticker({
     onTick,
     startTicks: 0,
     getTickLength,
