@@ -13,8 +13,7 @@ module.exports = {
     'no-console': 'off'
   },
   parserOptions: {
-    sourceType: 'module',
-    ecmaVersion: 2020
+    sourceType: 'module'
   },
   overrides: [
     {
