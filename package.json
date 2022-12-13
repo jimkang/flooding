@@ -54,6 +54,7 @@
     "d3-selection": "^3.0.0",
     "d3-transition": "^1.3.2",
     "d3-zoom": "^3.0.0",
+    "data-joiner": "^1.0.0",
     "errorback-promise": "^1.0.0",
     "get-at-path": "^1.0.1",
     "handle-error-web": "^1.0.1",
