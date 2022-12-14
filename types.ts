@@ -20,4 +20,5 @@ export interface EventMetadata {
 export interface PlayEvent {
   scoreEvent: ScoreEvent;
   nodes: SynthNode[];
+  started: boolean;
 }

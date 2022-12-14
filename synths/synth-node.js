@@ -16,6 +16,7 @@ var adsrCurve = new Float32Array([
   0.1,
   0
 ]);
+var asCurve = adsrCurve.slice(0, 3);
 
 export class SynthNode {
   constructor(ctx, params) {
@@ -26,6 +27,7 @@ export class SynthNode {
   node() {
     return this.node;
   }
+  syncToParams() {}
   connect({ synthNode, audioNode }) {
     if (audioNode) {
       this.node.connect(audioNode);
@@ -75,6 +77,9 @@ export class Gain extends SynthNode {
     this.node = this.ctx.createGain();
     this.node.gain.value = this.params.gain;
   }
+  fadeOut(fadeSeconds) {
+    this.node.gain.linearRampToValueAtTime(0, fadeSeconds);
+  }
   play() {}
 }
 
@@ -83,13 +88,18 @@ export class Envelope extends SynthNode {
     super(ctx, params);
     this.node = this.ctx.createGain();
   }
-  play({ startTime, endTime }) {
+  play({ startTime }) {
     this.node.gain.value = 0;
-    var envelopeLength = endTime - startTime;
+    // TODO: Base this on the tick.
+    var envelopeLength = 0.25;
     if (this.params.envelopeLengthProportionToEvent) {
       envelopeLength *= this.params.envelopeLengthProportionToEvent;
     }
-    this.node.gain.setValueCurveAtTime(adsrCurve, startTime, envelopeLength);
+    //this.node.gain.setValueCurveAtTime(adsrCurve, startTime, envelopeLength);
+    this.node.gain.setValueCurveAtTime(asCurve, startTime, envelopeLength);
+  }
+  fadeOut(fadeSeconds) {
+    this.node.gain.linearRampToValueAtTime(0, fadeSeconds);
   }
 }
 
@@ -126,22 +136,25 @@ export class Sampler extends SynthNode {
   constructor(ctx, params) {
     super(ctx, params);
     this.node = ctx.createBufferSource();
-    this.node.buffer = params.sampleBuffer;
-    if (params.sampleDetune) {
-      this.node.detune.value = params.sampleDetune;
+    this.node.buffer = this.params.sampleBuffer;
+    this.syncToParams();
+  }
+  syncToParams() {
+    if (this.params.sampleDetune) {
+      this.node.detune.value = this.params.sampleDetune;
     }
-    if (params.playbackRate) {
-      this.node.playbackRate.value = params.playbackRate;
+    if (this.params.playbackRate) {
+      this.node.playbackRate.value = this.params.playbackRate;
     }
-    if (params.loop) {
-      this.node.loop = params.loop;
-      this.node.loopStart = params.loopStart;
-      this.node.loopEnd = params.loopEnd;
+    if (this.params.loop) {
+      this.node.loop = this.params.loop;
+      this.node.loopStart = this.params.loopStart;
+      this.node.loopEnd = this.params.loopEnd;
     }
   }
-  play({ startTime, endTime }) {
+  play({ startTime }) {
     this.node.start(startTime);
-    this.node.stop(endTime + this.params.timeNeededForEnvelopeDecay);
+    //this.node.stop(endTime + this.params.timeNeededForEnvelopeDecay);
   }
 }
 
@@ -149,6 +162,10 @@ export class Panner extends SynthNode {
   constructor(ctx, params) {
     super(ctx, params);
     this.node = ctx.createStereoPanner(this.ctx, { pan: params.pan });
+  }
+  syncToParams() {
+    // TODO: Base it on tick size.
+    this.node.pan.linearRampToValueAtTime(this.params.pan, 0.25);
   }
   play() {}
 }

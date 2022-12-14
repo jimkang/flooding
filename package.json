@@ -1,7 +1,7 @@
 {
   "name": "flooding",
   "version": "1.0.3",
-  "description": "Blend some audio in a really literal way",
+  "description": "Flooding-driven audio piece",
   "main": "index.js",
   "prifloodinge": true,
   "scripts": {
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:jimkang/fermentation-flooding.git"
+    "url": "git@github.com:jimkang/flooding.git"
   },
   "keywords": [],
   "author": "Jim Kang",
   "license": "Polyform Noncommercial License 1.0",
   "bugs": {
-    "url": "https://github.com/jimkang/fermentation-flooding/issues"
+    "url": "https://github.com/jimkang/flooding/issues"
   },
-  "homepage": "https://github.com/jimkang/fermentation-flooding",
+  "homepage": "https://github.com/jimkang/flooding",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-json": "^4.1.0",
