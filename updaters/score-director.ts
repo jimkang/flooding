@@ -17,19 +17,19 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
 
   function play(state: ScoreState) {
     scoreEventJoiner.update(state.events);
+    console.log('Starting play() with scoreEvents', state.events.map(e => idScoreEvent(e)));
+    
     var exitingScoreEvents = scoreEventJoiner.exit();
-    console.log('exitingScoreEvents', exitingScoreEvents.map(e => e.rate));
+    console.log('exitingScoreEvents', exitingScoreEvents.map(idScoreEvent));
     var exitingPlayEvents = exitingScoreEvents.map(existingPlayEventForScoreEvent);
-    if (exitingPlayEvents.some(e => !e.started)) {
-      debugger;
-    }
-    exitingPlayEvents.forEach(removePlayEventFromList);
+    checkExitingPlayEvents(exitingPlayEvents);
+    removePlayEventsFromList(exitingPlayEvents, playEvents);
     exitingPlayEvents.forEach(curry(fadeToDeath)(state.tickLength/4));
 
     var newScoreEvents = scoreEventJoiner.enter();
-    console.log('newScoreEvents', newScoreEvents.map(e => e.rate));
+    console.log('newScoreEvents', newScoreEvents.map(idScoreEvent));
     var newPlayEvents = newScoreEvents.map(curry(newPlayEventForScoreEvent)(state.events.length));
-    playEvents = playEvents.concat(newPlayEvents);
+    newPlayEvents.forEach(curry(appendIfNotYetInList)(playEvents));
     newPlayEvents.forEach(
       playEvent => connectLastToDest(playEvent.nodes)
       //chain => chain?[chain.length - 1]?.connect({ audioNode: ctx.destination }
@@ -38,7 +38,9 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
     const baseStartTime = ctx.currentTime;
     // TODO: parameterize start and end times.
     newPlayEvents.forEach(playPlayEvent);
-    console.log('current scoreEvents', state.events.map(e => e.rate));
+
+    console.log('current scoreEvents', state.events.map(e => idScoreEvent(e)));
+    console.log('current playEvents', getIdsForPlayEvents(playEvents));
     state.events.map(existingPlayEventForScoreEvent).forEach(updatePlayEventNodeParams);
 
     function playPlayEvent(playEvent: PlayEvent) {
@@ -80,16 +82,30 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
 
     function existingPlayEventForScoreEvent(scoreEvent: ScoreEvent): PlayEvent {
       const id = idScoreEvent(scoreEvent);
-      return playEvents.find(playEvent => idScoreEvent(playEvent.scoreEvent) === id);
+      var playEvent = playEvents.find(playEvent => idScoreEvent(playEvent.scoreEvent) === id);
+      if (!playEvent) {
+        debugger;
+        throw new Error(`Could not find a play event for ${id}.`);
+      }
+      return playEvent;
     }
 
-    function removePlayEventFromList(playEvent: PlayEvent) {
-      const id = idScoreEvent(playEvent.scoreEvent);
-      const index = playEvents.findIndex(e => idScoreEvent(e.scoreEvent) === id);
+    function removePlayEventsFromList(playEventsToRemove: PlayEvent[], list: PlayEvent[]) {
+      const indexes = playEventsToRemove.map(findEventToRemove).sort(checkCompare);
+
+      console.log('Removing indexes', indexes, 'from list', getIdsForPlayEvents(list));
+      indexes.forEach(index => list.splice(index, 1));
+      console.log('playEvents after removal', getIdsForPlayEvents(list));
+    }
+
+    function findEventToRemove(eventToRemove: PlayEvent): number {
+      const index = playEvents.findIndex(
+        e => idScoreEvent(e.scoreEvent) === idScoreEvent(eventToRemove.scoreEvent)
+      );
       if (index < 0) {
-        throw new Error(`Could not find ${id} in playEvents for deletion.`);
+        throw new Error(`Could not find ${idScoreEvent(eventToRemove.scoreEvent)} in playEvents for deletion.`);
       }
-      playEvents.splice(index, 1);
+      return index;
     }
   }
 
@@ -104,6 +120,18 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
     // TODO: Connect to limiter instead.
     if (chain.length > 0) {
       chain[chain.length - 1].connect({ synthNode: null, audioNode: ctx.destination });
+    }
+  }
+
+  function checkExitingPlayEvents(exitingPlayEvents) {
+    var unplayedExitingPlayEvent: PlayEvent =  exitingPlayEvents.find(e => !e.started);
+    if (unplayedExitingPlayEvent) {
+      throw new Error(`${unplayedExitingPlayEvent.scoreEvent.rate} is exiting even though it has not started.`);
+    }
+    var playEventIds = getIdsForPlayEvents(playEvents);
+    var exitingPlayEventNotInList = exitingPlayEvents.find(e => !playEventIds.includes(idScoreEvent(e.scoreEvent)));
+    if (exitingPlayEventNotInList) {
+      throw new Error(`${idScoreEvent(exitingPlayEventNotInList.scoreEvent)} is exiting even though it is not in the current playEvents.`);
     }
   }
 }
@@ -151,3 +179,27 @@ function updatePlayEventNodeParams(playEvent: PlayEvent) {
     pannerNode.syncToParams();
   }
 }
+
+function getIdsForPlayEvents(playEvents: PlayEvent[]): string[] {
+  return playEvents.map(e => idScoreEvent(e.scoreEvent));
+}
+
+// Sort high to low, look for duplicates which should not be in the list.
+function checkCompare(a, b) {
+  if (a > b) {
+    return -1;
+  }
+  if (a < b) {
+    return 1;
+  }
+  throw new Error(`There is a duplicate in the PlayEvents to remove at index ${a}.`);
+}
+
+function appendIfNotYetInList(list: PlayEvent[], item: PlayEvent) {
+  const newId = idScoreEvent(item.scoreEvent);
+  var existing = list.find(listItem => idScoreEvent(listItem.scoreEvent) === newId);
+  if (!existing) {
+    list.push(item);
+  }
+}
+
