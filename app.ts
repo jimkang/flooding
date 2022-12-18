@@ -25,7 +25,7 @@ var routeState;
 var { getCurrentContext } = ContextKeeper();
 var ticker;
 var sampleDownloader;
-var chordPlayer;
+var scoreDirector;
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
 });
@@ -44,7 +44,7 @@ var renderTickLengths = RenderTimeSeries({
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick }) {
+async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick, startTick = 0 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -88,7 +88,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
 
   ticker = Ticker({
     onTick,
-    startTicks: 0,
+    startTick,
     getTickLength,
     totalTicks,
     onPause: null,
@@ -106,7 +106,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
-    chordPlayer = ScoreDirector({ ctx, sampleBuffer: buffers[2] });
+    scoreDirector = ScoreDirector({ ctx, sampleBuffer: buffers[2] });
     wireControls({
       onStart,
       onPieceLengthChange,
@@ -147,7 +147,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
       currentTick: ticks
     }); 
 
-    chordPlayer.play(
+    scoreDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, scoreState)
     );
   }
