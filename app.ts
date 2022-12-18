@@ -73,7 +73,8 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     seed
   });
   var scoreStateObjects: ScoreState[] = preRunComposer({ composer, totalTicks });
-  console.table('scoreStateObjects', scoreStateObjects.map(state => state.toString()));
+  console.log('Score states:');
+  console.table(scoreStateObjects);
   const totalTime = scoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0
