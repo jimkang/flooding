@@ -1,14 +1,15 @@
 export function Ticker({
   onTick,
-  startTicks,
+  startTick,
   onPause,
   onResume,
   totalTicks,
   getTickLength
 }) {
   var ticks = 0;
-  if (!isNaN(startTicks) && startTicks > -1) {
-    ticks = startTicks;
+  startTick = +startTick;
+  if (!isNaN(startTick) && startTick > -1) {
+    ticks = startTick;
   }
 
   var timeoutKey;

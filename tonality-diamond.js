@@ -1,28 +1,19 @@
 import { diamondLimit } from './consts';
 const diamondSideLength = Math.ceil(diamondLimit/2);
 
-var diamondRatios = [];
+var diamondRatioMap = new Map();
 
 for (let row = 0; row < diamondSideLength; ++row) {
-  const denominator = diamondLimit - row;
+  const rawDenominator = diamondLimit - row;
   for (let col = 0; col < diamondSideLength; ++col) {
-    const numerator = diamondLimit - col;
-    diamondRatios.push({ numerator, denominator });
+    const rawNumerator = diamondLimit - col;
+    let { numerator, denominator } = factorDown({ numerator: rawNumerator, denominator: rawDenominator });
+    diamondRatioMap.set(`${numerator}/${denominator}`, { numerator, denominator });
   }
 }
 
-diamondRatios = diamondRatios.map(factorDown);
+var diamondRatios = [...diamondRatioMap.values()];
 diamondRatios.sort((a, b) => a.denominator - b.denominator);
-
-// Dedupe.
-for (let i = diamondRatios.length - 1; i > 0; --i) {
-  let ratio = diamondRatios[i];
-  let prevRatio = diamondRatios[i - 1];
-  if (ratio.numerator === prevRatio.numerator && ratio.denominator === prevRatio.denominator) {
-    diamondRatios.splice(i, 1);
-  }
-}
-
 console.log(diamondRatios);
 
 export var tonalityDiamondPitches = [1, 2].concat(diamondRatios.slice(1).map(({ numerator, denominator }) => numerator/denominator));

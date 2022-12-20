@@ -5,6 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
 
 const production = !process.env.ROLLUP_WATCH;
 const unminify = process.env.UNMINIFY;
@@ -33,7 +34,13 @@ export default function createConfig({
       resolve({
         browser: true,
       }),
+
       commonjs(),
+
+      typescript({
+        sourceMap: !production,
+        inlineSources: !production
+      }),
 
       // In dev mode, call `npm run start` once
       // the bundle has been generated

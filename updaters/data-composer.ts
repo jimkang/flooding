@@ -4,12 +4,13 @@ import { range } from 'd3-array';
 import { scalePow } from 'd3-scale';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
+import { ScoreState, ScoreEvent } from '../types';
 
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.125;
 
-export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, chordXCeil, seed }) {
+export function DataComposer({ tempoFactor = 1, data, chordProp, chordXFloor, chordXCeil, seed }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   var chordScale = 
     scalePow().exponent(25)
@@ -20,9 +21,9 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
   var random = seedrandom(seed);
   var prob = Probable({ random });
 
-  return { getChord, getTickLength };
+  return { getScoreState };
 
-  function getChord() {
+  function getScoreState(): ScoreState {
     var chordPitchCount = Math.round(chordScale(+data[index][chordProp]));
     if (chordPitchCount < 1) {
       console.log('Bad data point', index, chordProp, +data[index][chordProp]);
@@ -33,10 +34,26 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
       }
     }
     pastPitchCounts.push(chordPitchCount);
-    var delays = range(chordPitchCount).map(() => 
-      0
-    );
-   
+    var scoreState = {
+      events: range(chordPitchCount).map(getScoreEvent),
+      tickIndex: index,
+      tickLength: getTickLength(),
+      meta: { chordPitchCount }
+    };
+    var pans = getPans(chordPitchCount);
+    pans.forEach((pan, i) => scoreState.events[i].pan = pan);
+    index += 1;
+    return scoreState;
+  }
+
+  function getScoreEvent(chordIndex: number): ScoreEvent {
+    return {
+      rate: tonalityDiamondPitches[chordIndex], 
+      delay: 0,
+    };
+  }
+
+  function getPans(chordPitchCount: number): number[] {
     var pans = [0];
     if (chordPitchCount > 1) {
       const maxWidth = chordPitchCount/maxPitchCount * 0.7 + 0.3;
@@ -47,18 +64,9 @@ export function DataDirector({ tempoFactor = 1, data, chordProp, chordXFloor, ch
       //pans = range(chordPitchCount).map(i => (leftmost + i * panIncrement) > 0 ? 1 : -1);
     }
     //pans = prob.shuffle(pans);
-
-    index += 1;
-
-    return { 
-      rates: tonalityDiamondPitches.slice(0, chordPitchCount), 
-      delays,
-      pans,
-      meta: {
-        chordPitchCount
-      }
-    };
+    return pans;
   }
+
 
   function getTickLength() {
     var tickLength = 1;

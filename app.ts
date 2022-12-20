@@ -8,23 +8,24 @@ import wireControls from './renderers/wire-controls';
 import { Ticker } from './updaters/ticker';
 import { SampleDownloader } from './tasks/sample-downloader';
 import RandomId from '@jimkang/randomid';
-import { ChordPlayer } from './updaters/chord-player';
+import { ScoreDirector } from './updaters/score-director';
 //import { Director } from './updaters/director';
-import { DataDirector } from './updaters/data-director';
+import { DataComposer } from './updaters/data-composer';
 import { defaultSecondsPerTick } from './consts';
-import { preRunDirector } from './updaters/pre-run-director';
-import { RenderTimeSeries } from './renderers/render-time-series/';
+import { preRunComposer } from './updaters/pre-run-composer';
+import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
 //import biscayneTides from './data/biscayne-tides.json';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
+import { ScoreState } from './types';
 
 var randomId = RandomId();
 var routeState;
 var { getCurrentContext } = ContextKeeper();
 var ticker;
 var sampleDownloader;
-var chordPlayer;
+var scoreDirector;
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
 });
@@ -43,7 +44,7 @@ var renderTickLengths = RenderTimeSeries({
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick }) {
+async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick, startTick = 0 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -63,7 +64,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   var ctx = values[0];
   
   //var director = Director({ seed, tempoFactor });
-  var director = DataDirector({
+  var composer = DataComposer({
     tempoFactor,
     data: bostonMSL,
     chordProp: 'meanSeaLevelDeltaMM',
@@ -71,24 +72,27 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     chordXCeil: 7387,
     seed
   });
-  var eventDirectionObjects = preRunDirector({ director, totalTicks });
-  console.table('eventDirectionObjects', eventDirectionObjects);
-  const totalTime = eventDirectionObjects.reduce(
+  var scoreStateObjects: ScoreState[] = preRunComposer({ composer, totalTicks });
+  console.log('Score states:');
+  console.table(scoreStateObjects);
+  const totalTime = scoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0
   );
   console.log('totalTime in minutes', totalTime/60);
-  console.log('Starting tick lengths', eventDirectionObjects.slice(0, 8).map(d => d.tickLength));
-  var firstBadEventDirection = eventDirectionObjects.find(ed => !ed.chord.delays || ed.tickLength <= 0);
+  console.log('Starting tick lengths', scoreStateObjects.slice(0, 8).map(d => d.tickLength));
+  var firstBadEventDirection = scoreStateObjects.find(state => !state.events.some(e => !e.delay)|| state.tickLength <= 0);
   if (firstBadEventDirection) {
     throw new Error(`Event direction is bad: ${JSON.stringify(firstBadEventDirection, null, 2)}`);
   }
 
-  ticker = new Ticker({
+  ticker = Ticker({
     onTick,
-    startTicks: 0,
+    startTick,
     getTickLength,
-    totalTicks
+    totalTicks,
+    onPause: null,
+    onResume: null
   }); 
 
   sampleDownloader = SampleDownloader({
@@ -102,7 +106,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
-    chordPlayer = ChordPlayer({ ctx, sampleBuffer: buffers[2] });
+    scoreDirector = ScoreDirector({ ctx, sampleBuffer: buffers[2] });
     wireControls({
       onStart,
       onPieceLengthChange,
@@ -115,47 +119,47 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   function onTick({ ticks, currentTickLengthSeconds }) {
     console.log(ticks, currentTickLengthSeconds); 
     //var chord = director.getChord({ ticks });
-    var eventDirection = eventDirectionObjects[ticks];
+    var scoreState = scoreStateObjects[ticks];
     var tickLength = currentTickLengthSeconds;
-    if (!isNaN(eventDirection.tickLength)) {
-      tickLength = eventDirection.tickLength;
+    if (!isNaN(scoreState.tickLength)) {
+      tickLength = scoreState.tickLength;
     }
     renderEventDirection({
       tickIndex: ticks,
       tickLength,
-      chordSize: eventDirection.chord.rates.length
+      chordSize: scoreState.meta.chordPitchCount
     });
 
     renderDensity({
-      valueOverTimeArray: eventDirectionObjects.map(({ tickLength, chordSize }) => ({ time: tickLength, value: chordSize })),
+      valueOverTimeArray: scoreStateObjects.map(({ tickLength, meta }) => ({ time: tickLength, value: meta.chordPitchCount })),
       totalTime,
       valueMax: tonalityDiamondPitches.length,
       currentTick: ticks
     }); 
 
     renderTickLengths({
-      valueOverTimeArray: eventDirectionObjects.map(({ tickLength }) => ({ time: 1, value: tickLength })),
-      totalTime: eventDirectionObjects.length,
-      valueMax: eventDirectionObjects.reduce(
+      valueOverTimeArray: scoreStateObjects.map(({ tickLength }) => ({ time: 1, value: tickLength })),
+      totalTime: scoreStateObjects.length,
+      valueMax: scoreStateObjects.reduce(
         (max, direction) => direction.tickLength > max ? direction.tickLength : max,
         0
       ),
       currentTick: ticks
     }); 
 
-    chordPlayer.play(
-      Object.assign({ tickLengthSeconds: tickLength }, eventDirection.chord)
+    scoreDirector.play(
+      Object.assign({ tickLengthSeconds: tickLength }, scoreState)
     );
   }
 
   function getTickLength(ticks) {
-    if (ticks < eventDirectionObjects.length) {
-      var tickLength = eventDirectionObjects[ticks].tickLength;
+    if (ticks < scoreStateObjects.length) {
+      var tickLength = scoreStateObjects[ticks].tickLength;
       if (!isNaN(tickLength)) {
         return tickLength;
       }
     }
-    return director.getTickLength(ticks);
+    //return director.getTickLength(ticks);
   }
 
   function onPieceLengthChange(length) {
