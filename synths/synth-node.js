@@ -91,7 +91,7 @@ export class Envelope extends SynthNode {
   play({ startTime }) {
     this.node.gain.value = 0;
     // TODO: Base this on the tick.
-    var envelopeLength = 0.25;
+    this.envelopeLength = 1;
     if (this.params.envelopeLengthProportionToEvent) {
       envelopeLength *= this.params.envelopeLengthProportionToEvent;
     }
