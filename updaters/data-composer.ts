@@ -46,10 +46,11 @@ export function DataComposer({ tempoFactor = 1, data, chordProp, chordXFloor, ch
     return scoreState;
   }
 
-  function getScoreEvent(chordIndex: number): ScoreEvent {
+  function getScoreEvent(chordIndex: number, arrayIndex: number, pitches: number[]): ScoreEvent {
     return {
       rate: tonalityDiamondPitches[chordIndex], 
       delay: 0,
+      peakGain: 0.8/pitches.length
     };
   }
 

@@ -87,19 +87,20 @@ export class Envelope extends SynthNode {
   constructor(ctx, params) {
     super(ctx, params);
     this.node = this.ctx.createGain();
-  }
-  play({ startTime }) {
-    this.node.gain.value = 0;
     // TODO: Base this on the tick.
     this.envelopeLength = 1;
     if (this.params.envelopeLengthProportionToEvent) {
-      envelopeLength *= this.params.envelopeLengthProportionToEvent;
+      this.envelopeLength *= this.params.envelopeLengthProportionToEvent;
     }
-    //this.node.gain.setValueCurveAtTime(adsrCurve, startTime, envelopeLength);
-    this.node.gain.setValueCurveAtTime(asCurve, startTime, envelopeLength);
-    this.envelopeCompletionTime = startTime + envelopeLength;
+    this.playCurve = asCurve.map(x => x * this.params.envelopeMaxGain);
   }
-  fadeOut(fadeSeconds) {
+  play({ startTime }) {
+    this.node.gain.value = 0;
+    //this.node.gain.setValueCurveAtTime(adsrCurve, startTime, envelopeLength);
+    this.node.gain.setValueCurveAtTime(this.playCurve, startTime, this.envelopeLength);
+    this.envelopeCompletionTime = startTime + this.envelopeLength;
+  }
+  linearRampTo(fadeSeconds, value) {
     this.node.gain.cancelScheduledValues(0);
     // If an envelope is still running its curve, that needs to finish first.
     var secondsUntilEnvelopeCompletion = 0;
@@ -110,7 +111,7 @@ export class Envelope extends SynthNode {
     // We will get a exception if we try to add a ramp event while the previous
     // value curve is still going.
     setTimeout(
-      () => this.node.gain.linearRampToValueAtTime(0, fadeSeconds),
+      () => this.node.gain.linearRampToValueAtTime(value, fadeSeconds),
       secondsUntilEnvelopeCompletion * 1000
     );
   }

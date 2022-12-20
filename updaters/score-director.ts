@@ -63,10 +63,10 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
           timeNeededForEnvelopeDecay: state.tickLength
         }
       );
-      const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);
+      //const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);
       var envelope = new Envelope(
         ctx,
-        { envelopeMaxGain: maxGain, envelopeLengthProportionToEvent: 1.2 }
+        { envelopeMaxGain: scoreEvent.peakGain, envelopeLengthProportionToEvent: 1.2 }
       );
       var panner = new Panner(ctx, { pan: scoreEvent.pan });
 
@@ -84,7 +84,6 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
       const id = idScoreEvent(scoreEvent);
       var playEvent = playEvents.find(playEvent => idScoreEvent(playEvent.scoreEvent) === id);
       if (!playEvent) {
-        debugger;
         throw new Error(`Could not find a play event for ${id}.`);
       }
       return playEvent;
@@ -142,8 +141,8 @@ function fadeToDeath(fadeSeconds: number, playEvent: PlayEvent) {
   if (!envelopeNode) {
     throw new Error("Can't fade this. It's missing a Envelope synth node!");
   }
-  envelopeNode.fadeOut(fadeSeconds);
-  setTimeout(() => decommisionNodes(playEvent), fadeSeconds * 1000);
+  envelopeNode.linearRampTo(fadeSeconds, 0);
+  setTimeout(() => decommisionNodes(playEvent), (fadeSeconds + 1) * 1000);
 }
 
 // TODO: Find out if this is even necessary.

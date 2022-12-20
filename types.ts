@@ -10,6 +10,7 @@ export interface ScoreState {
 export interface ScoreEvent {
   rate: number;
   delay: number;
+  peakGain: number;
   pan?: number;
 }
 
