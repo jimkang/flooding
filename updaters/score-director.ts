@@ -1,4 +1,4 @@
-import { Sampler, Envelope, Panner, SynthNode } from '../synths/synth-node';
+import { Sampler, Envelope, Panner, SynthNode, Gain } from '../synths/synth-node';
 import { ScoreState, ScoreEvent, PlayEvent } from '../types';
 import DataJoiner from 'data-joiner';
 import curry from 'lodash.curry';
@@ -12,6 +12,17 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
     keyFn: idScoreEvent
   });
   var playEvents: PlayEvent[] = [];
+  // Every playEvent should go out through this node eventually.
+  var mainOutNode = new Gain(ctx, { gain: 1.0 });
+  var compressor = new DynamicsCompressorNode(
+    ctx,
+    {
+      threshold: -16
+    }
+  );
+  //mainOutNode.connect({ synthNode: null, audioNode: compressor });
+  mainOutNode.connect({ synthNode: null, audioNode: ctx.destination });
+  compressor.connect(ctx.destination);
 
   return { play };
 
@@ -108,17 +119,10 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
     }
   }
 
-  //function detuneToSamplerChain(detune, i, detunes) {
-  //var sampler = new Sampler(ctx, { sampleBuffer, sampleDetune: detune, timeNeededForEnvelopeDecay: 0 });
-  //var gain = new Gain(ctx, { gain: 1.0/detunes.length });  
-  //sampler.connect({ synthNode: gain });
-  //return [sampler, gain];
-  //}
-
   function connectLastToDest(chain: SynthNode[]) {
     // TODO: Connect to limiter instead.
     if (chain.length > 0) {
-      chain[chain.length - 1].connect({ synthNode: null, audioNode: ctx.destination });
+      chain[chain.length - 1].connect({ synthNode: mainOutNode, audioNode: null });
     }
   }
 
@@ -177,6 +181,11 @@ function updatePlayEventNodeParams(playEvent: PlayEvent) {
     pannerNode.params.pan = playEvent.scoreEvent.pan;
     pannerNode.syncToParams();
   }
+  //var envelopeNode: Envelope = playEvent.nodes.find(node => node instanceof Envelope) as Envelope;
+  //if (envelopeNode) {
+  //// TODO: Use current tick size to determine ramp time.
+  //envelopeNode.linearRampTo(0.2, playEvent.scoreEvent.peakGain);
+  //}
 }
 
 function getIdsForPlayEvents(playEvents: PlayEvent[]): string[] {
