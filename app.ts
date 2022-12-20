@@ -44,7 +44,7 @@ var renderTickLengths = RenderTimeSeries({
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick, startTick = 0 }) {
+async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick, startTick = 0, sampleIndex = 2 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -106,7 +106,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
-    scoreDirector = ScoreDirector({ ctx, sampleBuffer: buffers[2] });
+    scoreDirector = ScoreDirector({ ctx, sampleBuffer: buffers[sampleIndex] });
     wireControls({
       onStart,
       onPieceLengthChange,
