@@ -63,7 +63,7 @@ export function DataComposer({ tempoFactor = 1, data, chordProp, chordXFloor, ch
       // Uncomment to check to see if panning is working.
       //pans = range(chordPitchCount).map(i => (leftmost + i * panIncrement) > 0 ? 1 : -1);
     }
-    //pans = prob.shuffle(pans);
+    pans = prob.shuffle(pans);
     return pans;
   }
 
