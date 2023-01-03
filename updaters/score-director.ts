@@ -35,7 +35,7 @@ export function ScoreDirector({ ctx, sampleBuffer }) {
     var exitingPlayEvents = exitingScoreEvents.map(existingPlayEventForScoreEvent);
     checkExitingPlayEvents(exitingPlayEvents);
     removePlayEventsFromList(exitingPlayEvents, playEvents);
-    exitingPlayEvents.forEach(curry(fadeToDeath)(state.tickLength/4));
+    exitingPlayEvents.forEach(curry(fadeToDeath)(state.tickLength * 2));
 
     var newScoreEvents = scoreEventJoiner.enter();
     console.log('newScoreEvents', newScoreEvents.map(idScoreEvent));
