@@ -1,4 +1,4 @@
-import { Sampler, Envelope, Panner, SynthNode, Gain } from '../synths/synth-node';
+import { Sampler, Envelope, Panner, SynthNode } from '../synths/synth-node';
 import { ScoreState, ScoreEvent, PlayEvent } from '../types';
 import DataJoiner from 'data-joiner';
 import curry from 'lodash.curry';
@@ -7,22 +7,12 @@ function idScoreEvent(scoreEvent: ScoreEvent) {
   return scoreEvent.rate.toFixed(3);
 }
 
-export function ScoreDirector({ ctx, sampleBuffer }) {
+export function ScoreDirector({ ctx, sampleBuffer, mainOutNode }) {
   var scoreEventJoiner = DataJoiner({
     keyFn: idScoreEvent
   });
   var playEvents: PlayEvent[] = [];
-  // Every playEvent should go out through this node eventually.
-  var mainOutNode = new Gain(ctx, { gain: 1.0 });
-  var compressor = new DynamicsCompressorNode(
-    ctx,
-    {
-      threshold: -16
-    }
-  );
-  //mainOutNode.connect({ synthNode: null, audioNode: compressor });
-  mainOutNode.connect({ synthNode: null, audioNode: ctx.destination });
-  compressor.connect(ctx.destination);
+ 
 
   return { play };
 

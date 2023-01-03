@@ -19,13 +19,16 @@ import { tonalityDiamondPitches } from './tonality-diamond';
 //import biscayneTides from './data/biscayne-tides.json';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import { ScoreState } from './types';
+import { MainOut } from './updaters/main-out';
 
 var randomId = RandomId();
 var routeState;
 var { getCurrentContext } = ContextKeeper();
 var ticker;
 var sampleDownloader;
-var scoreDirector;
+var mainScoreDirector;
+var lowScoreDirector;
+
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
 });
@@ -50,7 +53,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     return;
   }
   if (!totalTicks) {
-    routeState.addToRoute({ totalTicks: bostonMSL.length});
+    routeState.addToRoute({ totalTicks: bostonMSL.length });
     return;
   }
 
@@ -62,7 +65,8 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   }
 
   var ctx = values[0];
-  
+  var mainOutNode = MainOut({ ctx });
+
   //var director = Director({ seed, tempoFactor });
   var composer = DataComposer({
     tempoFactor,
@@ -72,19 +76,33 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     chordXCeil: 7387,
     seed
   });
-  var scoreStateObjects: ScoreState[] = preRunComposer({ composer, totalTicks });
+  var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({ composer, totalTicks });
   console.log('Score states:');
-  console.table(scoreStateObjects);
-  const totalTime = scoreStateObjects.reduce(
+  console.table(mainGroupScoreStateObjects);
+  const totalTime = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0
   );
-  console.log('totalTime in minutes', totalTime/60);
-  console.log('Starting tick lengths', scoreStateObjects.slice(0, 8).map(d => d.tickLength));
-  var firstBadEventDirection = scoreStateObjects.find(state => !state.events.some(e => !e.delay)|| state.tickLength <= 0);
+  console.log('totalTime in minutes', totalTime / 60);
+  console.log('Starting tick lengths', mainGroupScoreStateObjects.slice(0, 8).map(d => d.tickLength));
+  var firstBadEventDirection = mainGroupScoreStateObjects.find(state => !state.events.some(e => !e.delay) || state.tickLength <= 0);
   if (firstBadEventDirection) {
     throw new Error(`Event direction is bad: ${JSON.stringify(firstBadEventDirection, null, 2)}`);
   }
+
+  var lowGroupScoreStateObjects: ScoreState[] = preRunComposer({
+    composer: DataComposer({
+      tempoFactor,
+      data: bostonMSL,
+      chordProp: 'meanSeaLevelDeltaMM',
+      chordXFloor: 6809,
+      chordXCeil: 7387,
+      seed
+    }),
+    totalTicks
+  });
+  // Temp.; just to make it different.
+  lowGroupScoreStateObjects.reverse();
 
   ticker = Ticker({
     onTick,
@@ -93,7 +111,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     totalTicks,
     onPause: null,
     onResume: null
-  }); 
+  });
 
   sampleDownloader = SampleDownloader({
     sampleFiles: ['bagpipe-c.wav', 'flute-G4-edit.wav', 'trumpet-D2.wav', 'Vibraphone.sustain.ff.D4.wav'],
@@ -106,7 +124,13 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
     console.log(buffers);
-    scoreDirector = ScoreDirector({ ctx, sampleBuffer: buffers[sampleIndex] });
+    mainScoreDirector = ScoreDirector({ 
+      ctx, sampleBuffer: buffers[sampleIndex], mainOutNode
+    });
+    lowScoreDirector = ScoreDirector({
+      ctx, sampleBuffer: buffers[sampleIndex], mainOutNode
+    });
+
     wireControls({
       onStart,
       onPieceLengthChange,
@@ -117,44 +141,48 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   }
 
   function onTick({ ticks, currentTickLengthSeconds }) {
-    console.log(ticks, currentTickLengthSeconds); 
+    console.log(ticks, currentTickLengthSeconds);
     //var chord = director.getChord({ ticks });
-    var scoreState = scoreStateObjects[ticks];
+    var mainGroupScoreState = mainGroupScoreStateObjects[ticks];
+    var lowGroupScoreState = lowGroupScoreStateObjects[ticks];
     var tickLength = currentTickLengthSeconds;
-    if (!isNaN(scoreState.tickLength)) {
-      tickLength = scoreState.tickLength;
+    if (!isNaN(mainGroupScoreState.tickLength)) {
+      tickLength = mainGroupScoreState.tickLength;
     }
     renderEventDirection({
       tickIndex: ticks,
       tickLength,
-      chordSize: scoreState.meta.chordPitchCount
+      chordSize: mainGroupScoreState.meta.chordPitchCount
     });
 
     renderDensity({
-      valueOverTimeArray: scoreStateObjects.map(({ tickLength, meta }) => ({ time: tickLength, value: meta.chordPitchCount })),
+      valueOverTimeArray: mainGroupScoreStateObjects.map(({ tickLength, meta }) => ({ time: tickLength, value: meta.chordPitchCount })),
       totalTime,
       valueMax: tonalityDiamondPitches.length,
       currentTick: ticks
-    }); 
+    });
 
     renderTickLengths({
-      valueOverTimeArray: scoreStateObjects.map(({ tickLength }) => ({ time: 1, value: tickLength })),
-      totalTime: scoreStateObjects.length,
-      valueMax: scoreStateObjects.reduce(
+      valueOverTimeArray: mainGroupScoreStateObjects.map(({ tickLength }) => ({ time: 1, value: tickLength })),
+      totalTime: mainGroupScoreStateObjects.length,
+      valueMax: mainGroupScoreStateObjects.reduce(
         (max, direction) => direction.tickLength > max ? direction.tickLength : max,
         0
       ),
       currentTick: ticks
-    }); 
+    });
 
-    scoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, scoreState)
+    mainScoreDirector.play(
+      Object.assign({ tickLengthSeconds: tickLength }, mainGroupScoreState)
+    );
+    lowScoreDirector.play(
+      Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState),
     );
   }
 
   function getTickLength(ticks) {
-    if (ticks < scoreStateObjects.length) {
-      var tickLength = scoreStateObjects[ticks].tickLength;
+    if (ticks < mainGroupScoreStateObjects.length) {
+      var tickLength = mainGroupScoreStateObjects[ticks].tickLength;
       if (!isNaN(tickLength)) {
         return tickLength;
       }
