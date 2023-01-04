@@ -115,7 +115,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
       ctx, sampleBuffer: buffers[sampleIndex], mainOutNode
     });
     lowScoreDirector = ScoreDirector({
-      ctx, sampleBuffer: buffers[2], mainOutNode, ampFactor: 0.5, fadeLengthFactor: 4 
+      ctx, sampleBuffer: buffers[3], mainOutNode, ampFactor: 0.5, fadeLengthFactor: 4 
     });
 
     wireControls({
