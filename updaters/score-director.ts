@@ -1,13 +1,13 @@
-import { Sampler, Envelope, Panner, SynthNode } from '../synths/synth-node';
+import { Sampler, Envelope, Panner, SynthNode, Gain } from '../synths/synth-node';
 import { ScoreState, ScoreEvent, PlayEvent } from '../types';
 import DataJoiner from 'data-joiner';
 import curry from 'lodash.curry';
 
 function idScoreEvent(scoreEvent: ScoreEvent) {
-  return scoreEvent.rate.toFixed(3);
+  return scoreEvent.rate.toFixed(5);
 }
 
-export function ScoreDirector({ ctx, sampleBuffer, mainOutNode }) {
+export function ScoreDirector({ ctx, sampleBuffer, mainOutNode, ampFactor = 1.0, fadeLengthFactor = 2.0 }) {
   var scoreEventJoiner = DataJoiner({
     keyFn: idScoreEvent
   });
@@ -25,7 +25,11 @@ export function ScoreDirector({ ctx, sampleBuffer, mainOutNode }) {
     var exitingPlayEvents = exitingScoreEvents.map(existingPlayEventForScoreEvent);
     checkExitingPlayEvents(exitingPlayEvents);
     removePlayEventsFromList(exitingPlayEvents, playEvents);
-    exitingPlayEvents.forEach(curry(fadeToDeath)(state.tickLength * 2));
+    var fadeLength = state.tickLength;
+    if (state.tickLength > 1) {
+      fadeLength *= fadeLengthFactor;
+    }
+    exitingPlayEvents.forEach(curry(fadeToDeath)(fadeLength));
 
     var newScoreEvents = scoreEventJoiner.enter();
     console.log('newScoreEvents', newScoreEvents.map(idScoreEvent));
@@ -74,10 +78,17 @@ export function ScoreDirector({ ctx, sampleBuffer, mainOutNode }) {
       sampler.connect({ synthNode: envelope, audioNode: null });
       envelope.connect({ synthNode: panner, audioNode: null });
 
+      var nodes = [sampler, envelope, panner];
+      if (ampFactor !== 1.0) {
+        let gain = new Gain(ctx, { gain: ampFactor });
+        panner.connect({ synthNode: gain, audioNode: null });
+        nodes.push(gain);
+      }
+
       return {
         scoreEvent,
-        nodes: [sampler, envelope, panner],
-        started: false
+        started: false,
+        nodes
       };
     }
 

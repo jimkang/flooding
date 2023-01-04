@@ -3,23 +3,21 @@ import handleError from 'handle-error-web';
 import { version } from './package.json';
 import ep from 'errorback-promise';
 import ContextKeeper from 'audio-context-singleton';
-//import { queue } from 'd3-queue';
 import wireControls from './renderers/wire-controls';
 import { Ticker } from './updaters/ticker';
 import { SampleDownloader } from './tasks/sample-downloader';
 import RandomId from '@jimkang/randomid';
 import { ScoreDirector } from './updaters/score-director';
-//import { Director } from './updaters/director';
 import { DataComposer } from './updaters/data-composer';
 import { defaultSecondsPerTick } from './consts';
 import { preRunComposer } from './updaters/pre-run-composer';
 import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
-//import biscayneTides from './data/biscayne-tides.json';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import { ScoreState } from './types';
 import { MainOut } from './updaters/main-out';
+import { Transposer } from './updaters/transposer';
 
 var randomId = RandomId();
 var routeState;
@@ -90,19 +88,8 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     throw new Error(`Event direction is bad: ${JSON.stringify(firstBadEventDirection, null, 2)}`);
   }
 
-  var lowGroupScoreStateObjects: ScoreState[] = preRunComposer({
-    composer: DataComposer({
-      tempoFactor,
-      data: bostonMSL,
-      chordProp: 'meanSeaLevelDeltaMM',
-      chordXFloor: 6809,
-      chordXCeil: 7387,
-      seed
-    }),
-    totalTicks
-  });
-  // Temp.; just to make it different.
-  lowGroupScoreStateObjects.reverse();
+  var lowTransposer = Transposer({ seed, freqFactor: 0.125, eventProportionToTranspose: 0.5 });
+  var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(lowTransposer.getScoreState);
 
   ticker = Ticker({
     onTick,
@@ -128,7 +115,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
       ctx, sampleBuffer: buffers[sampleIndex], mainOutNode
     });
     lowScoreDirector = ScoreDirector({
-      ctx, sampleBuffer: buffers[sampleIndex], mainOutNode
+      ctx, sampleBuffer: buffers[2], mainOutNode, ampFactor: 0.5, fadeLengthFactor: 4 
     });
 
     wireControls({
