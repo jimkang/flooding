@@ -112,7 +112,9 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   function onComplete({ buffers }) {
     console.log(buffers);
     mainScoreDirector = ScoreDirector({ 
-      ctx, sampleBuffer: buffers[sampleIndex], mainOutNode
+      ctx, sampleBuffer: buffers[sampleIndex], mainOutNode,
+      constantEnvelopeLength: 1.0,
+      envelopeCurve: new Float32Array([ 0, 0.5, 1 ])
     });
     lowScoreDirector = ScoreDirector({
       ctx, sampleBuffer: buffers[3], mainOutNode, ampFactor: 0.5, fadeLengthFactor: 4 

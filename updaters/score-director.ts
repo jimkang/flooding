@@ -7,7 +7,16 @@ function idScoreEvent(scoreEvent: ScoreEvent) {
   return scoreEvent.rate.toFixed(5);
 }
 
-export function ScoreDirector({ ctx, sampleBuffer, mainOutNode, ampFactor = 1.0, fadeLengthFactor = 2.0 }) {
+export function ScoreDirector({
+  ctx,
+  sampleBuffer,
+  mainOutNode,
+  ampFactor = 1.0,
+  fadeLengthFactor = 2.0,
+  envelopeLengthFactor = 1.0,
+  constantEnvelopeLength = undefined,
+  envelopeCurve = null
+}) {
   var scoreEventJoiner = DataJoiner({
     keyFn: idScoreEvent
   });
@@ -71,7 +80,12 @@ export function ScoreDirector({ ctx, sampleBuffer, mainOutNode, ampFactor = 1.0,
       //const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);
       var envelope = new Envelope(
         ctx,
-        { envelopeMaxGain: scoreEvent.peakGain, envelopeLengthProportionToEvent: 1.2 }
+        {
+          envelopeMaxGain: scoreEvent.peakGain,
+          envelopeLengthProportionToEvent: 1.2,
+          envelopeLength: constantEnvelopeLength ? constantEnvelopeLength : state.tickLength * envelopeLengthFactor,
+          playCurve: envelopeCurve
+        }
       );
       var panner = new Panner(ctx, { pan: scoreEvent.pan });
 

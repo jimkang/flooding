@@ -16,7 +16,7 @@ var adsrCurve = new Float32Array([
   0.1,
   0
 ]);
-var asCurve = adsrCurve.slice(0, 3);
+//var asCurve = adsrCurve.slice(0, 3);
 
 export class SynthNode {
   constructor(ctx, params) {
@@ -87,12 +87,15 @@ export class Envelope extends SynthNode {
   constructor(ctx, params) {
     super(ctx, params);
     this.node = this.ctx.createGain();
-    // TODO: Base this on the tick.
     this.envelopeLength = 1;
-    if (this.params.envelopeLengthProportionToEvent) {
-      this.envelopeLength *= this.params.envelopeLengthProportionToEvent;
+    if (params.envelopeLength) {
+      this.envelopeLength = params.envelopeLength;
     }
-    this.playCurve = asCurve.map(x => x * this.params.envelopeMaxGain);
+    if (params.envelopeLengthProportionToEvent) {
+      this.envelopeLength *= params.envelopeLengthProportionToEvent;
+    }
+    this.playCurve = 
+      (params.playCurve ? params.playCurve : adsrCurve).map(x => x * this.params.envelopeMaxGain);
   }
   play({ startTime }) {
     this.node.gain.value = 0;
