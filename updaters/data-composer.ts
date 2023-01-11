@@ -24,7 +24,8 @@ export function DataComposer({ tempoFactor = 1, data, chordProp, chordXFloor, ch
   return { getScoreState };
 
   function getScoreState(): ScoreState {
-    var chordPitchCount = Math.round(chordScale(+data[index][chordProp]));
+    var sourceDatum = data[index];
+    var chordPitchCount = Math.round(chordScale(+sourceDatum[chordProp]));
     if (chordPitchCount < 1) {
       console.log('Bad data point', index, chordProp, +data[index][chordProp]);
       if (index > 0) {
@@ -44,14 +45,15 @@ export function DataComposer({ tempoFactor = 1, data, chordProp, chordXFloor, ch
     pans.forEach((pan, i) => scoreState.events[i].pan = pan);
     index += 1;
     return scoreState;
-  }
 
-  function getScoreEvent(chordIndex: number, arrayIndex: number, pitches: number[]): ScoreEvent {
-    return {
-      rate: tonalityDiamondPitches[chordIndex], 
-      delay: 0,
-      peakGain: 0.8/pitches.length
-    };
+    function getScoreEvent(chordIndex: number, arrayIndex: number, pitches: number[]): ScoreEvent {
+      return {
+        rate: tonalityDiamondPitches[chordIndex],
+        delay: 0,
+        peakGain: 0.8/pitches.length,
+        meta: { sourceDatum }
+      };
+    }
   }
 
   function getPans(chordPitchCount: number): number[] {

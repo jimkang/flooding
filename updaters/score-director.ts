@@ -3,7 +3,7 @@ import { ScoreState, ScoreEvent, PlayEvent } from '../types';
 import DataJoiner from 'data-joiner';
 import curry from 'lodash.curry';
 
-function idScoreEvent(scoreEvent: ScoreEvent) {
+function defaultIdScoreEvent(scoreEvent: ScoreEvent) {
   return scoreEvent.rate.toFixed(5);
 }
 
@@ -15,7 +15,10 @@ export function ScoreDirector({
   fadeLengthFactor = 2.0,
   envelopeLengthFactor = 1.0,
   constantEnvelopeLength = undefined,
-  envelopeCurve = null
+  envelopeCurve = null,
+  variableSampleBuffers = null,
+  directorName,
+  idScoreEvent = defaultIdScoreEvent
 }) {
   var scoreEventJoiner = DataJoiner({
     keyFn: idScoreEvent
@@ -27,7 +30,7 @@ export function ScoreDirector({
 
   function play(state: ScoreState) {
     scoreEventJoiner.update(state.events);
-    console.log('Starting play() with scoreEvents', state.events.map(e => idScoreEvent(e)));
+    console.log(directorName, 'Starting play() with scoreEvents', state.events.map(e => idScoreEvent(e)));
     
     var exitingScoreEvents = scoreEventJoiner.exit();
     console.log('exitingScoreEvents', exitingScoreEvents.map(idScoreEvent));
@@ -58,6 +61,10 @@ export function ScoreDirector({
     state.events.map(existingPlayEventForScoreEvent).forEach(updatePlayEventNodeParams);
 
     function playPlayEvent(playEvent: PlayEvent) {
+      if (playEvent.rest) {
+        return;
+      }
+
       console.log('Playing', playEvent.scoreEvent.rate);
       const startTime = baseStartTime + playEvent.scoreEvent.delay;
       //const endTime = startTime + state.tickLength;
@@ -66,10 +73,28 @@ export function ScoreDirector({
     }
 
     function newPlayEventForScoreEvent(totalScoreEventCount: number, scoreEvent: ScoreEvent): PlayEvent {
+      if (scoreEvent.rest) {
+        return {
+          scoreEvent,
+          started: false,
+          nodes: [],
+          rest: true
+        };
+      }
+
+      var eventSampleBuffer = sampleBuffer;
+      if (directorName === 'narration') {
+        console.log('variableSampleBuffers.length', variableSampleBuffers.length, 'variableSampleIndex', scoreEvent.variableSampleIndex);
+      }
+
+      if (variableSampleBuffers && !isNaN(scoreEvent.variableSampleIndex) &&
+          scoreEvent.variableSampleIndex < variableSampleBuffers.length) {
+        eventSampleBuffer = variableSampleBuffers[scoreEvent.variableSampleIndex];
+      }
       var sampler = new Sampler(
         ctx,
         {      
-          sampleBuffer,
+          sampleBuffer: eventSampleBuffer,
           playbackRate: scoreEvent.rate,
           loop: true,
           loopStart: 0.1,
@@ -144,7 +169,10 @@ export function ScoreDirector({
   function checkExitingPlayEvents(exitingPlayEvents) {
     var unplayedExitingPlayEvent: PlayEvent =  exitingPlayEvents.find(e => !e.started);
     if (unplayedExitingPlayEvent) {
-      throw new Error(`${unplayedExitingPlayEvent.scoreEvent.rate} is exiting even though it has not started.`);
+      // It's OK if rests are not played.
+      if (!unplayedExitingPlayEvent.rest) {
+        throw new Error(`${unplayedExitingPlayEvent.scoreEvent.rate} is exiting even though it has not started.`);
+      }
     }
     var playEventIds = getIdsForPlayEvents(playEvents);
     var exitingPlayEventNotInList = exitingPlayEvents.find(e => !playEventIds.includes(idScoreEvent(e.scoreEvent)));
@@ -152,15 +180,30 @@ export function ScoreDirector({
       throw new Error(`${idScoreEvent(exitingPlayEventNotInList.scoreEvent)} is exiting even though it is not in the current playEvents.`);
     }
   }
+
+  function appendIfNotYetInList(list: PlayEvent[], item: PlayEvent) {
+    const newId = idScoreEvent(item.scoreEvent);
+    var existing = list.find(listItem => idScoreEvent(listItem.scoreEvent) === newId);
+    if (!existing) {
+      list.push(item);
+    }
+  }
+
+  function getIdsForPlayEvents(playEvents: PlayEvent[]): string[] {
+    return playEvents.map(e => idScoreEvent(e.scoreEvent));
+  }
+
 }
 
 function fadeToDeath(fadeSeconds: number, playEvent: PlayEvent) {
-  console.log('Fading', playEvent.scoreEvent.rate);
-  var envelopeNode: Envelope = playEvent.nodes.find(node => node instanceof Envelope) as Envelope;
-  if (!envelopeNode) {
-    throw new Error("Can't fade this. It's missing a Envelope synth node!");
+  if (!playEvent.rest) {
+    console.log('Fading', playEvent.scoreEvent.rate);
+    var envelopeNode: Envelope = playEvent.nodes.find(node => node instanceof Envelope) as Envelope;
+    if (!envelopeNode) {
+      throw new Error("Can't fade this. It's missing a Envelope synth node!");
+    }
+    envelopeNode.linearRampTo(fadeSeconds, 0);
   }
-  envelopeNode.linearRampTo(fadeSeconds, 0);
   setTimeout(() => decommisionNodes(playEvent), (fadeSeconds + 1) * 1000);
 }
 
@@ -203,10 +246,6 @@ function updatePlayEventNodeParams(playEvent: PlayEvent) {
   //}
 }
 
-function getIdsForPlayEvents(playEvents: PlayEvent[]): string[] {
-  return playEvents.map(e => idScoreEvent(e.scoreEvent));
-}
-
 // Sort high to low, look for duplicates which should not be in the list.
 function checkCompare(a, b) {
   if (a > b) {
@@ -216,13 +255,5 @@ function checkCompare(a, b) {
     return 1;
   }
   throw new Error(`There is a duplicate in the PlayEvents to remove at index ${a}.`);
-}
-
-function appendIfNotYetInList(list: PlayEvent[], item: PlayEvent) {
-  const newId = idScoreEvent(item.scoreEvent);
-  var existing = list.find(listItem => idScoreEvent(listItem.scoreEvent) === newId);
-  if (!existing) {
-    list.push(item);
-  }
 }
 

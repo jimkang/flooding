@@ -15,9 +15,10 @@ import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
-import { ScoreState } from './types';
+import { ScoreState, ScoreEvent } from './types';
 import { MainOut } from './updaters/main-out';
 import { Transposer } from './updaters/transposer';
+import { NarrationDataComposer } from './updaters/narration-data-composer';
 
 var randomId = RandomId();
 var routeState;
@@ -26,6 +27,7 @@ var ticker;
 var sampleDownloader;
 var mainScoreDirector;
 var lowScoreDirector;
+var narrationDirector;
 
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
@@ -65,7 +67,6 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   var ctx = values[0];
   var mainOutNode = MainOut({ ctx });
 
-  //var director = Director({ seed, tempoFactor });
   var composer = DataComposer({
     tempoFactor,
     data: bostonMSL,
@@ -75,8 +76,6 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     seed
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({ composer, totalTicks });
-  console.log('Score states:');
-  console.table(mainGroupScoreStateObjects);
   const totalTime = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0
@@ -89,7 +88,12 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   }
 
   var lowTransposer = Transposer({ seed, freqFactor: 0.125, eventProportionToTranspose: 0.5 });
-  var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(lowTransposer.getScoreState);
+  var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects
+    .map(lowTransposer.getScoreState);
+
+  var narrationComposer = NarrationDataComposer();
+  var narrationGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects
+    .map(narrationComposer.getScoreState);
 
   ticker = Ticker({
     onTick,
@@ -101,7 +105,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   });
 
   sampleDownloader = SampleDownloader({
-    sampleFiles: ['bagpipe-c.wav', 'flute-G4-edit.wav', 'trumpet-D2.wav', 'Vibraphone.sustain.ff.D4.wav'],
+    sampleFiles: ['bagpipe-c.wav', 'flute-G4-edit.wav', 'trumpet-D2.wav', 'Vibraphone.sustain.ff.D4.wav', '1921-1930.wav', '1921-1930.wav', '1921-1930.wav'],
     localMode: true,
     onComplete,
     handleError
@@ -110,14 +114,29 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
 
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
-    console.log(buffers);
-    mainScoreDirector = ScoreDirector({ 
-      ctx, sampleBuffer: buffers[sampleIndex], mainOutNode,
+    mainScoreDirector = ScoreDirector({
+      directorName: 'main',
+      ctx,
+      sampleBuffer: buffers[sampleIndex],
+      mainOutNode,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([ 0, 0.5, 1 ])
     });
     lowScoreDirector = ScoreDirector({
-      ctx, sampleBuffer: buffers[3], mainOutNode, ampFactor: 0.5, fadeLengthFactor: 4 
+      directorName: 'low', ctx, sampleBuffer: buffers[3], mainOutNode, ampFactor: 0.5, fadeLengthFactor: 4 
+    });
+    narrationDirector = ScoreDirector({
+      directorName: 'narration',
+      ctx,
+      sampleBuffer: null,
+      variableSampleBuffers: buffers.slice(4),
+      mainOutNode,
+      idScoreEvent: function getSampleIndex(scoreEvent: ScoreEvent) {
+        if (!isNaN(scoreEvent.variableSampleIndex)) {
+          return '' + scoreEvent.variableSampleIndex;
+        }
+        return 'rest';
+      }
     });
 
     wireControls({
@@ -134,6 +153,8 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     //var chord = director.getChord({ ticks });
     var mainGroupScoreState = mainGroupScoreStateObjects[ticks];
     var lowGroupScoreState = lowGroupScoreStateObjects[ticks];
+    var narrationGroupScoreState = narrationGroupScoreStateObjects[ticks];
+
     var tickLength = currentTickLengthSeconds;
     if (!isNaN(mainGroupScoreState.tickLength)) {
       tickLength = mainGroupScoreState.tickLength;
@@ -166,6 +187,9 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     );
     lowScoreDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState),
+    );
+    narrationDirector.play(
+      Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState),
     );
   }
 

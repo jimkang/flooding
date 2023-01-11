@@ -12,14 +12,22 @@ export interface ScoreEvent {
   delay: number;
   peakGain: number;
   pan?: number;
+
+  // By default, it is assumed that ScoreEvent will always be using the same sample.
+  // variableSampleIndex allows the specification of different samples per event.
+  variableSampleIndex?: number;
+  meta?: EventMetadata;
+  rest?: boolean;
 }
 
 export interface EventMetadata {
   chordPitchCount?: number;
+  sourceDatum?;
 }
 
 export interface PlayEvent {
   scoreEvent: ScoreEvent;
   nodes: SynthNode[];
   started: boolean;
+  rest?: boolean;
 }
