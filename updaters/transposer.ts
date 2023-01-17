@@ -23,6 +23,7 @@ export function Transposer({ seed, freqFactor, eventProportionToTranspose }: { s
 
     function transposeEvent(scoreEvent: ScoreEvent): ScoreEvent {
       var newEvent = Object.assign({}, scoreEvent);
+      // TODO: Different loop properties.
       newEvent.rate *= freqFactor;
       newEvent.pan *= -1;
       return newEvent;

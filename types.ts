@@ -7,6 +7,11 @@ export interface ScoreState {
   meta?: EventMetadata;
 }
 
+export interface Loop {
+  loopStartSeconds: number;
+  loopEndSeconds: number;
+}
+
 export interface ScoreEvent {
   rate: number;
   delay: number;
@@ -16,6 +21,7 @@ export interface ScoreEvent {
   // By default, it is assumed that ScoreEvent will always be using the same sample.
   // variableSampleIndex allows the specification of different samples per event.
   variableSampleIndex?: number;
+  loop?: Loop;
   meta?: EventMetadata;
   rest?: boolean;
 }

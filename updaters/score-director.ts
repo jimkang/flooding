@@ -94,11 +94,11 @@ export function ScoreDirector({
       var sampler = new Sampler(
         ctx,
         {      
-          sampleBuffer: eventSampleBuffer,
+          sampleBuffer: eventSampleBuffer, // TODO: Sample buffer by name.
           playbackRate: scoreEvent.rate,
-          loop: true,
-          loopStart: 0.1,
-          loopEnd: 2.5,
+          loop: !!scoreEvent.loop,
+          loopStart: scoreEvent?.loop?.loopStartSeconds,
+          loopEnd: scoreEvent?.loop?.loopEndSeconds,
           timeNeededForEnvelopeDecay: state.tickLength
         }
       );

@@ -51,6 +51,7 @@ export function DataComposer({ tempoFactor = 1, data, chordProp, chordXFloor, ch
         rate: tonalityDiamondPitches[chordIndex],
         delay: 0,
         peakGain: 0.8/pitches.length,
+        loop: { loopStartSeconds: 0.1, loopEndSeconds: 2.5 },
         meta: { sourceDatum }
       };
     }
