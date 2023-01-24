@@ -30,10 +30,12 @@ var lowScoreDirector;
 var narrationDirector;
 
 var renderDensity = RenderTimeSeries({
-  canvasId: 'density-canvas', color: 'hsl(30, 50%, 50%)'
+  canvasId: 'density-canvas',
+  color: 'hsl(30, 50%, 50%)',
 });
 var renderTickLengths = RenderTimeSeries({
-  canvasId: 'ticklength-canvas', color: 'hsl(50, 50%, 50%)'
+  canvasId: 'ticklength-canvas',
+  color: 'hsl(50, 50%, 50%)',
 });
 
 (async function go() {
@@ -47,7 +49,13 @@ var renderTickLengths = RenderTimeSeries({
   routeState.routeFromHash();
 })();
 
-async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTick, startTick = 0, sampleIndex = 2 }) {
+async function followRoute({
+  seed,
+  totalTicks,
+  tempoFactor = defaultSecondsPerTick,
+  startTick = 0,
+  sampleIndex = 2,
+}) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -65,7 +73,6 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
   }
 
   var ctx = values[0];
-  var mainOutNode = MainOut({ ctx });
 
   var composer = DataComposer({
     tempoFactor,
@@ -73,27 +80,48 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     chordProp: 'meanSeaLevelDeltaMM',
     chordXFloor: 6809,
     chordXCeil: 7387,
-    seed
+    seed,
   });
-  var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({ composer, totalTicks });
-  const totalTime = mainGroupScoreStateObjects.reduce(
+  var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
+    composer,
+    totalTicks,
+  });
+  const totalSeconds = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0
   );
-  console.log('totalTime in minutes', totalTime / 60);
-  console.log('Starting tick lengths', mainGroupScoreStateObjects.slice(0, 8).map(d => d.tickLength));
-  var firstBadEventDirection = mainGroupScoreStateObjects.find(state => !state.events.some(e => !e.delay) || state.tickLength <= 0);
+  console.log('totalTime in minutes', totalSeconds / 60);
+  console.log(
+    'Starting tick lengths',
+    mainGroupScoreStateObjects.slice(0, 8).map((d) => d.tickLength)
+  );
+  var firstBadEventDirection = mainGroupScoreStateObjects.find(
+    (state) => !state.events.some((e) => !e.delay) || state.tickLength <= 0
+  );
   if (firstBadEventDirection) {
-    throw new Error(`Event direction is bad: ${JSON.stringify(firstBadEventDirection, null, 2)}`);
+    throw new Error(
+      `Event direction is bad: ${JSON.stringify(
+        firstBadEventDirection,
+        null,
+        2
+      )}`
+    );
   }
 
-  var lowTransposer = Transposer({ seed, freqFactor: 0.125, eventProportionToTranspose: 0.5 });
-  var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects
-    .map(lowTransposer.getScoreState);
+  var mainOutNode = MainOut({ ctx, totalSeconds });
+
+  var lowTransposer = Transposer({
+    seed,
+    freqFactor: 0.125,
+    eventProportionToTranspose: 0.5,
+  });
+  var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(
+    lowTransposer.getScoreState
+  );
 
   var narrationComposer = NarrationDataComposer();
-  var narrationGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects
-    .map(narrationComposer.getScoreState);
+  var narrationGroupScoreStateObjects: ScoreState[] =
+    mainGroupScoreStateObjects.map(narrationComposer.getScoreState);
 
   ticker = Ticker({
     onTick,
@@ -101,14 +129,22 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     getTickLength,
     totalTicks,
     onPause: null,
-    onResume: null
+    onResume: null,
   });
 
   sampleDownloader = SampleDownloader({
-    sampleFiles: ['bagpipe-c.wav', 'flute-G4-edit.wav', 'trumpet-D2.wav', 'Vibraphone.sustain.ff.D4.wav', '1921-1930.wav', '1921-1930.wav', '1921-1930.wav'],
+    sampleFiles: [
+      'bagpipe-c.wav',
+      'flute-G4-edit.wav',
+      'trumpet-D2.wav',
+      'Vibraphone.sustain.ff.D4.wav',
+      '1921-1930.wav',
+      '1921-1930.wav',
+      '1921-1930.wav',
+    ],
     localMode: true,
     onComplete,
-    handleError
+    handleError,
   });
   sampleDownloader.startDownloads();
 
@@ -120,10 +156,15 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
       sampleBuffer: buffers[sampleIndex],
       mainOutNode,
       constantEnvelopeLength: 1.0,
-      envelopeCurve: new Float32Array([ 0, 0.5, 1 ])
+      envelopeCurve: new Float32Array([0, 0.5, 1]),
     });
     lowScoreDirector = ScoreDirector({
-      directorName: 'low', ctx, sampleBuffer: buffers[3], mainOutNode, ampFactor: 0.5, fadeLengthFactor: 4 
+      directorName: 'low',
+      ctx,
+      sampleBuffer: buffers[3],
+      mainOutNode,
+      ampFactor: 0.5,
+      fadeLengthFactor: 4,
     });
     narrationDirector = ScoreDirector({
       directorName: 'narration',
@@ -136,7 +177,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
           return '' + scoreEvent.variableSampleIndex;
         }
         return 'rest';
-      }
+      },
     });
 
     wireControls({
@@ -144,7 +185,7 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
       onPieceLengthChange,
       onTempoFactorChange,
       totalTicks,
-      tempoFactor
+      tempoFactor,
     });
   }
 
@@ -162,34 +203,43 @@ async function followRoute({ seed, totalTicks, tempoFactor = defaultSecondsPerTi
     renderEventDirection({
       tickIndex: ticks,
       tickLength,
-      chordSize: mainGroupScoreState.meta.chordPitchCount
+      chordSize: mainGroupScoreState.meta.chordPitchCount,
     });
 
     renderDensity({
-      valueOverTimeArray: mainGroupScoreStateObjects.map(({ tickLength, meta }) => ({ time: tickLength, value: meta.chordPitchCount })),
-      totalTime,
+      valueOverTimeArray: mainGroupScoreStateObjects.map(
+        ({ tickLength, meta }) => ({
+          time: tickLength,
+          value: meta.chordPitchCount,
+        })
+      ),
+      totalTime: totalSeconds,
       valueMax: tonalityDiamondPitches.length,
-      currentTick: ticks
+      currentTick: ticks,
     });
 
     renderTickLengths({
-      valueOverTimeArray: mainGroupScoreStateObjects.map(({ tickLength }) => ({ time: 1, value: tickLength })),
+      valueOverTimeArray: mainGroupScoreStateObjects.map(({ tickLength }) => ({
+        time: 1,
+        value: tickLength,
+      })),
       totalTime: mainGroupScoreStateObjects.length,
       valueMax: mainGroupScoreStateObjects.reduce(
-        (max, direction) => direction.tickLength > max ? direction.tickLength : max,
+        (max, direction) =>
+          direction.tickLength > max ? direction.tickLength : max,
         0
       ),
-      currentTick: ticks
+      currentTick: ticks,
     });
 
     mainScoreDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, mainGroupScoreState)
     );
     lowScoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState),
+      Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState)
     );
     narrationDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState),
+      Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
     );
   }
 
@@ -226,4 +276,3 @@ function renderVersion() {
 function onStart() {
   ticker.resume();
 }
-
