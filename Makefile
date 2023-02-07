@@ -16,7 +16,7 @@ build:
 	$(rollup) -c
 
 sync:
-	rsync -a $(HOMEDIR)/samples $(USER)@$(SERVER):/$(APPDIR)/samples
+	rsync -a $(HOMEDIR)/samples $(USER)@$(SERVER):/$(APPDIR)/
 	scp $(HOMEDIR)/app.css $(USER)@$(SERVER):/$(APPDIR)
 	scp $(HOMEDIR)/index.html $(USER)@$(SERVER):/$(APPDIR)
 	scp $(HOMEDIR)/index.js $(USER)@$(SERVER):/$(APPDIR)
