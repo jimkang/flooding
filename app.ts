@@ -54,7 +54,7 @@ async function followRoute({
   totalTicks,
   tempoFactor = defaultSecondsPerTick,
   startTick = 0,
-  sampleIndex = 2,
+  sampleIndex = 11,
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -136,10 +136,6 @@ async function followRoute({
 
   sampleDownloader = SampleDownloader({
     sampleFiles: [
-      'timpani-d.wav',
-      'tuba-d.wav',
-      'trumpet-D2.wav',
-      'picked_bassnote_d.wav',
       '1921-1930.wav',
       '1931-1940.wav',
       '1941-1950.wav',
@@ -151,6 +147,9 @@ async function followRoute({
       '2001-2010.wav',
       '2011-2020.wav',
       '2021.wav',
+      'trumpet-D2.wav',
+      'timpani-d.wav',
+      //'flute-G4-edit.wav'
     ],
     localMode: true,
     onComplete,
