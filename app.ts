@@ -112,8 +112,10 @@ async function followRoute({
 
   var lowTransposer = Transposer({
     seed,
-    freqFactor: 0.125,
+    freqFactor: 0.5,
     eventProportionToTranspose: 0.5,
+    sampleLoopStart: 0,
+    sampleLoopEnd: 2,
   });
   var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(
     lowTransposer.getScoreState
@@ -134,10 +136,10 @@ async function followRoute({
 
   sampleDownloader = SampleDownloader({
     sampleFiles: [
-      'bagpipe-c.wav',
-      'flute-G4-edit.wav',
+      'timpani-d.wav',
+      'tuba-d.wav',
       'trumpet-D2.wav',
-      'Vibraphone.sustain.ff.D4.wav',
+      'picked_bassnote_d.wav',
       '1921-1930.wav',
       '1931-1940.wav',
       '1941-1950.wav',
@@ -169,10 +171,10 @@ async function followRoute({
     lowScoreDirector = ScoreDirector({
       directorName: 'low',
       ctx,
-      sampleBuffer: buffers[3],
+      sampleBuffer: buffers[0],
       mainOutNode,
-      ampFactor: 0.5,
-      fadeLengthFactor: 4,
+      ampFactor: 1.5,
+      fadeLengthFactor: 1,
     });
     narrationDirector = ScoreDirector({
       directorName: 'narration',
