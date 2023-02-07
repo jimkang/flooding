@@ -61,7 +61,7 @@ async function followRoute({
   lowTransposeFreqFactor = 0.25,
   highVoiceSampleIndex = 13,
   highSampleLoopEnd = 2,
-  highTransposeFreqFactor = 1.5,
+  highTransposeFreqFactor = 0.75,
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
