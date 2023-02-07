@@ -17,6 +17,7 @@ export interface ScoreEvent {
   delay: number;
   peakGain: number;
   pan?: number;
+  fadeLength?: number;
 
   // By default, it is assumed that ScoreEvent will always be using the same sample.
   // variableSampleIndex allows the specification of different samples per event.

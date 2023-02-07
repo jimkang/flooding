@@ -16,29 +16,35 @@ export function NarrationDataComposer() {
       tickIndex: refState.tickIndex,
       tickLength: refState.tickLength,
       meta: cloneDeep(refState.meta),
-      events: [getScoreEvent(refState.events[0])]
+      events: [getScoreEvent(refState.events[0])],
     };
 
     function getScoreEvent(refEvent: ScoreEvent): ScoreEvent {
       var event = {
-        rate: 1, 
+        rate: 1,
         delay: 0,
         peakGain: 1,
         pan: 0,
-        meta: cloneDeep(refEvent.meta)
+        meta: cloneDeep(refEvent.meta),
       };
 
-      const eventDecade = ~~(+refEvent.meta.sourceDatum.year/10);
-      const decadeChanged = (eventDecade !== currentDecade);
+      const eventDecade = ~~(+refEvent.meta.sourceDatum.year / 10);
+      const decadeChanged = eventDecade !== currentDecade;
 
       if (decadeChanged) {
         currentDecade = eventDecade;
         const variableSampleIndex = sampleIndex;
         sampleIndex += 1;
 
-        console.log('Narration using sample', variableSampleIndex, 'at tick', refState.tickIndex);
+        console.log(
+          'Narration using sample',
+          variableSampleIndex,
+          'at tick',
+          refState.tickIndex
+        );
 
-        return Object.assign({ variableSampleIndex }, event);
+        // The narration samples should play in full without getting faded out.
+        return Object.assign({ variableSampleIndex, fadeLength: 5 }, event);
       } else {
         return Object.assign({ rest: true }, event);
       }

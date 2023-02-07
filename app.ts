@@ -167,7 +167,7 @@ async function followRoute({
       directorName: 'narration',
       ctx,
       sampleBuffer: null,
-      variableSampleBuffers: buffers.slice(4),
+      variableSampleBuffers: buffers.slice(0, 11),
       mainOutNode,
       idScoreEvent: function getSampleIndex(scoreEvent: ScoreEvent) {
         if (!isNaN(scoreEvent.variableSampleIndex)) {
@@ -175,6 +175,8 @@ async function followRoute({
         }
         return 'rest';
       },
+      // Narration samples should not fade.
+      envelopeCurve: new Float32Array([1, 1]),
     });
 
     wireControls({
