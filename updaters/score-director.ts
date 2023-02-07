@@ -296,6 +296,7 @@ function decommisionNode(synthNode: SynthNode) {
 function updatePlayEventNodeParams(playEvent: PlayEvent) {
   var samplerNode = playEvent.nodes.find((node) => node instanceof Sampler);
   if (samplerNode) {
+    // TODO: linear ramp?
     samplerNode.params.playbackRate = playEvent.scoreEvent.rate;
     samplerNode.syncToParams();
   }

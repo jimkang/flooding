@@ -43,6 +43,7 @@ export function Transposer({
         };
       }
       newEvent.rate *= freqFactor;
+      // TODO: Figure out a better distribution.
       newEvent.pan *= -1;
       return newEvent;
     }

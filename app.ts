@@ -27,6 +27,7 @@ var ticker;
 var sampleDownloader;
 var mainScoreDirector;
 var lowScoreDirector;
+var highScoreDirector;
 var narrationDirector;
 
 var renderDensity = RenderTimeSeries({
@@ -58,6 +59,9 @@ async function followRoute({
   lowVoiceSampleIndex = 13,
   lowSampleLoopEnd = 2,
   lowTransposeFreqFactor = 0.25,
+  highVoiceSampleIndex = 13,
+  highSampleLoopEnd = 2,
+  highTransposeFreqFactor = 1.5,
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -124,6 +128,17 @@ async function followRoute({
     lowTransposer.getScoreState
   );
 
+  var highTransposer = Transposer({
+    seed,
+    freqFactor: +highTransposeFreqFactor,
+    eventProportionToTranspose: 0.5,
+    sampleLoopStart: 0,
+    sampleLoopEnd: +highSampleLoopEnd,
+  });
+  var highGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(
+    highTransposer.getScoreState
+  );
+
   var narrationComposer = NarrationDataComposer();
   var narrationGroupScoreStateObjects: ScoreState[] =
     mainGroupScoreStateObjects.map(narrationComposer.getScoreState);
@@ -160,8 +175,16 @@ async function followRoute({
       ctx,
       sampleBuffer: buffers[lowVoiceSampleIndex],
       mainOutNode,
-      ampFactor: 1.5,
+      ampFactor: 1,
       fadeLengthFactor: 1,
+    });
+    highScoreDirector = ScoreDirector({
+      directorName: 'high',
+      ctx,
+      sampleBuffer: buffers[highVoiceSampleIndex],
+      mainOutNode,
+      ampFactor: 1,
+      fadeLengthFactor: 3,
     });
     narrationDirector = ScoreDirector({
       directorName: 'narration',
@@ -193,6 +216,7 @@ async function followRoute({
     //var chord = director.getChord({ ticks });
     var mainGroupScoreState = mainGroupScoreStateObjects[ticks];
     var lowGroupScoreState = lowGroupScoreStateObjects[ticks];
+    var highGroupScoreState = highGroupScoreStateObjects[ticks];
     var narrationGroupScoreState = narrationGroupScoreStateObjects[ticks];
 
     var tickLength = currentTickLengthSeconds;
@@ -236,6 +260,9 @@ async function followRoute({
     );
     lowScoreDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState)
+    );
+    highScoreDirector.play(
+      Object.assign({ tickLengthSeconds: tickLength }, highGroupScoreState)
     );
     narrationDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
