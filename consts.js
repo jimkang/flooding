@@ -14,5 +14,5 @@ export var sampleFilenames = [
   '2021.wav',
   'trumpet-D2.wav',
   'timpani-d.wav',
-  //'flute-G4-edit.wav'
+  'flute-G4-edit.wav',
 ];

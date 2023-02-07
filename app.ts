@@ -55,7 +55,9 @@ async function followRoute({
   tempoFactor = defaultSecondsPerTick,
   startTick = 0,
   sampleIndex = 11,
-  lowVoiceSampleIndex = 12,
+  lowVoiceSampleIndex = 13,
+  lowSampleLoopEnd = 2,
+  lowTransposeFreqFactor = 0.25,
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -113,10 +115,10 @@ async function followRoute({
 
   var lowTransposer = Transposer({
     seed,
-    freqFactor: 0.5,
+    freqFactor: +lowTransposeFreqFactor,
     eventProportionToTranspose: 0.5,
     sampleLoopStart: 0,
-    sampleLoopEnd: 2,
+    sampleLoopEnd: +lowSampleLoopEnd,
   });
   var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(
     lowTransposer.getScoreState
