@@ -267,7 +267,10 @@ function fadeToDeath(defaultFadeSeconds: number, playEvent: PlayEvent) {
     if (!envelopeNode) {
       throw new Error("Can't fade this. It's missing a Envelope synth node!");
     }
-    envelopeNode.linearRampTo(fadeSeconds, 0);
+
+    // TODO: Something else should manage canceling other scheduled events.
+    playEvent.nodes.forEach((node) => node.cancelScheduledRamps());
+    setTimeout(() => envelopeNode.linearRampTo(fadeSeconds, 0), 100);
   }
   setTimeout(() => decommisionNodes(playEvent), (fadeSeconds + 1) * 1000);
 }

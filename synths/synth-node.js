@@ -1,20 +1,7 @@
 //var SoundbankReverb = require('soundbank-reverb');
 
 var adsrCurve = new Float32Array([
-  0,
-  0.5,
-  1,
-  1,
-  1,
-  1,
-  0.95,
-  0.9,
-  0.8,
-  0.72,
-  0.6,
-  0.3,
-  0.1,
-  0
+  0, 0.5, 1, 1, 1, 1, 0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0,
 ]);
 //var asCurve = adsrCurve.slice(0, 3);
 
@@ -28,6 +15,7 @@ export class SynthNode {
     return this.node;
   }
   syncToParams() {}
+  cancelScheduledRamps() {}
   connect({ synthNode, audioNode }) {
     if (audioNode) {
       this.node.connect(audioNode);
@@ -80,6 +68,9 @@ export class Gain extends SynthNode {
   fadeOut(fadeSeconds) {
     this.node.gain.linearRampToValueAtTime(0, fadeSeconds);
   }
+  cancelScheduledRamps() {
+    this.node.gain.cancelScheduledValues(this.ctx.currentTime);
+  }
   play() {}
 }
 
@@ -94,17 +85,26 @@ export class Envelope extends SynthNode {
     if (params.envelopeLengthProportionToEvent) {
       this.envelopeLength *= params.envelopeLengthProportionToEvent;
     }
-    this.playCurve = 
-      (params.playCurve ? params.playCurve : adsrCurve).map(x => x * this.params.envelopeMaxGain);
+    this.playCurve = (params.playCurve ? params.playCurve : adsrCurve).map(
+      (x) => x * this.params.envelopeMaxGain
+    );
   }
   play({ startTime }) {
     this.node.gain.value = 0;
     //this.node.gain.setValueCurveAtTime(adsrCurve, startTime, envelopeLength);
-    this.node.gain.setValueCurveAtTime(this.playCurve, startTime, this.envelopeLength);
-    this.envelopeCompletionTime = startTime + this.envelopeLength;
+    this.node.gain.setValueCurveAtTime(
+      this.playCurve,
+      startTime,
+      this.envelopeLength
+    );
+    this.envelopeCompletionTime = startTime + this.envelopeLength * 1.1;
+  }
+  cancelScheduledRamps() {
+    this.node.gain.cancelScheduledValues(0); //this.ctx.currentTime);
   }
   linearRampTo(fadeSeconds, value) {
-    this.node.gain.cancelScheduledValues(0);
+    this.node.gain.cancelScheduledValues(0); //this.ctx.currentTime);
+
     // If an envelope is still running its curve, that needs to finish first.
     var secondsUntilEnvelopeCompletion = 0;
     const now = this.ctx.currentTime;
@@ -156,6 +156,9 @@ export class Sampler extends SynthNode {
     this.node.buffer = this.params.sampleBuffer;
     this.syncToParams();
   }
+  cancelScheduledRamps() {
+    this.node.playbackRate.cancelScheduledValues(this.ctx.currentTime);
+  }
   syncToParams() {
     if (this.params.sampleDetune) {
       this.node.detune.value = this.params.sampleDetune;
@@ -180,11 +183,12 @@ export class Panner extends SynthNode {
     super(ctx, params);
     this.node = ctx.createStereoPanner(this.ctx, { pan: params.pan });
   }
+  cancelScheduledRamps() {
+    this.node.pan.cancelScheduledValues(this.ctx.currentTime);
+  }
   syncToParams() {
     // TODO: Base it on tick size.
     this.node.pan.linearRampToValueAtTime(this.params.pan, 0.25);
   }
   play() {}
 }
-
-
