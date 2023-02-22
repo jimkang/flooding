@@ -25,9 +25,10 @@ export function ScoreDirector({
   variableSampleBuffers = null,
   directorName,
   idScoreEvent = defaultIdScoreEvent,
+  slideMode = true,
 }) {
   var scoreEventJoiner = DataJoiner({
-    keyFn: idScoreEvent,
+    keyFn: slideMode ? idScoreEvent : null,
   });
   var playEvents: PlayEvent[] = [];
 
@@ -130,6 +131,7 @@ export function ScoreDirector({
         loopStart: scoreEvent?.loop?.loopStartSeconds,
         loopEnd: scoreEvent?.loop?.loopEndSeconds,
         timeNeededForEnvelopeDecay: state.tickLength,
+        rampSeconds: state.tickLength / 4,
       });
       //const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);
       var envelope = new Envelope(ctx, {
@@ -159,11 +161,19 @@ export function ScoreDirector({
       };
     }
 
-    function existingPlayEventForScoreEvent(scoreEvent: ScoreEvent): PlayEvent {
+    function existingPlayEventForScoreEvent(
+      scoreEvent: ScoreEvent,
+      index: number
+    ): PlayEvent {
+      var playEvent: PlayEvent;
       const id = idScoreEvent(scoreEvent);
-      var playEvent = playEvents.find(
-        (playEvent) => idScoreEvent(playEvent.scoreEvent) === id
-      );
+      if (slideMode && index < playEvents.length) {
+        playEvent = playEvents[index];
+      } else {
+        playEvent = playEvents.find(
+          (playEvent) => idScoreEvent(playEvent.scoreEvent) === id
+        );
+      }
       if (!playEvent) {
         throw new Error(`Could not find a play event for ${id}.`);
       }
@@ -176,7 +186,7 @@ export function ScoreDirector({
     ) {
       const indexes = playEventsToRemove
         .map(findEventToRemove)
-        .sort(checkCompare);
+        .sort(slideMode ? compareIndexes : checkCompare);
 
       console.log(
         'Removing indexes',
@@ -240,6 +250,11 @@ export function ScoreDirector({
   }
 
   function appendIfNotYetInList(list: PlayEvent[], item: PlayEvent) {
+    if (slideMode) {
+      list.push(item);
+      return;
+    }
+
     const newId = idScoreEvent(item.scoreEvent);
     var existing = list.find(
       (listItem) => idScoreEvent(listItem.scoreEvent) === newId
@@ -299,7 +314,6 @@ function decommisionNode(synthNode: SynthNode) {
 function updatePlayEventNodeParams(playEvent: PlayEvent) {
   var samplerNode = playEvent.nodes.find((node) => node instanceof Sampler);
   if (samplerNode) {
-    // TODO: linear ramp?
     samplerNode.params.playbackRate = playEvent.scoreEvent.rate;
     samplerNode.syncToParams();
   }
@@ -326,4 +340,11 @@ function checkCompare(a, b) {
   throw new Error(
     `There is a duplicate in the PlayEvents to remove at index ${a}.`
   );
+}
+
+function compareIndexes(a, b) {
+  if (a > b) {
+    return -1;
+  }
+  return 1;
 }
