@@ -171,6 +171,7 @@ async function followRoute({
       mainOutNode,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([0, 0.5, 1]),
+      slideMode: true,
     });
     lowScoreDirector = ScoreDirector({
       directorName: 'low',
@@ -179,6 +180,7 @@ async function followRoute({
       mainOutNode,
       ampFactor: 1,
       fadeLengthFactor: 1,
+      slideMode: true,
     });
     if (playHighPart) {
       highScoreDirector = ScoreDirector({
@@ -188,6 +190,7 @@ async function followRoute({
         mainOutNode,
         ampFactor: 1,
         fadeLengthFactor: 3,
+        slideMode: true,
       });
     }
     narrationDirector = ScoreDirector({
@@ -204,6 +207,7 @@ async function followRoute({
       },
       // Narration samples should not fade.
       envelopeCurve: new Float32Array([1, 1]),
+      slideMode: false,
     });
 
     wireControls({

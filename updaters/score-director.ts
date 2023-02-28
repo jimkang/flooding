@@ -27,9 +27,12 @@ export function ScoreDirector({
   idScoreEvent = defaultIdScoreEvent,
   slideMode = true,
 }) {
-  var scoreEventJoiner = DataJoiner({
-    keyFn: slideMode ? idScoreEvent : null,
-  });
+  var keyFn = idScoreEvent;
+  // In slideMode, use the default DataJoiner behavior, which uses the data array positions as ids.
+  if (slideMode) {
+    keyFn = null;
+  }
+  var scoreEventJoiner = DataJoiner({ keyFn });
   var playEvents: PlayEvent[] = [];
 
   return { play };
@@ -43,7 +46,11 @@ export function ScoreDirector({
     );
 
     var exitingScoreEvents = scoreEventJoiner.exit();
-    console.log('exitingScoreEvents', exitingScoreEvents.map(idScoreEvent));
+    console.log(
+      directorName,
+      'exitingScoreEvents',
+      exitingScoreEvents.map(idScoreEvent)
+    );
     var exitingPlayEvents = exitingScoreEvents.map(
       existingPlayEventForScoreEvent
     );
@@ -56,7 +63,11 @@ export function ScoreDirector({
     exitingPlayEvents.forEach(curry(fadeToDeath)(fadeLength));
 
     var newScoreEvents = scoreEventJoiner.enter();
-    console.log('newScoreEvents', newScoreEvents.map(idScoreEvent));
+    console.log(
+      directorName,
+      'newScoreEvents',
+      newScoreEvents.map(idScoreEvent)
+    );
     var newPlayEvents = newScoreEvents.map(
       curry(newPlayEventForScoreEvent)(state.events.length)
     );
@@ -71,10 +82,15 @@ export function ScoreDirector({
     newPlayEvents.forEach(playPlayEvent);
 
     console.log(
+      directorName,
       'current scoreEvents',
       state.events.map((e) => idScoreEvent(e))
     );
-    console.log('current playEvents', getIdsForPlayEvents(playEvents));
+    console.log(
+      directorName,
+      'current playEvents',
+      getIdsForPlayEvents(playEvents)
+    );
     state.events
       .map(existingPlayEventForScoreEvent)
       .forEach(updatePlayEventNodeParams);
@@ -131,7 +147,7 @@ export function ScoreDirector({
         loopStart: scoreEvent?.loop?.loopStartSeconds,
         loopEnd: scoreEvent?.loop?.loopEndSeconds,
         timeNeededForEnvelopeDecay: state.tickLength,
-        rampSeconds: state.tickLength / 4,
+        rampSeconds: state.tickLength / 5,
       });
       //const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);
       var envelope = new Envelope(ctx, {
