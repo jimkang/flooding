@@ -216,8 +216,16 @@ export class Panner extends SynthNode {
     this.node.pan.cancelScheduledValues(this.ctx.currentTime);
   }
   syncToParams() {
-    // TODO: Base it on tick size.
-    this.node.pan.linearRampToValueAtTime(this.params.pan, 0.25);
+    //this.node.pan.linearRampToValueAtTime(
+    //this.params.pan,
+    //isNaN(this.params.rampSeconds) ? 0.1 : this.params.rampSeconds
+    //);
+    homemadeLinearRamp(
+      this.node.pan,
+      this.params.pan,
+      this.ctx,
+      isNaN(this.params.rampSeconds) ? 0.1 : this.params.rampSeconds
+    );
   }
   play() {}
 }

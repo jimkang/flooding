@@ -93,7 +93,7 @@ export function ScoreDirector({
     );
     state.events
       .map(existingPlayEventForScoreEvent)
-      .forEach(updatePlayEventNodeParams);
+      .forEach(curry(updatePlayEventNodeParams)(state.tickLength));
 
     function playPlayEvent(playEvent: PlayEvent) {
       if (playEvent.rest) {
@@ -158,12 +158,15 @@ export function ScoreDirector({
           : state.tickLength * envelopeLengthFactor,
         playCurve: envelopeCurve,
       });
-      var panner = new Panner(ctx, { pan: scoreEvent.pan });
+      var panner = new Panner(ctx, {
+        pan: scoreEvent.pan,
+        rampSeconds: state.tickLength,
+      });
 
       sampler.connect({ synthNode: envelope, audioNode: null });
       envelope.connect({ synthNode: panner, audioNode: null });
 
-      var nodes = [sampler, envelope, panner];
+      var nodes: Array<SynthNode> = [sampler, envelope, panner];
       if (ampFactor !== 1.0) {
         let gain = new Gain(ctx, { gain: ampFactor });
         panner.connect({ synthNode: gain, audioNode: null });
@@ -327,7 +330,7 @@ function decommisionNode(synthNode: SynthNode) {
   }
 }
 
-function updatePlayEventNodeParams(playEvent: PlayEvent) {
+function updatePlayEventNodeParams(tickLength: number, playEvent: PlayEvent) {
   var samplerNode = playEvent.nodes.find((node) => node instanceof Sampler);
   if (samplerNode) {
     samplerNode.params.playbackRate = playEvent.scoreEvent.rate;
@@ -335,6 +338,7 @@ function updatePlayEventNodeParams(playEvent: PlayEvent) {
   }
   var pannerNode = playEvent.nodes.find((node) => node instanceof Panner);
   if (pannerNode) {
+    pannerNode.params.rampSeconds = tickLength;
     pannerNode.params.pan = playEvent.scoreEvent.pan;
     pannerNode.syncToParams();
   }

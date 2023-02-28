@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width" initial-scale="1">
+    <title>The Web Audio API's linearRampToValueAtTime doesn't work on playbackRate - jimkang.com
+    </title>
+    <link rel="alternate" href="http://jimkang.com/feed.xml" type="application/rss+xml" title="It's dot com.">
+    <link rel="stylesheet" href="/weblog/css/main.css">
+  </head>
+  <body class="article-detail">
+<style>
+#message-field {
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.button-container button {
+  font-size: larger;
+  margin-bottom: 0.5rem;
+}
+</style>
+
+<p><hr>
+<span id="message-field">Loading&nbsp;sample…</span></p>
+<p><div class="button-container">
+  <button id="play-builtin-ramp" disabled>Play sample with linearRampToValueAtTime</button>
+  <button id="play-homemade-ramp" disabled>Play sample with homemade ramp</button>
+</div></p>
+<hr>
+
+<p><noscript>(If you’re reading this from <span class="caps">RSS</span>: There’s a demo here, probably not displaying in your RSS reader. You have to click through to see it.)</noscript></p>
+<script>
+var playBuiltInButton;
+var playHomemadeButton;
+var messageField;
+
+(function rampDemo() {
+  messageField = document.getElementById('message-field');
+  playBuiltInButton = document.getElementById('play-builtin-ramp');
+  playHomemadeButton = document.getElementById('play-homemade-ramp');
+
+  getSample();
+})();
+
+
+async function getSample() {
+  var ctx = new AudioContext();
+
+  try {
+    var res = await fetch('flute_note_tremolo.wav');
+    if (!res.ok) {
+      throw new Error(`Error while trying to get sample. Status: ${res.status}`);
+    }
+    var blob = await res.blob();
+    var rawBuffer = await blob.arrayBuffer();
+    ctx.decodeAudioData(rawBuffer, setBuffer);
+  } catch (error) {
+    messageField.textContent = error.message;
+  }
+
+  function setBuffer(decoded) {
+    messageField.textContent = "The sample is loaded. Click a button to play it with either the built-in ramp (which doesn't work on Firefox) or homemade ramp.";
+
+    var builtInPlayer = Player({ runRamp: runBuiltInRamp, buffer: decoded, ctx });
+    var homemadePlayer = Player({ runRamp: runHomemadeRamp, buffer: decoded, ctx });
+
+    playBuiltInButton.addEventListener('click', builtInPlayer.play);
+    playHomemadeButton.addEventListener('click', homemadePlayer.play);
+
+    playBuiltInButton.removeAttribute('disabled');
+    playHomemadeButton.removeAttribute('disabled');
+  }
+}
+
+function Player({ runRamp, buffer, ctx }) {
+  var timeoutKey;
+  var samplerNode;
+
+  return { play };
+
+  function play() {
+    if (timeoutKey) {
+      clearTimeout(timeoutKey);
+    }
+    if (samplerNode) {
+      samplerNode.stop();
+    }
+
+    samplerNode = ctx.createBufferSource();
+    samplerNode.loop = true;
+    samplerNode.buffer = buffer;
+
+    pannerNode = ctx.createStereoPanner();
+    pannerNode.pan = -1;
+    samplerNode.connect(pannerNode);
+    pannerNode.connect(ctx.destination);
+
+    //samplerNode.connect(ctx.destination);
+    samplerNode.start();
+    runRamp({ ctx, node: pannerNode, param: 'pan', targetVal: 1 });
+
+    timeoutKey = setTimeout(() => samplerNode.stop(), 6000);
+  }
+}
+
+function runBuiltInRamp({ ctx, node, param = 'playbackRate', targetVal = 2, durationSeconds = 4 }) {
+  node[param].linearRampToValueAtTime(
+    targetVal,
+    ctx.currentTime + durationSeconds
+  );
+}
+
+function runHomemadeRamp({ ctx, node, param = 'playbackRate', targetVal = 2, durationSeconds = 4  }) {
+  homemadeLinearRamp({ param: node[param], targetVal, ctx, durationSeconds });
+}
+
+// Warning: cancelScheduledValues doesn't cancel this.
+function homemadeLinearRamp({ param, targetVal, ctx, durationSeconds }) {
+  const startTime = ctx.currentTime;
+  const startVal = param.value;
+  const valDelta = targetVal - startVal;
+  window.requestAnimationFrame(updateParam);
+
+  function updateParam() {
+    const elapsed = ctx.currentTime - startTime;
+    const progress = elapsed / durationSeconds;
+    param.value = startVal + progress * valDelta;
+    if (progress < 1) {
+      window.requestAnimationFrame(updateParam);
+    }
+  }
+}
+</script>
+  </body>
+</html>
