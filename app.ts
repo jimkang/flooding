@@ -171,7 +171,7 @@ async function followRoute({
       mainOutNode,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([0, 0.5, 1]),
-      slideMode: true,
+      slideMode: false,
     });
     lowScoreDirector = ScoreDirector({
       directorName: 'low',
