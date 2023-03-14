@@ -63,6 +63,7 @@ async function followRoute({
   highSampleLoopEnd = 2,
   highTransposeFreqFactor = 0.75,
   playHighPart = false,
+  chordScaleExponent = 25,
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -88,6 +89,7 @@ async function followRoute({
     chordProp: 'meanSeaLevelDeltaMM',
     chordXFloor: 6809,
     chordXCeil: 7387,
+    chordScaleExponent: +chordScaleExponent,
     seed,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
