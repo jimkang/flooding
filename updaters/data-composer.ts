@@ -17,7 +17,8 @@ export function DataComposer({
   chordXFloor,
   chordXCeil,
   seed,
-  chordScaleExponent = 25,
+  chordScaleExponent,
+  chordSizeLengthExp,
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   var chordScale = scalePow()
@@ -63,7 +64,7 @@ export function DataComposer({
       return {
         rate: tonalityDiamondPitches[chordIndex],
         delay: 0,
-        peakGain: 0.8 / pitches.length,
+        peakGain: 1.0 / pitches.length,
         loop: { loopStartSeconds: 0.1, loopEndSeconds: 2.5 },
         meta: { sourceDatum },
       };
@@ -90,7 +91,8 @@ export function DataComposer({
     if (pastPitchCounts.length > 0) {
       const propOfDiamondUnused =
         (maxPitchCount - pastPitchCount) / maxPitchCount;
-      tickLength = tickLength * Math.pow(propOfDiamondUnused, 3);
+      tickLength =
+        tickLength * Math.pow(propOfDiamondUnused, chordSizeLengthExp);
       //(0.8 + 0.4 * prob.roll(100)/100);
     }
     tickLength *= tempoFactor;
