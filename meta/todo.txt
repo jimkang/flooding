@@ -1,13 +1,3 @@
-Pops at ticks:
-
-- 31
-- 49
-- 72
-- 96
-- 100
-- 102
-- 339
-
 - Need ending.
 - Things feel stuck around tick 800. A lot of the bigger chords (~20 pitches) are going by really quickly, so everything seems a little samey. Maybe don't make the big chords quite as short?
 - Vary attack amplitudes.
@@ -20,4 +10,13 @@ Done:
 - Narration sample plays only partially around 1961.
 - Add a high vibraphone part?
 - Add a high flute part?
-- Is the compressor actually doing anything? A: Nothing important.
+- Pops at ticks:
+  - 31
+  - 49
+  - 72
+  - 96
+  - 100
+  - 102
+  - 339
+
+ Is the compressor actually doing anything? A: Nothing important.

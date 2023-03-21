@@ -65,7 +65,8 @@ export function DataComposer({
         rate: tonalityDiamondPitches[chordIndex],
         delay: 0,
         peakGain: 1.0 / pitches.length,
-        loop: { loopStartSeconds: 0.1, loopEndSeconds: 2.5 },
+        // Undefined loopEndSeconds tells the director to play to the end of the sample.
+        loop: { loopStartSeconds: 0.1, loopEndSeconds: undefined },
         meta: { sourceDatum },
       };
     }

@@ -197,8 +197,12 @@ export class Sampler extends SynthNode {
 
     if (this.params.loop) {
       this.node.loop = this.params.loop;
-      this.node.loopStart = this.params.loopStart;
-      this.node.loopEnd = this.params.loopEnd;
+      if (!isNaN(this.params.loopStart)) {
+        this.node.loopStart = this.params.loopStart;
+      }
+      if (!isNaN(this.params.loopEnd)) {
+        this.node.loopEnd = this.params.loopEnd;
+      }
     }
   }
   play({ startTime }) {
