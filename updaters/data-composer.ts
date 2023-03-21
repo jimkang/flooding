@@ -1,6 +1,5 @@
 import { tonalityDiamondPitches } from '../tonality-diamond';
 import { range } from 'd3-array';
-//import { scaleLinear } from 'd3-scale';
 import { scalePow } from 'd3-scale';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
@@ -9,6 +8,20 @@ import { ScoreState, ScoreEvent } from '../types';
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.125;
+
+const lowestRatio = tonalityDiamondPitches.reduce(
+  (lowest, current) => (lowest < current ? lowest : current),
+  10
+);
+const highestRatio = tonalityDiamondPitches.reduce(
+  (highest, current) => (highest > current ? highest : current),
+  -10
+);
+
+var ratioToGainAdjScale = scalePow()
+  .exponent(2)
+  .domain([lowestRatio, highestRatio])
+  .range([0.0001, 1.0]);
 
 export function DataComposer({
   tempoFactor = 1,
@@ -64,7 +77,9 @@ export function DataComposer({
       return {
         rate: tonalityDiamondPitches[chordIndex],
         delay: 0,
-        peakGain: 1.0 / pitches.length,
+        peakGain: 1.0 / maxPitchCount,
+        //ratioToGainAdjScale(tonalityDiamondPitches[chordIndex]) *
+        //(1.0 / pitches.length),
         // Undefined loopEndSeconds tells the director to play to the end of the sample.
         loop: { loopStartSeconds: 0.1, loopEndSeconds: undefined },
         meta: { sourceDatum },
