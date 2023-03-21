@@ -147,6 +147,7 @@ export function ScoreDirector({
         loopStart: scoreEvent?.loop?.loopStartSeconds,
         loopEnd: scoreEvent?.loop?.loopEndSeconds,
         timeNeededForEnvelopeDecay: state.tickLength,
+        enableRamp: slideMode,
         rampSeconds: state.tickLength / 5,
       });
       //const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);

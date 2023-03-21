@@ -174,24 +174,24 @@ export class Sampler extends SynthNode {
       if (isNaN(this.node.playbackRate.value)) {
         this.node.playbackRate.value = this.params.playbackRate;
       } else {
-        console.log(
-          'sliding from',
-          this.node.playbackRate.value,
-          'to',
-          this.params.playbackRate,
-          'at',
-          this.ctx.currentTime + this.rampSeconds
-        );
-        homemadeLinearRamp(
-          this.node.playbackRate,
-          this.params.playbackRate,
-          this.ctx,
-          this.rampSeconds
-        );
-        //this.node.playbackRate.linearRampToValueAtTime(
-        //this.params.playbackRate,
-        //this.ctx.currentTime + this.rampSeconds
-        //);
+        if (this.params.enableRamp) {
+          console.log(
+            'sliding from',
+            this.node.playbackRate.value,
+            'to',
+            this.params.playbackRate,
+            'at',
+            this.ctx.currentTime + this.rampSeconds
+          );
+          homemadeLinearRamp(
+            this.node.playbackRate,
+            this.params.playbackRate,
+            this.ctx,
+            this.rampSeconds
+          );
+        } else {
+          this.node.playbackRate.value = this.params.playbackRate;
+        }
       }
     }
 
