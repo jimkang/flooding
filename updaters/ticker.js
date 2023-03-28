@@ -3,9 +3,11 @@ export function Ticker({
   startTick,
   onPause,
   onResume,
+  onEndOfTicks,
   totalTicks,
-  getTickLength
+  getTickLength,
 }) {
+  totalTicks = +totalTicks;
   var ticks = 0;
   startTick = +startTick;
   if (!isNaN(startTick) && startTick > -1) {
@@ -23,7 +25,6 @@ export function Ticker({
     isPaused,
     getCurrentTickLength,
   };
-
 
   function getTicks() {
     return ticks;
@@ -58,11 +59,20 @@ export function Ticker({
     }
     onTick({ ticks, currentTickLengthSeconds });
     ticks += 1;
+    if (ticks === totalTicks && onEndOfTicks) {
+      setTimeout(sendEndEvent, currentTickLengthSeconds * 1000);
+      return;
+    }
+
     if (ticks >= totalTicks) {
       return;
     }
 
     timeoutKey = setTimeout(tick, currentTickLengthSeconds * 1000);
+  }
+
+  function sendEndEvent() {
+    onEndOfTicks();
   }
 
   function isPaused() {
@@ -73,4 +83,3 @@ export function Ticker({
     return currentTickLengthSeconds;
   }
 }
-

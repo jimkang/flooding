@@ -35,7 +35,15 @@ export function ScoreDirector({
   var scoreEventJoiner = DataJoiner({ keyFn });
   var playEvents: PlayEvent[] = [];
 
-  return { play };
+  return { play, end };
+
+  function end() {
+    play({
+      events: [],
+      tickIndex: Infinity,
+      tickLength: 1,
+    });
+  }
 
   function play(state: ScoreState) {
     scoreEventJoiner.update(state.events);

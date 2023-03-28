@@ -156,6 +156,7 @@ async function followRoute({
     totalTicks,
     onPause: null,
     onResume: null,
+    onEndOfTicks,
   });
 
   sampleDownloader = SampleDownloader({
@@ -283,6 +284,14 @@ async function followRoute({
     narrationDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
     );
+  }
+
+  function onEndOfTicks() {
+    mainScoreDirector.end();
+    lowScoreDirector.end();
+    if (playHighPart) {
+      highScoreDirector.end();
+    }
   }
 
   function getTickLength(ticks) {

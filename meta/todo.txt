@@ -1,13 +1,14 @@
-- Need ending.
 - Things feel stuck around tick 800. A lot of the bigger chords (~20 pitches) are going by really quickly, so everything seems a little samey. Maybe don't make the big chords quite as short?
   - Use d3-scale to map to a minimum tick length.
 - Vary attack amplitudes.
 - More intensity is needed at the end.
 - Bass is hitting negative playback rates around tick 79. Maybe there should be negative values at the end.
 - Narration sample plays only partially around 1100.
+- More pops around 145, possibly in bass.
 
 Done:
 
+- Need ending.
 - Narration sample plays only partially around 1961.
 - Add a high vibraphone part?
 - Add a high flute part?
