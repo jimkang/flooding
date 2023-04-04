@@ -8,7 +8,7 @@ import { ScoreState, ScoreEvent } from '../types';
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.125;
-const lastEventLengthFactor = 32;
+const lastEventLengthFactor = 96;
 
 //const lowestRatio = tonalityDiamondPitches.reduce(
 //(lowest, current) => (lowest < current ? lowest : current),

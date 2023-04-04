@@ -3,8 +3,8 @@
 - Vary attack amplitudes.
 - More intensity is needed at the end.
 - Bass is hitting negative playback rates around tick 79. Maybe there should be negative values at the end.
-- Narration sample plays only partially around 1100.
-- More pops around 145, possibly in bass.
+- Narration sample plays only partially around 1100. And at the 1990 one.
+- More pops around 145, possibly in bass. Also 55, 270, 520, 720
 
 Done:
 
