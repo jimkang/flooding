@@ -47,7 +47,7 @@ export function DataComposer({
 
   return { getScoreState };
 
-  function getScoreState(): ScoreState {
+  function getScoreState(tickIndex, indexOfTickIndex, tickIndexes): ScoreState {
     var sourceDatum = data[index];
     var chordPitchCount = Math.round(chordScale(+sourceDatum[chordProp]));
     if (chordPitchCount < 1) {
@@ -59,10 +59,12 @@ export function DataComposer({
       }
     }
     pastPitchCounts.push(chordPitchCount);
+    const tickLength = getTickLength();
     var scoreState = {
       events: range(chordPitchCount).map(getScoreEvent),
       tickIndex: index,
-      tickLength: getTickLength(),
+      tickLength,
+      durationTicks: Math.max(1, Math.ceil(tickIndex/tickIndexes.length * 100)),
       meta: { chordPitchCount },
     };
     var pans = getPans(chordPitchCount);

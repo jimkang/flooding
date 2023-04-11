@@ -64,11 +64,12 @@ export function ScoreDirector({
     );
     checkExitingPlayEvents(exitingPlayEvents);
     removePlayEventsFromList(exitingPlayEvents, playEvents);
+    const fadeStartOffset = state.tickLength * (state.durationTicks || 1);
     var fadeLength = state.tickLength;
-    if (state.tickLength > 1) {
+    if (fadeLength > 1) {
       fadeLength *= fadeLengthFactor;
     }
-    exitingPlayEvents.forEach(curry(fadeToDeath)(fadeLength));
+    exitingPlayEvents.forEach(curry(fadeToDeath)(fadeStartOffset, fadeLength));
 
     var newScoreEvents = scoreEventJoiner.enter();
     console.log(
@@ -297,7 +298,7 @@ export function ScoreDirector({
   }
 }
 
-function fadeToDeath(defaultFadeSeconds: number, playEvent: PlayEvent) {
+function fadeToDeath(fadeStartOffset: number, defaultFadeSeconds: number, playEvent: PlayEvent) {
   var fadeSeconds = playEvent.scoreEvent.fadeLength;
   if (isNaN(fadeSeconds)) {
     fadeSeconds = defaultFadeSeconds;
@@ -313,9 +314,9 @@ function fadeToDeath(defaultFadeSeconds: number, playEvent: PlayEvent) {
 
     // TODO: Something else should manage canceling other scheduled events.
     playEvent.nodes.forEach((node) => node.cancelScheduledRamps());
-    setTimeout(() => envelopeNode.linearRampTo(fadeSeconds, 0), 100);
+    setTimeout(() => envelopeNode.linearRampTo(fadeSeconds, 0), fadeStartOffset * 1000);
   }
-  setTimeout(() => decommisionNodes(playEvent), (fadeSeconds + 1) * 1000);
+  setTimeout(() => decommisionNodes(playEvent), (fadeStartOffset + fadeSeconds + 1) * 1000);
 }
 
 // TODO: Find out if this is even necessary.
