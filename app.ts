@@ -93,11 +93,13 @@ async function followRoute({
     chordScaleExponent: +chordScaleExponent,
     chordSizeLengthExp: +chordSizeLengthExp,
     seed,
+    totalTicks 
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
     composer,
     totalTicks,
   });
+  console.log(mainGroupScoreStateObjects.map(s => s.durationTicks));
   const totalSeconds = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0

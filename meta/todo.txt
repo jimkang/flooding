@@ -1,14 +1,15 @@
 - Things feel stuck around tick 800. A lot of the bigger chords (~20 pitches) are going by really quickly, so everything seems a little samey. Maybe don't make the big chords quite as short?
   - More intensity is needed at the end.
-  - Use d3-scale to map to a minimum tick length.
-    - There's a difference between tick length and duration. More events need to overlap.
 - Vary attack amplitudes.
 - Bass is hitting negative playback rates around tick 79. Maybe there should be negative values at the end.
 - Narration sample plays only partially around 1100. And at the 1990 one.
 - More pops around 145, possibly in bass. Also 55, 270, 520, 720
+- Vary loop lengths.
 
 Done:
 
+  - Use scale to map to a tick length.
+    - There's a difference between tick length and duration. More events need to overlap.
 - Need ending.
 - Narration sample plays only partially around 1961.
 - Add a high vibraphone part?

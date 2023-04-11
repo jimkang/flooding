@@ -1,6 +1,7 @@
 import { tonalityDiamondPitches } from '../tonality-diamond';
 import { range } from 'd3-array';
 import { scalePow } from 'd3-scale';
+import { easeExpIn, easeExpOut } from 'd3-ease';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
 import { ScoreState, ScoreEvent } from '../types';
@@ -9,6 +10,8 @@ const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.125;
 const lastEventLengthFactor = 96;
+const durationScaleInOutInflection = 0.7;
+const durationFactor = 10;
 
 //const lowestRatio = tonalityDiamondPitches.reduce(
 //(lowest, current) => (lowest < current ? lowest : current),
@@ -33,6 +36,7 @@ export function DataComposer({
   seed,
   chordScaleExponent,
   chordSizeLengthExp,
+  totalTicks,
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   var chordScale = scalePow()
@@ -47,7 +51,7 @@ export function DataComposer({
 
   return { getScoreState };
 
-  function getScoreState(tickIndex, indexOfTickIndex, tickIndexes): ScoreState {
+  function getScoreState(tickIndex): ScoreState {
     var sourceDatum = data[index];
     var chordPitchCount = Math.round(chordScale(+sourceDatum[chordProp]));
     if (chordPitchCount < 1) {
@@ -64,7 +68,7 @@ export function DataComposer({
       events: range(chordPitchCount).map(getScoreEvent),
       tickIndex: index,
       tickLength,
-      durationTicks: Math.max(1, Math.ceil(tickIndex/tickIndexes.length * 100)),
+      durationTicks: getDurationTicks(tickIndex),
       meta: { chordPitchCount },
     };
     var pans = getPans(chordPitchCount);
@@ -141,5 +145,21 @@ export function DataComposer({
     }
 
     return tickLength;
+  }
+
+  function getDurationTicks(tickIndex) {
+    const proportion = tickIndex / totalTicks;
+    let eventSpecificDurationFactor;
+    if (proportion < durationScaleInOutInflection) {
+      eventSpecificDurationFactor = easeExpIn(proportion / durationScaleInOutInflection);
+    } else {
+      eventSpecificDurationFactor =
+        easeExpIn(1) +
+        easeExpOut(
+          (proportion - durationScaleInOutInflection) /
+            (1 - durationScaleInOutInflection)
+        );
+    }
+    return Math.max(1, eventSpecificDurationFactor * durationFactor);
   }
 }
