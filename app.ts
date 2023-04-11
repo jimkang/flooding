@@ -56,13 +56,13 @@ async function followRoute({
   tempoFactor = defaultSecondsPerTick,
   startTick = 0,
   sampleIndex = 11,
-  lowVoiceSampleIndex = 13,
-  lowSampleLoopEnd = 2,
-  lowTransposeFreqFactor = 0.25,
-  highVoiceSampleIndex = 13,
-  highSampleLoopEnd = 2,
-  highTransposeFreqFactor = 0.75,
-  playHighPart = false,
+  lowVoiceSampleIndex = 14,
+  lowSampleLoopEnd = 7,
+  lowTransposeFreqFactor = 0.125,
+  highVoiceSampleIndex = 15,
+  highSampleLoopEnd = 10,
+  highTransposeFreqFactor = 1,
+  playHighPart = true,
   chordScaleExponent = 20,
   chordSizeLengthExp = 3,
 }) {
@@ -197,7 +197,7 @@ async function followRoute({
         mainOutNode,
         ampFactor: 1,
         fadeLengthFactor: 3,
-        slideMode: true,
+        slideMode: false,
       });
     }
     narrationDirector = ScoreDirector({
