@@ -317,7 +317,11 @@ function fadeToDeath(
   defaultFadeSeconds: number,
   playEvent: PlayEvent
 ) {
-  var fadeSeconds = playEvent.scoreEvent.fadeLength;
+  // Respect absoluteLengthSeconds if it's there.
+  var fadeSeconds = playEvent.scoreEvent.absoluteLengthSeconds;
+  if (isNaN(fadeSeconds)) {
+    fadeSeconds = playEvent.scoreEvent.fadeLength;
+  }
   if (isNaN(fadeSeconds)) {
     fadeSeconds = defaultFadeSeconds;
   }
