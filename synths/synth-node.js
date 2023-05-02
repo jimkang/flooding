@@ -14,8 +14,8 @@ export class SynthNode {
   node() {
     return this.node;
   }
-  syncToParams() {}
-  cancelScheduledRamps() {}
+  syncToParams() { }
+  cancelScheduledRamps() { }
   connect({ synthNode, audioNode }) {
     if (audioNode) {
       this.node.connect(audioNode);
@@ -56,7 +56,7 @@ export class VibratoAmp extends SynthNode {
     var connectTarget = connectTargetNode[this.params.destProp || 'detune'];
     this.node.connect(connectTarget);
   }
-  play() {}
+  play() { }
 }
 
 export class Gain extends SynthNode {
@@ -66,12 +66,16 @@ export class Gain extends SynthNode {
     this.node.gain.value = this.params.gain;
   }
   fadeOut(fadeSeconds) {
-    this.node.gain.linearRampToValueAtTime(0, fadeSeconds);
+    // linearRampToVauleAtTime and exponentialRampToValueAtTime sound like
+    // they're just cutting things off?
+    // 0 is not allowed as the value here.
+    // this.node.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + fadeSeconds);
+    homemadeLinearRamp(this.node.gain, 0, this.ctx, fadeSeconds);
   }
   cancelScheduledRamps() {
     this.node.gain.cancelScheduledValues(this.ctx.currentTime);
   }
-  play() {}
+  play() { }
 }
 
 export class Envelope extends SynthNode {
@@ -231,7 +235,7 @@ export class Panner extends SynthNode {
       isNaN(this.params.rampSeconds) ? 0.1 : this.params.rampSeconds
     );
   }
-  play() {}
+  play() { }
 }
 
 // Warning: cancelScheduledValues doesn't cover this.

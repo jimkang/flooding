@@ -65,6 +65,7 @@ async function followRoute({
   playHighPart = true,
   chordScaleExponent = 20,
   chordSizeLengthExp = 3,
+  finalFadeOutLength = 16,
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -93,13 +94,13 @@ async function followRoute({
     chordScaleExponent: +chordScaleExponent,
     chordSizeLengthExp: +chordSizeLengthExp,
     seed,
-    totalTicks 
+    totalTicks,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
     composer,
     totalTicks,
   });
-  console.log(mainGroupScoreStateObjects.map(s => s.durationTicks));
+  console.log(mainGroupScoreStateObjects.map((s) => s.durationTicks));
   const totalSeconds = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0
@@ -295,6 +296,7 @@ async function followRoute({
     if (playHighPart) {
       highScoreDirector.end();
     }
+    mainOutNode.fadeOut(finalFadeOutLength);
   }
 
   function getTickLength(ticks) {

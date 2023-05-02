@@ -1,6 +1,7 @@
 import { Gain } from '../synths/synth-node';
 
-export function MainOut({ ctx, totalSeconds }) {
+export function MainOut({ ctx }) {
+  //, totalSeconds }) {
   // Every playEvent should go out through this node eventually.
   var mainOutNode = new Gain(ctx, { gain: 1.0 });
   // Linear ramp on gain?
