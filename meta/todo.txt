@@ -1,10 +1,9 @@
-- Things feel stuck around tick 800. A lot of the bigger chords (~20 pitches) are going by really quickly, so everything seems a little samey. Maybe don't make the big chords quite as short?
-  - More intensity is needed at the end.
 - Vary attack amplitudes.
 - Bass is hitting negative playback rates around tick 79. Maybe there should be negative values at the end.
 - Narration sample plays only partially around 1100. And at the 1990 one.
-- More pops around 145, possibly in bass. Also 55, 270, 520, 720
-- Vary loop lengths.
+- Narration is too loud.
+- Freaks out around 1166.
+- Fade out main after last tick.
 
 Done:
 
@@ -22,5 +21,14 @@ Done:
   - 100
   - 102
   - 339
+- High part too piercing. Down an octave?
+- Things feel stuck around tick 800. A lot of the bigger chords (~20 pitches) are going by really quickly, so everything seems a little samey. Maybe don't make the big chords quite as short?
+  - More intensity is needed at the end.
+
+These aren't really an issue, it turns out:
+- Horn loop seems rough at the beginning. More gradual ramp?
+- Too quiet? May need light compression.
+- Vary loop lengths.
+- More pops around 145, possibly in bass. Also 55, 270, 520, 720
 
  Is the compressor actually doing anything? A: Nothing important.
