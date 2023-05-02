@@ -28,6 +28,7 @@ export interface ScoreEvent {
   loop?: Loop;
   meta?: EventMetadata;
   rest?: boolean;
+  absoluteLengthSeconds?: number;
 }
 
 export interface EventMetadata {

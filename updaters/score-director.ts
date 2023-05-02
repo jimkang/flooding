@@ -163,9 +163,10 @@ export function ScoreDirector({
       var envelope = new Envelope(ctx, {
         envelopeMaxGain: scoreEvent.peakGain,
         envelopeLengthProportionToEvent: 1.2,
-        envelopeLength: constantEnvelopeLength
-          ? constantEnvelopeLength
-          : state.tickLength * envelopeLengthFactor,
+        envelopeLength: getEnvelopeLengthForScoreEvent(
+          scoreEvent,
+          state.tickLength
+        ),
         playCurve: envelopeCurve,
       });
       var panner = new Panner(ctx, {
@@ -296,9 +297,26 @@ export function ScoreDirector({
   function getIdsForPlayEvents(playEvents: PlayEvent[]): string[] {
     return playEvents.map((e) => idScoreEvent(e.scoreEvent));
   }
+
+  function getEnvelopeLengthForScoreEvent(
+    scoreEvent: ScoreEvent,
+    tickLength: number
+  ): number {
+    if (!isNaN(scoreEvent.absoluteLengthSeconds)) {
+      return scoreEvent.absoluteLengthSeconds;
+    }
+    if (constantEnvelopeLength) {
+      return constantEnvelopeLength;
+    }
+    return tickLength * envelopeLengthFactor;
+  }
 }
 
-function fadeToDeath(fadeStartOffset: number, defaultFadeSeconds: number, playEvent: PlayEvent) {
+function fadeToDeath(
+  fadeStartOffset: number,
+  defaultFadeSeconds: number,
+  playEvent: PlayEvent
+) {
   var fadeSeconds = playEvent.scoreEvent.fadeLength;
   if (isNaN(fadeSeconds)) {
     fadeSeconds = defaultFadeSeconds;
@@ -314,9 +332,15 @@ function fadeToDeath(fadeStartOffset: number, defaultFadeSeconds: number, playEv
 
     // TODO: Something else should manage canceling other scheduled events.
     playEvent.nodes.forEach((node) => node.cancelScheduledRamps());
-    setTimeout(() => envelopeNode.linearRampTo(fadeSeconds, 0), fadeStartOffset * 1000);
+    setTimeout(
+      () => envelopeNode.linearRampTo(fadeSeconds, 0),
+      fadeStartOffset * 1000
+    );
   }
-  setTimeout(() => decommisionNodes(playEvent), (fadeStartOffset + fadeSeconds + 1) * 1000);
+  setTimeout(
+    () => decommisionNodes(playEvent),
+    (fadeStartOffset + fadeSeconds + 1) * 1000
+  );
 }
 
 // TODO: Find out if this is even necessary.

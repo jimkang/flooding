@@ -44,7 +44,10 @@ export function NarrationDataComposer() {
         );
 
         // The narration samples should play in full without getting faded out.
-        return Object.assign({ variableSampleIndex, fadeLength: 5 }, event);
+        return Object.assign(
+          { variableSampleIndex, absoluteLengthSeconds: 7 },
+          event
+        );
       } else {
         return Object.assign({ rest: true }, event);
       }
