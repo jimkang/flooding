@@ -4,7 +4,7 @@ import {
   Panner,
   SynthNode,
   Gain,
-} from '../synths/synth-node';
+} from 'synthskel/synths/synth-node';
 import { ScoreState, ScoreEvent, PlayEvent } from '../types';
 import DataJoiner from 'data-joiner';
 import curry from 'lodash.curry';
@@ -113,7 +113,7 @@ export function ScoreDirector({
       const startTime = baseStartTime + playEvent.scoreEvent.delay;
       //const endTime = startTime + state.tickLength;
       playEvent.nodes.forEach((synth) =>
-        synth.play({ startTime, endTime: NaN })
+        synth.play({ startTime, indefinite: true })
       );
       playEvent.started = true;
     }

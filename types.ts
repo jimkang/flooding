@@ -1,4 +1,4 @@
-import { SynthNode } from './synths/synth-node';
+import { SynthNode } from 'synthskel/synths/synth-node';
 
 export interface ScoreState {
   events: ScoreEvent[];

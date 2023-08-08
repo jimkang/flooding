@@ -16,7 +16,7 @@ import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import { ScoreState, ScoreEvent } from './types';
-import { MainOut } from './updaters/main-out';
+import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
 import { NarrationDataComposer } from './updaters/narration-data-composer';
 
