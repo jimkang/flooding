@@ -8,7 +8,7 @@ import { ScoreState, ScoreEvent } from '../types';
 
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
-const minTickLength = 0.125;
+const minTickLength = 0.25;
 const lastEventLengthFactor = 96;
 const durationScaleInOutInflection = 0.7;
 const durationFactor = 10;
@@ -151,7 +151,9 @@ export function DataComposer({
     const proportion = tickIndex / totalTicks;
     let eventSpecificDurationFactor;
     if (proportion < durationScaleInOutInflection) {
-      eventSpecificDurationFactor = easeExpIn(proportion / durationScaleInOutInflection);
+      eventSpecificDurationFactor = easeExpIn(
+        proportion / durationScaleInOutInflection
+      );
     } else {
       eventSpecificDurationFactor =
         easeExpIn(1) +

@@ -19,7 +19,7 @@ export function ScoreDirector({
   mainOutNode,
   ampFactor = 1.0,
   fadeLengthFactor = 2.0,
-  envelopeLengthFactor = 1.0,
+  envelopeLengthFactor = 1.2,
   constantEnvelopeLength = undefined,
   envelopeCurve = null,
   variableSampleBuffers = null,
@@ -64,7 +64,7 @@ export function ScoreDirector({
     );
     checkExitingPlayEvents(exitingPlayEvents);
     removePlayEventsFromList(exitingPlayEvents, playEvents);
-    const fadeStartOffset = state.tickLength * (state.durationTicks || 1);
+    const fadeStartOffset = state.tickLength * (state.durationTicks + 0.3 || 1);
     var fadeLength = state.tickLength;
     if (fadeLength > 1) {
       fadeLength *= fadeLengthFactor;
@@ -161,13 +161,12 @@ export function ScoreDirector({
       });
       //const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);
       var envelope = new Envelope(ctx, {
-        envelopeMaxGain: scoreEvent.peakGain,
-        envelopeLengthProportionToEvent: 1.2,
         envelopeLength: getEnvelopeLengthForScoreEvent(
           scoreEvent,
           state.tickLength
         ),
-        playCurve: envelopeCurve,
+        playCurve:
+          envelopeCurve && envelopeCurve.map((x) => x * scoreEvent.peakGain),
       });
       var panner = new Panner(ctx, {
         pan: scoreEvent.pan,
