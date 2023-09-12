@@ -9,14 +9,18 @@ import { SampleDownloader } from './tasks/sample-downloader';
 import RandomId from '@jimkang/randomid';
 import { ScoreDirector } from './updaters/score-director';
 import { DataComposer } from './updaters/data-composer';
-import { defaultSecondsPerTick, sampleFilenames } from './consts';
+import {
+  defaultSecondsPerTick,
+  sampleFilenames,
+  defaultADSRCurve,
+} from './consts';
 import { preRunComposer } from './updaters/pre-run-composer';
 import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import { ScoreState, ScoreEvent } from './types';
-import { MainOut } from './updaters/main-out';
+import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
 import { NarrationDataComposer } from './updaters/narration-data-composer';
 
@@ -188,6 +192,7 @@ async function followRoute({
       sampleBuffer: buffers[lowVoiceSampleIndex],
       mainOutNode,
       ampFactor: 1,
+      envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 1,
       slideMode: true,
     });
@@ -198,6 +203,7 @@ async function followRoute({
         sampleBuffer: buffers[highVoiceSampleIndex],
         mainOutNode,
         ampFactor: 1,
+        envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 3,
         slideMode: false,
       });
