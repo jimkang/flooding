@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import { ScoreState, ScoreEvent } from '../types';
+import { ScoreState, ScoreEvent } from 'synthskel/types';
 
 // Assumes that the sample buffers given to the director will be in the order that
 // they need to be played in.

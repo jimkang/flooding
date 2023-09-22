@@ -3,11 +3,14 @@ import {
   Envelope,
   Panner,
   SynthNode,
-  Gain,
 } from 'synthskel/synths/synth-node';
-import { ScoreState, ScoreEvent, PlayEvent } from '../types';
+import { ScoreState, ScoreEvent, PlayEvent } from 'synthskel/types';
 import DataJoiner from 'data-joiner';
 import curry from 'lodash.curry';
+import {
+  playPlayEvent,
+  newPlayEventForScoreEvent,
+} from 'synthskel/tasks/play-event';
 
 function defaultIdScoreEvent(scoreEvent: ScoreEvent) {
   return scoreEvent.rate.toFixed(5);
@@ -77,8 +80,18 @@ export function ScoreDirector({
       'newScoreEvents',
       newScoreEvents.map(idScoreEvent)
     );
-    var newPlayEvents = newScoreEvents.map(
-      curry(newPlayEventForScoreEvent)(state.events.length)
+    var newPlayEvents = newScoreEvents.map((scoreEvt) =>
+      newPlayEventForScoreEvent({
+        scoreEvent: scoreEvt,
+        sampleBuffer,
+        variableSampleBuffers,
+        ctx,
+        tickLength: state.tickLength,
+        slideMode,
+        envelopeCurve,
+        ampFactor,
+        getEnvelopeLengthForScoreEvent,
+      })
     );
     newPlayEvents.forEach(curry(appendIfNotYetInList)(playEvents));
     newPlayEvents.forEach(
@@ -88,7 +101,9 @@ export function ScoreDirector({
 
     const baseStartTime = ctx.currentTime;
     // TODO: parameterize start and end times.
-    newPlayEvents.forEach(playPlayEvent);
+    newPlayEvents.forEach((playEvent) =>
+      playPlayEvent({ playEvent, startTime: baseStartTime })
+    );
 
     console.log(
       directorName,
@@ -103,92 +118,6 @@ export function ScoreDirector({
     state.events
       .map(existingPlayEventForScoreEvent)
       .forEach(curry(updatePlayEventNodeParams)(state.tickLength));
-
-    function playPlayEvent(playEvent: PlayEvent) {
-      if (playEvent.rest) {
-        return;
-      }
-
-      console.log('Playing', playEvent.scoreEvent.rate);
-      const startTime = baseStartTime + playEvent.scoreEvent.delay;
-      //const endTime = startTime + state.tickLength;
-      playEvent.nodes.forEach((synth) =>
-        synth.play({ startTime, indefinite: true })
-      );
-      playEvent.started = true;
-    }
-
-    function newPlayEventForScoreEvent(
-      totalScoreEventCount: number,
-      scoreEvent: ScoreEvent
-    ): PlayEvent {
-      if (scoreEvent.rest) {
-        return {
-          scoreEvent,
-          started: false,
-          nodes: [],
-          rest: true,
-        };
-      }
-
-      var eventSampleBuffer = sampleBuffer;
-      if (directorName === 'narration') {
-        console.log(
-          'variableSampleBuffers.length',
-          variableSampleBuffers.length,
-          'variableSampleIndex',
-          scoreEvent.variableSampleIndex
-        );
-      }
-
-      if (
-        variableSampleBuffers &&
-        !isNaN(scoreEvent.variableSampleIndex) &&
-        scoreEvent.variableSampleIndex < variableSampleBuffers.length
-      ) {
-        eventSampleBuffer =
-          variableSampleBuffers[scoreEvent.variableSampleIndex];
-      }
-      var sampler = new Sampler(ctx, {
-        sampleBuffer: eventSampleBuffer, // TODO: Sample buffer by name.
-        playbackRate: scoreEvent.rate,
-        loop: !!scoreEvent.loop,
-        loopStart: scoreEvent?.loop?.loopStartSeconds,
-        loopEnd: scoreEvent?.loop?.loopEndSeconds,
-        timeNeededForEnvelopeDecay: state.tickLength,
-        enableRamp: slideMode,
-        rampSeconds: state.tickLength / 5,
-      });
-      //const maxGain = 0.8/Math.pow(totalScoreEventCount, 3);
-      var envelope = new Envelope(ctx, {
-        envelopeLength: getEnvelopeLengthForScoreEvent(
-          scoreEvent,
-          state.tickLength
-        ),
-        playCurve:
-          envelopeCurve && envelopeCurve.map((x) => x * scoreEvent.peakGain),
-      });
-      var panner = new Panner(ctx, {
-        pan: scoreEvent.pan,
-        rampSeconds: state.tickLength,
-      });
-
-      sampler.connect({ synthNode: envelope, audioNode: null });
-      envelope.connect({ synthNode: panner, audioNode: null });
-
-      var nodes: Array<SynthNode> = [sampler, envelope, panner];
-      if (ampFactor !== 1.0) {
-        let gain = new Gain(ctx, { gain: ampFactor });
-        panner.connect({ synthNode: gain, audioNode: null });
-        nodes.push(gain);
-      }
-
-      return {
-        scoreEvent,
-        started: false,
-        nodes,
-      };
-    }
 
     function existingPlayEventForScoreEvent(
       scoreEvent: ScoreEvent,

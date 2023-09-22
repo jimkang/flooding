@@ -4,7 +4,7 @@ import { scalePow } from 'd3-scale';
 import { easeExpIn, easeExpOut } from 'd3-ease';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
-import { ScoreState, ScoreEvent } from '../types';
+import { ScoreState, ScoreEvent } from 'synthskel/types';
 
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
