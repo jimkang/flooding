@@ -7270,5 +7270,77 @@
     "year": "  2021",
     "month": 11.499600000000001,
     "meanSeaLevelDeltaMM": 7203
+  },
+  {
+    "date": "2022-01-01T05:00:00.000Z",
+    "year": "  2022",
+    "month": 0.5004,
+    "meanSeaLevelDeltaMM": 7210
+  },
+  {
+    "date": "2022-02-01T05:00:00.000Z",
+    "year": "  2022",
+    "month": 1.5,
+    "meanSeaLevelDeltaMM": 7078
+  },
+  {
+    "date": "2022-03-01T05:00:00.000Z",
+    "year": "  2022",
+    "month": 2.4996,
+    "meanSeaLevelDeltaMM": 7163
+  },
+  {
+    "date": "2022-04-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 3.5004,
+    "meanSeaLevelDeltaMM": 7213
+  },
+  {
+    "date": "2022-05-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 4.5,
+    "meanSeaLevelDeltaMM": 7262
+  },
+  {
+    "date": "2022-06-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 5.4996,
+    "meanSeaLevelDeltaMM": 7279
+  },
+  {
+    "date": "2022-07-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 6.500399999999999,
+    "meanSeaLevelDeltaMM": 7244
+  },
+  {
+    "date": "2022-08-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 7.5,
+    "meanSeaLevelDeltaMM": 7262
+  },
+  {
+    "date": "2022-09-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 8.499600000000001,
+    "meanSeaLevelDeltaMM": 7288
+  },
+  {
+    "date": "2022-10-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 9.500399999999999,
+    "meanSeaLevelDeltaMM": 7274
+  },
+  {
+    "date": "2022-11-01T04:00:00.000Z",
+    "year": "  2022",
+    "month": 10.5,
+    "meanSeaLevelDeltaMM": 7212
+  },
+  {
+    "date": "2022-12-01T05:00:00.000Z",
+    "year": "  2022",
+    "month": 11.499600000000001,
+    "meanSeaLevelDeltaMM": 7259
   }
 ]

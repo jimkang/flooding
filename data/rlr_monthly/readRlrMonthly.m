@@ -33,11 +33,8 @@ function data = readRlrMonthly(directoryName)
 %                       with the data - see station documentation for
 %                       further information
 %   isMtl             Flag where true value indicates that the measurement
-%                     is based on mean tide level (MTL) data. For RLR data,
-%                     this has been corrected to mean sea level (MSL) based
-%                     on the estimated correction listed in the
-%                     mtl_msl_corrections.csv file. Consult the psmsl.hel
-%                     file for further details.
+%                     is based on mean tide level (MTL) data. Consult the 
+%                     psmsl.hel file for further details.
 %
 %   EXAMPLES OF USE:
 %
@@ -61,6 +58,18 @@ function data = readRlrMonthly(directoryName)
 %
 %   Plot the location of all stations:
 %       plot([data.longitude],[data.latitude],'b.');
+%
+%   UPDATES:
+%
+%   2023-08-01
+%   Fixed time variable, now properly reports time as centre of month as
+%   described in documentation - previously provided a date half a day too
+%   early.
+%   Fixed dataflag for data given as MTL - these are no longer
+%   automatically flagged as problematic, but use the added isMtl variable
+%   instead.
+%   Added isMtl variable
+
 
 %   If called without input arguments, select directory
 if nargin == 0
@@ -92,14 +101,14 @@ fid = fopen(catFile);
 if fid == -1
     error(['Could not find catalogue file ',catFile])
 end
-txt = textscan(fid,'%5n;%11.6f;%12.6f; %40c;%4n;%4n; %1c');
+txt = textscan(fid,'%5n;%11.6f;%12.6f; %40c; %3c; %3c; %1c');
 fclose(fid);
 catalogue.id = txt{1};
 catalogue.latitude = txt{2};
 catalogue.longitude = txt{3};
 catalogue.name = txt{4};
-catalogue.coastline = txt{5};
-catalogue.stationcode = txt{6};
+catalogue.coastline = str2double(cellstr(txt{5}));
+catalogue.stationcode = str2double(cellstr(txt{6}));
 catalogue.flag = txt{7};
 %   Check length of each of these fields is the same
 if length(unique(cellfun(@length,txt)))~=1
@@ -150,11 +159,11 @@ for i = 1:noStations
     %   Extract month and year
     data(i).year = floor(txt{1});
     data(i).month = (round((txt{1}-data(i).year)*24)+1)/2;
-    data(i).time = datenum(data(i).year,data(i).month,...
-        0.5 * (1 + eomday(data(i).year,data(i).month)));
+    data(i).time = (datenum(data(i).year,data(i).month,1) + ...
+        datenum(data(i).year,data(i).month+1,1)) / 2;
     data(i).height = txt{2};
     data(i).missing = txt{3};
-    %   First column of data flag is unused
+    %   First column of data flags is unused.
     data(i).isMtl = txt{5}==1;
     data(i).dataflag = txt{6}==1;
     %   In height, mark missing values as Not-a-Number

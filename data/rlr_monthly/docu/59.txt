@@ -16,4 +16,8 @@ For a discussion of land movements in the area of the Gulf of Naples, see the pa
 Genova              250/011 RLR(1963) is 10.2m below BM
 =========================== FOLLOWING PSMSL DOCUMENTATION ADDED 22-Jan-2016
 A value of MTL-MSL=-2 mm has been applied to the RLR data for the period 1884-1977. The values were derived using the GESLA2 (high-frequency tide gauge) dataset using harmonic constituents.
+=========================== FOLLOWING PSMSL DOCUMENTATION ADDED 22-Nov-2022
+Data between 2014-2017 are not included in the RLR dataset as they are interpolated from a nearby radar station
+=========================== FOLLOWING PSMSL DOCUMENTATION ADDED 20-Jan-2023
+After the supplier provided further information, data for 2011-06, 2014-03 to 2017-08 and 2017-10 have been granted RLR status but the data points have been flagged. The supplier has explained that during these periods, gaps in data from the float gauge have been filled in using data from a nearby radar sensor. These gaps are typically between 12 and 24 hours long. There are small differences between the two sensors, typically a few millimetres, but rarely above a centimetre. For each period filled, the 24 hours before and after the gap have been used to calculate an adjustment to apply to the data.
 

@@ -14,4 +14,6 @@ Mar del Plata (Club) gauge (38 03 S, 57 33W) moved to
 Mar del Plata (Naval Base) (38 02'S, 57 31'W) December
 1998 because of beach works.  New site levelled into
 old benchmark (Repere No.11) and data treated as continuous.
+=========================== FOLLOWING PSMSL DOCUMENTATION ADDED 01-Feb-2023
+Mar del Plata (Base Naval) station was moved back to Mar del Plata (Club) tide gauge. 
 

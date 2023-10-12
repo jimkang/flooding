@@ -1,10 +1,10 @@
 When using the tide gauge data set from the PSMSL, we ask that you reference
 the last paper describing the data set, as well as the data set itself.  As an
-example, "the tide gauge data [Holgate et al., 2013; PSMSL, 2022] show
+example, "the tide gauge data [Holgate et al., 2013; PSMSL, 2023] show
 that ..."
 
-Permanent Service for Mean Sea Level (PSMSL), 2022, "Tide Gauge Data", 
-Retrieved 17 Oct 2022 from http://www.psmsl.org/data/obtaining/. 
+Permanent Service for Mean Sea Level (PSMSL), 2023, "Tide Gauge Data", 
+Retrieved 09 Oct 2023 from http://www.psmsl.org/data/obtaining/. 
 
 Simon J. Holgate, Andrew Matthews, Philip L. Woodworth, Lesley J. Rickards, 
 Mark E. Tamisiea, Elizabeth Bradshaw, Peter R. Foden, Kathleen M. Gordon,

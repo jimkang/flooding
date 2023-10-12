@@ -13,4 +13,6 @@ Last data received for this station was 1996. However as the Lat., Long., and be
 There appears to be a shift in datum from 1954 onwards.
 =========================== FOLLOWING PSMSL DOCUMENTATION ADDED 22-Jan-2016
 A value of MTL-MSL=-157 mm has been applied to the RLR data for the period 1950-1951.  This value was derived from the average of three differences in the annual MSL and MTL listed for the station in Pub. Sci. 24.  Note that no correction has been applied to the metric data.
+=========================== FOLLOWING PSMSL DOCUMENTATION ADDED 15-Feb-2023
+We queried the 2017 data with the supplier and removed it at their request
 
