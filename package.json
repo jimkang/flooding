@@ -1,6 +1,6 @@
 {
   "name": "flooding",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Flooding-driven audio piece",
   "main": "index.js",
   "prifloodinge": true,
