@@ -5,6 +5,7 @@ import { easeExpIn, easeExpOut } from 'd3-ease';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
+import { TideGauge } from '../types';
 
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
@@ -37,7 +38,18 @@ export function DataComposer({
   chordScaleExponent,
   chordSizeLengthExp,
   totalTicks,
+}: {
+  tempoFactor: number;
+  data: TideGauge[];
+  chordProp: string;
+  chordXFloor: number;
+  chordXCeil: number;
+  seed: string;
+  chordScaleExponent: number;
+  chordSizeLengthExp: number;
+  totalTicks: number;
 }) {
+  // var currentYear;
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   var chordScale = scalePow()
     .exponent(chordScaleExponent)
@@ -53,6 +65,8 @@ export function DataComposer({
 
   function getScoreState(tickIndex): ScoreState {
     var sourceDatum = data[index];
+    var arpeggiate = false; //sourceDatum.year !== currentYear;
+    // currentYear = sourceDatum.year;
     var chordPitchCount = Math.round(chordScale(+sourceDatum[chordProp]));
     if (chordPitchCount < 1) {
       console.log('Bad data point', index, chordProp, +data[index][chordProp]);
@@ -63,7 +77,8 @@ export function DataComposer({
       }
     }
     pastPitchCounts.push(chordPitchCount);
-    const tickLength = getTickLength();
+    // Stretch it out for the arpeggios.
+    const tickLength = getTickLength(); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
     var scoreState = {
       events: range(chordPitchCount).map(getScoreEvent),
       tickIndex: index,
@@ -77,18 +92,24 @@ export function DataComposer({
     return scoreState;
 
     function getScoreEvent(
-      chordIndex: number
-      //arrayIndex: number,
-      //pitches: number[]
+      chordIndex: number,
+      arrayIndex: number,
+      pitches: number[]
     ): ScoreEvent {
       return {
         rate: tonalityDiamondPitches[chordIndex],
-        delay: 0,
+        delay: arpeggiate ? arrayIndex * (tickLength / pitches.length) : 0,
+        absoluteLengthSeconds: arpeggiate
+          ? (tickLength / pitches.length) * 1.1
+          : undefined,
         peakGain: 1.0 / maxPitchCount,
         //ratioToGainAdjScale(tonalityDiamondPitches[chordIndex]) *
         //(1.0 / pitches.length),
         // Undefined loopEndSeconds tells the director to play to the end of the sample.
-        loop: { loopStartSeconds: 0.1, loopEndSeconds: undefined },
+        loop: arpeggiate
+          ? undefined
+          : { loopStartSeconds: 0.1, loopEndSeconds: undefined },
+        finite: arpeggiate,
         meta: { sourceDatum },
       };
     }

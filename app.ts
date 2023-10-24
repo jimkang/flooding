@@ -104,6 +104,7 @@ async function followRoute({
     composer,
     totalTicks,
   });
+  // console.log(mainGroupScoreStateObjects);
   console.log(mainGroupScoreStateObjects.map((s) => s.durationTicks));
   const totalSeconds = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
