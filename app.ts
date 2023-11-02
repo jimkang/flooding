@@ -116,7 +116,9 @@ async function followRoute({
     mainGroupScoreStateObjects.slice(0, 8).map((d) => d.tickLength)
   );
   var firstBadEventDirection = mainGroupScoreStateObjects.find(
-    (state) => !state.events.some((e) => !e.delay) || state.tickLength <= 0
+    (state) =>
+      (state.events.length > 0 && !state.events.some((e) => !e.delay)) ||
+      state.tickLength <= 0
   );
   if (firstBadEventDirection) {
     throw new Error(

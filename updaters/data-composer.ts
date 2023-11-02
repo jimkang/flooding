@@ -49,7 +49,7 @@ export function DataComposer({
   chordSizeLengthExp: number;
   totalTicks: number;
 }) {
-  // var currentYear;
+  var currentYear;
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   var chordScale = scalePow()
     .exponent(chordScaleExponent)
@@ -64,30 +64,60 @@ export function DataComposer({
   return { getScoreState };
 
   function getScoreState(tickIndex): ScoreState {
+    var arpeggiate = false;
     var sourceDatum = data[index];
-    var arpeggiate = false; //sourceDatum.year !== currentYear;
-    // currentYear = sourceDatum.year;
-    var chordPitchCount = Math.round(chordScale(+sourceDatum[chordProp]));
-    if (chordPitchCount < 1) {
-      console.log('Bad data point', index, chordProp, +data[index][chordProp]);
-      if (index > 0) {
-        chordPitchCount = pastPitchCounts[index - 1];
-      } else {
-        chordPitchCount = 1;
-      }
-    }
-    pastPitchCounts.push(chordPitchCount);
-    // Stretch it out for the arpeggios.
+    const newYear = sourceDatum.year !== currentYear;
+    currentYear = sourceDatum.year;
+
     const tickLength = getTickLength(); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
-    var scoreState = {
-      events: range(chordPitchCount).map(getScoreEvent),
+    var scoreState: ScoreState = {
+      events: [],
       tickIndex: index,
       tickLength,
       durationTicks: getDurationTicks(tickIndex),
-      meta: { chordPitchCount },
     };
-    var pans = getPans(chordPitchCount);
-    pans.forEach((pan, i) => (scoreState.events[i].pan = pan));
+
+    let chordPitchCount = 0;
+    // TODO: Break *after* year, not *at* start of new year.
+    if (newYear) {
+      // Take a break.
+      console.log('New year at tick', index);
+      // scoreState.tickLength = tickLength * 2;
+      scoreState.grandPause = true;
+      // scoreState.events.push({
+      //   rate: 1,
+      //   delay: 0,
+      //   peakGain: 1,
+      //   pan: 0,
+      //   rest: true,
+      //   meta: { sourceDatum },
+      // });
+      pastPitchCounts.push(1);
+    } else {
+      chordPitchCount = Math.round(chordScale(+sourceDatum[chordProp]));
+      if (chordPitchCount < 1) {
+        console.log(
+          'Bad data point',
+          index,
+          chordProp,
+          +data[index][chordProp]
+        );
+        if (index > 0) {
+          chordPitchCount = pastPitchCounts[index - 1];
+        } else {
+          chordPitchCount = 1;
+        }
+      }
+      pastPitchCounts.push(chordPitchCount);
+      // Stretch it out for the arpeggios.
+
+      scoreState.events = range(chordPitchCount).map(getScoreEvent);
+
+      let pans = getPans(chordPitchCount);
+      pans.forEach((pan, i) => (scoreState.events[i].pan = pan));
+    }
+
+    scoreState.meta = { chordPitchCount };
     index += 1;
     return scoreState;
 
@@ -109,7 +139,7 @@ export function DataComposer({
         loop: arpeggiate
           ? undefined
           : { loopStartSeconds: 0.1, loopEndSeconds: undefined },
-        finite: arpeggiate,
+        finite: true,
         meta: { sourceDatum },
       };
     }

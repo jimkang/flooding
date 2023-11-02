@@ -16,7 +16,8 @@ export function NarrationDataComposer() {
       tickIndex: refState.tickIndex,
       tickLength: refState.tickLength,
       meta: cloneDeep(refState.meta),
-      events: [getScoreEvent(refState.events[0])],
+      events:
+        refState.events.length > 0 ? [getScoreEvent(refState.events[0])] : [],
     };
 
     function getScoreEvent(refEvent: ScoreEvent): ScoreEvent {
