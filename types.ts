@@ -3,4 +3,5 @@ export interface TideGauge {
   year: string;
   month: number;
   meanSeaLevelDeltaMM: number;
+  pauseInsert?: boolean;
 }

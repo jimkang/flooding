@@ -49,7 +49,6 @@ export function DataComposer({
   chordSizeLengthExp: number;
   totalTicks: number;
 }) {
-  var currentYear;
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   var chordScale = scalePow()
     .exponent(chordScaleExponent)
@@ -66,8 +65,6 @@ export function DataComposer({
   function getScoreState(tickIndex): ScoreState {
     var arpeggiate = false;
     var sourceDatum = data[index];
-    const newYear = sourceDatum.year !== currentYear;
-    currentYear = sourceDatum.year;
 
     const tickLength = getTickLength(); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
     var scoreState: ScoreState = {
@@ -78,20 +75,11 @@ export function DataComposer({
     };
 
     let chordPitchCount = 0;
-    // TODO: Break *after* year, not *at* start of new year.
-    if (newYear) {
+    if (sourceDatum.pauseInsert) {
       // Take a break.
       console.log('New year at tick', index);
       // scoreState.tickLength = tickLength * 2;
       scoreState.grandPause = true;
-      // scoreState.events.push({
-      //   rate: 1,
-      //   delay: 0,
-      //   peakGain: 1,
-      //   pan: 0,
-      //   rest: true,
-      //   meta: { sourceDatum },
-      // });
       pastPitchCounts.push(1);
     } else {
       chordPitchCount = Math.round(chordScale(+sourceDatum[chordProp]));
@@ -165,8 +153,9 @@ export function DataComposer({
     }
 
     var tickLength = 1;
-    const pastPitchCount = pastPitchCounts[pastPitchCounts.length - 1];
+    let pastPitchCount = 0;
     if (pastPitchCounts.length > 0) {
+      pastPitchCount = pastPitchCounts[pastPitchCounts.length - 1];
       const propOfDiamondUnused =
         (maxPitchCount - pastPitchCount) / maxPitchCount;
       tickLength =

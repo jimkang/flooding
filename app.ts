@@ -20,6 +20,7 @@ import { renderEventDirection } from './renderers/render-event-direction';
 import { tonalityDiamondPitches } from './tonality-diamond';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
+import { TideGauge } from './types';
 import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
 import { NarrationDataComposer } from './updaters/narration-data-composer';
@@ -75,8 +76,12 @@ async function followRoute({
     routeState.addToRoute({ seed: randomId(8) });
     return;
   }
+
+  var tideGaugeData = bostonMSL.slice();
+  insertYearBreaks(tideGaugeData);
+
   if (!totalTicks) {
-    routeState.addToRoute({ totalTicks: bostonMSL.length });
+    routeState.addToRoute({ totalTicks: tideGaugeData.length });
     return;
   }
 
@@ -91,7 +96,7 @@ async function followRoute({
 
   var composer = DataComposer({
     tempoFactor,
-    data: bostonMSL,
+    data: tideGaugeData,
     chordProp: 'meanSeaLevelDeltaMM',
     chordXFloor: 6809,
     chordXCeil: 7387,
@@ -104,7 +109,7 @@ async function followRoute({
     composer,
     totalTicks,
   });
-  // console.log(mainGroupScoreStateObjects);
+  console.log(mainGroupScoreStateObjects);
   console.log(mainGroupScoreStateObjects.map((s) => s.durationTicks));
   const totalSeconds = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
@@ -324,6 +329,24 @@ async function followRoute({
 
   function onTempoFactorChange(length) {
     routeState.addToRoute({ tempoFactor: length });
+  }
+}
+
+function insertYearBreaks(data: TideGauge[]) {
+  var currentYear;
+  for (let i = data.length - 1; i > 0; --i) {
+    let datum = data[i];
+    let year = datum.year;
+    if (currentYear !== undefined && currentYear !== year) {
+      data.splice(i + 1, 0, {
+        date: datum.date,
+        year,
+        month: datum.month,
+        meanSeaLevelDeltaMM: datum.meanSeaLevelDeltaMM,
+        pauseInsert: true,
+      });
+    }
+    currentYear = year;
   }
 }
 
