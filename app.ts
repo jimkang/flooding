@@ -333,11 +333,13 @@ async function followRoute({
 }
 
 function insertYearBreaks(data: TideGauge[]) {
-  var currentYear;
+  // var currentYear;
+  var currentDecade;
   for (let i = data.length - 1; i > 0; --i) {
     let datum = data[i];
     let year = datum.year;
-    if (currentYear !== undefined && currentYear !== year) {
+    let decade = Math.floor(+year / 10);
+    if (currentDecade !== undefined && currentDecade !== decade) {
       data.splice(i + 1, 0, {
         date: datum.date,
         year,
@@ -346,7 +348,7 @@ function insertYearBreaks(data: TideGauge[]) {
         pauseInsert: true,
       });
     }
-    currentYear = year;
+    currentDecade = decade;
   }
 }
 
