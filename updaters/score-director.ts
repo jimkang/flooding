@@ -75,7 +75,7 @@ export function ScoreDirector({
     if (state.grandPause) {
       // Stop everything right now.
       fadeStartOffset = 0;
-      fadeLength = state.tickLength / 10;
+      fadeLength = state.tickLength;
     }
     exitingPlayEvents.forEach(curry(fadeToDeath)(fadeStartOffset, fadeLength));
 

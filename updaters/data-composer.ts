@@ -77,8 +77,8 @@ export function DataComposer({
     let chordPitchCount = 0;
     if (sourceDatum.pauseInsert) {
       // Take a break.
-      console.log('New year at tick', index);
-      // scoreState.tickLength = tickLength * 2;
+      console.log('Grand pause at tick', index);
+      scoreState.tickLength = tickLength * 3;
       scoreState.grandPause = true;
       pastPitchCounts.push(1);
     } else {
@@ -105,7 +105,7 @@ export function DataComposer({
       pans.forEach((pan, i) => (scoreState.events[i].pan = pan));
     }
 
-    scoreState.meta = { chordPitchCount };
+    scoreState.meta = { chordPitchCount, sourceDatum };
     index += 1;
     return scoreState;
 
