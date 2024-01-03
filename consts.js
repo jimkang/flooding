@@ -1,5 +1,5 @@
 export const defaultSecondsPerTick = 0.5;
-export const diamondLimit = 15;
+export const diamondLimit = 11;
 export var sampleFilenames = [
   '1921-1930.wav',
   '1931-1940.wav',

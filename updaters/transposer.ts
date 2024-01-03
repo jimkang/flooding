@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
-import { ScoreState, ScoreEvent } from '../types';
+import { ScoreState, ScoreEvent } from 'synthskel/types';
 
 export function Transposer({
   seed,
