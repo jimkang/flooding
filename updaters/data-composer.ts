@@ -7,6 +7,15 @@ import seedrandom from 'seedrandom';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
 import { TideGauge } from '../types';
 
+var altSortPitches = [];
+for (let i = 0; i < Math.floor(tonalityDiamondPitches.length / 2); ++i) {
+  altSortPitches.push(tonalityDiamondPitches[i]);
+  altSortPitches.push(
+    tonalityDiamondPitches[tonalityDiamondPitches.length - 1 - i]
+  );
+}
+console.log('altSortPitches', altSortPitches);
+
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.25;
@@ -115,7 +124,7 @@ export function DataComposer({
       pitches: number[]
     ): ScoreEvent {
       return {
-        rate: tonalityDiamondPitches[chordIndex],
+        rate: altSortPitches[chordIndex],
         delay: arpeggiate ? arrayIndex * (tickLength / pitches.length) : 0,
         absoluteLengthSeconds: arpeggiate
           ? (tickLength / pitches.length) * 1.1
