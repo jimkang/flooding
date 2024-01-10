@@ -1,4 +1,4 @@
-import { tonalityDiamondPitches } from '../tonality-diamond';
+import { getTonalityDiamond } from '../tonality-diamond';
 import { range } from 'd3-array';
 import { scalePow } from 'd3-scale';
 import { easeExpIn, easeExpOut } from 'd3-ease';
@@ -6,7 +6,9 @@ import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
 import { TideGauge } from '../types';
+import { diamondLimit } from '../consts';
 
+var tonalityDiamondPitches = getTonalityDiamond({ diamondLimit });
 const maxPitchCount = tonalityDiamondPitches.length;
 const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.25;
