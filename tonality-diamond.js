@@ -1,7 +1,7 @@
 import { diamondLimit } from './consts';
 
-const denomLimit = 32;
-const tolerance = 1 / 10000;
+// const denomLimit = 32;
+// const tolerance = 1 / 10000;
 
 function range(start, len, step = 1) {
   var a = [];
@@ -36,21 +36,21 @@ function compareDesc(a, b) {
   return -1;
 }
 
-function compareDenomSizeAsc(a, b) {
-  if (getDenom(a) < getDenom(b)) {
-    return -1;
-  }
-  return 1;
-}
+// function compareDenomSizeAsc(a, b) {
+//   if (getDenom(a) < getDenom(b)) {
+//     return -1;
+//   }
+//   return 1;
+// }
 
-function getDenom(n) {
-  for (let denom = 1; denom < denomLimit; ++denom) {
-    if (n % (1 / denom) <= tolerance) {
-      return denom;
-    }
-  }
-  return denomLimit;
-}
+// function getDenom(n) {
+//   for (let denom = 1; denom < denomLimit; ++denom) {
+//     if (n % (1 / denom) <= tolerance) {
+//       return denom;
+//     }
+//   }
+//   return denomLimit;
+// }
 
 const factorCount = ~~(diamondLimit / 2 + 1);
 
@@ -90,5 +90,5 @@ for (let row = 0; row < diamondTable.length; ++row) {
 var diamondRatios = [...diamondRatioSet.values()];
 console.log(diamondRatios);
 
-export var tonalityDiamondPitches = diamondRatios.sort(compareDenomSizeAsc);
-console.log(tonalityDiamondPitches);
+export var tonalityDiamondPitches = diamondRatios; //.sort(compareDenomSizeAsc);
+//console.log(tonalityDiamondPitches);
