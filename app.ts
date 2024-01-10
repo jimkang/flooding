@@ -13,11 +13,11 @@ import {
   defaultSecondsPerTick,
   sampleFilenames,
   defaultADSRCurve,
+  tonalityDiamondPitches,
 } from './consts';
 import { preRunComposer } from './updaters/pre-run-composer';
 import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
-import { tonalityDiamondPitches } from './tonality-diamond';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
 import { TideGauge } from './types';

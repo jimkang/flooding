@@ -1,5 +1,7 @@
+import { getTonalityDiamond } from './tonality-diamond';
 export const defaultSecondsPerTick = 0.5;
-export const diamondLimit = 11;
+export const diamondLimit = 13;
+export var tonalityDiamondPitches = getTonalityDiamond({ diamondLimit });
 export var sampleFilenames = [
   '1921-1930.wav',
   '1931-1940.wav',
