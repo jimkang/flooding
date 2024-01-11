@@ -1,6 +1,3 @@
-// const denomLimit = 32;
-// const tolerance = 1 / 10000;
-
 function range(start, len, step = 1) {
   var a = [];
   for (let i = start; a.length < len; i += step) {
@@ -33,22 +30,6 @@ function compareDesc(a, b) {
   }
   return -1;
 }
-
-// function compareDenomSizeAsc(a, b) {
-//   if (getDenom(a) < getDenom(b)) {
-//     return -1;
-//   }
-//   return 1;
-// }
-
-// function getDenom(n) {
-//   for (let denom = 1; denom < denomLimit; ++denom) {
-//     if (n % (1 / denom) <= tolerance) {
-//       return denom;
-//     }
-//   }
-//   return denomLimit;
-// }
 
 export function getTonalityDiamond({ diamondLimit }) {
   const factorCount = ~~(diamondLimit / 2 + 1);
@@ -91,5 +72,4 @@ export function getTonalityDiamond({ diamondLimit }) {
   return diamondRatios;
 }
 
-// export var tonalityDiamondPitches = diamondRatios; //.sort(compareDenomSizeAsc);
 //console.log(tonalityDiamondPitches);

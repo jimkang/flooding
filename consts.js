@@ -1,7 +1,14 @@
 import { getTonalityDiamond } from './tonality-diamond';
 export const defaultSecondsPerTick = 0.5;
 export const diamondLimit = 13;
-export var tonalityDiamondPitches = getTonalityDiamond({ diamondLimit });
+
+const denomLimit = 32;
+const tolerance = 1 / 10000;
+
+export var tonalityDiamondPitches = getTonalityDiamond({ diamondLimit }).sort(
+  compareDenomSizeAsc
+);
+
 export var sampleFilenames = [
   '1921-1930.wav',
   '1931-1940.wav',
@@ -23,3 +30,19 @@ export var sampleFilenames = [
 export var defaultADSRCurve = [
   0, 0.5, 1, 1, 1, 1, 0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0,
 ];
+
+function compareDenomSizeAsc(a, b) {
+  if (getDenom(a) < getDenom(b)) {
+    return -1;
+  }
+  return 1;
+}
+
+function getDenom(n) {
+  for (let denom = 1; denom < denomLimit; ++denom) {
+    if (n % (1 / denom) <= tolerance) {
+      return denom;
+    }
+  }
+  return denomLimit;
+}
