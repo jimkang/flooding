@@ -18,6 +18,7 @@ import {
 import { preRunComposer } from './updaters/pre-run-composer';
 import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
+import { renderVisualizationForTick } from './renderers/visualization';
 import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
 import { TideGauge } from './types';
@@ -302,6 +303,8 @@ async function followRoute({
     narrationDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
     );
+
+    renderVisualizationForTick(mainGroupScoreState);
   }
 
   function onEndOfTicks() {
