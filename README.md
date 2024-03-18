@@ -1,6 +1,8 @@
 # flooding
 
-Blends some audio in a really literal way.
+## Sources
+
+[meta/ohc_levitus_climdash_seasonal.csv] (units: 10^22 joules) is from the [NCEI  Heat Content Basin Time Series](https://www.ncei.noaa.gov/access/global-ocean-heat-content/basin_heat_data.html), which comes from [World Ocean Heat Content and Thermosteric Sea Level change (0-2000 m), 1955-2010](https://www.ncei.noaa.gov/data/oceans/woa/PUBLICATIONS/grlheat12.pdf).
 
 ## Getting it running
 
