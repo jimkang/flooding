@@ -19,12 +19,13 @@ import { preRunComposer } from './updaters/pre-run-composer';
 import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { renderVisualizationForTick } from './renderers/visualization';
-import bostonMSL from './data/rlr_monthly/json-data/235.json';
-import { ScoreState, ScoreEvent } from 'synthskel/types';
-import { TideGauge } from './types';
+// import bostonMSL from './data/rlr_monthly/json-data/235.json';
+import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
+import { ScoreState /*, ScoreEvent*/ } from 'synthskel/types';
+// import { SubjectDatum } from './types';
 import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
-import { NarrationDataComposer } from './updaters/narration-data-composer';
+// import { NarrationDataComposer } from './updaters/narration-data-composer';
 
 var randomId = RandomId();
 var routeState;
@@ -34,7 +35,7 @@ var sampleDownloader;
 var mainScoreDirector;
 var lowScoreDirector;
 var highScoreDirector;
-var narrationDirector;
+// var narrationDirector;
 
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas',
@@ -69,7 +70,7 @@ async function followRoute({
   highSampleLoopEnd = 10,
   highTransposeFreqFactor = 0.5,
   playHighPart = true,
-  chordScaleExponent = 20,
+  chordScaleExponent = 1.5,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
 }) {
@@ -78,11 +79,11 @@ async function followRoute({
     return;
   }
 
-  var tideGaugeData = bostonMSL.slice();
-  insertYearBreaks(tideGaugeData);
+  var ohcData = ohcByQuarter.slice();
+  // insertYearBreaks(ohcData);
 
   if (!totalTicks) {
-    routeState.addToRoute({ totalTicks: tideGaugeData.length });
+    routeState.addToRoute({ totalTicks: ohcData.length });
     return;
   }
 
@@ -97,10 +98,10 @@ async function followRoute({
 
   var composer = DataComposer({
     tempoFactor,
-    data: tideGaugeData,
-    chordProp: 'meanSeaLevelDeltaMM',
-    chordXFloor: 6809,
-    chordXCeil: 7387,
+    data: ohcData,
+    chordProp: 'value',
+    chordXFloor: 0, // 6809,
+    chordXCeil: 31, // 7387,
     chordScaleExponent: +chordScaleExponent,
     chordSizeLengthExp: +chordSizeLengthExp,
     seed,
@@ -161,9 +162,9 @@ async function followRoute({
       mainGroupScoreStateObjects.map(highTransposer.getScoreState);
   }
 
-  var narrationComposer = NarrationDataComposer();
-  var narrationGroupScoreStateObjects: ScoreState[] =
-    mainGroupScoreStateObjects.map(narrationComposer.getScoreState);
+  // var narrationComposer = NarrationDataComposer();
+  // var narrationGroupScoreStateObjects: ScoreState[] =
+  //   mainGroupScoreStateObjects.map(narrationComposer.getScoreState);
 
   ticker = Ticker({
     onTick,
@@ -217,22 +218,22 @@ async function followRoute({
         slideMode: false,
       });
     }
-    narrationDirector = ScoreDirector({
-      directorName: 'narration',
-      ctx,
-      sampleBuffer: null,
-      variableSampleBuffers: buffers.slice(0, 11),
-      mainOutNode,
-      idScoreEvent: function getSampleIndex(scoreEvent: ScoreEvent) {
-        if (!isNaN(scoreEvent.variableSampleIndex)) {
-          return '' + scoreEvent.variableSampleIndex;
-        }
-        return 'rest';
-      },
-      // Narration samples should not fade.
-      envelopeCurve: new Float32Array([1, 1]),
-      slideMode: false,
-    });
+    // narrationDirector = ScoreDirector({
+    //   directorName: 'narration',
+    //   ctx,
+    //   sampleBuffer: null,
+    //   variableSampleBuffers: buffers.slice(0, 11),
+    //   mainOutNode,
+    //   idScoreEvent: function getSampleIndex(scoreEvent: ScoreEvent) {
+    //     if (!isNaN(scoreEvent.variableSampleIndex)) {
+    //       return '' + scoreEvent.variableSampleIndex;
+    //     }
+    //     return 'rest';
+    //   },
+    //   // Narration samples should not fade.
+    //   envelopeCurve: new Float32Array([1, 1]),
+    //   slideMode: false,
+    // });
 
     wireControls({
       onStart,
@@ -251,7 +252,7 @@ async function followRoute({
     if (playHighPart) {
       var highGroupScoreState = highGroupScoreStateObjects[ticks];
     }
-    var narrationGroupScoreState = narrationGroupScoreStateObjects[ticks];
+    // var narrationGroupScoreState = narrationGroupScoreStateObjects[ticks];
 
     var tickLength = currentTickLengthSeconds;
     if (!isNaN(mainGroupScoreState.tickLength)) {
@@ -300,9 +301,9 @@ async function followRoute({
         Object.assign({ tickLengthSeconds: tickLength }, highGroupScoreState)
       );
     }
-    narrationDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
-    );
+    // narrationDirector.play(
+    //   Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
+    // );
 
     renderVisualizationForTick(mainGroupScoreState);
   }
@@ -335,25 +336,25 @@ async function followRoute({
   }
 }
 
-function insertYearBreaks(data: TideGauge[]) {
-  // var currentYear;
-  var currentDecade;
-  for (let i = data.length - 1; i > 0; --i) {
-    let datum = data[i];
-    let year = datum.year;
-    let decade = Math.floor(+year / 10);
-    if (currentDecade !== undefined && currentDecade !== decade) {
-      data.splice(i + 1, 0, {
-        date: datum.date,
-        year,
-        month: datum.month,
-        meanSeaLevelDeltaMM: datum.meanSeaLevelDeltaMM,
-        pauseInsert: true,
-      });
-    }
-    currentDecade = decade;
-  }
-}
+// function insertYearBreaks(data: SubjectDatum[]) {
+//   // var currentYear;
+//   var currentDecade;
+//   for (let i = data.length - 1; i > 0; --i) {
+//     let datum = data[i];
+//     let year = datum.year;
+//     let decade = Math.floor(+year / 10);
+//     if (currentDecade !== undefined && currentDecade !== decade) {
+//       data.splice(i + 1, 0, {
+//         date: datum.date,
+//         year,
+//         month: datum.month,
+//         value: datum.value,
+//         pauseInsert: true,
+//       });
+//     }
+//     currentDecade = decade;
+//   }
+// }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
   handleError(error);

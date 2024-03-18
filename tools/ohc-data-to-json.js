@@ -24,7 +24,7 @@ const minDelta = rows.reduce(
 );
 rows.forEach(normalize);
 
-console.log('min', minDelta);
+// console.log('min', minDelta);
 fs.writeFileSync(
   path.join(outputDirPath, basename + '.json'),
   JSON.stringify(rows, null, 2),
@@ -41,5 +41,5 @@ function parseLine(line) {
 }
 
 function normalize(row) {
-  row.heatDeltaNorm = row.heatDelta - minDelta;
+  row.value = row.heatDelta - minDelta;
 }

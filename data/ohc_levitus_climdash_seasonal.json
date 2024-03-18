@@ -4,1931 +4,1931 @@
     "year": "1955",
     "month": 3,
     "heatDelta": -2.870669,
-    "heatDeltaNorm": 5.136280000000001
+    "value": 5.136280000000001
   },
   {
     "date": "1955-07-01T04:00:00.000Z",
     "year": "1955",
     "month": 6,
     "heatDelta": -0.112888,
-    "heatDeltaNorm": 7.894061000000001
+    "value": 7.894061000000001
   },
   {
     "date": "1955-10-01T04:00:00.000Z",
     "year": "1955",
     "month": 9,
     "heatDelta": -1.814083,
-    "heatDeltaNorm": 6.192866
+    "value": 6.192866
   },
   {
     "date": "1956-01-01T05:00:00.000Z",
     "year": "1955",
     "month": 12,
     "heatDelta": -8.006949,
-    "heatDeltaNorm": 0
+    "value": 0
   },
   {
     "date": "1956-04-01T05:00:00.000Z",
     "year": "1956",
     "month": 3,
     "heatDelta": -2.414768,
-    "heatDeltaNorm": 5.592181
+    "value": 5.592181
   },
   {
     "date": "1956-07-01T04:00:00.000Z",
     "year": "1956",
     "month": 6,
     "heatDelta": -4.435912,
-    "heatDeltaNorm": 3.5710370000000005
+    "value": 3.5710370000000005
   },
   {
     "date": "1956-10-01T04:00:00.000Z",
     "year": "1956",
     "month": 9,
     "heatDelta": -2.657124,
-    "heatDeltaNorm": 5.349825000000001
+    "value": 5.349825000000001
   },
   {
     "date": "1957-01-01T05:00:00.000Z",
     "year": "1956",
     "month": 12,
     "heatDelta": -0.925602,
-    "heatDeltaNorm": 7.081347000000001
+    "value": 7.081347000000001
   },
   {
     "date": "1957-04-01T05:00:00.000Z",
     "year": "1957",
     "month": 3,
     "heatDelta": -4.126613,
-    "heatDeltaNorm": 3.8803360000000007
+    "value": 3.8803360000000007
   },
   {
     "date": "1957-07-01T04:00:00.000Z",
     "year": "1957",
     "month": 6,
     "heatDelta": -5.5812,
-    "heatDeltaNorm": 2.4257490000000006
+    "value": 2.4257490000000006
   },
   {
     "date": "1957-10-01T04:00:00.000Z",
     "year": "1957",
     "month": 9,
     "heatDelta": -3.82883,
-    "heatDeltaNorm": 4.178119000000001
+    "value": 4.178119000000001
   },
   {
     "date": "1958-01-01T05:00:00.000Z",
     "year": "1957",
     "month": 12,
     "heatDelta": -4.916474,
-    "heatDeltaNorm": 3.0904750000000005
+    "value": 3.0904750000000005
   },
   {
     "date": "1958-04-01T05:00:00.000Z",
     "year": "1958",
     "month": 3,
     "heatDelta": -0.855497,
-    "heatDeltaNorm": 7.151452000000001
+    "value": 7.151452000000001
   },
   {
     "date": "1958-07-01T04:00:00.000Z",
     "year": "1958",
     "month": 6,
     "heatDelta": -1.357916,
-    "heatDeltaNorm": 6.649033000000001
+    "value": 6.649033000000001
   },
   {
     "date": "1958-10-01T04:00:00.000Z",
     "year": "1958",
     "month": 9,
     "heatDelta": -0.407367,
-    "heatDeltaNorm": 7.599582000000001
+    "value": 7.599582000000001
   },
   {
     "date": "1959-01-01T05:00:00.000Z",
     "year": "1958",
     "month": 12,
     "heatDelta": -3.510767,
-    "heatDeltaNorm": 4.496182000000001
+    "value": 4.496182000000001
   },
   {
     "date": "1959-04-01T05:00:00.000Z",
     "year": "1959",
     "month": 3,
     "heatDelta": -4.33201,
-    "heatDeltaNorm": 3.674939
+    "value": 3.674939
   },
   {
     "date": "1959-07-01T04:00:00.000Z",
     "year": "1959",
     "month": 6,
     "heatDelta": -0.125907,
-    "heatDeltaNorm": 7.881042000000001
+    "value": 7.881042000000001
   },
   {
     "date": "1959-10-01T04:00:00.000Z",
     "year": "1959",
     "month": 9,
     "heatDelta": -2.352136,
-    "heatDeltaNorm": 5.654813000000001
+    "value": 5.654813000000001
   },
   {
     "date": "1960-01-01T05:00:00.000Z",
     "year": "1959",
     "month": 12,
     "heatDelta": -1.947549,
-    "heatDeltaNorm": 6.0594
+    "value": 6.0594
   },
   {
     "date": "1960-04-01T05:00:00.000Z",
     "year": "1960",
     "month": 3,
     "heatDelta": -2.228227,
-    "heatDeltaNorm": 5.778722
+    "value": 5.778722
   },
   {
     "date": "1960-07-01T04:00:00.000Z",
     "year": "1960",
     "month": 6,
     "heatDelta": -1.15004,
-    "heatDeltaNorm": 6.856909000000001
+    "value": 6.856909000000001
   },
   {
     "date": "1960-10-01T04:00:00.000Z",
     "year": "1960",
     "month": 9,
     "heatDelta": -0.156131,
-    "heatDeltaNorm": 7.850818
+    "value": 7.850818
   },
   {
     "date": "1961-01-01T05:00:00.000Z",
     "year": "1960",
     "month": 12,
     "heatDelta": -2.23387,
-    "heatDeltaNorm": 5.773079000000001
+    "value": 5.773079000000001
   },
   {
     "date": "1961-04-01T05:00:00.000Z",
     "year": "1961",
     "month": 3,
     "heatDelta": -2.596117,
-    "heatDeltaNorm": 5.410832000000001
+    "value": 5.410832000000001
   },
   {
     "date": "1961-07-01T04:00:00.000Z",
     "year": "1961",
     "month": 6,
     "heatDelta": -2.191756,
-    "heatDeltaNorm": 5.815193000000001
+    "value": 5.815193000000001
   },
   {
     "date": "1961-10-01T04:00:00.000Z",
     "year": "1961",
     "month": 9,
     "heatDelta": -0.904012,
-    "heatDeltaNorm": 7.102937000000001
+    "value": 7.102937000000001
   },
   {
     "date": "1962-01-01T05:00:00.000Z",
     "year": "1961",
     "month": 12,
     "heatDelta": -2.766685,
-    "heatDeltaNorm": 5.240264000000001
+    "value": 5.240264000000001
   },
   {
     "date": "1962-04-01T05:00:00.000Z",
     "year": "1962",
     "month": 3,
     "heatDelta": -1.934748,
-    "heatDeltaNorm": 6.072201000000001
+    "value": 6.072201000000001
   },
   {
     "date": "1962-07-01T04:00:00.000Z",
     "year": "1962",
     "month": 6,
     "heatDelta": -3.028738,
-    "heatDeltaNorm": 4.978211
+    "value": 4.978211
   },
   {
     "date": "1962-10-01T04:00:00.000Z",
     "year": "1962",
     "month": 9,
     "heatDelta": 1.394506,
-    "heatDeltaNorm": 9.401455
+    "value": 9.401455
   },
   {
     "date": "1963-01-01T05:00:00.000Z",
     "year": "1962",
     "month": 12,
     "heatDelta": -0.732579,
-    "heatDeltaNorm": 7.27437
+    "value": 7.27437
   },
   {
     "date": "1963-04-01T05:00:00.000Z",
     "year": "1963",
     "month": 3,
     "heatDelta": -2.489086,
-    "heatDeltaNorm": 5.517863
+    "value": 5.517863
   },
   {
     "date": "1963-07-01T04:00:00.000Z",
     "year": "1963",
     "month": 6,
     "heatDelta": -1.974558,
-    "heatDeltaNorm": 6.0323910000000005
+    "value": 6.0323910000000005
   },
   {
     "date": "1963-10-01T04:00:00.000Z",
     "year": "1963",
     "month": 9,
     "heatDelta": -3.880683,
-    "heatDeltaNorm": 4.126266000000001
+    "value": 4.126266000000001
   },
   {
     "date": "1964-01-01T05:00:00.000Z",
     "year": "1963",
     "month": 12,
     "heatDelta": -0.741971,
-    "heatDeltaNorm": 7.264978
+    "value": 7.264978
   },
   {
     "date": "1964-04-01T05:00:00.000Z",
     "year": "1964",
     "month": 3,
     "heatDelta": -2.540313,
-    "heatDeltaNorm": 5.466636000000001
+    "value": 5.466636000000001
   },
   {
     "date": "1964-07-01T04:00:00.000Z",
     "year": "1964",
     "month": 6,
     "heatDelta": -0.999268,
-    "heatDeltaNorm": 7.007681000000001
+    "value": 7.007681000000001
   },
   {
     "date": "1964-10-01T04:00:00.000Z",
     "year": "1964",
     "month": 9,
     "heatDelta": -3.550237,
-    "heatDeltaNorm": 4.4567120000000005
+    "value": 4.4567120000000005
   },
   {
     "date": "1965-01-01T05:00:00.000Z",
     "year": "1964",
     "month": 12,
     "heatDelta": -5.396096,
-    "heatDeltaNorm": 2.6108530000000005
+    "value": 2.6108530000000005
   },
   {
     "date": "1965-04-01T05:00:00.000Z",
     "year": "1965",
     "month": 3,
     "heatDelta": -3.407796,
-    "heatDeltaNorm": 4.599153000000001
+    "value": 4.599153000000001
   },
   {
     "date": "1965-07-01T04:00:00.000Z",
     "year": "1965",
     "month": 6,
     "heatDelta": -3.65106,
-    "heatDeltaNorm": 4.355889
+    "value": 4.355889
   },
   {
     "date": "1965-10-01T04:00:00.000Z",
     "year": "1965",
     "month": 9,
     "heatDelta": -2.26,
-    "heatDeltaNorm": 5.746949000000001
+    "value": 5.746949000000001
   },
   {
     "date": "1966-01-01T05:00:00.000Z",
     "year": "1965",
     "month": 12,
     "heatDelta": -2.920431,
-    "heatDeltaNorm": 5.086518
+    "value": 5.086518
   },
   {
     "date": "1966-04-01T05:00:00.000Z",
     "year": "1966",
     "month": 3,
     "heatDelta": -4.449895,
-    "heatDeltaNorm": 3.557054000000001
+    "value": 3.557054000000001
   },
   {
     "date": "1966-07-01T04:00:00.000Z",
     "year": "1966",
     "month": 6,
     "heatDelta": -3.879088,
-    "heatDeltaNorm": 4.127861000000001
+    "value": 4.127861000000001
   },
   {
     "date": "1966-10-01T04:00:00.000Z",
     "year": "1966",
     "month": 9,
     "heatDelta": -2.689776,
-    "heatDeltaNorm": 5.317173
+    "value": 5.317173
   },
   {
     "date": "1967-01-01T05:00:00.000Z",
     "year": "1966",
     "month": 12,
     "heatDelta": -4.756363,
-    "heatDeltaNorm": 3.250586
+    "value": 3.250586
   },
   {
     "date": "1967-04-01T05:00:00.000Z",
     "year": "1967",
     "month": 3,
     "heatDelta": -4.570902,
-    "heatDeltaNorm": 3.4360470000000003
+    "value": 3.4360470000000003
   },
   {
     "date": "1967-07-01T04:00:00.000Z",
     "year": "1967",
     "month": 6,
     "heatDelta": -3.258875,
-    "heatDeltaNorm": 4.748074000000001
+    "value": 4.748074000000001
   },
   {
     "date": "1967-10-01T04:00:00.000Z",
     "year": "1967",
     "month": 9,
     "heatDelta": -4.820662,
-    "heatDeltaNorm": 3.186287000000001
+    "value": 3.186287000000001
   },
   {
     "date": "1968-01-01T05:00:00.000Z",
     "year": "1967",
     "month": 12,
     "heatDelta": -4.795085,
-    "heatDeltaNorm": 3.2118640000000003
+    "value": 3.2118640000000003
   },
   {
     "date": "1968-04-01T05:00:00.000Z",
     "year": "1968",
     "month": 3,
     "heatDelta": -7.422575,
-    "heatDeltaNorm": 0.5843740000000004
+    "value": 0.5843740000000004
   },
   {
     "date": "1968-07-01T04:00:00.000Z",
     "year": "1968",
     "month": 6,
     "heatDelta": -4.560177,
-    "heatDeltaNorm": 3.446772
+    "value": 3.446772
   },
   {
     "date": "1968-10-01T04:00:00.000Z",
     "year": "1968",
     "month": 9,
     "heatDelta": -3.969478,
-    "heatDeltaNorm": 4.037471
+    "value": 4.037471
   },
   {
     "date": "1969-01-01T05:00:00.000Z",
     "year": "1968",
     "month": 12,
     "heatDelta": -6.957784,
-    "heatDeltaNorm": 1.0491650000000003
+    "value": 1.0491650000000003
   },
   {
     "date": "1969-04-01T05:00:00.000Z",
     "year": "1969",
     "month": 3,
     "heatDelta": -3.020569,
-    "heatDeltaNorm": 4.9863800000000005
+    "value": 4.9863800000000005
   },
   {
     "date": "1969-07-01T04:00:00.000Z",
     "year": "1969",
     "month": 6,
     "heatDelta": -4.898119,
-    "heatDeltaNorm": 3.10883
+    "value": 3.10883
   },
   {
     "date": "1969-10-01T04:00:00.000Z",
     "year": "1969",
     "month": 9,
     "heatDelta": -4.474476,
-    "heatDeltaNorm": 3.5324730000000004
+    "value": 3.5324730000000004
   },
   {
     "date": "1970-01-01T05:00:00.000Z",
     "year": "1969",
     "month": 12,
     "heatDelta": -5.531948,
-    "heatDeltaNorm": 2.4750010000000007
+    "value": 2.4750010000000007
   },
   {
     "date": "1970-04-01T05:00:00.000Z",
     "year": "1970",
     "month": 3,
     "heatDelta": -7.44103,
-    "heatDeltaNorm": 0.565919000000001
+    "value": 0.565919000000001
   },
   {
     "date": "1970-07-01T04:00:00.000Z",
     "year": "1970",
     "month": 6,
     "heatDelta": -5.943489,
-    "heatDeltaNorm": 2.063460000000001
+    "value": 2.063460000000001
   },
   {
     "date": "1970-10-01T04:00:00.000Z",
     "year": "1970",
     "month": 9,
     "heatDelta": -3.995159,
-    "heatDeltaNorm": 4.01179
+    "value": 4.01179
   },
   {
     "date": "1971-01-01T05:00:00.000Z",
     "year": "1970",
     "month": 12,
     "heatDelta": -3.814105,
-    "heatDeltaNorm": 4.192844000000001
+    "value": 4.192844000000001
   },
   {
     "date": "1971-04-01T05:00:00.000Z",
     "year": "1971",
     "month": 3,
     "heatDelta": -4.959378,
-    "heatDeltaNorm": 3.0475710000000005
+    "value": 3.0475710000000005
   },
   {
     "date": "1971-07-01T04:00:00.000Z",
     "year": "1971",
     "month": 6,
     "heatDelta": -3.910183,
-    "heatDeltaNorm": 4.096766000000001
+    "value": 4.096766000000001
   },
   {
     "date": "1971-10-01T04:00:00.000Z",
     "year": "1971",
     "month": 9,
     "heatDelta": -3.727275,
-    "heatDeltaNorm": 4.279674
+    "value": 4.279674
   },
   {
     "date": "1972-01-01T05:00:00.000Z",
     "year": "1971",
     "month": 12,
     "heatDelta": -2.47277,
-    "heatDeltaNorm": 5.534179
+    "value": 5.534179
   },
   {
     "date": "1972-04-01T05:00:00.000Z",
     "year": "1972",
     "month": 3,
     "heatDelta": -4.091771,
-    "heatDeltaNorm": 3.915178000000001
+    "value": 3.915178000000001
   },
   {
     "date": "1972-07-01T04:00:00.000Z",
     "year": "1972",
     "month": 6,
     "heatDelta": -2.54613,
-    "heatDeltaNorm": 5.460819000000001
+    "value": 5.460819000000001
   },
   {
     "date": "1972-10-01T04:00:00.000Z",
     "year": "1972",
     "month": 9,
     "heatDelta": -7.319351,
-    "heatDeltaNorm": 0.6875980000000004
+    "value": 0.6875980000000004
   },
   {
     "date": "1973-01-01T05:00:00.000Z",
     "year": "1972",
     "month": 12,
     "heatDelta": -6.997663,
-    "heatDeltaNorm": 1.0092860000000003
+    "value": 1.0092860000000003
   },
   {
     "date": "1973-04-01T05:00:00.000Z",
     "year": "1973",
     "month": 3,
     "heatDelta": -6.992906,
-    "heatDeltaNorm": 1.014043000000001
+    "value": 1.014043000000001
   },
   {
     "date": "1973-07-01T04:00:00.000Z",
     "year": "1973",
     "month": 6,
     "heatDelta": -3.276274,
-    "heatDeltaNorm": 4.730675000000001
+    "value": 4.730675000000001
   },
   {
     "date": "1973-10-01T04:00:00.000Z",
     "year": "1973",
     "month": 9,
     "heatDelta": -1.011778,
-    "heatDeltaNorm": 6.995171000000001
+    "value": 6.995171000000001
   },
   {
     "date": "1974-01-01T05:00:00.000Z",
     "year": "1973",
     "month": 12,
     "heatDelta": -2.796067,
-    "heatDeltaNorm": 5.210882000000001
+    "value": 5.210882000000001
   },
   {
     "date": "1974-04-01T04:00:00.000Z",
     "year": "1974",
     "month": 3,
     "heatDelta": -4.533091,
-    "heatDeltaNorm": 3.473858000000001
+    "value": 3.473858000000001
   },
   {
     "date": "1974-07-01T04:00:00.000Z",
     "year": "1974",
     "month": 6,
     "heatDelta": -3.247772,
-    "heatDeltaNorm": 4.759177000000001
+    "value": 4.759177000000001
   },
   {
     "date": "1974-10-01T04:00:00.000Z",
     "year": "1974",
     "month": 9,
     "heatDelta": -2.193655,
-    "heatDeltaNorm": 5.813294000000001
+    "value": 5.813294000000001
   },
   {
     "date": "1975-01-01T05:00:00.000Z",
     "year": "1974",
     "month": 12,
     "heatDelta": -1.12579,
-    "heatDeltaNorm": 6.881159
+    "value": 6.881159
   },
   {
     "date": "1975-04-01T04:00:00.000Z",
     "year": "1975",
     "month": 3,
     "heatDelta": -2.142686,
-    "heatDeltaNorm": 5.864263000000001
+    "value": 5.864263000000001
   },
   {
     "date": "1975-07-01T04:00:00.000Z",
     "year": "1975",
     "month": 6,
     "heatDelta": -2.137013,
-    "heatDeltaNorm": 5.869936000000001
+    "value": 5.869936000000001
   },
   {
     "date": "1975-10-01T04:00:00.000Z",
     "year": "1975",
     "month": 9,
     "heatDelta": -1.747955,
-    "heatDeltaNorm": 6.258994
+    "value": 6.258994
   },
   {
     "date": "1976-01-01T05:00:00.000Z",
     "year": "1975",
     "month": 12,
     "heatDelta": -0.17834,
-    "heatDeltaNorm": 7.828609
+    "value": 7.828609
   },
   {
     "date": "1976-04-01T05:00:00.000Z",
     "year": "1976",
     "month": 3,
     "heatDelta": -2.743946,
-    "heatDeltaNorm": 5.263003
+    "value": 5.263003
   },
   {
     "date": "1976-07-01T04:00:00.000Z",
     "year": "1976",
     "month": 6,
     "heatDelta": -0.842684,
-    "heatDeltaNorm": 7.164265
+    "value": 7.164265
   },
   {
     "date": "1976-10-01T04:00:00.000Z",
     "year": "1976",
     "month": 9,
     "heatDelta": -3.662868,
-    "heatDeltaNorm": 4.344081000000001
+    "value": 4.344081000000001
   },
   {
     "date": "1977-01-01T05:00:00.000Z",
     "year": "1976",
     "month": 12,
     "heatDelta": -3.163476,
-    "heatDeltaNorm": 4.843473
+    "value": 4.843473
   },
   {
     "date": "1977-04-01T05:00:00.000Z",
     "year": "1977",
     "month": 3,
     "heatDelta": 0.753658,
-    "heatDeltaNorm": 8.760607
+    "value": 8.760607
   },
   {
     "date": "1977-07-01T04:00:00.000Z",
     "year": "1977",
     "month": 6,
     "heatDelta": 1.487195,
-    "heatDeltaNorm": 9.494144
+    "value": 9.494144
   },
   {
     "date": "1977-10-01T04:00:00.000Z",
     "year": "1977",
     "month": 9,
     "heatDelta": -0.29661,
-    "heatDeltaNorm": 7.710339
+    "value": 7.710339
   },
   {
     "date": "1978-01-01T05:00:00.000Z",
     "year": "1977",
     "month": 12,
     "heatDelta": -1.816407,
-    "heatDeltaNorm": 6.190542000000001
+    "value": 6.190542000000001
   },
   {
     "date": "1978-04-01T05:00:00.000Z",
     "year": "1978",
     "month": 3,
     "heatDelta": 0.659256,
-    "heatDeltaNorm": 8.666205
+    "value": 8.666205
   },
   {
     "date": "1978-07-01T04:00:00.000Z",
     "year": "1978",
     "month": 6,
     "heatDelta": 0.186941,
-    "heatDeltaNorm": 8.19389
+    "value": 8.19389
   },
   {
     "date": "1978-10-01T04:00:00.000Z",
     "year": "1978",
     "month": 9,
     "heatDelta": -1.20887,
-    "heatDeltaNorm": 6.798079
+    "value": 6.798079
   },
   {
     "date": "1979-01-01T05:00:00.000Z",
     "year": "1978",
     "month": 12,
     "heatDelta": 0.569558,
-    "heatDeltaNorm": 8.576507000000001
+    "value": 8.576507000000001
   },
   {
     "date": "1979-04-01T05:00:00.000Z",
     "year": "1979",
     "month": 3,
     "heatDelta": 0.24465,
-    "heatDeltaNorm": 8.251599
+    "value": 8.251599
   },
   {
     "date": "1979-07-01T04:00:00.000Z",
     "year": "1979",
     "month": 6,
     "heatDelta": -1.640448,
-    "heatDeltaNorm": 6.366501
+    "value": 6.366501
   },
   {
     "date": "1979-10-01T04:00:00.000Z",
     "year": "1979",
     "month": 9,
     "heatDelta": -1.909762,
-    "heatDeltaNorm": 6.097187000000001
+    "value": 6.097187000000001
   },
   {
     "date": "1980-01-01T05:00:00.000Z",
     "year": "1979",
     "month": 12,
     "heatDelta": -0.532718,
-    "heatDeltaNorm": 7.4742310000000005
+    "value": 7.4742310000000005
   },
   {
     "date": "1980-04-01T05:00:00.000Z",
     "year": "1980",
     "month": 3,
     "heatDelta": 1.621559,
-    "heatDeltaNorm": 9.628508
+    "value": 9.628508
   },
   {
     "date": "1980-07-01T04:00:00.000Z",
     "year": "1980",
     "month": 6,
     "heatDelta": 1.813644,
-    "heatDeltaNorm": 9.820593
+    "value": 9.820593
   },
   {
     "date": "1980-10-01T04:00:00.000Z",
     "year": "1980",
     "month": 9,
     "heatDelta": -0.058621,
-    "heatDeltaNorm": 7.948328000000001
+    "value": 7.948328000000001
   },
   {
     "date": "1981-01-01T05:00:00.000Z",
     "year": "1980",
     "month": 12,
     "heatDelta": 0.985672,
-    "heatDeltaNorm": 8.992621
+    "value": 8.992621
   },
   {
     "date": "1981-04-01T05:00:00.000Z",
     "year": "1981",
     "month": 3,
     "heatDelta": 0.466168,
-    "heatDeltaNorm": 8.473117
+    "value": 8.473117
   },
   {
     "date": "1981-07-01T04:00:00.000Z",
     "year": "1981",
     "month": 6,
     "heatDelta": 0.533019,
-    "heatDeltaNorm": 8.539968
+    "value": 8.539968
   },
   {
     "date": "1981-10-01T04:00:00.000Z",
     "year": "1981",
     "month": 9,
     "heatDelta": -1.49033,
-    "heatDeltaNorm": 6.516619
+    "value": 6.516619
   },
   {
     "date": "1982-01-01T05:00:00.000Z",
     "year": "1981",
     "month": 12,
     "heatDelta": 0.979648,
-    "heatDeltaNorm": 8.986597
+    "value": 8.986597
   },
   {
     "date": "1982-04-01T05:00:00.000Z",
     "year": "1982",
     "month": 3,
     "heatDelta": -1.497396,
-    "heatDeltaNorm": 6.509553
+    "value": 6.509553
   },
   {
     "date": "1982-07-01T04:00:00.000Z",
     "year": "1982",
     "month": 6,
     "heatDelta": -1.675871,
-    "heatDeltaNorm": 6.331078000000001
+    "value": 6.331078000000001
   },
   {
     "date": "1982-10-01T04:00:00.000Z",
     "year": "1982",
     "month": 9,
     "heatDelta": -5.024016,
-    "heatDeltaNorm": 2.982933000000001
+    "value": 2.982933000000001
   },
   {
     "date": "1983-01-01T05:00:00.000Z",
     "year": "1982",
     "month": 12,
     "heatDelta": -1.026103,
-    "heatDeltaNorm": 6.9808460000000006
+    "value": 6.9808460000000006
   },
   {
     "date": "1983-04-01T05:00:00.000Z",
     "year": "1983",
     "month": 3,
     "heatDelta": -3.626007,
-    "heatDeltaNorm": 4.380942000000001
+    "value": 4.380942000000001
   },
   {
     "date": "1983-07-01T04:00:00.000Z",
     "year": "1983",
     "month": 6,
     "heatDelta": 2.378227,
-    "heatDeltaNorm": 10.385176000000001
+    "value": 10.385176000000001
   },
   {
     "date": "1983-10-01T04:00:00.000Z",
     "year": "1983",
     "month": 9,
     "heatDelta": -6.587368,
-    "heatDeltaNorm": 1.4195810000000009
+    "value": 1.4195810000000009
   },
   {
     "date": "1984-01-01T05:00:00.000Z",
     "year": "1983",
     "month": 12,
     "heatDelta": -3.216753,
-    "heatDeltaNorm": 4.790196
+    "value": 4.790196
   },
   {
     "date": "1984-04-01T05:00:00.000Z",
     "year": "1984",
     "month": 3,
     "heatDelta": 2.502179,
-    "heatDeltaNorm": 10.509128
+    "value": 10.509128
   },
   {
     "date": "1984-07-01T04:00:00.000Z",
     "year": "1984",
     "month": 6,
     "heatDelta": -2.455978,
-    "heatDeltaNorm": 5.5509710000000005
+    "value": 5.5509710000000005
   },
   {
     "date": "1984-10-01T04:00:00.000Z",
     "year": "1984",
     "month": 9,
     "heatDelta": -2.656893,
-    "heatDeltaNorm": 5.350056
+    "value": 5.350056
   },
   {
     "date": "1985-01-01T05:00:00.000Z",
     "year": "1984",
     "month": 12,
     "heatDelta": 0.773232,
-    "heatDeltaNorm": 8.780181
+    "value": 8.780181
   },
   {
     "date": "1985-04-01T05:00:00.000Z",
     "year": "1985",
     "month": 3,
     "heatDelta": 1.784006,
-    "heatDeltaNorm": 9.790955
+    "value": 9.790955
   },
   {
     "date": "1985-07-01T04:00:00.000Z",
     "year": "1985",
     "month": 6,
     "heatDelta": 1.808964,
-    "heatDeltaNorm": 9.815913
+    "value": 9.815913
   },
   {
     "date": "1985-10-01T04:00:00.000Z",
     "year": "1985",
     "month": 9,
     "heatDelta": 0.248777,
-    "heatDeltaNorm": 8.255726000000001
+    "value": 8.255726000000001
   },
   {
     "date": "1986-01-01T05:00:00.000Z",
     "year": "1985",
     "month": 12,
     "heatDelta": -3.403632,
-    "heatDeltaNorm": 4.6033170000000005
+    "value": 4.6033170000000005
   },
   {
     "date": "1986-04-01T05:00:00.000Z",
     "year": "1986",
     "month": 3,
     "heatDelta": -0.832693,
-    "heatDeltaNorm": 7.174256000000001
+    "value": 7.174256000000001
   },
   {
     "date": "1986-07-01T04:00:00.000Z",
     "year": "1986",
     "month": 6,
     "heatDelta": 1.70314,
-    "heatDeltaNorm": 9.710089
+    "value": 9.710089
   },
   {
     "date": "1986-10-01T04:00:00.000Z",
     "year": "1986",
     "month": 9,
     "heatDelta": -1.31332,
-    "heatDeltaNorm": 6.6936290000000005
+    "value": 6.6936290000000005
   },
   {
     "date": "1987-01-01T05:00:00.000Z",
     "year": "1986",
     "month": 12,
     "heatDelta": -3.706717,
-    "heatDeltaNorm": 4.300232000000001
+    "value": 4.300232000000001
   },
   {
     "date": "1987-04-01T05:00:00.000Z",
     "year": "1987",
     "month": 3,
     "heatDelta": -0.207786,
-    "heatDeltaNorm": 7.799163000000001
+    "value": 7.799163000000001
   },
   {
     "date": "1987-07-01T04:00:00.000Z",
     "year": "1987",
     "month": 6,
     "heatDelta": -1.371921,
-    "heatDeltaNorm": 6.635028
+    "value": 6.635028
   },
   {
     "date": "1987-10-01T04:00:00.000Z",
     "year": "1987",
     "month": 9,
     "heatDelta": -2.150277,
-    "heatDeltaNorm": 5.8566720000000005
+    "value": 5.8566720000000005
   },
   {
     "date": "1988-01-01T05:00:00.000Z",
     "year": "1987",
     "month": 12,
     "heatDelta": 0.158229,
-    "heatDeltaNorm": 8.165178000000001
+    "value": 8.165178000000001
   },
   {
     "date": "1988-04-01T05:00:00.000Z",
     "year": "1988",
     "month": 3,
     "heatDelta": 0.584472,
-    "heatDeltaNorm": 8.591421
+    "value": 8.591421
   },
   {
     "date": "1988-07-01T04:00:00.000Z",
     "year": "1988",
     "month": 6,
     "heatDelta": 0.316734,
-    "heatDeltaNorm": 8.323683
+    "value": 8.323683
   },
   {
     "date": "1988-10-01T04:00:00.000Z",
     "year": "1988",
     "month": 9,
     "heatDelta": 1.238749,
-    "heatDeltaNorm": 9.245698
+    "value": 9.245698
   },
   {
     "date": "1989-01-01T05:00:00.000Z",
     "year": "1988",
     "month": 12,
     "heatDelta": 2.213401,
-    "heatDeltaNorm": 10.22035
+    "value": 10.22035
   },
   {
     "date": "1989-04-01T05:00:00.000Z",
     "year": "1989",
     "month": 3,
     "heatDelta": 1.054477,
-    "heatDeltaNorm": 9.061426
+    "value": 9.061426
   },
   {
     "date": "1989-07-01T04:00:00.000Z",
     "year": "1989",
     "month": 6,
     "heatDelta": 2.184499,
-    "heatDeltaNorm": 10.191448000000001
+    "value": 10.191448000000001
   },
   {
     "date": "1989-10-01T04:00:00.000Z",
     "year": "1989",
     "month": 9,
     "heatDelta": 0.722182,
-    "heatDeltaNorm": 8.729131
+    "value": 8.729131
   },
   {
     "date": "1990-01-01T05:00:00.000Z",
     "year": "1989",
     "month": 12,
     "heatDelta": -0.347525,
-    "heatDeltaNorm": 7.6594240000000005
+    "value": 7.6594240000000005
   },
   {
     "date": "1990-04-01T05:00:00.000Z",
     "year": "1990",
     "month": 3,
     "heatDelta": 1.21432,
-    "heatDeltaNorm": 9.221269000000001
+    "value": 9.221269000000001
   },
   {
     "date": "1990-07-01T04:00:00.000Z",
     "year": "1990",
     "month": 6,
     "heatDelta": -1.216034,
-    "heatDeltaNorm": 6.790915
+    "value": 6.790915
   },
   {
     "date": "1990-10-01T04:00:00.000Z",
     "year": "1990",
     "month": 9,
     "heatDelta": -1.483189,
-    "heatDeltaNorm": 6.52376
+    "value": 6.52376
   },
   {
     "date": "1991-01-01T05:00:00.000Z",
     "year": "1990",
     "month": 12,
     "heatDelta": 2.194469,
-    "heatDeltaNorm": 10.201418
+    "value": 10.201418
   },
   {
     "date": "1991-04-01T05:00:00.000Z",
     "year": "1991",
     "month": 3,
     "heatDelta": 2.197155,
-    "heatDeltaNorm": 10.204104000000001
+    "value": 10.204104000000001
   },
   {
     "date": "1991-07-01T04:00:00.000Z",
     "year": "1991",
     "month": 6,
     "heatDelta": 3.209013,
-    "heatDeltaNorm": 11.215962000000001
+    "value": 11.215962000000001
   },
   {
     "date": "1991-10-01T04:00:00.000Z",
     "year": "1991",
     "month": 9,
     "heatDelta": 2.128846,
-    "heatDeltaNorm": 10.135795
+    "value": 10.135795
   },
   {
     "date": "1992-01-01T05:00:00.000Z",
     "year": "1991",
     "month": 12,
     "heatDelta": 3.047556,
-    "heatDeltaNorm": 11.054505
+    "value": 11.054505
   },
   {
     "date": "1992-04-01T05:00:00.000Z",
     "year": "1992",
     "month": 3,
     "heatDelta": 0.985267,
-    "heatDeltaNorm": 8.992216
+    "value": 8.992216
   },
   {
     "date": "1992-07-01T04:00:00.000Z",
     "year": "1992",
     "month": 6,
     "heatDelta": 1.039358,
-    "heatDeltaNorm": 9.046307
+    "value": 9.046307
   },
   {
     "date": "1992-10-01T04:00:00.000Z",
     "year": "1992",
     "month": 9,
     "heatDelta": 0.746549,
-    "heatDeltaNorm": 8.753498
+    "value": 8.753498
   },
   {
     "date": "1993-01-01T05:00:00.000Z",
     "year": "1992",
     "month": 12,
     "heatDelta": -0.484774,
-    "heatDeltaNorm": 7.522175000000001
+    "value": 7.522175000000001
   },
   {
     "date": "1993-04-01T05:00:00.000Z",
     "year": "1993",
     "month": 3,
     "heatDelta": 1.901373,
-    "heatDeltaNorm": 9.908322
+    "value": 9.908322
   },
   {
     "date": "1993-07-01T04:00:00.000Z",
     "year": "1993",
     "month": 6,
     "heatDelta": 0.014944,
-    "heatDeltaNorm": 8.021893
+    "value": 8.021893
   },
   {
     "date": "1993-10-01T04:00:00.000Z",
     "year": "1993",
     "month": 9,
     "heatDelta": 0.072173,
-    "heatDeltaNorm": 8.079122
+    "value": 8.079122
   },
   {
     "date": "1994-01-01T05:00:00.000Z",
     "year": "1993",
     "month": 12,
     "heatDelta": 0.746779,
-    "heatDeltaNorm": 8.753728
+    "value": 8.753728
   },
   {
     "date": "1994-04-01T05:00:00.000Z",
     "year": "1994",
     "month": 3,
     "heatDelta": 1.721586,
-    "heatDeltaNorm": 9.728535
+    "value": 9.728535
   },
   {
     "date": "1994-07-01T04:00:00.000Z",
     "year": "1994",
     "month": 6,
     "heatDelta": -0.640411,
-    "heatDeltaNorm": 7.366538
+    "value": 7.366538
   },
   {
     "date": "1994-10-01T04:00:00.000Z",
     "year": "1994",
     "month": 9,
     "heatDelta": 2.212865,
-    "heatDeltaNorm": 10.219814
+    "value": 10.219814
   },
   {
     "date": "1995-01-01T05:00:00.000Z",
     "year": "1994",
     "month": 12,
     "heatDelta": 2.744318,
-    "heatDeltaNorm": 10.751267
+    "value": 10.751267
   },
   {
     "date": "1995-04-01T05:00:00.000Z",
     "year": "1995",
     "month": 3,
     "heatDelta": 3.309005,
-    "heatDeltaNorm": 11.315954000000001
+    "value": 11.315954000000001
   },
   {
     "date": "1995-07-01T04:00:00.000Z",
     "year": "1995",
     "month": 6,
     "heatDelta": 2.082141,
-    "heatDeltaNorm": 10.08909
+    "value": 10.08909
   },
   {
     "date": "1995-10-01T04:00:00.000Z",
     "year": "1995",
     "month": 9,
     "heatDelta": 0.500147,
-    "heatDeltaNorm": 8.507096
+    "value": 8.507096
   },
   {
     "date": "1996-01-01T05:00:00.000Z",
     "year": "1995",
     "month": 12,
     "heatDelta": 3.164881,
-    "heatDeltaNorm": 11.17183
+    "value": 11.17183
   },
   {
     "date": "1996-04-01T05:00:00.000Z",
     "year": "1996",
     "month": 3,
     "heatDelta": 4.492706,
-    "heatDeltaNorm": 12.499655
+    "value": 12.499655
   },
   {
     "date": "1996-07-01T04:00:00.000Z",
     "year": "1996",
     "month": 6,
     "heatDelta": 7.236955,
-    "heatDeltaNorm": 15.243904
+    "value": 15.243904
   },
   {
     "date": "1996-10-01T04:00:00.000Z",
     "year": "1996",
     "month": 9,
     "heatDelta": 2.027039,
-    "heatDeltaNorm": 10.033988
+    "value": 10.033988
   },
   {
     "date": "1997-01-01T05:00:00.000Z",
     "year": "1996",
     "month": 12,
     "heatDelta": 4.419283,
-    "heatDeltaNorm": 12.426232
+    "value": 12.426232
   },
   {
     "date": "1997-04-01T05:00:00.000Z",
     "year": "1997",
     "month": 3,
     "heatDelta": 4.525184,
-    "heatDeltaNorm": 12.532133000000002
+    "value": 12.532133000000002
   },
   {
     "date": "1997-07-01T04:00:00.000Z",
     "year": "1997",
     "month": 6,
     "heatDelta": 3.687088,
-    "heatDeltaNorm": 11.694037000000002
+    "value": 11.694037000000002
   },
   {
     "date": "1997-10-01T04:00:00.000Z",
     "year": "1997",
     "month": 9,
     "heatDelta": 2.090838,
-    "heatDeltaNorm": 10.097787
+    "value": 10.097787
   },
   {
     "date": "1998-01-01T05:00:00.000Z",
     "year": "1997",
     "month": 12,
     "heatDelta": 2.676821,
-    "heatDeltaNorm": 10.68377
+    "value": 10.68377
   },
   {
     "date": "1998-04-01T05:00:00.000Z",
     "year": "1998",
     "month": 3,
     "heatDelta": 3.046107,
-    "heatDeltaNorm": 11.053056000000002
+    "value": 11.053056000000002
   },
   {
     "date": "1998-07-01T04:00:00.000Z",
     "year": "1998",
     "month": 6,
     "heatDelta": 5.32325,
-    "heatDeltaNorm": 13.330199
+    "value": 13.330199
   },
   {
     "date": "1998-10-01T04:00:00.000Z",
     "year": "1998",
     "month": 9,
     "heatDelta": 3.689378,
-    "heatDeltaNorm": 11.696327
+    "value": 11.696327
   },
   {
     "date": "1999-01-01T05:00:00.000Z",
     "year": "1998",
     "month": 12,
     "heatDelta": 5.156275,
-    "heatDeltaNorm": 13.163224
+    "value": 13.163224
   },
   {
     "date": "1999-04-01T05:00:00.000Z",
     "year": "1999",
     "month": 3,
     "heatDelta": 5.388621,
-    "heatDeltaNorm": 13.39557
+    "value": 13.39557
   },
   {
     "date": "1999-07-01T04:00:00.000Z",
     "year": "1999",
     "month": 6,
     "heatDelta": 5.638433,
-    "heatDeltaNorm": 13.645382000000001
+    "value": 13.645382000000001
   },
   {
     "date": "1999-10-01T04:00:00.000Z",
     "year": "1999",
     "month": 9,
     "heatDelta": 6.149937,
-    "heatDeltaNorm": 14.156886
+    "value": 14.156886
   },
   {
     "date": "2000-01-01T05:00:00.000Z",
     "year": "1999",
     "month": 12,
     "heatDelta": 6.595028,
-    "heatDeltaNorm": 14.601977000000002
+    "value": 14.601977000000002
   },
   {
     "date": "2000-04-01T05:00:00.000Z",
     "year": "2000",
     "month": 3,
     "heatDelta": 4.844887,
-    "heatDeltaNorm": 12.851836
+    "value": 12.851836
   },
   {
     "date": "2000-07-01T04:00:00.000Z",
     "year": "2000",
     "month": 6,
     "heatDelta": 5.757782,
-    "heatDeltaNorm": 13.764731000000001
+    "value": 13.764731000000001
   },
   {
     "date": "2000-10-01T04:00:00.000Z",
     "year": "2000",
     "month": 9,
     "heatDelta": 7.14543,
-    "heatDeltaNorm": 15.152379
+    "value": 15.152379
   },
   {
     "date": "2001-01-01T05:00:00.000Z",
     "year": "2000",
     "month": 12,
     "heatDelta": 4.938114,
-    "heatDeltaNorm": 12.945063000000001
+    "value": 12.945063000000001
   },
   {
     "date": "2001-04-01T05:00:00.000Z",
     "year": "2001",
     "month": 3,
     "heatDelta": 3.076658,
-    "heatDeltaNorm": 11.083607
+    "value": 11.083607
   },
   {
     "date": "2001-07-01T04:00:00.000Z",
     "year": "2001",
     "month": 6,
     "heatDelta": 2.730675,
-    "heatDeltaNorm": 10.737624
+    "value": 10.737624
   },
   {
     "date": "2001-10-01T04:00:00.000Z",
     "year": "2001",
     "month": 9,
     "heatDelta": 3.21216,
-    "heatDeltaNorm": 11.219109
+    "value": 11.219109
   },
   {
     "date": "2002-01-01T05:00:00.000Z",
     "year": "2001",
     "month": 12,
     "heatDelta": 7.447564,
-    "heatDeltaNorm": 15.454513
+    "value": 15.454513
   },
   {
     "date": "2002-04-01T05:00:00.000Z",
     "year": "2002",
     "month": 3,
     "heatDelta": 5.505122,
-    "heatDeltaNorm": 13.512071
+    "value": 13.512071
   },
   {
     "date": "2002-07-01T04:00:00.000Z",
     "year": "2002",
     "month": 6,
     "heatDelta": 7.580072,
-    "heatDeltaNorm": 15.587021
+    "value": 15.587021
   },
   {
     "date": "2002-10-01T04:00:00.000Z",
     "year": "2002",
     "month": 9,
     "heatDelta": 7.701444,
-    "heatDeltaNorm": 15.708393000000001
+    "value": 15.708393000000001
   },
   {
     "date": "2003-01-01T05:00:00.000Z",
     "year": "2002",
     "month": 12,
     "heatDelta": 6.368651,
-    "heatDeltaNorm": 14.3756
+    "value": 14.3756
   },
   {
     "date": "2003-04-01T05:00:00.000Z",
     "year": "2003",
     "month": 3,
     "heatDelta": 8.746294,
-    "heatDeltaNorm": 16.753243
+    "value": 16.753243
   },
   {
     "date": "2003-07-01T04:00:00.000Z",
     "year": "2003",
     "month": 6,
     "heatDelta": 9.989262,
-    "heatDeltaNorm": 17.996211000000002
+    "value": 17.996211000000002
   },
   {
     "date": "2003-10-01T04:00:00.000Z",
     "year": "2003",
     "month": 9,
     "heatDelta": 9.416777,
-    "heatDeltaNorm": 17.423726000000002
+    "value": 17.423726000000002
   },
   {
     "date": "2004-01-01T05:00:00.000Z",
     "year": "2003",
     "month": 12,
     "heatDelta": 11.65459,
-    "heatDeltaNorm": 19.661539
+    "value": 19.661539
   },
   {
     "date": "2004-04-01T05:00:00.000Z",
     "year": "2004",
     "month": 3,
     "heatDelta": 11.021722,
-    "heatDeltaNorm": 19.028671000000003
+    "value": 19.028671000000003
   },
   {
     "date": "2004-07-01T04:00:00.000Z",
     "year": "2004",
     "month": 6,
     "heatDelta": 9.882789,
-    "heatDeltaNorm": 17.889738
+    "value": 17.889738
   },
   {
     "date": "2004-10-01T04:00:00.000Z",
     "year": "2004",
     "month": 9,
     "heatDelta": 9.770217,
-    "heatDeltaNorm": 17.777166
+    "value": 17.777166
   },
   {
     "date": "2005-01-01T05:00:00.000Z",
     "year": "2004",
     "month": 12,
     "heatDelta": 10.286994,
-    "heatDeltaNorm": 18.293943
+    "value": 18.293943
   },
   {
     "date": "2005-04-01T05:00:00.000Z",
     "year": "2005",
     "month": 3,
     "heatDelta": 8.052857,
-    "heatDeltaNorm": 16.059806000000002
+    "value": 16.059806000000002
   },
   {
     "date": "2005-07-01T04:00:00.000Z",
     "year": "2005",
     "month": 6,
     "heatDelta": 8.463406,
-    "heatDeltaNorm": 16.470355
+    "value": 16.470355
   },
   {
     "date": "2005-10-01T04:00:00.000Z",
     "year": "2005",
     "month": 9,
     "heatDelta": 7.849959,
-    "heatDeltaNorm": 15.856908
+    "value": 15.856908
   },
   {
     "date": "2006-01-01T05:00:00.000Z",
     "year": "2005",
     "month": 12,
     "heatDelta": 9.281116,
-    "heatDeltaNorm": 17.288065000000003
+    "value": 17.288065000000003
   },
   {
     "date": "2006-04-01T05:00:00.000Z",
     "year": "2006",
     "month": 3,
     "heatDelta": 10.343987,
-    "heatDeltaNorm": 18.350936
+    "value": 18.350936
   },
   {
     "date": "2006-07-01T04:00:00.000Z",
     "year": "2006",
     "month": 6,
     "heatDelta": 9.907466,
-    "heatDeltaNorm": 17.914414999999998
+    "value": 17.914414999999998
   },
   {
     "date": "2006-10-01T04:00:00.000Z",
     "year": "2006",
     "month": 9,
     "heatDelta": 10.797616,
-    "heatDeltaNorm": 18.804565
+    "value": 18.804565
   },
   {
     "date": "2007-01-01T05:00:00.000Z",
     "year": "2006",
     "month": 12,
     "heatDelta": 10.671572,
-    "heatDeltaNorm": 18.678521
+    "value": 18.678521
   },
   {
     "date": "2007-04-01T04:00:00.000Z",
     "year": "2007",
     "month": 3,
     "heatDelta": 9.896998,
-    "heatDeltaNorm": 17.903947000000002
+    "value": 17.903947000000002
   },
   {
     "date": "2007-07-01T04:00:00.000Z",
     "year": "2007",
     "month": 6,
     "heatDelta": 8.81155,
-    "heatDeltaNorm": 16.818499000000003
+    "value": 16.818499000000003
   },
   {
     "date": "2007-10-01T04:00:00.000Z",
     "year": "2007",
     "month": 9,
     "heatDelta": 9.61194,
-    "heatDeltaNorm": 17.618889000000003
+    "value": 17.618889000000003
   },
   {
     "date": "2008-01-01T05:00:00.000Z",
     "year": "2007",
     "month": 12,
     "heatDelta": 9.592806,
-    "heatDeltaNorm": 17.599755000000002
+    "value": 17.599755000000002
   },
   {
     "date": "2008-04-01T04:00:00.000Z",
     "year": "2008",
     "month": 3,
     "heatDelta": 10.786727,
-    "heatDeltaNorm": 18.793676
+    "value": 18.793676
   },
   {
     "date": "2008-07-01T04:00:00.000Z",
     "year": "2008",
     "month": 6,
     "heatDelta": 10.336976,
-    "heatDeltaNorm": 18.343925
+    "value": 18.343925
   },
   {
     "date": "2008-10-01T04:00:00.000Z",
     "year": "2008",
     "month": 9,
     "heatDelta": 10.391797,
-    "heatDeltaNorm": 18.398746000000003
+    "value": 18.398746000000003
   },
   {
     "date": "2009-01-01T05:00:00.000Z",
     "year": "2008",
     "month": 12,
     "heatDelta": 8.693175,
-    "heatDeltaNorm": 16.700124000000002
+    "value": 16.700124000000002
   },
   {
     "date": "2009-04-01T04:00:00.000Z",
     "year": "2009",
     "month": 3,
     "heatDelta": 10.176744,
-    "heatDeltaNorm": 18.183692999999998
+    "value": 18.183692999999998
   },
   {
     "date": "2009-07-01T04:00:00.000Z",
     "year": "2009",
     "month": 6,
     "heatDelta": 9.101278,
-    "heatDeltaNorm": 17.108227
+    "value": 17.108227
   },
   {
     "date": "2009-10-01T04:00:00.000Z",
     "year": "2009",
     "month": 9,
     "heatDelta": 10.603387,
-    "heatDeltaNorm": 18.610336
+    "value": 18.610336
   },
   {
     "date": "2010-01-01T05:00:00.000Z",
     "year": "2009",
     "month": 12,
     "heatDelta": 10.623396,
-    "heatDeltaNorm": 18.630345
+    "value": 18.630345
   },
   {
     "date": "2010-04-01T04:00:00.000Z",
     "year": "2010",
     "month": 3,
     "heatDelta": 11.198472,
-    "heatDeltaNorm": 19.205421
+    "value": 19.205421
   },
   {
     "date": "2010-07-01T04:00:00.000Z",
     "year": "2010",
     "month": 6,
     "heatDelta": 9.614333,
-    "heatDeltaNorm": 17.621282
+    "value": 17.621282
   },
   {
     "date": "2010-10-01T04:00:00.000Z",
     "year": "2010",
     "month": 9,
     "heatDelta": 9.911397,
-    "heatDeltaNorm": 17.918346
+    "value": 17.918346
   },
   {
     "date": "2011-01-01T05:00:00.000Z",
     "year": "2010",
     "month": 12,
     "heatDelta": 10.745736,
-    "heatDeltaNorm": 18.752685
+    "value": 18.752685
   },
   {
     "date": "2011-04-01T04:00:00.000Z",
     "year": "2011",
     "month": 3,
     "heatDelta": 10.729161,
-    "heatDeltaNorm": 18.73611
+    "value": 18.73611
   },
   {
     "date": "2011-07-01T04:00:00.000Z",
     "year": "2011",
     "month": 6,
     "heatDelta": 10.042295,
-    "heatDeltaNorm": 18.049244
+    "value": 18.049244
   },
   {
     "date": "2011-10-01T04:00:00.000Z",
     "year": "2011",
     "month": 9,
     "heatDelta": 12.127405,
-    "heatDeltaNorm": 20.134354000000002
+    "value": 20.134354000000002
   },
   {
     "date": "2012-01-01T05:00:00.000Z",
     "year": "2011",
     "month": 12,
     "heatDelta": 10.578467,
-    "heatDeltaNorm": 18.585416000000002
+    "value": 18.585416000000002
   },
   {
     "date": "2012-04-01T04:00:00.000Z",
     "year": "2012",
     "month": 3,
     "heatDelta": 11.747399,
-    "heatDeltaNorm": 19.754348
+    "value": 19.754348
   },
   {
     "date": "2012-07-01T04:00:00.000Z",
     "year": "2012",
     "month": 6,
     "heatDelta": 10.098619,
-    "heatDeltaNorm": 18.105567999999998
+    "value": 18.105567999999998
   },
   {
     "date": "2012-10-01T04:00:00.000Z",
     "year": "2012",
     "month": 9,
     "heatDelta": 10.641594,
-    "heatDeltaNorm": 18.648543
+    "value": 18.648543
   },
   {
     "date": "2013-01-01T05:00:00.000Z",
     "year": "2012",
     "month": 12,
     "heatDelta": 11.275383,
-    "heatDeltaNorm": 19.282332
+    "value": 19.282332
   },
   {
     "date": "2013-04-01T04:00:00.000Z",
     "year": "2013",
     "month": 3,
     "heatDelta": 13.534068,
-    "heatDeltaNorm": 21.541017
+    "value": 21.541017
   },
   {
     "date": "2013-07-01T04:00:00.000Z",
     "year": "2013",
     "month": 6,
     "heatDelta": 12.048531,
-    "heatDeltaNorm": 20.055480000000003
+    "value": 20.055480000000003
   },
   {
     "date": "2013-10-01T04:00:00.000Z",
     "year": "2013",
     "month": 9,
     "heatDelta": 11.164961,
-    "heatDeltaNorm": 19.17191
+    "value": 19.17191
   },
   {
     "date": "2014-01-01T05:00:00.000Z",
     "year": "2013",
     "month": 12,
     "heatDelta": 13.65546,
-    "heatDeltaNorm": 21.662409
+    "value": 21.662409
   },
   {
     "date": "2014-04-01T04:00:00.000Z",
     "year": "2014",
     "month": 3,
     "heatDelta": 14.243009,
-    "heatDeltaNorm": 22.249958
+    "value": 22.249958
   },
   {
     "date": "2014-07-01T04:00:00.000Z",
     "year": "2014",
     "month": 6,
     "heatDelta": 13.165339,
-    "heatDeltaNorm": 21.172288
+    "value": 21.172288
   },
   {
     "date": "2014-10-01T04:00:00.000Z",
     "year": "2014",
     "month": 9,
     "heatDelta": 11.987585,
-    "heatDeltaNorm": 19.994534
+    "value": 19.994534
   },
   {
     "date": "2015-01-01T05:00:00.000Z",
     "year": "2014",
     "month": 12,
     "heatDelta": 13.646789,
-    "heatDeltaNorm": 21.653738
+    "value": 21.653738
   },
   {
     "date": "2015-04-01T04:00:00.000Z",
     "year": "2015",
     "month": 3,
     "heatDelta": 15.84637,
-    "heatDeltaNorm": 23.853319
+    "value": 23.853319
   },
   {
     "date": "2015-07-01T04:00:00.000Z",
     "year": "2015",
     "month": 6,
     "heatDelta": 14.841905,
-    "heatDeltaNorm": 22.848854000000003
+    "value": 22.848854000000003
   },
   {
     "date": "2015-10-01T04:00:00.000Z",
     "year": "2015",
     "month": 9,
     "heatDelta": 14.64152,
-    "heatDeltaNorm": 22.648469
+    "value": 22.648469
   },
   {
     "date": "2016-01-01T05:00:00.000Z",
     "year": "2015",
     "month": 12,
     "heatDelta": 15.156898,
-    "heatDeltaNorm": 23.163847
+    "value": 23.163847
   },
   {
     "date": "2016-04-01T04:00:00.000Z",
     "year": "2016",
     "month": 3,
     "heatDelta": 15.45853,
-    "heatDeltaNorm": 23.465479000000002
+    "value": 23.465479000000002
   },
   {
     "date": "2016-07-01T04:00:00.000Z",
     "year": "2016",
     "month": 6,
     "heatDelta": 13.076438,
-    "heatDeltaNorm": 21.083387000000002
+    "value": 21.083387000000002
   },
   {
     "date": "2016-10-01T04:00:00.000Z",
     "year": "2016",
     "month": 9,
     "heatDelta": 13.078745,
-    "heatDeltaNorm": 21.085694
+    "value": 21.085694
   },
   {
     "date": "2017-01-01T05:00:00.000Z",
     "year": "2016",
     "month": 12,
     "heatDelta": 14.275308,
-    "heatDeltaNorm": 22.282257
+    "value": 22.282257
   },
   {
     "date": "2017-04-01T04:00:00.000Z",
     "year": "2017",
     "month": 3,
     "heatDelta": 16.024471,
-    "heatDeltaNorm": 24.031419999999997
+    "value": 24.031419999999997
   },
   {
     "date": "2017-07-01T04:00:00.000Z",
     "year": "2017",
     "month": 6,
     "heatDelta": 16.228298,
-    "heatDeltaNorm": 24.235247
+    "value": 24.235247
   },
   {
     "date": "2017-10-01T04:00:00.000Z",
     "year": "2017",
     "month": 9,
     "heatDelta": 14.849831,
-    "heatDeltaNorm": 22.85678
+    "value": 22.85678
   },
   {
     "date": "2018-01-01T05:00:00.000Z",
     "year": "2017",
     "month": 12,
     "heatDelta": 16.408493,
-    "heatDeltaNorm": 24.415442
+    "value": 24.415442
   },
   {
     "date": "2018-04-01T04:00:00.000Z",
     "year": "2018",
     "month": 3,
     "heatDelta": 17.503874,
-    "heatDeltaNorm": 25.510823000000002
+    "value": 25.510823000000002
   },
   {
     "date": "2018-07-01T04:00:00.000Z",
     "year": "2018",
     "month": 6,
     "heatDelta": 15.545946,
-    "heatDeltaNorm": 23.552895
+    "value": 23.552895
   },
   {
     "date": "2018-10-01T04:00:00.000Z",
     "year": "2018",
     "month": 9,
     "heatDelta": 16.040094,
-    "heatDeltaNorm": 24.047043000000002
+    "value": 24.047043000000002
   },
   {
     "date": "2019-01-01T05:00:00.000Z",
     "year": "2018",
     "month": 12,
     "heatDelta": 17.797443,
-    "heatDeltaNorm": 25.804392
+    "value": 25.804392
   },
   {
     "date": "2019-04-01T04:00:00.000Z",
     "year": "2019",
     "month": 3,
     "heatDelta": 18.26557,
-    "heatDeltaNorm": 26.272519000000003
+    "value": 26.272519000000003
   },
   {
     "date": "2019-07-01T04:00:00.000Z",
     "year": "2019",
     "month": 6,
     "heatDelta": 17.515776,
-    "heatDeltaNorm": 25.522725
+    "value": 25.522725
   },
   {
     "date": "2019-10-01T04:00:00.000Z",
     "year": "2019",
     "month": 9,
     "heatDelta": 17.219067,
-    "heatDeltaNorm": 25.226016
+    "value": 25.226016
   },
   {
     "date": "2020-01-01T05:00:00.000Z",
     "year": "2019",
     "month": 12,
     "heatDelta": 17.901997,
-    "heatDeltaNorm": 25.908946
+    "value": 25.908946
   },
   {
     "date": "2020-04-01T04:00:00.000Z",
     "year": "2020",
     "month": 3,
     "heatDelta": 19.231215,
-    "heatDeltaNorm": 27.238163999999998
+    "value": 27.238163999999998
   },
   {
     "date": "2020-07-01T04:00:00.000Z",
     "year": "2020",
     "month": 6,
     "heatDelta": 17.286221,
-    "heatDeltaNorm": 25.293170000000003
+    "value": 25.293170000000003
   },
   {
     "date": "2020-10-01T04:00:00.000Z",
     "year": "2020",
     "month": 9,
     "heatDelta": 15.914822,
-    "heatDeltaNorm": 23.921771
+    "value": 23.921771
   },
   {
     "date": "2021-01-01T05:00:00.000Z",
     "year": "2020",
     "month": 12,
     "heatDelta": 17.663042,
-    "heatDeltaNorm": 25.669991000000003
+    "value": 25.669991000000003
   },
   {
     "date": "2021-04-01T04:00:00.000Z",
     "year": "2021",
     "month": 3,
     "heatDelta": 18.986416,
-    "heatDeltaNorm": 26.993364999999997
+    "value": 26.993364999999997
   },
   {
     "date": "2021-07-01T04:00:00.000Z",
     "year": "2021",
     "month": 6,
     "heatDelta": 18.136728,
-    "heatDeltaNorm": 26.143677000000004
+    "value": 26.143677000000004
   },
   {
     "date": "2021-10-01T04:00:00.000Z",
     "year": "2021",
     "month": 9,
     "heatDelta": 18.155346,
-    "heatDeltaNorm": 26.162295
+    "value": 26.162295
   },
   {
     "date": "2022-01-01T05:00:00.000Z",
     "year": "2021",
     "month": 12,
     "heatDelta": 19.661541,
-    "heatDeltaNorm": 27.66849
+    "value": 27.66849
   },
   {
     "date": "2022-04-01T04:00:00.000Z",
     "year": "2022",
     "month": 3,
     "heatDelta": 20.059818,
-    "heatDeltaNorm": 28.066767
+    "value": 28.066767
   },
   {
     "date": "2022-07-01T04:00:00.000Z",
     "year": "2022",
     "month": 6,
     "heatDelta": 19.38064,
-    "heatDeltaNorm": 27.387589
+    "value": 27.387589
   },
   {
     "date": "2022-10-01T04:00:00.000Z",
     "year": "2022",
     "month": 9,
     "heatDelta": 18.949022,
-    "heatDeltaNorm": 26.955970999999998
+    "value": 26.955970999999998
   },
   {
     "date": "2023-01-01T05:00:00.000Z",
     "year": "2022",
     "month": 12,
     "heatDelta": 20.35737,
-    "heatDeltaNorm": 28.364319000000002
+    "value": 28.364319000000002
   },
   {
     "date": "2023-04-01T04:00:00.000Z",
     "year": "2023",
     "month": 3,
     "heatDelta": 20.53422,
-    "heatDeltaNorm": 28.541169000000004
+    "value": 28.541169000000004
   },
   {
     "date": "2023-07-01T04:00:00.000Z",
     "year": "2023",
     "month": 6,
     "heatDelta": 19.86902,
-    "heatDeltaNorm": 27.875968999999998
+    "value": 27.875968999999998
   },
   {
     "date": "2023-10-01T04:00:00.000Z",
     "year": "2023",
     "month": 9,
     "heatDelta": 20.081532,
-    "heatDeltaNorm": 28.088481
+    "value": 28.088481
   },
   {
     "date": "2024-01-01T05:00:00.000Z",
     "year": "2023",
     "month": 12,
     "heatDelta": 22.065022,
-    "heatDeltaNorm": 30.071970999999998
+    "value": 30.071970999999998
   }
 ]
