@@ -70,7 +70,7 @@ async function followRoute({
   highSampleLoopEnd = 10,
   highTransposeFreqFactor = 0.5,
   playHighPart = true,
-  chordScaleExponent = 1.5,
+  chordScaleExponent = 1.25,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
 }) {

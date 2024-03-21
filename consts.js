@@ -1,5 +1,5 @@
 import { getTonalityDiamond } from './tonality-diamond';
-export const defaultSecondsPerTick = 0.5;
+export const defaultSecondsPerTick = 2;
 export const diamondLimit = 13;
 
 const denomLimit = 32;
