@@ -70,7 +70,7 @@ async function followRoute({
   highSampleLoopEnd = 10,
   highTransposeFreqFactor = 0.5,
   playHighPart = true,
-  chordScaleExponent = 1.25,
+  chordScaleExponent = 1,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
 }) {
@@ -191,7 +191,7 @@ async function followRoute({
       ctx,
       sampleBuffer: buffers[sampleIndex],
       mainOutNode,
-      ampFactor: 0.9,
+      ampFactor: 0.7,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([0, 0.5, 1]),
       slideMode: false,
@@ -204,7 +204,7 @@ async function followRoute({
       ampFactor: 1,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 1,
-      slideMode: true,
+      slideMode: false,
     });
     if (playHighPart) {
       highScoreDirector = ScoreDirector({
@@ -212,10 +212,10 @@ async function followRoute({
         ctx,
         sampleBuffer: buffers[highVoiceSampleIndex],
         mainOutNode,
-        ampFactor: 1,
+        ampFactor: 0.7,
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 3,
-        slideMode: false,
+        slideMode: true,
       });
     }
     // narrationDirector = ScoreDirector({
