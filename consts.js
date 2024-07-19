@@ -22,7 +22,7 @@ export var sampleFilenames = [
   '2011-2020.wav',
   '2021.wav',
   'trumpet-D2.wav',
-  'flute_note_tremolo.wav',
+  // 'flute_note_tremolo.wav',
   'flute-G4-edit.wav',
   'glass-more-full.wav',
   'glass-less-full.wav',
