@@ -1,5 +1,6 @@
 import {
   Sampler,
+  Osc,
   Envelope,
   Panner,
   SynthNode,
@@ -87,6 +88,7 @@ export function ScoreDirector({
     );
     var newPlayEvents = newScoreEvents.map((scoreEvt) =>
       newPlayEventForScoreEvent({
+        GenNodeClass: Osc,
         scoreEvent: scoreEvt,
         sampleBuffer,
         variableSampleBuffers,
@@ -302,7 +304,9 @@ function decommisionNode(synthNode: SynthNode) {
 }
 
 function updatePlayEventNodeParams(tickLength: number, playEvent: PlayEvent) {
-  var samplerNode = playEvent.nodes.find((node) => node instanceof Sampler);
+  var samplerNode = playEvent.nodes.find(
+    (node) => node instanceof Osc || node instanceof Sampler
+  );
   if (samplerNode) {
     samplerNode.params.playbackRate = playEvent.scoreEvent.rate;
     samplerNode.syncToParams();
