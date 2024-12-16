@@ -39,6 +39,7 @@ export function DataComposer({
   chordScaleExponent,
   chordSizeLengthExp,
   totalTicks,
+  shouldLoop,
 }: {
   tempoFactor: number;
   data: SubjectDatum[];
@@ -49,6 +50,7 @@ export function DataComposer({
   chordScaleExponent: number;
   chordSizeLengthExp: number;
   totalTicks: number;
+  shouldLoop?: boolean;
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   // var chordScale = scaleLinear().domain([chordXFloor, chordXCeil]).range([1, maxPitchCount]);
@@ -127,7 +129,10 @@ export function DataComposer({
         // Undefined loopEndSeconds tells the director to play to the end of the sample.
         loop: arpeggiate
           ? undefined
-          : { loopStartSeconds: 0.1, loopEndSeconds: undefined },
+          : shouldLoop
+            ? { loopStartSeconds: 0, loopEndSeconds: 6 }
+            : undefined,
+        reverb: true,
         finite: true,
         meta: { sourceDatum },
       };

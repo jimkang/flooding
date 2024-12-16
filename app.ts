@@ -62,14 +62,16 @@ async function followRoute({
   totalTicks,
   tempoFactor = defaultSecondsPerTick,
   startTick = 0,
-  sampleIndex = 11,
-  lowVoiceSampleIndex = 15,
+  sampleIndex = 15,
+  impulseIndex = 17,
+  lowVoiceSampleIndex = 13,
   lowSampleLoopEnd = 7,
   lowTransposeFreqFactor = 0.125,
   highVoiceSampleIndex = 16,
-  highSampleLoopEnd = 10,
+  highSampleLoopEnd = 0, //10, Tell Transposer to not loop by default.
   highTransposeFreqFactor = 0.5,
   playHighPart = true,
+  playLowPart = false,
   chordScaleExponent = 1,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
@@ -106,6 +108,7 @@ async function followRoute({
     chordSizeLengthExp: +chordSizeLengthExp,
     seed,
     totalTicks,
+    shouldLoop: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
     composer,
@@ -139,16 +142,17 @@ async function followRoute({
 
   var mainOutNode = MainOut({ ctx, totalSeconds });
 
-  var lowTransposer = Transposer({
-    seed,
-    freqFactor: +lowTransposeFreqFactor,
-    eventProportionToTranspose: 0.5,
-    sampleLoopStart: 0,
-    sampleLoopEnd: +lowSampleLoopEnd,
-  });
-  var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(
-    lowTransposer.getScoreState
-  );
+  if (playLowPart) {
+    var lowTransposer = Transposer({
+      seed,
+      freqFactor: +lowTransposeFreqFactor,
+      eventProportionToTranspose: 0.5,
+      sampleLoopStart: 0,
+      sampleLoopEnd: +lowSampleLoopEnd,
+    });
+    var lowGroupScoreStateObjects: ScoreState[] =
+      mainGroupScoreStateObjects.map(lowTransposer.getScoreState);
+  }
 
   if (playHighPart) {
     var highTransposer = Transposer({
@@ -190,32 +194,37 @@ async function followRoute({
       directorName: 'main',
       ctx,
       sampleBuffer: buffers[sampleIndex],
+      impulseBuffer: buffers[impulseIndex],
       mainOutNode,
-      ampFactor: 0.7,
+      ampFactor: 1.0,
       constantEnvelopeLength: 1.0,
-      envelopeCurve: new Float32Array([0, 0.5, 1]),
+      envelopeCurve: new Float32Array([1, 1]),
       slideMode: false,
     });
-    lowScoreDirector = ScoreDirector({
-      directorName: 'low',
-      ctx,
-      sampleBuffer: buffers[lowVoiceSampleIndex],
-      mainOutNode,
-      ampFactor: 1,
-      envelopeCurve: defaultADSRCurve,
-      fadeLengthFactor: 1,
-      slideMode: false,
-    });
+    if (playLowPart) {
+      lowScoreDirector = ScoreDirector({
+        directorName: 'low',
+        ctx,
+        sampleBuffer: buffers[lowVoiceSampleIndex],
+        impulseBuffer: buffers[impulseIndex],
+        mainOutNode,
+        ampFactor: 1,
+        envelopeCurve: defaultADSRCurve,
+        fadeLengthFactor: 1,
+        slideMode: false,
+      });
+    }
     if (playHighPart) {
       highScoreDirector = ScoreDirector({
         directorName: 'high',
         ctx,
         sampleBuffer: buffers[highVoiceSampleIndex],
+        impulseBuffer: buffers[impulseIndex],
         mainOutNode,
-        ampFactor: 0.7,
+        ampFactor: 0.5,
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 3,
-        slideMode: true,
+        slideMode: false,
       });
     }
     // narrationDirector = ScoreDirector({
@@ -248,7 +257,9 @@ async function followRoute({
     console.log(ticks, currentTickLengthSeconds);
     //var chord = director.getChord({ ticks });
     var mainGroupScoreState = mainGroupScoreStateObjects[ticks];
-    var lowGroupScoreState = lowGroupScoreStateObjects[ticks];
+    if (playLowPart) {
+      var lowGroupScoreState = lowGroupScoreStateObjects[ticks];
+    }
     if (playHighPart) {
       var highGroupScoreState = highGroupScoreStateObjects[ticks];
     }
@@ -293,9 +304,11 @@ async function followRoute({
     mainScoreDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, mainGroupScoreState)
     );
-    lowScoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState)
-    );
+    if (playLowPart) {
+      lowScoreDirector.play(
+        Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState)
+      );
+    }
     if (playHighPart) {
       highScoreDirector.play(
         Object.assign({ tickLengthSeconds: tickLength }, highGroupScoreState)

@@ -20,6 +20,7 @@ function defaultIdScoreEvent(scoreEvent: ScoreEvent) {
 export function ScoreDirector({
   ctx,
   sampleBuffer,
+  impulseBuffer,
   mainOutNode,
   ampFactor = 1.0,
   fadeLengthFactor = 2.0,
@@ -89,10 +90,11 @@ export function ScoreDirector({
     );
     var newPlayEvents = newScoreEvents.map((scoreEvt) =>
       newPlayEventForScoreEvent({
-        GenNodeClass: Osc,
+        // GenNodeClass: Osc,
         scoreEvent: scoreEvt,
         sampleBuffer,
         variableSampleBuffers,
+        impulseBuffer,
         ctx,
         tickLength: state.tickLength,
         slideMode,
@@ -100,6 +102,7 @@ export function ScoreDirector({
         ampFactor,
         getEnvelopeLengthForScoreEvent,
         baseFreq,
+        // shape: 'triangle',
       })
     );
     newPlayEvents.forEach(curry(appendIfNotYetInList)(playEvents));
