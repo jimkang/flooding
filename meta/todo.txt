@@ -1,3 +1,11 @@
+- Avoid crash by stopping notes instead of using fadeToDeath when things get fast.w
+
+Done:
+
+- Slow down marimba.
+
+Old:
+
 - Other data sets
   - They all need to be transformed so that the end up as rows of { date, year, month, value }
   - Support changing the set in the url.

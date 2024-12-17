@@ -62,7 +62,7 @@ async function followRoute({
   totalTicks,
   tempoFactor = defaultSecondsPerTick,
   startTick = 0,
-  sampleIndex = 15,
+  sampleIndex = 18,
   impulseIndex = 17,
   lowVoiceSampleIndex = 13,
   lowSampleLoopEnd = 7,
@@ -109,6 +109,8 @@ async function followRoute({
     seed,
     totalTicks,
     shouldLoop: true,
+    loopEndSeconds: 6,
+    adjustLoopForRate: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
     composer,
@@ -158,7 +160,7 @@ async function followRoute({
     var highTransposer = Transposer({
       seed,
       freqFactor: +highTransposeFreqFactor,
-      eventProportionToTranspose: 0.5,
+      eventProportionToTranspose: 0.75,
       sampleLoopStart: 0,
       sampleLoopEnd: +highSampleLoopEnd,
     });
@@ -196,7 +198,7 @@ async function followRoute({
       sampleBuffer: buffers[sampleIndex],
       impulseBuffer: buffers[impulseIndex],
       mainOutNode,
-      ampFactor: 1.0,
+      ampFactor: 5.0,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([1, 1]),
       slideMode: false,
@@ -225,6 +227,7 @@ async function followRoute({
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 3,
         slideMode: false,
+        mute: false,
       });
     }
     // narrationDirector = ScoreDirector({

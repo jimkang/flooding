@@ -32,6 +32,7 @@ export function ScoreDirector({
   idScoreEvent = defaultIdScoreEvent,
   slideMode = true,
   baseFreq = 329.628, // E4
+  mute = false,
 }) {
   var keyFn = idScoreEvent;
   // In slideMode, use the default DataJoiner behavior, which uses the data array positions as ids.
@@ -52,6 +53,9 @@ export function ScoreDirector({
   }
 
   function play(state: ScoreState) {
+    if (mute) {
+      return;
+    }
     scoreEventJoiner.update(state.events);
     console.log(
       directorName,

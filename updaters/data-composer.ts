@@ -40,6 +40,9 @@ export function DataComposer({
   chordSizeLengthExp,
   totalTicks,
   shouldLoop,
+  loopEndSeconds,
+  adjustLoopForRate,
+  arpeggiate = false,
 }: {
   tempoFactor: number;
   data: SubjectDatum[];
@@ -51,6 +54,9 @@ export function DataComposer({
   chordSizeLengthExp: number;
   totalTicks: number;
   shouldLoop?: boolean;
+  loopEndSeconds?: number;
+  adjustLoopForRate?: boolean;
+  arpeggiate?: boolean;
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   // var chordScale = scaleLinear().domain([chordXFloor, chordXCeil]).range([1, maxPitchCount]);
@@ -66,7 +72,6 @@ export function DataComposer({
   return { getScoreState };
 
   function getScoreState(tickIndex): ScoreState {
-    var arpeggiate = false;
     var sourceDatum = data[index];
 
     const tickLength = getTickLength(); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
@@ -117,8 +122,19 @@ export function DataComposer({
       arrayIndex: number,
       pitches: number[]
     ): ScoreEvent {
+      const rate = tonalityDiamondPitches[chordIndex];
+      var loop;
+      if (!arpeggiate && shouldLoop) {
+        // The actual loop length is affected by the playbackRate.
+        loop = {
+          loopStartSeconds: 0,
+          loopEndSeconds: adjustLoopForRate
+            ? loopEndSeconds * rate
+            : loopEndSeconds,
+        };
+      }
       return {
-        rate: tonalityDiamondPitches[chordIndex],
+        rate,
         delay: arpeggiate ? arrayIndex * (tickLength / pitches.length) : 0,
         absoluteLengthSeconds: arpeggiate
           ? (tickLength / pitches.length) * 1.1
@@ -127,11 +143,7 @@ export function DataComposer({
         //ratioToGainAdjScale(tonalityDiamondPitches[chordIndex]) *
         //(1.0 / pitches.length),
         // Undefined loopEndSeconds tells the director to play to the end of the sample.
-        loop: arpeggiate
-          ? undefined
-          : shouldLoop
-            ? { loopStartSeconds: 0, loopEndSeconds: 6 }
-            : undefined,
+        loop,
         reverb: true,
         finite: true,
         meta: { sourceDatum },
