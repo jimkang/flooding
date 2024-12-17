@@ -1,5 +1,6 @@
 import {
   Sampler,
+  Osc,
   Envelope,
   Panner,
   SynthNode,
@@ -19,6 +20,7 @@ function defaultIdScoreEvent(scoreEvent: ScoreEvent) {
 export function ScoreDirector({
   ctx,
   sampleBuffer,
+  impulseBuffer,
   mainOutNode,
   ampFactor = 1.0,
   fadeLengthFactor = 2.0,
@@ -29,6 +31,7 @@ export function ScoreDirector({
   directorName,
   idScoreEvent = defaultIdScoreEvent,
   slideMode = true,
+  baseFreq = 329.628, // E4
 }) {
   var keyFn = idScoreEvent;
   // In slideMode, use the default DataJoiner behavior, which uses the data array positions as ids.
@@ -87,15 +90,19 @@ export function ScoreDirector({
     );
     var newPlayEvents = newScoreEvents.map((scoreEvt) =>
       newPlayEventForScoreEvent({
+        // GenNodeClass: Osc,
         scoreEvent: scoreEvt,
         sampleBuffer,
         variableSampleBuffers,
+        impulseBuffer,
         ctx,
         tickLength: state.tickLength,
         slideMode,
         envelopeCurve,
         ampFactor,
         getEnvelopeLengthForScoreEvent,
+        baseFreq,
+        // shape: 'triangle',
       })
     );
     newPlayEvents.forEach(curry(appendIfNotYetInList)(playEvents));
@@ -243,6 +250,31 @@ export function ScoreDirector({
     }
     return tickLength * envelopeLengthFactor;
   }
+
+  function updatePlayEventNodeParams(tickLength: number, playEvent: PlayEvent) {
+    var genNode = playEvent.nodes.find(
+      (node) => node instanceof Osc || node instanceof Sampler
+    );
+    if (genNode) {
+      if (genNode instanceof Osc) {
+        genNode.params.freq = playEvent.scoreEvent.rate * baseFreq;
+      } else {
+        genNode.params.playbackRate = playEvent.scoreEvent.rate;
+      }
+      genNode.syncToParams();
+    }
+    var pannerNode = playEvent.nodes.find((node) => node instanceof Panner);
+    if (pannerNode) {
+      pannerNode.params.rampSeconds = tickLength;
+      pannerNode.params.pan = playEvent.scoreEvent.pan;
+      pannerNode.syncToParams();
+    }
+    //var envelopeNode: Envelope = playEvent.nodes.find(node => node instanceof Envelope) as Envelope;
+    //if (envelopeNode) {
+    //// TODO: Use current tick size to determine ramp time.
+    //envelopeNode.linearRampTo(0.2, playEvent.scoreEvent.peakGain);
+    //}
+  }
 }
 
 function fadeToDeath(
@@ -299,25 +331,6 @@ function decommisionNode(synthNode: SynthNode) {
   if (audioNode.disconnect) {
     audioNode.disconnect();
   }
-}
-
-function updatePlayEventNodeParams(tickLength: number, playEvent: PlayEvent) {
-  var samplerNode = playEvent.nodes.find((node) => node instanceof Sampler);
-  if (samplerNode) {
-    samplerNode.params.playbackRate = playEvent.scoreEvent.rate;
-    samplerNode.syncToParams();
-  }
-  var pannerNode = playEvent.nodes.find((node) => node instanceof Panner);
-  if (pannerNode) {
-    pannerNode.params.rampSeconds = tickLength;
-    pannerNode.params.pan = playEvent.scoreEvent.pan;
-    pannerNode.syncToParams();
-  }
-  //var envelopeNode: Envelope = playEvent.nodes.find(node => node instanceof Envelope) as Envelope;
-  //if (envelopeNode) {
-  //// TODO: Use current tick size to determine ramp time.
-  //envelopeNode.linearRampTo(0.2, playEvent.scoreEvent.peakGain);
-  //}
 }
 
 // Sort high to low, look for duplicates which should not be in the list.

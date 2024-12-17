@@ -19,12 +19,13 @@ import { preRunComposer } from './updaters/pre-run-composer';
 import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
 import { renderVisualizationForTick } from './renderers/visualization';
-import bostonMSL from './data/rlr_monthly/json-data/235.json';
-import { ScoreState, ScoreEvent } from 'synthskel/types';
-import { TideGauge } from './types';
+// import bostonMSL from './data/rlr_monthly/json-data/235.json';
+import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
+import { ScoreState /*, ScoreEvent*/ } from 'synthskel/types';
+// import { SubjectDatum } from './types';
 import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
-import { NarrationDataComposer } from './updaters/narration-data-composer';
+// import { NarrationDataComposer } from './updaters/narration-data-composer';
 
 var randomId = RandomId();
 var routeState;
@@ -34,7 +35,7 @@ var sampleDownloader;
 var mainScoreDirector;
 var lowScoreDirector;
 var highScoreDirector;
-var narrationDirector;
+// var narrationDirector;
 
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas',
@@ -61,15 +62,17 @@ async function followRoute({
   totalTicks,
   tempoFactor = defaultSecondsPerTick,
   startTick = 0,
-  sampleIndex = 11,
-  lowVoiceSampleIndex = 14,
+  sampleIndex = 15,
+  impulseIndex = 17,
+  lowVoiceSampleIndex = 13,
   lowSampleLoopEnd = 7,
   lowTransposeFreqFactor = 0.125,
-  highVoiceSampleIndex = 15,
-  highSampleLoopEnd = 10,
+  highVoiceSampleIndex = 16,
+  highSampleLoopEnd = 0, //10, Tell Transposer to not loop by default.
   highTransposeFreqFactor = 0.5,
   playHighPart = true,
-  chordScaleExponent = 20,
+  playLowPart = false,
+  chordScaleExponent = 1,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
 }) {
@@ -78,11 +81,11 @@ async function followRoute({
     return;
   }
 
-  var tideGaugeData = bostonMSL.slice();
-  insertYearBreaks(tideGaugeData);
+  var ohcData = ohcByQuarter.slice();
+  // insertYearBreaks(ohcData);
 
   if (!totalTicks) {
-    routeState.addToRoute({ totalTicks: tideGaugeData.length });
+    routeState.addToRoute({ totalTicks: ohcData.length });
     return;
   }
 
@@ -97,14 +100,15 @@ async function followRoute({
 
   var composer = DataComposer({
     tempoFactor,
-    data: tideGaugeData,
-    chordProp: 'meanSeaLevelDeltaMM',
-    chordXFloor: 6809,
-    chordXCeil: 7387,
+    data: ohcData,
+    chordProp: 'value',
+    chordXFloor: 0, // 6809,
+    chordXCeil: 31, // 7387,
     chordScaleExponent: +chordScaleExponent,
     chordSizeLengthExp: +chordSizeLengthExp,
     seed,
     totalTicks,
+    shouldLoop: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
     composer,
@@ -138,16 +142,17 @@ async function followRoute({
 
   var mainOutNode = MainOut({ ctx, totalSeconds });
 
-  var lowTransposer = Transposer({
-    seed,
-    freqFactor: +lowTransposeFreqFactor,
-    eventProportionToTranspose: 0.5,
-    sampleLoopStart: 0,
-    sampleLoopEnd: +lowSampleLoopEnd,
-  });
-  var lowGroupScoreStateObjects: ScoreState[] = mainGroupScoreStateObjects.map(
-    lowTransposer.getScoreState
-  );
+  if (playLowPart) {
+    var lowTransposer = Transposer({
+      seed,
+      freqFactor: +lowTransposeFreqFactor,
+      eventProportionToTranspose: 0.5,
+      sampleLoopStart: 0,
+      sampleLoopEnd: +lowSampleLoopEnd,
+    });
+    var lowGroupScoreStateObjects: ScoreState[] =
+      mainGroupScoreStateObjects.map(lowTransposer.getScoreState);
+  }
 
   if (playHighPart) {
     var highTransposer = Transposer({
@@ -161,9 +166,9 @@ async function followRoute({
       mainGroupScoreStateObjects.map(highTransposer.getScoreState);
   }
 
-  var narrationComposer = NarrationDataComposer();
-  var narrationGroupScoreStateObjects: ScoreState[] =
-    mainGroupScoreStateObjects.map(narrationComposer.getScoreState);
+  // var narrationComposer = NarrationDataComposer();
+  // var narrationGroupScoreStateObjects: ScoreState[] =
+  //   mainGroupScoreStateObjects.map(narrationComposer.getScoreState);
 
   ticker = Ticker({
     onTick,
@@ -189,50 +194,55 @@ async function followRoute({
       directorName: 'main',
       ctx,
       sampleBuffer: buffers[sampleIndex],
+      impulseBuffer: buffers[impulseIndex],
       mainOutNode,
-      ampFactor: 0.9,
+      ampFactor: 1.0,
       constantEnvelopeLength: 1.0,
-      envelopeCurve: new Float32Array([0, 0.5, 1]),
+      envelopeCurve: new Float32Array([1, 1]),
       slideMode: false,
     });
-    lowScoreDirector = ScoreDirector({
-      directorName: 'low',
-      ctx,
-      sampleBuffer: buffers[lowVoiceSampleIndex],
-      mainOutNode,
-      ampFactor: 1,
-      envelopeCurve: defaultADSRCurve,
-      fadeLengthFactor: 1,
-      slideMode: true,
-    });
+    if (playLowPart) {
+      lowScoreDirector = ScoreDirector({
+        directorName: 'low',
+        ctx,
+        sampleBuffer: buffers[lowVoiceSampleIndex],
+        impulseBuffer: buffers[impulseIndex],
+        mainOutNode,
+        ampFactor: 1,
+        envelopeCurve: defaultADSRCurve,
+        fadeLengthFactor: 1,
+        slideMode: false,
+      });
+    }
     if (playHighPart) {
       highScoreDirector = ScoreDirector({
         directorName: 'high',
         ctx,
         sampleBuffer: buffers[highVoiceSampleIndex],
+        impulseBuffer: buffers[impulseIndex],
         mainOutNode,
-        ampFactor: 1,
+        ampFactor: 0.5,
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 3,
         slideMode: false,
       });
     }
-    narrationDirector = ScoreDirector({
-      directorName: 'narration',
-      ctx,
-      sampleBuffer: null,
-      variableSampleBuffers: buffers.slice(0, 11),
-      mainOutNode,
-      idScoreEvent: function getSampleIndex(scoreEvent: ScoreEvent) {
-        if (!isNaN(scoreEvent.variableSampleIndex)) {
-          return '' + scoreEvent.variableSampleIndex;
-        }
-        return 'rest';
-      },
-      // Narration samples should not fade.
-      envelopeCurve: new Float32Array([1, 1]),
-      slideMode: false,
-    });
+    // narrationDirector = ScoreDirector({
+    //   directorName: 'narration',
+    //   ctx,
+    //   sampleBuffer: null,
+    //   variableSampleBuffers: buffers.slice(0, 11),
+    //   mainOutNode,
+    //   idScoreEvent: function getSampleIndex(scoreEvent: ScoreEvent) {
+    //     if (!isNaN(scoreEvent.variableSampleIndex)) {
+    //       return '' + scoreEvent.variableSampleIndex;
+    //     }
+    //     return 'rest';
+    //   },
+    //   // Narration samples should not fade.
+    //   envelopeCurve: new Float32Array([1, 1]),
+    //   slideMode: false,
+    // });
 
     wireControls({
       onStart,
@@ -247,11 +257,13 @@ async function followRoute({
     console.log(ticks, currentTickLengthSeconds);
     //var chord = director.getChord({ ticks });
     var mainGroupScoreState = mainGroupScoreStateObjects[ticks];
-    var lowGroupScoreState = lowGroupScoreStateObjects[ticks];
+    if (playLowPart) {
+      var lowGroupScoreState = lowGroupScoreStateObjects[ticks];
+    }
     if (playHighPart) {
       var highGroupScoreState = highGroupScoreStateObjects[ticks];
     }
-    var narrationGroupScoreState = narrationGroupScoreStateObjects[ticks];
+    // var narrationGroupScoreState = narrationGroupScoreStateObjects[ticks];
 
     var tickLength = currentTickLengthSeconds;
     if (!isNaN(mainGroupScoreState.tickLength)) {
@@ -292,17 +304,19 @@ async function followRoute({
     mainScoreDirector.play(
       Object.assign({ tickLengthSeconds: tickLength }, mainGroupScoreState)
     );
-    lowScoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState)
-    );
+    if (playLowPart) {
+      lowScoreDirector.play(
+        Object.assign({ tickLengthSeconds: tickLength }, lowGroupScoreState)
+      );
+    }
     if (playHighPart) {
       highScoreDirector.play(
         Object.assign({ tickLengthSeconds: tickLength }, highGroupScoreState)
       );
     }
-    narrationDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
-    );
+    // narrationDirector.play(
+    //   Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
+    // );
 
     renderVisualizationForTick(mainGroupScoreState);
   }
@@ -335,25 +349,25 @@ async function followRoute({
   }
 }
 
-function insertYearBreaks(data: TideGauge[]) {
-  // var currentYear;
-  var currentDecade;
-  for (let i = data.length - 1; i > 0; --i) {
-    let datum = data[i];
-    let year = datum.year;
-    let decade = Math.floor(+year / 10);
-    if (currentDecade !== undefined && currentDecade !== decade) {
-      data.splice(i + 1, 0, {
-        date: datum.date,
-        year,
-        month: datum.month,
-        meanSeaLevelDeltaMM: datum.meanSeaLevelDeltaMM,
-        pauseInsert: true,
-      });
-    }
-    currentDecade = decade;
-  }
-}
+// function insertYearBreaks(data: SubjectDatum[]) {
+//   // var currentYear;
+//   var currentDecade;
+//   for (let i = data.length - 1; i > 0; --i) {
+//     let datum = data[i];
+//     let year = datum.year;
+//     let decade = Math.floor(+year / 10);
+//     if (currentDecade !== undefined && currentDecade !== decade) {
+//       data.splice(i + 1, 0, {
+//         date: datum.date,
+//         year,
+//         month: datum.month,
+//         value: datum.value,
+//         pauseInsert: true,
+//       });
+//     }
+//     currentDecade = decade;
+//   }
+// }
 
 function reportTopLevelError(msg, url, lineNo, columnNo, error) {
   handleError(error);

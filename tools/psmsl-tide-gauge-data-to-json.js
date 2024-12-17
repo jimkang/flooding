@@ -18,12 +18,16 @@ const basename = path.basename(inputPath, '.rlrdata');
 const contents = fs.readFileSync(inputPath, { encoding: 'utf8' });
 var lines = contents.trim().split('\n');
 var rows = lines.map(parseLine);
-fs.writeFileSync(path.join(outputDirPath, basename + '.json'), JSON.stringify(rows, null, 2), { encoding: 'utf8' });
+fs.writeFileSync(
+  path.join(outputDirPath, basename + '.json'),
+  JSON.stringify(rows, null, 2),
+  { encoding: 'utf8' }
+);
 
 function parseLine(line, lines, i) {
   var values = line.split(';');
   const [year, monthPart] = values[0].split('.');
-  const month = +monthPart/10000*12;
+  const month = (+monthPart / 10000) * 12;
   var date = new Date(year, month);
   var meanSeaLevelDeltaMM = +values[1];
   if (meanSeaLevelDeltaMM === -99999) {
@@ -36,4 +40,3 @@ function parseLine(line, lines, i) {
   }
   return { date, year, month, meanSeaLevelDeltaMM };
 }
-

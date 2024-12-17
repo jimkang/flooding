@@ -1,7 +1,8 @@
-export interface TideGauge {
+export interface SubjectDatum {
   date: string;
   year: string;
   month: number;
-  meanSeaLevelDeltaMM: number;
+  value: number;
+  meanSeaLevelDeltaMM?: number;
   pauseInsert?: boolean;
 }

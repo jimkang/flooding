@@ -73,6 +73,6 @@
     "soundbank-reverb": "^1.1.2",
     "split-to-words": "^2.0.0",
     "strokerouter": "^2.0.0",
-    "synthskel": "^1.3.3"
+    "synthskel": "^2.1.0"
   }
 }

@@ -1,10 +1,11 @@
 import { range } from 'd3-array';
 import { scalePow } from 'd3-scale';
+// import { scaleLinear } from 'd3-scale';
 import { easeExpIn, easeExpOut } from 'd3-ease';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
-import { TideGauge } from '../types';
+import { SubjectDatum } from '../types';
 import { tonalityDiamondPitches } from '../consts';
 
 const maxPitchCount = tonalityDiamondPitches.length;
@@ -38,9 +39,10 @@ export function DataComposer({
   chordScaleExponent,
   chordSizeLengthExp,
   totalTicks,
+  shouldLoop,
 }: {
   tempoFactor: number;
-  data: TideGauge[];
+  data: SubjectDatum[];
   chordProp: string;
   chordXFloor: number;
   chordXCeil: number;
@@ -48,11 +50,12 @@ export function DataComposer({
   chordScaleExponent: number;
   chordSizeLengthExp: number;
   totalTicks: number;
+  shouldLoop?: boolean;
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
+  // var chordScale = scaleLinear().domain([chordXFloor, chordXCeil]).range([1, maxPitchCount]);
   var chordScale = scalePow()
     .exponent(chordScaleExponent)
-    //scaleLinear()
     .domain([chordXFloor, chordXCeil])
     .range([1, maxPitchCount]);
   var index = 0;
@@ -126,7 +129,10 @@ export function DataComposer({
         // Undefined loopEndSeconds tells the director to play to the end of the sample.
         loop: arpeggiate
           ? undefined
-          : { loopStartSeconds: 0.1, loopEndSeconds: undefined },
+          : shouldLoop
+            ? { loopStartSeconds: 0, loopEndSeconds: 6 }
+            : undefined,
+        reverb: true,
         finite: true,
         meta: { sourceDatum },
       };

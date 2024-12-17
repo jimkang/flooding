@@ -1,6 +1,10 @@
+- Other data sets
+  - They all need to be transformed so that the end up as rows of { date, year, month, value }
+  - Support changing the set in the url.
+  - Different defaults for different sets.
+
 - Vary attack amplitudes.
 - Bass is hitting negative playback rates around tick 79. Maybe there should be negative values at the end.
-- Narration is too loud.
 
 Done:
 
@@ -30,6 +34,7 @@ These aren't really an issue, it turns out:
 - Too quiet? May need light compression.
 - Vary loop lengths.
 - More pops around 145, possibly in bass. Also 55, 270, 520, 720
+- Narration is too loud.
 
 Can't repro:
 
