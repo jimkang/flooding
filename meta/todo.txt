@@ -1,8 +1,12 @@
-- Avoid crash by stopping notes instead of using fadeToDeath when things get fast.w
+- Avoid crash by stopping notes instead of using fadeToDeath when things get fast. Around tick 193.
+- Maybe pan the parts more left and right.
+- Low pipe organ sample?
 
 Done:
 
 - Slow down marimba.
+- Try French horn again.
+- Marimba loop: 1s?
 
 Old:
 

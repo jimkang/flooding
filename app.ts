@@ -67,7 +67,7 @@ async function followRoute({
   lowVoiceSampleIndex = 13,
   lowSampleLoopEnd = 7,
   lowTransposeFreqFactor = 0.125,
-  highVoiceSampleIndex = 16,
+  highVoiceSampleIndex = 19, // 16,
   highSampleLoopEnd = 0, //10, Tell Transposer to not loop by default.
   highTransposeFreqFactor = 0.5,
   playHighPart = true,
@@ -109,7 +109,7 @@ async function followRoute({
     seed,
     totalTicks,
     shouldLoop: true,
-    loopEndSeconds: 6,
+    loopEndSeconds: 1,
     adjustLoopForRate: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
@@ -198,7 +198,7 @@ async function followRoute({
       sampleBuffer: buffers[sampleIndex],
       impulseBuffer: buffers[impulseIndex],
       mainOutNode,
-      ampFactor: 5.0,
+      ampFactor: 4.0,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([1, 1]),
       slideMode: false,
@@ -223,7 +223,7 @@ async function followRoute({
         sampleBuffer: buffers[highVoiceSampleIndex],
         impulseBuffer: buffers[impulseIndex],
         mainOutNode,
-        ampFactor: 0.5,
+        ampFactor: 1, // 0.7,
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 3,
         slideMode: false,
