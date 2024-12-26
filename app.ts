@@ -109,7 +109,7 @@ async function followRoute({
     seed,
     totalTicks,
     shouldLoop: true,
-    loopEndSeconds: 1,
+    loopEndSeconds: 5,
     adjustLoopForRate: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
