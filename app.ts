@@ -64,14 +64,16 @@ async function followRoute({
   startTick = 0,
   sampleIndex = 18,
   impulseIndex = 17,
-  lowVoiceSampleIndex = 13,
+  lowVoiceSampleIndex = 16,
   lowSampleLoopEnd = 7,
-  lowTransposeFreqFactor = 0.125,
+  lowTransposeFreqFactor = 0.25,
+  lowImpulseIndex = 17,
   highVoiceSampleIndex = 19, // 16,
   highSampleLoopEnd = 0, //10, Tell Transposer to not loop by default.
   highTransposeFreqFactor = 0.5,
-  playHighPart = true,
-  playLowPart = false,
+  highImpulseIndex = 17,
+  playHighPart = false,
+  playLowPart = true,
   chordScaleExponent = 1,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
@@ -148,9 +150,10 @@ async function followRoute({
     var lowTransposer = Transposer({
       seed,
       freqFactor: +lowTransposeFreqFactor,
-      eventProportionToTranspose: 0.5,
+      eventProportionToTranspose: 0.4,
       sampleLoopStart: 0,
       sampleLoopEnd: +lowSampleLoopEnd,
+      panDelta: -0.5,
     });
     var lowGroupScoreStateObjects: ScoreState[] =
       mainGroupScoreStateObjects.map(lowTransposer.getScoreState);
@@ -163,6 +166,7 @@ async function followRoute({
       eventProportionToTranspose: 0.75,
       sampleLoopStart: 0,
       sampleLoopEnd: +highSampleLoopEnd,
+      panDelta: +0.5,
     });
     var highGroupScoreStateObjects: ScoreState[] =
       mainGroupScoreStateObjects.map(highTransposer.getScoreState);
@@ -208,9 +212,9 @@ async function followRoute({
         directorName: 'low',
         ctx,
         sampleBuffer: buffers[lowVoiceSampleIndex],
-        impulseBuffer: buffers[impulseIndex],
+        impulseBuffer: buffers[lowImpulseIndex],
         mainOutNode,
-        ampFactor: 1,
+        ampFactor: 0.5,
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 1,
         slideMode: false,
@@ -221,9 +225,9 @@ async function followRoute({
         directorName: 'high',
         ctx,
         sampleBuffer: buffers[highVoiceSampleIndex],
-        impulseBuffer: buffers[impulseIndex],
+        impulseBuffer: buffers[highImpulseIndex],
         mainOutNode,
-        ampFactor: 1, // 0.7,
+        ampFactor: 1,
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 3,
         slideMode: false,

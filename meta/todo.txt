@@ -1,6 +1,8 @@
 - Avoid crash by stopping notes instead of using fadeToDeath when things get fast. Around tick 193.
 - Maybe pan the parts more left and right.
 - Low pipe organ sample?
+- Glass more-full with spacey-impulse!
+- Arbitrary transpose parts, not just low and high.
 
 Done:
 

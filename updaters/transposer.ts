@@ -9,12 +9,14 @@ export function Transposer({
   eventProportionToTranspose,
   sampleLoopStart,
   sampleLoopEnd,
+  panDelta = 0,
 }: {
   seed: string;
   freqFactor: number;
   eventProportionToTranspose: number;
   sampleLoopStart?: number;
   sampleLoopEnd?: number;
+  panDelta: number;
 }) {
   var random = seedrandom(seed);
   var prob = Probable({ random });
@@ -43,8 +45,14 @@ export function Transposer({
         };
       }
       newEvent.rate *= freqFactor;
-      // TODO: Figure out a better distribution.
-      newEvent.pan *= -1;
+      var newPan = newEvent.pan + panDelta;
+      if (newPan < 0) {
+        newPan = Math.max(newPan, -1);
+      }
+      if (newPan > 0) {
+        newPan = Math.min(newPan, 1);
+      }
+      newEvent.pan = newPan;
       return newEvent;
     }
   }
