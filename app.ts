@@ -111,7 +111,7 @@ async function followRoute({
     seed,
     totalTicks,
     shouldLoop: true,
-    loopEndSeconds: 5,
+    loopEndSeconds: 3,
     adjustLoopForRate: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
@@ -214,7 +214,7 @@ async function followRoute({
         sampleBuffer: buffers[lowVoiceSampleIndex],
         impulseBuffer: buffers[lowImpulseIndex],
         mainOutNode,
-        ampFactor: 0.5,
+        ampFactor: 0.25,
         envelopeCurve: defaultADSRCurve,
         fadeLengthFactor: 1,
         slideMode: false,
