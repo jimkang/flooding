@@ -1,14 +1,16 @@
 - Avoid crash by stopping notes instead of using fadeToDeath when things get fast. Around tick 193.
-- Maybe pan the parts more left and right.
+- More thickness.
+- Supplemental page that lets you hear what the different chords sound like.
 - Low pipe organ sample?
-- Glass more-full with spacey-impulse!
-- Arbitrary transpose parts, not just low and high.
 
 Done:
 
 - Slow down marimba.
 - Try French horn again.
 - Marimba loop: 1s?
+- Maybe pan the parts more left and right.
+- Glass more-full with spacey-impulse!
+- Arbitrary transpose parts, not just low and high.
 
 Old:
 
