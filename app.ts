@@ -69,18 +69,18 @@ async function followRoute({
   sampleIndex = 18,
   impulseIndex = 17,
   part2SampleIndex = 16,
-  part2SampleLoopEnd = 1,
+  part2ImpulseIndex = 20,
+  part2SampleLoopEnd = 0,
   part2TransposeFreqFactor = 0.25,
-  part2ImpulseIndex = 17,
   part3SampleIndex = 19, // 16,
+  part3ImpulseIndex = 17,
   // Use 0 to tell Transposer to not loop by default.
   part3SampleLoopEnd = 0, //10,
   part3TransposeFreqFactor = 2,
-  part3ImpulseIndex = 17,
   part4SampleIndex = 13,
+  part4ImpulseIndex = 20,
   part4SampleLoopEnd = 5,
   part4TransposeFreqFactor = 1,
-  part4ImpulseIndex = 20,
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -115,7 +115,7 @@ async function followRoute({
     seed,
     totalTicks,
     shouldLoop: true,
-    loopEndSeconds: 4,
+    loopEndSeconds: 1,
     adjustLoopForRate: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
@@ -164,7 +164,7 @@ async function followRoute({
   var part3Transposer = Transposer({
     seed,
     freqFactor: +part3TransposeFreqFactor,
-    eventProportionToTranspose: 0.75,
+    eventProportionToTranspose: 0.5,
     sampleLoopStart: 0,
     sampleLoopEnd: +part3SampleLoopEnd,
     panDelta: +0.5,
@@ -213,7 +213,7 @@ async function followRoute({
       sampleBuffer: buffers[sampleIndex],
       impulseBuffer: buffers[impulseIndex],
       mainOutNode,
-      ampFactor: 4.0,
+      ampFactor: 5.0,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([1, 1]),
       slideMode: false,
@@ -236,7 +236,7 @@ async function followRoute({
       sampleBuffer: buffers[part3SampleIndex],
       impulseBuffer: buffers[part3ImpulseIndex],
       mainOutNode,
-      ampFactor: 0.75,
+      ampFactor: 0.5,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 3,
       slideMode: false,
@@ -253,7 +253,7 @@ async function followRoute({
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 3,
       slideMode: false,
-      mute: false,
+      mute: true,
     });
     // narrationDirector = ScoreDirector({
     //   directorName: 'narration',
