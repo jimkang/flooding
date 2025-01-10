@@ -12,6 +12,7 @@ import {
   playPlayEvent,
   newPlayEventForScoreEvent,
 } from 'synthskel/tasks/play-event';
+import { goodlog } from '../tasks/goodlog';
 
 function defaultIdScoreEvent(scoreEvent: ScoreEvent) {
   return scoreEvent.rate.toFixed(5);
@@ -57,14 +58,14 @@ export function ScoreDirector({
       return;
     }
     scoreEventJoiner.update(state.events);
-    console.log(
+    goodlog(
       directorName,
       'Starting play() with scoreEvents',
       state.events.map((e) => idScoreEvent(e))
     );
 
     var exitingScoreEvents = scoreEventJoiner.exit();
-    console.log(
+    goodlog(
       directorName,
       'exitingScoreEvents',
       exitingScoreEvents.map(idScoreEvent)
@@ -87,11 +88,7 @@ export function ScoreDirector({
     exitingPlayEvents.forEach(curry(fadeToDeath)(fadeStartOffset, fadeLength));
 
     var newScoreEvents = scoreEventJoiner.enter();
-    console.log(
-      directorName,
-      'newScoreEvents',
-      newScoreEvents.map(idScoreEvent)
-    );
+    goodlog(directorName, 'newScoreEvents', newScoreEvents.map(idScoreEvent));
     var newPlayEvents = newScoreEvents.map((scoreEvt) =>
       newPlayEventForScoreEvent({
         // GenNodeClass: Osc,
@@ -121,12 +118,12 @@ export function ScoreDirector({
       playPlayEvent({ playEvent, startTime: baseStartTime })
     );
 
-    console.log(
+    goodlog(
       directorName,
       'current scoreEvents',
       state.events.map((e) => idScoreEvent(e))
     );
-    console.log(
+    goodlog(
       directorName,
       'current playEvents',
       getIdsForPlayEvents(playEvents)
@@ -162,14 +159,14 @@ export function ScoreDirector({
         .map(findEventToRemove)
         .sort(slideMode ? compareIndexes : checkCompare);
 
-      console.log(
+      goodlog(
         'Removing indexes',
         indexes,
         'from list',
         getIdsForPlayEvents(list)
       );
       indexes.forEach((index) => list.splice(index, 1));
-      console.log('playEvents after removal', getIdsForPlayEvents(list));
+      goodlog('playEvents after removal', getIdsForPlayEvents(list));
     }
 
     function findEventToRemove(eventToRemove: PlayEvent): number {
@@ -295,7 +292,7 @@ function fadeToDeath(
     fadeSeconds = defaultFadeSeconds;
   }
   if (!playEvent.rest) {
-    console.log('Fading', playEvent.scoreEvent.rate);
+    goodlog('Fading', playEvent.scoreEvent.rate);
     var envelopeNode: Envelope = playEvent.nodes.find(
       (node) => node instanceof Envelope
     ) as Envelope;

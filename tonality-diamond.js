@@ -43,8 +43,8 @@ export function getTonalityDiamond({ diamondLimit }) {
       .sort(compareDesc)
   );
 
-  console.log('oddFactors', oddFactors);
-  console.log('reciprocalFactors', reciprocalFactors);
+  // console.log('oddFactors', oddFactors);
+  // console.log('reciprocalFactors', reciprocalFactors);
 
   var diamondTable = [oddFactors];
 
@@ -56,7 +56,7 @@ export function getTonalityDiamond({ diamondLimit }) {
     diamondTable.push(row);
   }
 
-  console.table(diamondTable);
+  // console.table(diamondTable);
 
   // Is it a mistake to get rid of redundancies?
   var diamondRatioSet = new Set();
@@ -68,7 +68,7 @@ export function getTonalityDiamond({ diamondLimit }) {
   }
 
   var diamondRatios = [...diamondRatioSet.values()];
-  console.log(diamondRatios);
+  // console.log(diamondRatios);
   return diamondRatios;
 }
 

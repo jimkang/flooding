@@ -26,6 +26,9 @@ import { ScoreState /*, ScoreEvent*/ } from 'synthskel/types';
 import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
+import { /*enableGoodlog,*/ goodlog } from './tasks/goodlog';
+
+// enableGoodlog();
 
 var randomId = RandomId();
 var routeState;
@@ -122,14 +125,14 @@ async function followRoute({
     composer,
     totalTicks,
   });
-  console.log(mainGroupScoreStateObjects);
-  console.log(mainGroupScoreStateObjects.map((s) => s.durationTicks));
+  goodlog(mainGroupScoreStateObjects);
+  goodlog(mainGroupScoreStateObjects.map((s) => s.durationTicks));
   const totalSeconds = mainGroupScoreStateObjects.reduce(
     (total, direction) => total + direction.tickLength,
     0
   );
-  console.log('totalTime in minutes', totalSeconds / 60);
-  console.log(
+  goodlog('totalTime in minutes', totalSeconds / 60);
+  goodlog(
     'Starting tick lengths',
     mainGroupScoreStateObjects.slice(0, 8).map((d) => d.tickLength)
   );
@@ -282,7 +285,7 @@ async function followRoute({
   }
 
   function onTick({ ticks, currentTickLengthSeconds }) {
-    console.log(ticks, currentTickLengthSeconds);
+    goodlog(ticks, currentTickLengthSeconds);
     //var chord = director.getChord({ ticks });
     var mainGroupScoreState = mainGroupScoreStateObjects[ticks];
     var part2GroupScoreState = part2GroupScoreStateObjects[ticks];
