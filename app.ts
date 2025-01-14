@@ -24,6 +24,7 @@ import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
 import { ScoreState /*, ScoreEvent*/ } from 'synthskel/types';
 // import { SubjectDatum } from './types';
 import { MainOut } from 'synthskel/synths/main-out';
+import { Reverb } from 'synthskel/synths/synth-node';
 import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
 import { /*enableGoodlog,*/ goodlog } from './tasks/goodlog';
@@ -210,12 +211,20 @@ async function followRoute({
 
   // TODO: Test non-locally.
   function onComplete({ buffers }) {
+    var part1Out = new Reverb(ctx, { buffer: buffers[impulseIndex] });
+    part1Out.connect({ synthNode: mainOutNode, audioNode: null });
+    var part2Out = new Reverb(ctx, { buffer: buffers[part2ImpulseIndex] });
+    part2Out.connect({ synthNode: mainOutNode, audioNode: null });
+    var part3Out = new Reverb(ctx, { buffer: buffers[part3ImpulseIndex] });
+    part3Out.connect({ synthNode: mainOutNode, audioNode: null });
+    var part4Out = new Reverb(ctx, { buffer: buffers[part4ImpulseIndex] });
+    part4Out.connect({ synthNode: mainOutNode, audioNode: null });
+
     mainScoreDirector = ScoreDirector({
       directorName: 'main',
       ctx,
       sampleBuffer: buffers[sampleIndex],
-      impulseBuffer: buffers[impulseIndex],
-      mainOutNode,
+      outNode: part1Out,
       ampFactor: 5.0,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([1, 1]),
@@ -225,8 +234,7 @@ async function followRoute({
       directorName: 'part2',
       ctx,
       sampleBuffer: buffers[part2SampleIndex],
-      impulseBuffer: buffers[part2ImpulseIndex],
-      mainOutNode,
+      outNode: part2Out,
       ampFactor: 0.25,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 1,
@@ -237,8 +245,7 @@ async function followRoute({
       directorName: 'part3',
       ctx,
       sampleBuffer: buffers[part3SampleIndex],
-      impulseBuffer: buffers[part3ImpulseIndex],
-      mainOutNode,
+      outNode: part3Out,
       ampFactor: 0.5,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 3,
@@ -250,8 +257,7 @@ async function followRoute({
       directorName: 'part4',
       ctx,
       sampleBuffer: buffers[part4SampleIndex],
-      impulseBuffer: buffers[part4ImpulseIndex],
-      mainOutNode,
+      outNode: part4Out,
       ampFactor: 1,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 3,

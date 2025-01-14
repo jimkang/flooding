@@ -21,8 +21,7 @@ function defaultIdScoreEvent(scoreEvent: ScoreEvent) {
 export function ScoreDirector({
   ctx,
   sampleBuffer,
-  impulseBuffer,
-  mainOutNode,
+  outNode,
   ampFactor = 1.0,
   fadeLengthFactor = 2.0,
   envelopeLengthFactor = 1.2,
@@ -95,7 +94,7 @@ export function ScoreDirector({
         scoreEvent: scoreEvt,
         sampleBuffer,
         variableSampleBuffers,
-        impulseBuffer,
+        impulseBuffer: null,
         ctx,
         tickLength: state.tickLength,
         slideMode,
@@ -189,7 +188,7 @@ export function ScoreDirector({
     // TODO: Connect to limiter instead.
     if (chain.length > 0) {
       chain[chain.length - 1].connect({
-        synthNode: mainOutNode,
+        synthNode: outNode,
         audioNode: null,
       });
     }
