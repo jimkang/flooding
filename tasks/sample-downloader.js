@@ -8,10 +8,15 @@ const localSampleBaseURL = 'samples';
 
 var { getCurrentContext } = ContextKeeper();
 
-export function SampleDownloader({ sampleFiles, localMode, onComplete, handleError }) {
+export function SampleDownloader({
+  sampleFiles,
+  localMode,
+  onComplete,
+  handleError,
+}) {
   var downloadStatus = {
     samplesDownloaded: false,
-    sampleBuffers: null,
+    buffersByFilename: null,
   };
 
   return { downloadStatus, startDownloads };
@@ -31,12 +36,11 @@ export function SampleDownloader({ sampleFiles, localMode, onComplete, handleErr
     );
   }
 
-  function saveBuffers(buffers) {
-    downloadStatus.sampleBuffers = buffers;
+  function saveBuffers(buffersByFilename) {
+    downloadStatus.buffersByFilename = buffersByFilename;
     downloadStatus.samplesDownloaded = true;
     if (onComplete) {
-      onComplete({ buffers });
+      onComplete({ buffersByFilename });
     }
   }
 }
-

@@ -70,19 +70,19 @@ async function followRoute({
   chordScaleExponent = 1,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
-  sampleIndex = 18,
-  impulseIndex = 17,
-  part2SampleIndex = 16,
-  part2ImpulseIndex = 20,
+  part1Sample = 'marimba-d3-long.wav',
+  part1Impulse = 'echoey-impulse.wav',
+  part2Sample = 'trumpet-D2.eqd.wav',
+  part2Impulse = 'spacey-impulse.wav',
   part2SampleLoopEnd = 0,
   part2TransposeFreqFactor = 0.25,
-  part3SampleIndex = 19, // 16,
-  part3ImpulseIndex = 17,
+  part3Sample = 'french-horn-D2.wav', // 16,
+  part3Impulse = 'echoey-impulse.wav',
   // Use 0 to tell Transposer to not loop by default.
   part3SampleLoopEnd = 0, //10,
   part3TransposeFreqFactor = 2,
-  part4SampleIndex = 13,
-  part4ImpulseIndex = 20,
+  part4Sample = 'glass-more-full.wav',
+  part4Impulse = 'spacey-impulse.wav',
   part4SampleLoopEnd = 5,
   part4TransposeFreqFactor = 1,
 }) {
@@ -210,20 +210,20 @@ async function followRoute({
   sampleDownloader.startDownloads();
 
   // TODO: Test non-locally.
-  function onComplete({ buffers }) {
-    var part1Out = new Reverb(ctx, { buffer: buffers[impulseIndex] });
+  function onComplete({ buffersByFilename }) {
+    var part1Out = new Reverb(ctx, { buffer: buffersByFilename[part1Impulse] });
     part1Out.connect({ synthNode: mainOutNode, audioNode: null });
-    var part2Out = new Reverb(ctx, { buffer: buffers[part2ImpulseIndex] });
+    var part2Out = new Reverb(ctx, { buffer: buffersByFilename[part2Impulse] });
     part2Out.connect({ synthNode: mainOutNode, audioNode: null });
-    var part3Out = new Reverb(ctx, { buffer: buffers[part3ImpulseIndex] });
+    var part3Out = new Reverb(ctx, { buffer: buffersByFilename[part3Impulse] });
     part3Out.connect({ synthNode: mainOutNode, audioNode: null });
-    var part4Out = new Reverb(ctx, { buffer: buffers[part4ImpulseIndex] });
+    var part4Out = new Reverb(ctx, { buffer: buffersByFilename[part4Impulse] });
     part4Out.connect({ synthNode: mainOutNode, audioNode: null });
 
     mainScoreDirector = ScoreDirector({
       directorName: 'main',
       ctx,
-      sampleBuffer: buffers[sampleIndex],
+      sampleBuffer: buffersByFilename[part1Sample],
       outNode: part1Out,
       ampFactor: 5.0,
       constantEnvelopeLength: 1.0,
@@ -233,7 +233,7 @@ async function followRoute({
     part2ScoreDirector = ScoreDirector({
       directorName: 'part2',
       ctx,
-      sampleBuffer: buffers[part2SampleIndex],
+      sampleBuffer: buffersByFilename[part2Sample],
       outNode: part2Out,
       ampFactor: 0.25,
       envelopeCurve: defaultADSRCurve,
@@ -244,7 +244,7 @@ async function followRoute({
     part3ScoreDirector = ScoreDirector({
       directorName: 'part3',
       ctx,
-      sampleBuffer: buffers[part3SampleIndex],
+      sampleBuffer: buffersByFilename[part3Sample],
       outNode: part3Out,
       ampFactor: 0.5,
       envelopeCurve: defaultADSRCurve,
@@ -256,7 +256,7 @@ async function followRoute({
     part4ScoreDirector = ScoreDirector({
       directorName: 'part4',
       ctx,
-      sampleBuffer: buffers[part4SampleIndex],
+      sampleBuffer: buffersByFilename[part4Sample],
       outNode: part4Out,
       ampFactor: 1,
       envelopeCurve: defaultADSRCurve,

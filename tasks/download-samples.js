@@ -23,16 +23,19 @@ export function downloadSamples({ ctx, sampleFiles, baseURL }, allDone) {
     }
 
     function passDecoded(decoded) {
-      done(null, decoded);
+      done(null, { file, decoded });
     }
   }
 
-  function downloadsDone(error, buffers) {
+  function downloadsDone(error, fileDecodedObjects) {
     if (error) {
       allDone(error);
       return;
     }
-    allDone(null, buffers);
+    var buffersByFilename = {};
+    for (let fileDecoded of fileDecodedObjects) {
+      buffersByFilename[fileDecoded.file] = fileDecoded.decoded;
+    }
+    allDone(null, buffersByFilename);
   }
 }
-
