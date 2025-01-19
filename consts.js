@@ -31,6 +31,8 @@ export var sampleFilenames = [
   'marimba-d3-long.wav',
   'french-horn-D2.wav',
   'spacey-impulse.wav',
+  'celesta-g4-soft-PB.wav',
+  'cor_anglais-d4-PB-loop.wav',
 ];
 export var defaultADSRCurve = [
   0, 0.5, 1, 1, 1, 1, 0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0,

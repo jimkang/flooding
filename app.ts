@@ -76,12 +76,12 @@ async function followRoute({
   part2Impulse = 'spacey-impulse.wav',
   part2SampleLoopEnd = 0,
   part2TransposeFreqFactor = 0.25,
-  part3Sample = 'french-horn-D2.wav', // 16,
+  part3Sample = 'cor_anglais-d4-PB-loop.wav',
   part3Impulse = 'echoey-impulse.wav',
   // Use 0 to tell Transposer to not loop by default.
   part3SampleLoopEnd = 0, //10,
   part3TransposeFreqFactor = 2,
-  part4Sample = 'glass-more-full.wav',
+  part4Sample = 'celesta-g4-soft-PB.wav',
   part4Impulse = 'spacey-impulse.wav',
   part4SampleLoopEnd = 5,
   part4TransposeFreqFactor = 1,
@@ -221,11 +221,11 @@ async function followRoute({
     part4Out.connect({ synthNode: mainOutNode, audioNode: null });
 
     mainScoreDirector = ScoreDirector({
-      directorName: 'main',
+      directorName: 'part1',
       ctx,
       sampleBuffer: buffersByFilename[part1Sample],
       outNode: part1Out,
-      ampFactor: 5.0,
+      ampFactor: 4.0,
       constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([1, 1]),
       slideMode: false,
@@ -258,7 +258,7 @@ async function followRoute({
       ctx,
       sampleBuffer: buffersByFilename[part4Sample],
       outNode: part4Out,
-      ampFactor: 1,
+      ampFactor: 3,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 3,
       slideMode: false,
