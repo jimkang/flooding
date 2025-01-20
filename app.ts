@@ -68,12 +68,10 @@ async function followRoute({
   finalFadeOutLength = 16,
   parts = [
     {
-      sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
-      // part1Sample = 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
+      sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav',
       impulse: 'echoey-impulse.wav',
       loop: true,
       sampleLoopEnd: 1.0,
-      // Chorus: Too much dungeon synth?
       ampFactor: 2.0,
       // constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([1, 1]),
@@ -81,13 +79,33 @@ async function followRoute({
       pan: -0.2,
     },
     {
-      sample: 'trumpet-D2-eqd.wav', //'chorus-male-d3-PB-loop.wav', //
+      sample: 'Vibraphone.sustain.ff.D3.wav',
+      impulse: 'echoey-impulse.wav',
+      sampleLoopEnd: 0,
+      transposeProportion: 1.0,
+      transposeFreqFactor: 1,
+      pan: 0.2,
+      ampFactor: 0.25,
+      envelopeCurve: defaultADSRCurve,
+    },
+    {
+      sample: 'marimba-d3-long.wav',
+      impulse: 'echoey-impulse.wav',
+      sampleLoopEnd: 0,
+      transposeProportion: 0.5,
+      transposeFreqFactor: 1,
+      pan: 0.4,
+      ampFactor: 0.25,
+      envelopeCurve: new Float32Array([1, 1]),
+    },
+    {
+      sample: 'trumpet-D2-eqd.wav',
       impulse: 'spacey-impulse.wav',
       sampleLoopEnd: 0,
       transposeProportion: 0.3,
       transposeFreqFactor: 0.5,
       pan: -0.5,
-      ampFactor: 0.5,
+      ampFactor: 0.25,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 1,
       slideMode: false,
@@ -100,10 +118,20 @@ async function followRoute({
       transposeProportion: 0.5,
       transposeFreqFactor: 2,
       pan: 0.5,
-      ampFactor: 0.5,
+      ampFactor: 0.75,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 3,
       slideMode: false,
+    },
+    {
+      sample: 'chorus-male-d3-PB-loop.wav',
+      impulse: 'spacey-impulse.wav',
+      sampleLoopEnd: 0,
+      transposeProportion: 0.75,
+      transposeFreqFactor: 1,
+      pan: 0.5,
+      ampFactor: 0.25,
+      envelopeCurve: defaultADSRCurve,
     },
     // {
     //   sample: 'celesta-g4-soft-PB.wav',
