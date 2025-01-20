@@ -70,9 +70,11 @@ async function followRoute({
   chordScaleExponent = 1,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
-  part1Sample = 'marimba-d3-long.wav',
+  part1Sample = 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
+  // part1Sample = 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
   part1Impulse = 'echoey-impulse.wav',
-  part2Sample = 'chorus-male-d3-PB-loop.wav', // 'trumpet-D2.eqd.wav',
+  // Chorus: Too much dungeon synth?
+  part2Sample = 'trumpet-D2.eqd.wav', //'chorus-male-d3-PB-loop.wav', //
   part2Impulse = 'spacey-impulse.wav',
   part2SampleLoopEnd = 0,
   part2TransposeFreqFactor = 0.5,
@@ -225,8 +227,8 @@ async function followRoute({
       ctx,
       sampleBuffer: buffersByFilename[part1Sample],
       outNode: part1Out,
-      ampFactor: 4.0,
-      constantEnvelopeLength: 1.0,
+      ampFactor: 2.0,
+      // constantEnvelopeLength: 1.0,
       envelopeCurve: new Float32Array([1, 1]),
       slideMode: false,
     });
