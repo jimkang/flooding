@@ -36,11 +36,7 @@ var routeState;
 var { getCurrentContext } = ContextKeeper();
 var ticker;
 var sampleDownloader;
-var mainScoreDirector;
-var part2ScoreDirector;
-var part3ScoreDirector;
-var part4ScoreDirector;
-// var narrationDirector;
+var scoreDirectors = [];
 
 var renderDensity = RenderTimeSeries({
   canvasId: 'density-canvas',
@@ -70,23 +66,58 @@ async function followRoute({
   chordScaleExponent = 1,
   chordSizeLengthExp = 3,
   finalFadeOutLength = 16,
-  part1Sample = 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
-  // part1Sample = 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
-  part1Impulse = 'echoey-impulse.wav',
-  // Chorus: Too much dungeon synth?
-  part2Sample = 'trumpet-D2.eqd.wav', //'chorus-male-d3-PB-loop.wav', //
-  part2Impulse = 'spacey-impulse.wav',
-  part2SampleLoopEnd = 0,
-  part2TransposeFreqFactor = 0.5,
-  part3Sample = 'cor_anglais-d4-PB-loop.wav',
-  part3Impulse = 'echoey-impulse.wav',
-  // Use 0 to tell Transposer to not loop by default.
-  part3SampleLoopEnd = 0, //10,
-  part3TransposeFreqFactor = 2,
-  part4Sample = 'celesta-g4-soft-PB.wav',
-  part4Impulse = 'spacey-impulse.wav',
-  part4SampleLoopEnd = 5,
-  part4TransposeFreqFactor = 1,
+  parts = [
+    {
+      sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
+      // part1Sample = 'PianoSoftRoll-D2.wav', // // 'marimba-d3-long.wav', TODO: part5 with marimba
+      impulse: 'echoey-impulse.wav',
+      loop: true,
+      sampleLoopEnd: 1.0,
+      // Chorus: Too much dungeon synth?
+      ampFactor: 2.0,
+      // constantEnvelopeLength: 1.0,
+      envelopeCurve: new Float32Array([1, 1]),
+      slideMode: false,
+    },
+    {
+      sample: 'trumpet-D2.eqd.wav', //'chorus-male-d3-PB-loop.wav', //
+      impulse: 'spacey-impulse.wav',
+      sampleLoopEnd: 0,
+      transposeProportion: 0.4,
+      transposeFreqFactor: 0.5,
+      pan: -0.5,
+      ampFactor: 1,
+      envelopeCurve: defaultADSRCurve,
+      fadeLengthFactor: 1,
+      slideMode: false,
+    },
+    {
+      sample: 'cor_anglais-d4-PB-loop.wav',
+      impulse: 'echoey-impulse.wav',
+      // Use 0 to tell Transposer to not loop by default.
+      sampleLoopEnd: 0, //10,
+      transposeProportion: 0.5,
+      transposeFreqFactor: 2,
+      pan: 0.5,
+      ampFactor: 0.5,
+      envelopeCurve: defaultADSRCurve,
+      fadeLengthFactor: 3,
+      slideMode: false,
+    },
+    {
+      sample: 'celesta-g4-soft-PB.wav',
+      impulse: 'spacey-impulse.wav',
+      sampleLoopEnd: 5,
+      transposeProportion: 0.75,
+      transposeFreqFactor: 1,
+      pan: 0,
+      ampFactor: 0.5,
+      envelopeCurve: defaultADSRCurve,
+      fadeLengthFactor: 3,
+      slideMode: false,
+      mute: true,
+    },
+  ],
 }) {
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -120,8 +151,8 @@ async function followRoute({
     chordSizeLengthExp: +chordSizeLengthExp,
     seed,
     totalTicks,
-    shouldLoop: true,
-    loopEndSeconds: 1,
+    shouldLoop: parts[0].loop,
+    loopEndSeconds: parts[0].sampleLoopEnd,
     adjustLoopForRate: true,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
@@ -156,42 +187,21 @@ async function followRoute({
 
   var mainOutNode = MainOut({ ctx, totalSeconds });
 
-  var part2Transposer = Transposer({
-    seed,
-    freqFactor: +part2TransposeFreqFactor,
-    eventProportionToTranspose: 0.4,
-    sampleLoopStart: 0,
-    sampleLoopEnd: +part2SampleLoopEnd,
-    panDelta: -0.5,
-  });
-  var part2GroupScoreStateObjects: ScoreState[] =
-    mainGroupScoreStateObjects.map(part2Transposer.getScoreState);
+  var transposers = parts.slice(1).map((part) =>
+    Transposer({
+      seed,
+      freqFactor: +part.transposeFreqFactor,
+      eventProportionToTranspose: part.transposeFreqFactor,
+      sampleLoopStart: 0,
+      sampleLoopEnd: +part.sampleLoopEnd,
+      panDelta: part.pan,
+    })
+  );
 
-  var part3Transposer = Transposer({
-    seed,
-    freqFactor: +part3TransposeFreqFactor,
-    eventProportionToTranspose: 0.5,
-    sampleLoopStart: 0,
-    sampleLoopEnd: +part3SampleLoopEnd,
-    panDelta: +0.5,
-  });
-  var part3GroupScoreStateObjects: ScoreState[] =
-    mainGroupScoreStateObjects.map(part3Transposer.getScoreState);
-
-  var part4Transposer = Transposer({
-    seed,
-    freqFactor: +part4TransposeFreqFactor,
-    eventProportionToTranspose: 0.75,
-    sampleLoopStart: 0,
-    sampleLoopEnd: +part4SampleLoopEnd,
-    panDelta: 0,
-  });
-  var part4GroupScoreStateObjects: ScoreState[] =
-    mainGroupScoreStateObjects.map(part4Transposer.getScoreState);
-
-  // var narrationComposer = NarrationDataComposer();
-  // var narrationGroupScoreStateObjects: ScoreState[] =
-  //   mainGroupScoreStateObjects.map(narrationComposer.getScoreState);
+  var partScoreStateObjectLists = transposers.map((transposer) =>
+    mainGroupScoreStateObjects.map(transposer.getScoreState)
+  );
+  partScoreStateObjectLists.unshift(mainGroupScoreStateObjects);
 
   ticker = Ticker({
     onTick,
@@ -213,75 +223,30 @@ async function followRoute({
 
   // TODO: Test non-locally.
   function onComplete({ buffersByFilename }) {
-    var part1Out = new Reverb(ctx, { buffer: buffersByFilename[part1Impulse] });
-    part1Out.connect({ synthNode: mainOutNode, audioNode: null });
-    var part2Out = new Reverb(ctx, { buffer: buffersByFilename[part2Impulse] });
-    part2Out.connect({ synthNode: mainOutNode, audioNode: null });
-    var part3Out = new Reverb(ctx, { buffer: buffersByFilename[part3Impulse] });
-    part3Out.connect({ synthNode: mainOutNode, audioNode: null });
-    var part4Out = new Reverb(ctx, { buffer: buffersByFilename[part4Impulse] });
-    part4Out.connect({ synthNode: mainOutNode, audioNode: null });
+    var partOuts = [];
 
-    mainScoreDirector = ScoreDirector({
-      directorName: 'part1',
-      ctx,
-      sampleBuffer: buffersByFilename[part1Sample],
-      outNode: part1Out,
-      ampFactor: 2.0,
-      // constantEnvelopeLength: 1.0,
-      envelopeCurve: new Float32Array([1, 1]),
-      slideMode: false,
-    });
-    part2ScoreDirector = ScoreDirector({
-      directorName: 'part2',
-      ctx,
-      sampleBuffer: buffersByFilename[part2Sample],
-      outNode: part2Out,
-      ampFactor: 1,
-      envelopeCurve: defaultADSRCurve,
-      fadeLengthFactor: 1,
-      slideMode: false,
-    });
+    for (let i = 0; i < parts.length; ++i) {
+      let partOut = new Reverb(ctx, {
+        buffer: buffersByFilename[parts[i].impulse],
+      });
+      partOut.connect({ synthNode: mainOutNode, audioNode: null });
+      partOuts.push(partOut);
+    }
 
-    part3ScoreDirector = ScoreDirector({
-      directorName: 'part3',
-      ctx,
-      sampleBuffer: buffersByFilename[part3Sample],
-      outNode: part3Out,
-      ampFactor: 0.5,
-      envelopeCurve: defaultADSRCurve,
-      fadeLengthFactor: 3,
-      slideMode: false,
-      mute: false,
-    });
-
-    part4ScoreDirector = ScoreDirector({
-      directorName: 'part4',
-      ctx,
-      sampleBuffer: buffersByFilename[part4Sample],
-      outNode: part4Out,
-      ampFactor: 3,
-      envelopeCurve: defaultADSRCurve,
-      fadeLengthFactor: 3,
-      slideMode: false,
-      mute: true,
-    });
-    // narrationDirector = ScoreDirector({
-    //   directorName: 'narration',
-    //   ctx,
-    //   sampleBuffer: null,
-    //   variableSampleBuffers: buffers.slice(0, 11),
-    //   mainOutNode,
-    //   idScoreEvent: function getSampleIndex(scoreEvent: ScoreEvent) {
-    //     if (!isNaN(scoreEvent.variableSampleIndex)) {
-    //       return '' + scoreEvent.variableSampleIndex;
-    //     }
-    //     return 'rest';
-    //   },
-    //   // Narration samples should not fade.
-    //   envelopeCurve: new Float32Array([1, 1]),
-    //   slideMode: false,
-    // });
+    scoreDirectors = parts.map((part, i) =>
+      ScoreDirector({
+        directorName: part.sample + 'director',
+        ctx,
+        sampleBuffer: buffersByFilename[part.sample],
+        outNode: partOuts[i],
+        ampFactor: part.ampFactor,
+        // constantEnvelopeLength: 1.0,
+        envelopeCurve: part.envelopeCurve,
+        fadeLengthFactor: part.fadeLengthFactor,
+        slideMode: part.slideMode,
+        mute: part.mute,
+      })
+    );
 
     wireControls({
       onStart,
@@ -295,11 +260,8 @@ async function followRoute({
   function onTick({ ticks, currentTickLengthSeconds }) {
     goodlog(ticks, currentTickLengthSeconds);
     //var chord = director.getChord({ ticks });
-    var mainGroupScoreState = mainGroupScoreStateObjects[ticks];
-    var part2GroupScoreState = part2GroupScoreStateObjects[ticks];
-    var part3GroupScoreState = part3GroupScoreStateObjects[ticks];
-    var part4GroupScoreState = part4GroupScoreStateObjects[ticks];
-    // var narrationGroupScoreState = narrationGroupScoreStateObjects[ticks];
+    var groupScoreStates = partScoreStateObjectLists.map((list) => list[ticks]);
+    var mainGroupScoreState = groupScoreStates[0];
 
     var tickLength = currentTickLengthSeconds;
     if (!isNaN(mainGroupScoreState.tickLength)) {
@@ -337,30 +299,17 @@ async function followRoute({
       currentTick: ticks,
     });
 
-    mainScoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, mainGroupScoreState)
-    );
-    part2ScoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, part2GroupScoreState)
-    );
-    part3ScoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, part3GroupScoreState)
-    );
-    part4ScoreDirector.play(
-      Object.assign({ tickLengthSeconds: tickLength }, part4GroupScoreState)
-    );
-    // narrationDirector.play(
-    //   Object.assign({ tickLengthSeconds: tickLength }, narrationGroupScoreState)
-    // );
+    for (let i = 0; i < scoreDirectors.length; ++i) {
+      scoreDirectors[i].play(
+        Object.assign({ tickLengthSeconds: tickLength }, groupScoreStates[i])
+      );
+    }
 
     renderVisualizationForTick(mainGroupScoreState);
   }
 
   function onEndOfTicks() {
-    mainScoreDirector.end();
-    part2ScoreDirector.end();
-    part3ScoreDirector.end();
-    part4ScoreDirector.end();
+    scoreDirectors.forEach((dir) => dir.end());
     mainOutNode.fadeOut(finalFadeOutLength);
   }
 
