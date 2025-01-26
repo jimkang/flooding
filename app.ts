@@ -75,19 +75,21 @@ async function followRoute({
       sampleLoopEnd: 0,
       ampFactor: 0.25,
       // constantEnvelopeLength: 1.0,
-      envelopeCurve: new Float32Array([1, 1]),
+      envelopeCurve: flatADSR,
       slideMode: false,
       pan: -0.2,
+      mute: false,
     },
     {
       sample: 'Vibraphone.sustain.ff.D3.wav',
-      impulse: 'echoey-impulse.wav',
+      impulse: 'spacey-impulse.wav',
       sampleLoopEnd: 0,
       transposeProportion: 1.0,
       transposeFreqFactor: 1,
       pan: 0.2,
-      ampFactor: 0.25,
-      envelopeCurve: defaultADSRCurve,
+      ampFactor: 1.0,
+      envelopeCurve: [0, 0.1, 0.2, 0.5, 1, 1],
+      mute: false,
     },
     {
       sample: 'marimba-d3-long.wav',
@@ -107,10 +109,11 @@ async function followRoute({
       transposeProportion: 0.3,
       transposeFreqFactor: 0.5,
       pan: -0.5,
-      ampFactor: 0.25,
+      ampFactor: 0.125,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 1,
       slideMode: false,
+      mute: true,
     },
     {
       sample: 'cor_anglais-d4-PB-loop.wav',
@@ -120,10 +123,11 @@ async function followRoute({
       transposeProportion: 0.5,
       transposeFreqFactor: 2,
       pan: 0.5,
-      ampFactor: 0.75,
+      ampFactor: 0.4,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 3,
       slideMode: false,
+      mute: false,
     },
     {
       sample: 'chorus-male-d3-PB-loop.wav',
@@ -259,10 +263,12 @@ async function followRoute({
     var partOuts = [];
 
     for (let i = 0; i < parts.length; ++i) {
-      let partOut = new Reverb(ctx, {
-        buffer: buffersByFilename[parts[i].impulse],
-      });
-      partOut.connect({ synthNode: mainOutNode, audioNode: null });
+      let partOut = mainOutNode;
+      const buffer = buffersByFilename[parts[i].impulse];
+      if (buffer) {
+        partOut = new Reverb(ctx, { buffer });
+        partOut.connect({ synthNode: mainOutNode, audioNode: null });
+      }
       partOuts.push(partOut);
     }
 

@@ -1,8 +1,6 @@
 - Supplemental page that lets you hear what the different chords sound like.
 - Low pipe organ sample?
-- Piano sample?
 - Visualize heat as speed
-- Turn down marimba or reduce reverb mix
 - Cut reverb mix as time goes on?
 - Some synth cheesiness around 170. Could use more mids?
 
@@ -17,6 +15,8 @@ Done:
 - Maybe pan the parts more left and right.
 - Glass more-full with spacey-impulse!
 - Arbitrary transpose parts, not just low and high.
+- Piano sample?
+- Turn down marimba or reduce reverb mix
 
 Old:
 
