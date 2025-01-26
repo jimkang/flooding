@@ -3,7 +3,7 @@ import { select } from 'd3-selection';
 
 var monthLabel = select('.month');
 var yearLabel = select('.year');
-var tideGaugeLevelLabel = select('.tide-gauge-level');
+var levelLabel = select('.ohc-level');
 
 export function renderVisualizationForTick(scoreState: ScoreState) {
   var monthDatum = scoreState?.meta?.sourceDatum;
@@ -13,6 +13,6 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
     const month = date.toLocaleString({}, { month: 'long' });
     monthLabel.text(month);
     yearLabel.text(monthDatum.year);
-    tideGaugeLevelLabel.text(monthDatum.value.toFixed(2));
+    levelLabel.text(monthDatum.value.toFixed(2));
   }
 }
