@@ -77,6 +77,11 @@ svg {
   background-color: #333;
 }
 
+.ohc-level {
+  font-size: larger;
+  font-weight: bold;
+}
+
 @media all and (max-height: 568px) {
   body {
     font-size: 18px;

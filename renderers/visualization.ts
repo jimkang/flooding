@@ -13,6 +13,6 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
     const month = date.toLocaleString({}, { month: 'long' });
     monthLabel.text(month);
     yearLabel.text(monthDatum.year);
-    tideGaugeLevelLabel.text(monthDatum.value);
+    tideGaugeLevelLabel.text(monthDatum.value.toFixed(2));
   }
 }
