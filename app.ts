@@ -13,6 +13,7 @@ import {
   defaultSecondsPerTick,
   sampleFilenames,
   defaultADSRCurve,
+  flatADSR,
   tonalityDiamondPitches,
 } from './consts';
 import { preRunComposer } from './updaters/pre-run-composer';
@@ -96,7 +97,8 @@ async function followRoute({
       transposeFreqFactor: 1,
       pan: 0.4,
       ampFactor: 0.25,
-      envelopeCurve: new Float32Array([1, 1]),
+      envelopeCurve: flatADSR,
+      mute: false,
     },
     {
       sample: 'trumpet-D2-eqd.wav',
@@ -131,7 +133,9 @@ async function followRoute({
       transposeFreqFactor: 1,
       pan: 0.5,
       ampFactor: 0.25,
-      envelopeCurve: defaultADSRCurve,
+      envelopeCurve: flatADSR,
+      slideMode: true,
+      mute: false,
     },
     // {
     //   sample: 'celesta-g4-soft-PB.wav',
