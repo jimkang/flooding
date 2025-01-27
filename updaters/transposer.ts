@@ -7,6 +7,7 @@ export function Transposer({
   seed,
   freqFactor,
   eventProportionToTranspose,
+  shouldLoop,
   sampleLoopStart,
   sampleLoopEnd,
   panDelta = 0,
@@ -14,6 +15,7 @@ export function Transposer({
   seed: string;
   freqFactor: number;
   eventProportionToTranspose: number;
+  shouldLoop?: boolean;
   sampleLoopStart?: number;
   sampleLoopEnd?: number;
   panDelta: number;
@@ -38,11 +40,13 @@ export function Transposer({
 
     function transposeEvent(scoreEvent: ScoreEvent): ScoreEvent {
       var newEvent = Object.assign({}, scoreEvent);
-      if (!isNaN(sampleLoopStart) && !isNaN(sampleLoopEnd)) {
+      if (shouldLoop && !isNaN(sampleLoopStart) && !isNaN(sampleLoopEnd)) {
         newEvent.loop = {
           loopStartSeconds: sampleLoopStart,
           loopEndSeconds: sampleLoopEnd,
         };
+      } else {
+        delete newEvent.loop;
       }
       newEvent.rate *= freqFactor;
       var newPan = newEvent.pan + panDelta;
