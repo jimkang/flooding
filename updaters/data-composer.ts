@@ -9,9 +9,9 @@ import { SubjectDatum } from '../types';
 import { tonalityDiamondPitches } from '../consts';
 
 const maxPitchCount = tonalityDiamondPitches.length;
-const beginningLengthAsAProportion = 0.025;
+// const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.25;
-const lastEventLengthFactor = 96;
+// const lastEventLengthFactor = 96;
 const durationScaleInOutInflection = 0.7;
 const durationFactor = 10;
 
@@ -74,7 +74,7 @@ export function DataComposer({
   function getScoreState(tickIndex): ScoreState {
     var sourceDatum = data[index];
 
-    const tickLength = getTickLength(); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
+    const tickLength = getTickLength(sourceDatum); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
     var scoreState: ScoreState = {
       events: [],
       tickIndex: index,
@@ -165,38 +165,31 @@ export function DataComposer({
     return pans;
   }
 
-  function getTickLength() {
-    if (index === data.length - 1) {
-      return tempoFactor * lastEventLengthFactor;
-    }
-
+  function getTickLength(currentDatum) {
     var tickLength = 1;
-    let pastPitchCount = 0;
-    if (pastPitchCounts.length > 0) {
-      pastPitchCount = pastPitchCounts[pastPitchCounts.length - 1];
-      const propOfDiamondUnused =
-        (maxPitchCount - pastPitchCount) / maxPitchCount;
-      tickLength =
-        tickLength * Math.pow(propOfDiamondUnused, chordSizeLengthExp);
-      //(0.8 + 0.4 * prob.roll(100)/100);
-    }
-    tickLength *= tempoFactor;
-    // Start slow, then get faster.
-    const progress = pastPitchCount / data.length;
-    var progressFactor;
-    //if (progress > 0.05) {
-    //progressFactor = 10 * Math.log10(4 * progress + 2.7) + 3;
-    progressFactor = 5 * Math.pow(Math.exp(-4 * progress), 2) - 0;
-    //} else {
-    ////progressFactor = 0.5 * Math.cos(2 * Math.PI - Math.PI) + 1;
-    //progressFactor = 1;
-    //}
-    if (progress < beginningLengthAsAProportion) {
-      const factorBoost = (1 - progress / beginningLengthAsAProportion) * 10;
-      progressFactor += factorBoost;
-    }
+    const chordPitchCount = Math.round(chordScale(+currentDatum[chordProp]));
+    const propOfDiamondUnused =
+      (maxPitchCount - chordPitchCount) / maxPitchCount;
+    tickLength = tickLength * Math.pow(propOfDiamondUnused, chordSizeLengthExp);
+    //(0.8 + 0.4 * prob.roll(100)/100);
 
-    tickLength *= progressFactor;
+    tickLength *= tempoFactor;
+    console.log('tempoFactor', tempoFactor, tickLength);
+    // Start slow, then get faster.
+    //const progress = index / data.length;
+    //var progressFactor;
+    ////if (progress > 0.05) {
+    ////progressFactor = 10 * Math.log10(4 * progress + 2.7) + 3;
+    //progressFactor = 5 * Math.pow(Math.exp(-4 * progress), 2) - 0;
+    ////} else {
+    //////progressFactor = 0.5 * Math.cos(2 * Math.PI - Math.PI) + 1;
+    ////progressFactor = 1;
+    ////}
+    //if (progress < beginningLengthAsAProportion) {
+    //  const factorBoost = (1 - progress / beginningLengthAsAProportion) * 10;
+    //  progressFactor += factorBoost;
+
+    //tickLength *= progressFactor;
     if (tickLength < minTickLength) {
       //console.log('flooring', pastPitchCounts.length);
       tickLength = minTickLength;

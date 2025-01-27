@@ -74,14 +74,13 @@ export function ScoreDirector({
     );
     checkExitingPlayEvents(exitingPlayEvents);
     removePlayEventsFromList(exitingPlayEvents, playEvents);
-    var fadeStartOffset = state.tickLength * (state.durationTicks + 0.3 || 1);
+    var fadeStartOffset = 0; //state.tickLength * (state.durationTicks + 0.3 || 1);
     var fadeLength = state.tickLength;
     if (fadeLength > 1) {
       fadeLength *= fadeLengthFactor;
     }
     if (state.grandPause) {
       // Stop everything right now.
-      fadeStartOffset = 0;
       fadeLength = state.tickLength;
     }
     exitingPlayEvents.forEach(curry(fadeToDeath)(fadeStartOffset, fadeLength));
