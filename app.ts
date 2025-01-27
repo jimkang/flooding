@@ -28,9 +28,9 @@ import { MainOut } from 'synthskel/synths/main-out';
 import { Reverb } from 'synthskel/synths/synth-node';
 import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
-import { /*enableGoodlog,*/ goodlog } from './tasks/goodlog';
+import { enableGoodlog, goodlog } from './tasks/goodlog';
 
-// enableGoodlog();
+enableGoodlog();
 
 var randomId = RandomId();
 var routeState;
@@ -70,12 +70,13 @@ async function followRoute({
   parts = [
     {
       sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav',
-      impulse: 'echoey-impulse.wav',
+      // impulse: 'echoey-impulse.wav',
       loop: true,
       sampleLoopEnd: 0,
       ampFactor: 0.25,
       // constantEnvelopeLength: 1.0,
       envelopeCurve: flatADSR,
+      fadeLengthFactor: 0.01,
       slideMode: false,
       pan: -0.2,
       mute: false,
@@ -89,8 +90,9 @@ async function followRoute({
       pan: 0.2,
       ampFactor: 0.5,
       envelopeCurve: [0, 0.1, 0.2, 0.5, 1, 1],
+      fadeLengthFactor: 0.05,
       slideMode: false,
-      mute: false,
+      mute: true,
     },
     {
       sample: 'marimba-d3-long.wav',
@@ -101,20 +103,21 @@ async function followRoute({
       pan: 0.4,
       ampFactor: 0.25,
       envelopeCurve: flatADSR,
-      mute: false,
+      fadeLengthFactor: 0.01,
+      mute: true,
     },
     {
       sample: 'trumpet-D2-eqd.wav',
-      impulse: 'spacey-impulse.wav',
+      // impulse: 'spacey-impulse.wav', // Need wet/dry for this
       sampleLoopEnd: 0,
-      transposeProportion: 0.3,
-      transposeFreqFactor: 0.5,
+      transposeProportion: 1,
+      transposeFreqFactor: 1,
       pan: -0.5,
       ampFactor: 0.125,
-      envelopeCurve: defaultADSRCurve,
-      fadeLengthFactor: 1,
+      envelopeCurve: flatADSR,
+      fadeLengthFactor: 0.01,
       slideMode: false,
-      mute: true,
+      mute: false,
     },
     {
       sample: 'cor_anglais-d4-PB-loop.wav',
@@ -124,23 +127,24 @@ async function followRoute({
       transposeProportion: 0.5,
       transposeFreqFactor: 2,
       pan: 0.5,
-      ampFactor: 0.1,
+      ampFactor: 0.25,
       envelopeCurve: defaultADSRCurve,
-      fadeLengthFactor: 3,
+      fadeLengthFactor: 0.1,
       slideMode: false,
       mute: false,
     },
     {
       sample: 'chorus-male-d3-PB-loop.wav',
       impulse: 'spacey-impulse.wav',
-      sampleLoopEnd: 0,
+      sampleLoopEnd: 1.0,
       transposeProportion: 0.75,
       transposeFreqFactor: 1,
       pan: 0.5,
-      ampFactor: 0.125,
+      ampFactor: 0.25,
       envelopeCurve: flatADSR,
+      fadeLengthFactor: 0.1,
       slideMode: true,
-      mute: true,
+      mute: false,
     },
     // {
     //   sample: 'celesta-g4-soft-PB.wav',
