@@ -111,7 +111,8 @@ async function followRoute({
     {
       sample: 'trumpet-D2-eqd.wav',
       // impulse: 'spacey-impulse.wav', // Need wet/dry for this
-      sampleLoopEnd: 0,
+      loop: true,
+      sampleLoopEnd: 2,
       transposeProportion: 1,
       transposeFreqFactor: 1,
       pan: -0.5,
@@ -119,21 +120,21 @@ async function followRoute({
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
-      mute: true,
+      mute: false,
     },
     {
       sample: 'cor_anglais-d4-PB-loop.wav',
       impulse: 'echoey-impulse.wav',
-      // Use 0 to tell Transposer to not loop by default.
-      sampleLoopEnd: 0, //10,
+      loop: true,
+      sampleLoopEnd: 2,
       transposeProportion: 0.5,
       transposeFreqFactor: 2,
       pan: 0.5,
-      ampFactor: 0.25,
+      ampFactor: 0.5,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 0.1,
       slideMode: false,
-      mute: true,
+      mute: false,
     },
     {
       sample: 'chorus-male-d3-PB-loop.wav',
