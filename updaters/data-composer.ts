@@ -43,6 +43,7 @@ export function DataComposer({
   loopEndSeconds,
   adjustLoopForRate,
   arpeggiate = false,
+  constantTickLength,
 }: {
   tempoFactor: number;
   data: SubjectDatum[];
@@ -57,6 +58,7 @@ export function DataComposer({
   loopEndSeconds?: number;
   adjustLoopForRate?: boolean;
   arpeggiate?: boolean;
+  constantTickLength?: boolean;
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   // var chordScale = scaleLinear().domain([chordXFloor, chordXCeil]).range([1, maxPitchCount]);
@@ -167,6 +169,10 @@ export function DataComposer({
 
   function getTickLength(currentDatum) {
     var tickLength = 1;
+
+    if (constantTickLength) {
+      return tickLength * tempoFactor;
+    }
     const chordPitchCount = Math.round(chordScale(+currentDatum[chordProp]));
     const propOfDiamondUnused =
       (maxPitchCount - chordPitchCount) / maxPitchCount;
@@ -174,7 +180,7 @@ export function DataComposer({
     //(0.8 + 0.4 * prob.roll(100)/100);
 
     tickLength *= tempoFactor;
-    console.log('tempoFactor', tempoFactor, tickLength);
+    // console.log('tempoFactor', tempoFactor, tickLength);
     // Start slow, then get faster.
     //const progress = index / data.length;
     //var progressFactor;

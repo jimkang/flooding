@@ -2,10 +2,11 @@
 - Low pipe organ sample?
 - Visualize heat as speed
 - Cut reverb mix as time goes on?
-- Some synth cheesiness around 170. Could use more mids?
+- Bring back long ending.
 
 Done:
 
+- Some synth cheesiness around 170. Could use more mids?
 - Stop distortion and browser crash.
 - Avoid crash by stopping notes instead of using fadeToDeath when things get fast. Around tick 193.
   - It crashes the browser around 200, but it does not hit the "curve down in progress" error if you change the loop length from 4 to 1 in the main part. I think this dodges that particular issue.
