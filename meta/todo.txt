@@ -1,11 +1,13 @@
 - Supplemental page that lets you hear what the different chords sound like.
-- Low pipe organ sample?
 - Visualize heat as speed
 - Cut reverb mix as time goes on?
 - Bring back long ending.
+- More trumpet thickness somehow.
+- Pauses between decades.
 
 Done:
 
+- Low pipe organ sample?
 - Some synth cheesiness around 170. Could use more mids?
 - Stop distortion and browser crash.
 - Avoid crash by stopping notes instead of using fadeToDeath when things get fast. Around tick 193.

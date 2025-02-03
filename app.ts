@@ -80,7 +80,7 @@ async function followRoute({
       fadeLengthFactor: 0.01,
       slideMode: false,
       pan: -0.2,
-      mute: true,
+      // mute: true,
     },
     {
       sample: 'Vibraphone.sustain.ff.D3.wav',
@@ -94,7 +94,7 @@ async function followRoute({
       envelopeCurve: [0, 0.1, 0.2, 0.5, 1, 1],
       fadeLengthFactor: 0.05,
       slideMode: false,
-      mute: false,
+      // mute: true,
     },
     {
       sample: 'marimba-d3-long.wav',
@@ -107,7 +107,7 @@ async function followRoute({
       ampFactor: 1,
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
-      mute: false,
+      // mute: true
     },
     {
       sample: 'trumpet-D2-eqd.wav',
@@ -121,7 +121,7 @@ async function followRoute({
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
-      mute: false,
+      // mute: true,
     },
     {
       sample: 'cor_anglais-d4-PB-loop.wav',
@@ -135,7 +135,7 @@ async function followRoute({
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 0.1,
       slideMode: false,
-      mute: false,
+      // mute: true,
     },
     {
       sample: 'chorus-male-d3-PB-loop.wav',
@@ -163,6 +163,19 @@ async function followRoute({
     //   slideMode: false,
     //   mute: true,
     // },
+    {
+      sample: '205822__xserra__organ-c3-fade-out.wav',
+      loop: true,
+      // impulse: 'echoey-impulse.wav',
+      transposeProportion: 0.5,
+      transposeFreqFactor: 0.5,
+      pan: 0.5,
+      ampFactor: 3,
+      envelopeCurve: defaultADSRCurve,
+      fadeLengthFactor: 0.1,
+      slideMode: false,
+      mute: false,
+    },
   ],
 }) {
   if (!seed) {
