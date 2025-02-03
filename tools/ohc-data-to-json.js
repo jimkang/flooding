@@ -34,7 +34,8 @@ fs.writeFileSync(
 function parseLine(line) {
   var values = line.split(',');
   const [year, monthPart] = values[0].split('-');
-  const month = +monthPart;
+  // JS months are 0-based. NOAA months are 1-based.
+  const month = +monthPart - 1;
   var date = new Date(year, month);
   var heatDelta = +values[1];
   return { date, year, month, heatDelta };
