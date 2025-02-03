@@ -71,10 +71,10 @@ async function followRoute({
   parts = [
     {
       sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav',
-      // impulse: 'echoey-impulse.wav',
-      loop: true,
+      impulse: 'spacey-impulse.wav',
+      loop: false,
       sampleLoopEnd: 0,
-      ampFactor: 0.25,
+      ampFactor: 0.5,
       // constantEnvelopeLength: 1.0,
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
@@ -84,37 +84,39 @@ async function followRoute({
     },
     {
       sample: 'Vibraphone.sustain.ff.D3.wav',
-      impulse: 'spacey-impulse.wav',
+      impulse: 'echoey-impulse.wav',
       loop: false,
       sampleLoopEnd: 0,
       transposeProportion: 0.5,
       transposeFreqFactor: 1,
       pan: 0.2,
       ampFactor: 1.0,
-      envelopeCurve: [0, 0.1, 0.2, 0.5, 1, 1],
+      envelopeCurve: flatADSR, // [0, 0.1, 0.2, 0.5, 1, 1],
       fadeLengthFactor: 0.05,
       slideMode: false,
       // mute: true,
-    },
-    {
-      sample: 'marimba-d3-long.wav',
-      impulse: 'echoey-impulse.wav',
-      loop: false,
-      sampleLoopEnd: 0,
-      transposeProportion: 1,
-      transposeFreqFactor: 1,
-      pan: 0.4,
-      ampFactor: 1,
-      envelopeCurve: flatADSR,
-      fadeLengthFactor: 0.01,
-      // mute: true
+      // solo: true,
     },
     {
       sample: 'trumpet-D2-eqd.wav',
-      // impulse: 'spacey-impulse.wav', // Need wet/dry for this
       loop: true,
       sampleLoopEnd: 2,
-      transposeProportion: 1,
+      transposeProportion: 0.25,
+      transposeFreqFactor: 0.25,
+      pan: -0.5,
+      ampFactor: 0.25, // * 0.5,
+      envelopeCurve: flatADSR,
+      fadeLengthFactor: 0.01,
+      slideMode: false,
+      // mute: true,
+      // solo: true,
+    },
+    {
+      sample: 'trumpet-D2-eqd.wav',
+      impulse: 'spacey-impulse.wav',
+      loop: true,
+      sampleLoopEnd: 2,
+      transposeProportion: 0.5,
       transposeFreqFactor: 1,
       pan: -0.5,
       ampFactor: 0.125,
@@ -122,13 +124,14 @@ async function followRoute({
       fadeLengthFactor: 0.01,
       slideMode: false,
       // mute: true,
+      // solo: true,
     },
     {
       sample: 'cor_anglais-d4-PB-loop.wav',
       impulse: 'echoey-impulse.wav',
       loop: true,
       sampleLoopEnd: 2,
-      transposeProportion: 0.5,
+      transposeProportion: 1,
       transposeFreqFactor: 2,
       pan: 0.5,
       ampFactor: 0.5,
@@ -165,12 +168,13 @@ async function followRoute({
     // },
     {
       sample: '205822__xserra__organ-c3-fade-out.wav',
+      // sample: 'organ-d2.wav',
       loop: true,
       // impulse: 'echoey-impulse.wav',
       transposeProportion: 0.5,
-      transposeFreqFactor: 0.5,
+      transposeFreqFactor: 9 / 8 / 2,
       pan: 0.5,
-      ampFactor: 3,
+      ampFactor: 1.5,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 0.1,
       slideMode: false,
@@ -296,9 +300,11 @@ async function followRoute({
       partOuts.push(partOut);
     }
 
+    var solosExist = parts.some((part) => part.solo);
+
     scoreDirectors = parts.map((part, i) =>
       ScoreDirector({
-        directorName: part.sample + 'director',
+        directorName: part.sample + ' director',
         ctx,
         sampleBuffer: buffersByFilename[part.sample],
         outNode: partOuts[i],
@@ -307,7 +313,7 @@ async function followRoute({
         envelopeCurve: part.envelopeCurve,
         fadeLengthFactor: part.fadeLengthFactor,
         slideMode: part.slideMode,
-        mute: part.mute,
+        mute: solosExist ? !part.solo : part.mute,
       })
     );
 
