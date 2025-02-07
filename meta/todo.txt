@@ -2,11 +2,15 @@
 - Visualize heat as speed
 - Cut reverb mix as time goes on?
 - Bring back long ending.
-- More trumpet thickness somehow.
 - Pauses between decades.
+- Joule reference scale
+- Try higher trumpet again
+- More end intensity might be nice. Maybe fade the pipe organ a bit there?
+- "increase in the last n years" instead of 1955.
 
 Done:
 
+- More trumpet thickness somehow.
 - Low pipe organ sample?
 - Some synth cheesiness around 170. Could use more mids?
 - Stop distortion and browser crash.

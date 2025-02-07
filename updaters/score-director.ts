@@ -26,6 +26,7 @@ export function ScoreDirector({
   fadeLengthFactor = 2.0,
   envelopeLengthFactor = 1.2,
   constantEnvelopeLength = undefined,
+  getEnvelopeLengthForScoreEvent,
   envelopeCurve = null,
   variableSampleBuffers = null,
   directorName,
@@ -99,7 +100,8 @@ export function ScoreDirector({
         slideMode,
         envelopeCurve,
         ampFactor,
-        getEnvelopeLengthForScoreEvent,
+        getEnvelopeLengthForScoreEvent:
+          getEnvelopeLengthForScoreEvent || defaultGetEnvelopeLength,
         baseFreq,
         // shape: 'triangle',
       })
@@ -237,7 +239,7 @@ export function ScoreDirector({
     return playEvents.map((e) => idScoreEvent(e.scoreEvent));
   }
 
-  function getEnvelopeLengthForScoreEvent(
+  function defaultGetEnvelopeLength(
     scoreEvent: ScoreEvent,
     tickLength: number
   ): number {
