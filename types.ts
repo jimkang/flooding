@@ -1,8 +1,8 @@
 export interface SubjectDatum {
   date: string;
-  year: string;
+  year: number;
   month: number;
   value: number;
   meanSeaLevelDeltaMM?: number;
-  pauseInsert?: boolean;
+  startOfDecade?: boolean;
 }

@@ -44,6 +44,7 @@ export function DataComposer({
   adjustLoopForRate,
   arpeggiate = false,
   constantTickLength,
+  usePauses = true,
 }: {
   tempoFactor: number;
   data: SubjectDatum[];
@@ -59,6 +60,7 @@ export function DataComposer({
   adjustLoopForRate?: boolean;
   arpeggiate?: boolean;
   constantTickLength?: boolean;
+  usePauses?: boolean;
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
   // var chordScale = scaleLinear().domain([chordXFloor, chordXCeil]).range([1, maxPitchCount]);
@@ -85,10 +87,9 @@ export function DataComposer({
     };
 
     let chordPitchCount = 0;
-    if (sourceDatum.pauseInsert) {
+    if (usePauses && sourceDatum.startOfDecade) {
       // Take a break.
-      console.log('Grand pause at tick', index);
-      scoreState.tickLength = tickLength * 3;
+      scoreState.tickLength = 2;
       scoreState.grandPause = true;
       pastPitchCounts.push(1);
     } else {

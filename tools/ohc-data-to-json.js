@@ -17,7 +17,7 @@ const outputDirPath = process.argv[3];
 const basename = path.basename(inputPath, '.csv');
 const contents = fs.readFileSync(inputPath, { encoding: 'utf8' });
 var lines = contents.trim().split('\n');
-var rows = lines.map(parseLine);
+var rows = lines.map(parseLine).flat();
 const minDelta = rows.reduce(
   (min, row) => (row.heatDelta < min ? row.heatDelta : min),
   0
@@ -31,6 +31,7 @@ fs.writeFileSync(
   { encoding: 'utf8' }
 );
 
+// This will sometimes return two objects.
 function parseLine(line) {
   var values = line.split(',');
   let [year, monthPart] = values[0].split('-');
@@ -40,8 +41,16 @@ function parseLine(line) {
   var date = new Date(year, month);
   const heatDelta = +values[1];
   // The month is the end of the three-month period. So, 2 (March — Jan is 0 and Feb. is 1) is the first period of the year.
-  const pauseInsert = year % 10 === 0 && month === 2;
-  return { date, year, month, heatDelta, pauseInsert };
+  const startOfDecade = year % 10 === 0 && month === 2;
+
+  if (startOfDecade) {
+    return [
+      { date, year, month, heatDelta, startOfDecade },
+      { date, year, month, heatDelta },
+    ];
+  }
+
+  return { date, year, month, heatDelta };
 }
 
 function normalize(row) {
