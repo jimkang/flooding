@@ -26,7 +26,7 @@ export function ScoreDirector({
   fadeLengthFactor = 2.0,
   envelopeLengthFactor = 1.2,
   constantEnvelopeLength = undefined,
-  getEnvelopeLengthForScoreEvent,
+  getEnvelopeLengthForScoreEvent = undefined,
   envelopeCurve = null,
   variableSampleBuffers = null,
   directorName,

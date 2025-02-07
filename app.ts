@@ -22,7 +22,7 @@ import { renderEventDirection } from './renderers/render-event-direction';
 import { renderVisualizationForTick } from './renderers/visualization';
 // import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
-import { ScoreState /*, ScoreEvent*/ } from 'synthskel/types';
+import { ScoreState } from 'synthskel/types';
 // import { SubjectDatum } from './types';
 import { MainOut } from 'synthskel/synths/main-out';
 import { Reverb } from 'synthskel/synths/synth-node';
@@ -80,6 +80,7 @@ async function followRoute({
       fadeLengthFactor: 0.01,
       slideMode: false,
       pan: -0.2,
+      solo: false,
       // mute: true,
     },
     {
@@ -176,6 +177,12 @@ async function followRoute({
       pan: 0.5,
       ampFactor: 1.5,
       envelopeCurve: defaultADSRCurve,
+      getEnvelopeLengthForScoreEvent(_scoreEvent, tickLength) {
+        if (tickLength < 1.0) {
+          return tickLength * tickLength;
+        }
+        return tickLength;
+      },
       fadeLengthFactor: 0.1,
       slideMode: false,
       mute: false,
@@ -314,6 +321,7 @@ async function followRoute({
         fadeLengthFactor: part.fadeLengthFactor,
         slideMode: part.slideMode,
         mute: solosExist ? !part.solo : part.mute,
+        getEnvelopeLengthForScoreEvent: part.getEnvelopeLengthForScoreEvent,
       })
     );
 
