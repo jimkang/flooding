@@ -1,1934 +1,2242 @@
 [
   {
     "date": "1955-03-01T05:00:00.000Z",
-    "year": "1955",
+    "year": 1955,
     "month": 2,
     "heatDelta": -2.870669,
+    "pauseInsert": false,
     "value": 5.136280000000001
   },
   {
     "date": "1955-06-01T04:00:00.000Z",
-    "year": "1955",
+    "year": 1955,
     "month": 5,
     "heatDelta": -0.112888,
+    "pauseInsert": false,
     "value": 7.894061000000001
   },
   {
     "date": "1955-09-01T04:00:00.000Z",
-    "year": "1955",
+    "year": 1955,
     "month": 8,
     "heatDelta": -1.814083,
+    "pauseInsert": false,
     "value": 6.192866
   },
   {
     "date": "1955-12-01T05:00:00.000Z",
-    "year": "1955",
+    "year": 1955,
     "month": 11,
     "heatDelta": -8.006949,
+    "pauseInsert": false,
     "value": 0
   },
   {
     "date": "1956-03-01T05:00:00.000Z",
-    "year": "1956",
+    "year": 1956,
     "month": 2,
     "heatDelta": -2.414768,
+    "pauseInsert": false,
     "value": 5.592181
   },
   {
     "date": "1956-06-01T04:00:00.000Z",
-    "year": "1956",
+    "year": 1956,
     "month": 5,
     "heatDelta": -4.435912,
+    "pauseInsert": false,
     "value": 3.5710370000000005
   },
   {
     "date": "1956-09-01T04:00:00.000Z",
-    "year": "1956",
+    "year": 1956,
     "month": 8,
     "heatDelta": -2.657124,
+    "pauseInsert": false,
     "value": 5.349825000000001
   },
   {
     "date": "1956-12-01T05:00:00.000Z",
-    "year": "1956",
+    "year": 1956,
     "month": 11,
     "heatDelta": -0.925602,
+    "pauseInsert": false,
     "value": 7.081347000000001
   },
   {
     "date": "1957-03-01T05:00:00.000Z",
-    "year": "1957",
+    "year": 1957,
     "month": 2,
     "heatDelta": -4.126613,
+    "pauseInsert": false,
     "value": 3.8803360000000007
   },
   {
     "date": "1957-06-01T04:00:00.000Z",
-    "year": "1957",
+    "year": 1957,
     "month": 5,
     "heatDelta": -5.5812,
+    "pauseInsert": false,
     "value": 2.4257490000000006
   },
   {
     "date": "1957-09-01T04:00:00.000Z",
-    "year": "1957",
+    "year": 1957,
     "month": 8,
     "heatDelta": -3.82883,
+    "pauseInsert": false,
     "value": 4.178119000000001
   },
   {
     "date": "1957-12-01T05:00:00.000Z",
-    "year": "1957",
+    "year": 1957,
     "month": 11,
     "heatDelta": -4.916474,
+    "pauseInsert": false,
     "value": 3.0904750000000005
   },
   {
     "date": "1958-03-01T05:00:00.000Z",
-    "year": "1958",
+    "year": 1958,
     "month": 2,
     "heatDelta": -0.855497,
+    "pauseInsert": false,
     "value": 7.151452000000001
   },
   {
     "date": "1958-06-01T04:00:00.000Z",
-    "year": "1958",
+    "year": 1958,
     "month": 5,
     "heatDelta": -1.357916,
+    "pauseInsert": false,
     "value": 6.649033000000001
   },
   {
     "date": "1958-09-01T04:00:00.000Z",
-    "year": "1958",
+    "year": 1958,
     "month": 8,
     "heatDelta": -0.407367,
+    "pauseInsert": false,
     "value": 7.599582000000001
   },
   {
     "date": "1958-12-01T05:00:00.000Z",
-    "year": "1958",
+    "year": 1958,
     "month": 11,
     "heatDelta": -3.510767,
+    "pauseInsert": false,
     "value": 4.496182000000001
   },
   {
     "date": "1959-03-01T05:00:00.000Z",
-    "year": "1959",
+    "year": 1959,
     "month": 2,
     "heatDelta": -4.33201,
+    "pauseInsert": false,
     "value": 3.674939
   },
   {
     "date": "1959-06-01T04:00:00.000Z",
-    "year": "1959",
+    "year": 1959,
     "month": 5,
     "heatDelta": -0.125907,
+    "pauseInsert": false,
     "value": 7.881042000000001
   },
   {
     "date": "1959-09-01T04:00:00.000Z",
-    "year": "1959",
+    "year": 1959,
     "month": 8,
     "heatDelta": -2.352136,
+    "pauseInsert": false,
     "value": 5.654813000000001
   },
   {
     "date": "1959-12-01T05:00:00.000Z",
-    "year": "1959",
+    "year": 1959,
     "month": 11,
     "heatDelta": -1.947549,
+    "pauseInsert": false,
     "value": 6.0594
   },
   {
     "date": "1960-03-01T05:00:00.000Z",
-    "year": "1960",
+    "year": 1960,
     "month": 2,
     "heatDelta": -2.228227,
+    "pauseInsert": true,
     "value": 5.778722
   },
   {
     "date": "1960-06-01T04:00:00.000Z",
-    "year": "1960",
+    "year": 1960,
     "month": 5,
     "heatDelta": -1.15004,
+    "pauseInsert": false,
     "value": 6.856909000000001
   },
   {
     "date": "1960-09-01T04:00:00.000Z",
-    "year": "1960",
+    "year": 1960,
     "month": 8,
     "heatDelta": -0.156131,
+    "pauseInsert": false,
     "value": 7.850818
   },
   {
     "date": "1960-12-01T05:00:00.000Z",
-    "year": "1960",
+    "year": 1960,
     "month": 11,
     "heatDelta": -2.23387,
+    "pauseInsert": false,
     "value": 5.773079000000001
   },
   {
     "date": "1961-03-01T05:00:00.000Z",
-    "year": "1961",
+    "year": 1961,
     "month": 2,
     "heatDelta": -2.596117,
+    "pauseInsert": false,
     "value": 5.410832000000001
   },
   {
     "date": "1961-06-01T04:00:00.000Z",
-    "year": "1961",
+    "year": 1961,
     "month": 5,
     "heatDelta": -2.191756,
+    "pauseInsert": false,
     "value": 5.815193000000001
   },
   {
     "date": "1961-09-01T04:00:00.000Z",
-    "year": "1961",
+    "year": 1961,
     "month": 8,
     "heatDelta": -0.904012,
+    "pauseInsert": false,
     "value": 7.102937000000001
   },
   {
     "date": "1961-12-01T05:00:00.000Z",
-    "year": "1961",
+    "year": 1961,
     "month": 11,
     "heatDelta": -2.766685,
+    "pauseInsert": false,
     "value": 5.240264000000001
   },
   {
     "date": "1962-03-01T05:00:00.000Z",
-    "year": "1962",
+    "year": 1962,
     "month": 2,
     "heatDelta": -1.934748,
+    "pauseInsert": false,
     "value": 6.072201000000001
   },
   {
     "date": "1962-06-01T04:00:00.000Z",
-    "year": "1962",
+    "year": 1962,
     "month": 5,
     "heatDelta": -3.028738,
+    "pauseInsert": false,
     "value": 4.978211
   },
   {
     "date": "1962-09-01T04:00:00.000Z",
-    "year": "1962",
+    "year": 1962,
     "month": 8,
     "heatDelta": 1.394506,
+    "pauseInsert": false,
     "value": 9.401455
   },
   {
     "date": "1962-12-01T05:00:00.000Z",
-    "year": "1962",
+    "year": 1962,
     "month": 11,
     "heatDelta": -0.732579,
+    "pauseInsert": false,
     "value": 7.27437
   },
   {
     "date": "1963-03-01T05:00:00.000Z",
-    "year": "1963",
+    "year": 1963,
     "month": 2,
     "heatDelta": -2.489086,
+    "pauseInsert": false,
     "value": 5.517863
   },
   {
     "date": "1963-06-01T04:00:00.000Z",
-    "year": "1963",
+    "year": 1963,
     "month": 5,
     "heatDelta": -1.974558,
+    "pauseInsert": false,
     "value": 6.0323910000000005
   },
   {
     "date": "1963-09-01T04:00:00.000Z",
-    "year": "1963",
+    "year": 1963,
     "month": 8,
     "heatDelta": -3.880683,
+    "pauseInsert": false,
     "value": 4.126266000000001
   },
   {
     "date": "1963-12-01T05:00:00.000Z",
-    "year": "1963",
+    "year": 1963,
     "month": 11,
     "heatDelta": -0.741971,
+    "pauseInsert": false,
     "value": 7.264978
   },
   {
     "date": "1964-03-01T05:00:00.000Z",
-    "year": "1964",
+    "year": 1964,
     "month": 2,
     "heatDelta": -2.540313,
+    "pauseInsert": false,
     "value": 5.466636000000001
   },
   {
     "date": "1964-06-01T04:00:00.000Z",
-    "year": "1964",
+    "year": 1964,
     "month": 5,
     "heatDelta": -0.999268,
+    "pauseInsert": false,
     "value": 7.007681000000001
   },
   {
     "date": "1964-09-01T04:00:00.000Z",
-    "year": "1964",
+    "year": 1964,
     "month": 8,
     "heatDelta": -3.550237,
+    "pauseInsert": false,
     "value": 4.4567120000000005
   },
   {
     "date": "1964-12-01T05:00:00.000Z",
-    "year": "1964",
+    "year": 1964,
     "month": 11,
     "heatDelta": -5.396096,
+    "pauseInsert": false,
     "value": 2.6108530000000005
   },
   {
     "date": "1965-03-01T05:00:00.000Z",
-    "year": "1965",
+    "year": 1965,
     "month": 2,
     "heatDelta": -3.407796,
+    "pauseInsert": false,
     "value": 4.599153000000001
   },
   {
     "date": "1965-06-01T04:00:00.000Z",
-    "year": "1965",
+    "year": 1965,
     "month": 5,
     "heatDelta": -3.65106,
+    "pauseInsert": false,
     "value": 4.355889
   },
   {
     "date": "1965-09-01T04:00:00.000Z",
-    "year": "1965",
+    "year": 1965,
     "month": 8,
     "heatDelta": -2.26,
+    "pauseInsert": false,
     "value": 5.746949000000001
   },
   {
     "date": "1965-12-01T05:00:00.000Z",
-    "year": "1965",
+    "year": 1965,
     "month": 11,
     "heatDelta": -2.920431,
+    "pauseInsert": false,
     "value": 5.086518
   },
   {
     "date": "1966-03-01T05:00:00.000Z",
-    "year": "1966",
+    "year": 1966,
     "month": 2,
     "heatDelta": -4.449895,
+    "pauseInsert": false,
     "value": 3.557054000000001
   },
   {
     "date": "1966-06-01T04:00:00.000Z",
-    "year": "1966",
+    "year": 1966,
     "month": 5,
     "heatDelta": -3.879088,
+    "pauseInsert": false,
     "value": 4.127861000000001
   },
   {
     "date": "1966-09-01T04:00:00.000Z",
-    "year": "1966",
+    "year": 1966,
     "month": 8,
     "heatDelta": -2.689776,
+    "pauseInsert": false,
     "value": 5.317173
   },
   {
     "date": "1966-12-01T05:00:00.000Z",
-    "year": "1966",
+    "year": 1966,
     "month": 11,
     "heatDelta": -4.756363,
+    "pauseInsert": false,
     "value": 3.250586
   },
   {
     "date": "1967-03-01T05:00:00.000Z",
-    "year": "1967",
+    "year": 1967,
     "month": 2,
     "heatDelta": -4.570902,
+    "pauseInsert": false,
     "value": 3.4360470000000003
   },
   {
     "date": "1967-06-01T04:00:00.000Z",
-    "year": "1967",
+    "year": 1967,
     "month": 5,
     "heatDelta": -3.258875,
+    "pauseInsert": false,
     "value": 4.748074000000001
   },
   {
     "date": "1967-09-01T04:00:00.000Z",
-    "year": "1967",
+    "year": 1967,
     "month": 8,
     "heatDelta": -4.820662,
+    "pauseInsert": false,
     "value": 3.186287000000001
   },
   {
     "date": "1967-12-01T05:00:00.000Z",
-    "year": "1967",
+    "year": 1967,
     "month": 11,
     "heatDelta": -4.795085,
+    "pauseInsert": false,
     "value": 3.2118640000000003
   },
   {
     "date": "1968-03-01T05:00:00.000Z",
-    "year": "1968",
+    "year": 1968,
     "month": 2,
     "heatDelta": -7.422575,
+    "pauseInsert": false,
     "value": 0.5843740000000004
   },
   {
     "date": "1968-06-01T04:00:00.000Z",
-    "year": "1968",
+    "year": 1968,
     "month": 5,
     "heatDelta": -4.560177,
+    "pauseInsert": false,
     "value": 3.446772
   },
   {
     "date": "1968-09-01T04:00:00.000Z",
-    "year": "1968",
+    "year": 1968,
     "month": 8,
     "heatDelta": -3.969478,
+    "pauseInsert": false,
     "value": 4.037471
   },
   {
     "date": "1968-12-01T05:00:00.000Z",
-    "year": "1968",
+    "year": 1968,
     "month": 11,
     "heatDelta": -6.957784,
+    "pauseInsert": false,
     "value": 1.0491650000000003
   },
   {
     "date": "1969-03-01T05:00:00.000Z",
-    "year": "1969",
+    "year": 1969,
     "month": 2,
     "heatDelta": -3.020569,
+    "pauseInsert": false,
     "value": 4.9863800000000005
   },
   {
     "date": "1969-06-01T04:00:00.000Z",
-    "year": "1969",
+    "year": 1969,
     "month": 5,
     "heatDelta": -4.898119,
+    "pauseInsert": false,
     "value": 3.10883
   },
   {
     "date": "1969-09-01T04:00:00.000Z",
-    "year": "1969",
+    "year": 1969,
     "month": 8,
     "heatDelta": -4.474476,
+    "pauseInsert": false,
     "value": 3.5324730000000004
   },
   {
     "date": "1969-12-01T05:00:00.000Z",
-    "year": "1969",
+    "year": 1969,
     "month": 11,
     "heatDelta": -5.531948,
+    "pauseInsert": false,
     "value": 2.4750010000000007
   },
   {
     "date": "1970-03-01T05:00:00.000Z",
-    "year": "1970",
+    "year": 1970,
     "month": 2,
     "heatDelta": -7.44103,
+    "pauseInsert": true,
     "value": 0.565919000000001
   },
   {
     "date": "1970-06-01T04:00:00.000Z",
-    "year": "1970",
+    "year": 1970,
     "month": 5,
     "heatDelta": -5.943489,
+    "pauseInsert": false,
     "value": 2.063460000000001
   },
   {
     "date": "1970-09-01T04:00:00.000Z",
-    "year": "1970",
+    "year": 1970,
     "month": 8,
     "heatDelta": -3.995159,
+    "pauseInsert": false,
     "value": 4.01179
   },
   {
     "date": "1970-12-01T05:00:00.000Z",
-    "year": "1970",
+    "year": 1970,
     "month": 11,
     "heatDelta": -3.814105,
+    "pauseInsert": false,
     "value": 4.192844000000001
   },
   {
     "date": "1971-03-01T05:00:00.000Z",
-    "year": "1971",
+    "year": 1971,
     "month": 2,
     "heatDelta": -4.959378,
+    "pauseInsert": false,
     "value": 3.0475710000000005
   },
   {
     "date": "1971-06-01T04:00:00.000Z",
-    "year": "1971",
+    "year": 1971,
     "month": 5,
     "heatDelta": -3.910183,
+    "pauseInsert": false,
     "value": 4.096766000000001
   },
   {
     "date": "1971-09-01T04:00:00.000Z",
-    "year": "1971",
+    "year": 1971,
     "month": 8,
     "heatDelta": -3.727275,
+    "pauseInsert": false,
     "value": 4.279674
   },
   {
     "date": "1971-12-01T05:00:00.000Z",
-    "year": "1971",
+    "year": 1971,
     "month": 11,
     "heatDelta": -2.47277,
+    "pauseInsert": false,
     "value": 5.534179
   },
   {
     "date": "1972-03-01T05:00:00.000Z",
-    "year": "1972",
+    "year": 1972,
     "month": 2,
     "heatDelta": -4.091771,
+    "pauseInsert": false,
     "value": 3.915178000000001
   },
   {
     "date": "1972-06-01T04:00:00.000Z",
-    "year": "1972",
+    "year": 1972,
     "month": 5,
     "heatDelta": -2.54613,
+    "pauseInsert": false,
     "value": 5.460819000000001
   },
   {
     "date": "1972-09-01T04:00:00.000Z",
-    "year": "1972",
+    "year": 1972,
     "month": 8,
     "heatDelta": -7.319351,
+    "pauseInsert": false,
     "value": 0.6875980000000004
   },
   {
     "date": "1972-12-01T05:00:00.000Z",
-    "year": "1972",
+    "year": 1972,
     "month": 11,
     "heatDelta": -6.997663,
+    "pauseInsert": false,
     "value": 1.0092860000000003
   },
   {
     "date": "1973-03-01T05:00:00.000Z",
-    "year": "1973",
+    "year": 1973,
     "month": 2,
     "heatDelta": -6.992906,
+    "pauseInsert": false,
     "value": 1.014043000000001
   },
   {
     "date": "1973-06-01T04:00:00.000Z",
-    "year": "1973",
+    "year": 1973,
     "month": 5,
     "heatDelta": -3.276274,
+    "pauseInsert": false,
     "value": 4.730675000000001
   },
   {
     "date": "1973-09-01T04:00:00.000Z",
-    "year": "1973",
+    "year": 1973,
     "month": 8,
     "heatDelta": -1.011778,
+    "pauseInsert": false,
     "value": 6.995171000000001
   },
   {
     "date": "1973-12-01T05:00:00.000Z",
-    "year": "1973",
+    "year": 1973,
     "month": 11,
     "heatDelta": -2.796067,
+    "pauseInsert": false,
     "value": 5.210882000000001
   },
   {
     "date": "1974-03-01T04:00:00.000Z",
-    "year": "1974",
+    "year": 1974,
     "month": 2,
     "heatDelta": -4.533091,
+    "pauseInsert": false,
     "value": 3.473858000000001
   },
   {
     "date": "1974-06-01T04:00:00.000Z",
-    "year": "1974",
+    "year": 1974,
     "month": 5,
     "heatDelta": -3.247772,
+    "pauseInsert": false,
     "value": 4.759177000000001
   },
   {
     "date": "1974-09-01T04:00:00.000Z",
-    "year": "1974",
+    "year": 1974,
     "month": 8,
     "heatDelta": -2.193655,
+    "pauseInsert": false,
     "value": 5.813294000000001
   },
   {
     "date": "1974-12-01T05:00:00.000Z",
-    "year": "1974",
+    "year": 1974,
     "month": 11,
     "heatDelta": -1.12579,
+    "pauseInsert": false,
     "value": 6.881159
   },
   {
     "date": "1975-03-01T04:00:00.000Z",
-    "year": "1975",
+    "year": 1975,
     "month": 2,
     "heatDelta": -2.142686,
+    "pauseInsert": false,
     "value": 5.864263000000001
   },
   {
     "date": "1975-06-01T04:00:00.000Z",
-    "year": "1975",
+    "year": 1975,
     "month": 5,
     "heatDelta": -2.137013,
+    "pauseInsert": false,
     "value": 5.869936000000001
   },
   {
     "date": "1975-09-01T04:00:00.000Z",
-    "year": "1975",
+    "year": 1975,
     "month": 8,
     "heatDelta": -1.747955,
+    "pauseInsert": false,
     "value": 6.258994
   },
   {
     "date": "1975-12-01T05:00:00.000Z",
-    "year": "1975",
+    "year": 1975,
     "month": 11,
     "heatDelta": -0.17834,
+    "pauseInsert": false,
     "value": 7.828609
   },
   {
     "date": "1976-03-01T05:00:00.000Z",
-    "year": "1976",
+    "year": 1976,
     "month": 2,
     "heatDelta": -2.743946,
+    "pauseInsert": false,
     "value": 5.263003
   },
   {
     "date": "1976-06-01T04:00:00.000Z",
-    "year": "1976",
+    "year": 1976,
     "month": 5,
     "heatDelta": -0.842684,
+    "pauseInsert": false,
     "value": 7.164265
   },
   {
     "date": "1976-09-01T04:00:00.000Z",
-    "year": "1976",
+    "year": 1976,
     "month": 8,
     "heatDelta": -3.662868,
+    "pauseInsert": false,
     "value": 4.344081000000001
   },
   {
     "date": "1976-12-01T05:00:00.000Z",
-    "year": "1976",
+    "year": 1976,
     "month": 11,
     "heatDelta": -3.163476,
+    "pauseInsert": false,
     "value": 4.843473
   },
   {
     "date": "1977-03-01T05:00:00.000Z",
-    "year": "1977",
+    "year": 1977,
     "month": 2,
     "heatDelta": 0.753658,
+    "pauseInsert": false,
     "value": 8.760607
   },
   {
     "date": "1977-06-01T04:00:00.000Z",
-    "year": "1977",
+    "year": 1977,
     "month": 5,
     "heatDelta": 1.487195,
+    "pauseInsert": false,
     "value": 9.494144
   },
   {
     "date": "1977-09-01T04:00:00.000Z",
-    "year": "1977",
+    "year": 1977,
     "month": 8,
     "heatDelta": -0.29661,
+    "pauseInsert": false,
     "value": 7.710339
   },
   {
     "date": "1977-12-01T05:00:00.000Z",
-    "year": "1977",
+    "year": 1977,
     "month": 11,
     "heatDelta": -1.816407,
+    "pauseInsert": false,
     "value": 6.190542000000001
   },
   {
     "date": "1978-03-01T05:00:00.000Z",
-    "year": "1978",
+    "year": 1978,
     "month": 2,
     "heatDelta": 0.659256,
+    "pauseInsert": false,
     "value": 8.666205
   },
   {
     "date": "1978-06-01T04:00:00.000Z",
-    "year": "1978",
+    "year": 1978,
     "month": 5,
     "heatDelta": 0.186941,
+    "pauseInsert": false,
     "value": 8.19389
   },
   {
     "date": "1978-09-01T04:00:00.000Z",
-    "year": "1978",
+    "year": 1978,
     "month": 8,
     "heatDelta": -1.20887,
+    "pauseInsert": false,
     "value": 6.798079
   },
   {
     "date": "1978-12-01T05:00:00.000Z",
-    "year": "1978",
+    "year": 1978,
     "month": 11,
     "heatDelta": 0.569558,
+    "pauseInsert": false,
     "value": 8.576507000000001
   },
   {
     "date": "1979-03-01T05:00:00.000Z",
-    "year": "1979",
+    "year": 1979,
     "month": 2,
     "heatDelta": 0.24465,
+    "pauseInsert": false,
     "value": 8.251599
   },
   {
     "date": "1979-06-01T04:00:00.000Z",
-    "year": "1979",
+    "year": 1979,
     "month": 5,
     "heatDelta": -1.640448,
+    "pauseInsert": false,
     "value": 6.366501
   },
   {
     "date": "1979-09-01T04:00:00.000Z",
-    "year": "1979",
+    "year": 1979,
     "month": 8,
     "heatDelta": -1.909762,
+    "pauseInsert": false,
     "value": 6.097187000000001
   },
   {
     "date": "1979-12-01T05:00:00.000Z",
-    "year": "1979",
+    "year": 1979,
     "month": 11,
     "heatDelta": -0.532718,
+    "pauseInsert": false,
     "value": 7.4742310000000005
   },
   {
     "date": "1980-03-01T05:00:00.000Z",
-    "year": "1980",
+    "year": 1980,
     "month": 2,
     "heatDelta": 1.621559,
+    "pauseInsert": true,
     "value": 9.628508
   },
   {
     "date": "1980-06-01T04:00:00.000Z",
-    "year": "1980",
+    "year": 1980,
     "month": 5,
     "heatDelta": 1.813644,
+    "pauseInsert": false,
     "value": 9.820593
   },
   {
     "date": "1980-09-01T04:00:00.000Z",
-    "year": "1980",
+    "year": 1980,
     "month": 8,
     "heatDelta": -0.058621,
+    "pauseInsert": false,
     "value": 7.948328000000001
   },
   {
     "date": "1980-12-01T05:00:00.000Z",
-    "year": "1980",
+    "year": 1980,
     "month": 11,
     "heatDelta": 0.985672,
+    "pauseInsert": false,
     "value": 8.992621
   },
   {
     "date": "1981-03-01T05:00:00.000Z",
-    "year": "1981",
+    "year": 1981,
     "month": 2,
     "heatDelta": 0.466168,
+    "pauseInsert": false,
     "value": 8.473117
   },
   {
     "date": "1981-06-01T04:00:00.000Z",
-    "year": "1981",
+    "year": 1981,
     "month": 5,
     "heatDelta": 0.533019,
+    "pauseInsert": false,
     "value": 8.539968
   },
   {
     "date": "1981-09-01T04:00:00.000Z",
-    "year": "1981",
+    "year": 1981,
     "month": 8,
     "heatDelta": -1.49033,
+    "pauseInsert": false,
     "value": 6.516619
   },
   {
     "date": "1981-12-01T05:00:00.000Z",
-    "year": "1981",
+    "year": 1981,
     "month": 11,
     "heatDelta": 0.979648,
+    "pauseInsert": false,
     "value": 8.986597
   },
   {
     "date": "1982-03-01T05:00:00.000Z",
-    "year": "1982",
+    "year": 1982,
     "month": 2,
     "heatDelta": -1.497396,
+    "pauseInsert": false,
     "value": 6.509553
   },
   {
     "date": "1982-06-01T04:00:00.000Z",
-    "year": "1982",
+    "year": 1982,
     "month": 5,
     "heatDelta": -1.675871,
+    "pauseInsert": false,
     "value": 6.331078000000001
   },
   {
     "date": "1982-09-01T04:00:00.000Z",
-    "year": "1982",
+    "year": 1982,
     "month": 8,
     "heatDelta": -5.024016,
+    "pauseInsert": false,
     "value": 2.982933000000001
   },
   {
     "date": "1982-12-01T05:00:00.000Z",
-    "year": "1982",
+    "year": 1982,
     "month": 11,
     "heatDelta": -1.026103,
+    "pauseInsert": false,
     "value": 6.9808460000000006
   },
   {
     "date": "1983-03-01T05:00:00.000Z",
-    "year": "1983",
+    "year": 1983,
     "month": 2,
     "heatDelta": -3.626007,
+    "pauseInsert": false,
     "value": 4.380942000000001
   },
   {
     "date": "1983-06-01T04:00:00.000Z",
-    "year": "1983",
+    "year": 1983,
     "month": 5,
     "heatDelta": 2.378227,
+    "pauseInsert": false,
     "value": 10.385176000000001
   },
   {
     "date": "1983-09-01T04:00:00.000Z",
-    "year": "1983",
+    "year": 1983,
     "month": 8,
     "heatDelta": -6.587368,
+    "pauseInsert": false,
     "value": 1.4195810000000009
   },
   {
     "date": "1983-12-01T05:00:00.000Z",
-    "year": "1983",
+    "year": 1983,
     "month": 11,
     "heatDelta": -3.216753,
+    "pauseInsert": false,
     "value": 4.790196
   },
   {
     "date": "1984-03-01T05:00:00.000Z",
-    "year": "1984",
+    "year": 1984,
     "month": 2,
     "heatDelta": 2.502179,
+    "pauseInsert": false,
     "value": 10.509128
   },
   {
     "date": "1984-06-01T04:00:00.000Z",
-    "year": "1984",
+    "year": 1984,
     "month": 5,
     "heatDelta": -2.455978,
+    "pauseInsert": false,
     "value": 5.5509710000000005
   },
   {
     "date": "1984-09-01T04:00:00.000Z",
-    "year": "1984",
+    "year": 1984,
     "month": 8,
     "heatDelta": -2.656893,
+    "pauseInsert": false,
     "value": 5.350056
   },
   {
     "date": "1984-12-01T05:00:00.000Z",
-    "year": "1984",
+    "year": 1984,
     "month": 11,
     "heatDelta": 0.773232,
+    "pauseInsert": false,
     "value": 8.780181
   },
   {
     "date": "1985-03-01T05:00:00.000Z",
-    "year": "1985",
+    "year": 1985,
     "month": 2,
     "heatDelta": 1.784006,
+    "pauseInsert": false,
     "value": 9.790955
   },
   {
     "date": "1985-06-01T04:00:00.000Z",
-    "year": "1985",
+    "year": 1985,
     "month": 5,
     "heatDelta": 1.808964,
+    "pauseInsert": false,
     "value": 9.815913
   },
   {
     "date": "1985-09-01T04:00:00.000Z",
-    "year": "1985",
+    "year": 1985,
     "month": 8,
     "heatDelta": 0.248777,
+    "pauseInsert": false,
     "value": 8.255726000000001
   },
   {
     "date": "1985-12-01T05:00:00.000Z",
-    "year": "1985",
+    "year": 1985,
     "month": 11,
     "heatDelta": -3.403632,
+    "pauseInsert": false,
     "value": 4.6033170000000005
   },
   {
     "date": "1986-03-01T05:00:00.000Z",
-    "year": "1986",
+    "year": 1986,
     "month": 2,
     "heatDelta": -0.832693,
+    "pauseInsert": false,
     "value": 7.174256000000001
   },
   {
     "date": "1986-06-01T04:00:00.000Z",
-    "year": "1986",
+    "year": 1986,
     "month": 5,
     "heatDelta": 1.70314,
+    "pauseInsert": false,
     "value": 9.710089
   },
   {
     "date": "1986-09-01T04:00:00.000Z",
-    "year": "1986",
+    "year": 1986,
     "month": 8,
     "heatDelta": -1.31332,
+    "pauseInsert": false,
     "value": 6.6936290000000005
   },
   {
     "date": "1986-12-01T05:00:00.000Z",
-    "year": "1986",
+    "year": 1986,
     "month": 11,
     "heatDelta": -3.706717,
+    "pauseInsert": false,
     "value": 4.300232000000001
   },
   {
     "date": "1987-03-01T05:00:00.000Z",
-    "year": "1987",
+    "year": 1987,
     "month": 2,
     "heatDelta": -0.207786,
+    "pauseInsert": false,
     "value": 7.799163000000001
   },
   {
     "date": "1987-06-01T04:00:00.000Z",
-    "year": "1987",
+    "year": 1987,
     "month": 5,
     "heatDelta": -1.371921,
+    "pauseInsert": false,
     "value": 6.635028
   },
   {
     "date": "1987-09-01T04:00:00.000Z",
-    "year": "1987",
+    "year": 1987,
     "month": 8,
     "heatDelta": -2.150277,
+    "pauseInsert": false,
     "value": 5.8566720000000005
   },
   {
     "date": "1987-12-01T05:00:00.000Z",
-    "year": "1987",
+    "year": 1987,
     "month": 11,
     "heatDelta": 0.158229,
+    "pauseInsert": false,
     "value": 8.165178000000001
   },
   {
     "date": "1988-03-01T05:00:00.000Z",
-    "year": "1988",
+    "year": 1988,
     "month": 2,
     "heatDelta": 0.584472,
+    "pauseInsert": false,
     "value": 8.591421
   },
   {
     "date": "1988-06-01T04:00:00.000Z",
-    "year": "1988",
+    "year": 1988,
     "month": 5,
     "heatDelta": 0.316734,
+    "pauseInsert": false,
     "value": 8.323683
   },
   {
     "date": "1988-09-01T04:00:00.000Z",
-    "year": "1988",
+    "year": 1988,
     "month": 8,
     "heatDelta": 1.238749,
+    "pauseInsert": false,
     "value": 9.245698
   },
   {
     "date": "1988-12-01T05:00:00.000Z",
-    "year": "1988",
+    "year": 1988,
     "month": 11,
     "heatDelta": 2.213401,
+    "pauseInsert": false,
     "value": 10.22035
   },
   {
     "date": "1989-03-01T05:00:00.000Z",
-    "year": "1989",
+    "year": 1989,
     "month": 2,
     "heatDelta": 1.054477,
+    "pauseInsert": false,
     "value": 9.061426
   },
   {
     "date": "1989-06-01T04:00:00.000Z",
-    "year": "1989",
+    "year": 1989,
     "month": 5,
     "heatDelta": 2.184499,
+    "pauseInsert": false,
     "value": 10.191448000000001
   },
   {
     "date": "1989-09-01T04:00:00.000Z",
-    "year": "1989",
+    "year": 1989,
     "month": 8,
     "heatDelta": 0.722182,
+    "pauseInsert": false,
     "value": 8.729131
   },
   {
     "date": "1989-12-01T05:00:00.000Z",
-    "year": "1989",
+    "year": 1989,
     "month": 11,
     "heatDelta": -0.347525,
+    "pauseInsert": false,
     "value": 7.6594240000000005
   },
   {
     "date": "1990-03-01T05:00:00.000Z",
-    "year": "1990",
+    "year": 1990,
     "month": 2,
     "heatDelta": 1.21432,
+    "pauseInsert": true,
     "value": 9.221269000000001
   },
   {
     "date": "1990-06-01T04:00:00.000Z",
-    "year": "1990",
+    "year": 1990,
     "month": 5,
     "heatDelta": -1.216034,
+    "pauseInsert": false,
     "value": 6.790915
   },
   {
     "date": "1990-09-01T04:00:00.000Z",
-    "year": "1990",
+    "year": 1990,
     "month": 8,
     "heatDelta": -1.483189,
+    "pauseInsert": false,
     "value": 6.52376
   },
   {
     "date": "1990-12-01T05:00:00.000Z",
-    "year": "1990",
+    "year": 1990,
     "month": 11,
     "heatDelta": 2.194469,
+    "pauseInsert": false,
     "value": 10.201418
   },
   {
     "date": "1991-03-01T05:00:00.000Z",
-    "year": "1991",
+    "year": 1991,
     "month": 2,
     "heatDelta": 2.197155,
+    "pauseInsert": false,
     "value": 10.204104000000001
   },
   {
     "date": "1991-06-01T04:00:00.000Z",
-    "year": "1991",
+    "year": 1991,
     "month": 5,
     "heatDelta": 3.209013,
+    "pauseInsert": false,
     "value": 11.215962000000001
   },
   {
     "date": "1991-09-01T04:00:00.000Z",
-    "year": "1991",
+    "year": 1991,
     "month": 8,
     "heatDelta": 2.128846,
+    "pauseInsert": false,
     "value": 10.135795
   },
   {
     "date": "1991-12-01T05:00:00.000Z",
-    "year": "1991",
+    "year": 1991,
     "month": 11,
     "heatDelta": 3.047556,
+    "pauseInsert": false,
     "value": 11.054505
   },
   {
     "date": "1992-03-01T05:00:00.000Z",
-    "year": "1992",
+    "year": 1992,
     "month": 2,
     "heatDelta": 0.985267,
+    "pauseInsert": false,
     "value": 8.992216
   },
   {
     "date": "1992-06-01T04:00:00.000Z",
-    "year": "1992",
+    "year": 1992,
     "month": 5,
     "heatDelta": 1.039358,
+    "pauseInsert": false,
     "value": 9.046307
   },
   {
     "date": "1992-09-01T04:00:00.000Z",
-    "year": "1992",
+    "year": 1992,
     "month": 8,
     "heatDelta": 0.746549,
+    "pauseInsert": false,
     "value": 8.753498
   },
   {
     "date": "1992-12-01T05:00:00.000Z",
-    "year": "1992",
+    "year": 1992,
     "month": 11,
     "heatDelta": -0.484774,
+    "pauseInsert": false,
     "value": 7.522175000000001
   },
   {
     "date": "1993-03-01T05:00:00.000Z",
-    "year": "1993",
+    "year": 1993,
     "month": 2,
     "heatDelta": 1.901373,
+    "pauseInsert": false,
     "value": 9.908322
   },
   {
     "date": "1993-06-01T04:00:00.000Z",
-    "year": "1993",
+    "year": 1993,
     "month": 5,
     "heatDelta": 0.014944,
+    "pauseInsert": false,
     "value": 8.021893
   },
   {
     "date": "1993-09-01T04:00:00.000Z",
-    "year": "1993",
+    "year": 1993,
     "month": 8,
     "heatDelta": 0.072173,
+    "pauseInsert": false,
     "value": 8.079122
   },
   {
     "date": "1993-12-01T05:00:00.000Z",
-    "year": "1993",
+    "year": 1993,
     "month": 11,
     "heatDelta": 0.746779,
+    "pauseInsert": false,
     "value": 8.753728
   },
   {
     "date": "1994-03-01T05:00:00.000Z",
-    "year": "1994",
+    "year": 1994,
     "month": 2,
     "heatDelta": 1.721586,
+    "pauseInsert": false,
     "value": 9.728535
   },
   {
     "date": "1994-06-01T04:00:00.000Z",
-    "year": "1994",
+    "year": 1994,
     "month": 5,
     "heatDelta": -0.640411,
+    "pauseInsert": false,
     "value": 7.366538
   },
   {
     "date": "1994-09-01T04:00:00.000Z",
-    "year": "1994",
+    "year": 1994,
     "month": 8,
     "heatDelta": 2.212865,
+    "pauseInsert": false,
     "value": 10.219814
   },
   {
     "date": "1994-12-01T05:00:00.000Z",
-    "year": "1994",
+    "year": 1994,
     "month": 11,
     "heatDelta": 2.744318,
+    "pauseInsert": false,
     "value": 10.751267
   },
   {
     "date": "1995-03-01T05:00:00.000Z",
-    "year": "1995",
+    "year": 1995,
     "month": 2,
     "heatDelta": 3.309005,
+    "pauseInsert": false,
     "value": 11.315954000000001
   },
   {
     "date": "1995-06-01T04:00:00.000Z",
-    "year": "1995",
+    "year": 1995,
     "month": 5,
     "heatDelta": 2.082141,
+    "pauseInsert": false,
     "value": 10.08909
   },
   {
     "date": "1995-09-01T04:00:00.000Z",
-    "year": "1995",
+    "year": 1995,
     "month": 8,
     "heatDelta": 0.500147,
+    "pauseInsert": false,
     "value": 8.507096
   },
   {
     "date": "1995-12-01T05:00:00.000Z",
-    "year": "1995",
+    "year": 1995,
     "month": 11,
     "heatDelta": 3.164881,
+    "pauseInsert": false,
     "value": 11.17183
   },
   {
     "date": "1996-03-01T05:00:00.000Z",
-    "year": "1996",
+    "year": 1996,
     "month": 2,
     "heatDelta": 4.492706,
+    "pauseInsert": false,
     "value": 12.499655
   },
   {
     "date": "1996-06-01T04:00:00.000Z",
-    "year": "1996",
+    "year": 1996,
     "month": 5,
     "heatDelta": 7.236955,
+    "pauseInsert": false,
     "value": 15.243904
   },
   {
     "date": "1996-09-01T04:00:00.000Z",
-    "year": "1996",
+    "year": 1996,
     "month": 8,
     "heatDelta": 2.027039,
+    "pauseInsert": false,
     "value": 10.033988
   },
   {
     "date": "1996-12-01T05:00:00.000Z",
-    "year": "1996",
+    "year": 1996,
     "month": 11,
     "heatDelta": 4.419283,
+    "pauseInsert": false,
     "value": 12.426232
   },
   {
     "date": "1997-03-01T05:00:00.000Z",
-    "year": "1997",
+    "year": 1997,
     "month": 2,
     "heatDelta": 4.525184,
+    "pauseInsert": false,
     "value": 12.532133000000002
   },
   {
     "date": "1997-06-01T04:00:00.000Z",
-    "year": "1997",
+    "year": 1997,
     "month": 5,
     "heatDelta": 3.687088,
+    "pauseInsert": false,
     "value": 11.694037000000002
   },
   {
     "date": "1997-09-01T04:00:00.000Z",
-    "year": "1997",
+    "year": 1997,
     "month": 8,
     "heatDelta": 2.090838,
+    "pauseInsert": false,
     "value": 10.097787
   },
   {
     "date": "1997-12-01T05:00:00.000Z",
-    "year": "1997",
+    "year": 1997,
     "month": 11,
     "heatDelta": 2.676821,
+    "pauseInsert": false,
     "value": 10.68377
   },
   {
     "date": "1998-03-01T05:00:00.000Z",
-    "year": "1998",
+    "year": 1998,
     "month": 2,
     "heatDelta": 3.046107,
+    "pauseInsert": false,
     "value": 11.053056000000002
   },
   {
     "date": "1998-06-01T04:00:00.000Z",
-    "year": "1998",
+    "year": 1998,
     "month": 5,
     "heatDelta": 5.32325,
+    "pauseInsert": false,
     "value": 13.330199
   },
   {
     "date": "1998-09-01T04:00:00.000Z",
-    "year": "1998",
+    "year": 1998,
     "month": 8,
     "heatDelta": 3.689378,
+    "pauseInsert": false,
     "value": 11.696327
   },
   {
     "date": "1998-12-01T05:00:00.000Z",
-    "year": "1998",
+    "year": 1998,
     "month": 11,
     "heatDelta": 5.156275,
+    "pauseInsert": false,
     "value": 13.163224
   },
   {
     "date": "1999-03-01T05:00:00.000Z",
-    "year": "1999",
+    "year": 1999,
     "month": 2,
     "heatDelta": 5.388621,
+    "pauseInsert": false,
     "value": 13.39557
   },
   {
     "date": "1999-06-01T04:00:00.000Z",
-    "year": "1999",
+    "year": 1999,
     "month": 5,
     "heatDelta": 5.638433,
+    "pauseInsert": false,
     "value": 13.645382000000001
   },
   {
     "date": "1999-09-01T04:00:00.000Z",
-    "year": "1999",
+    "year": 1999,
     "month": 8,
     "heatDelta": 6.149937,
+    "pauseInsert": false,
     "value": 14.156886
   },
   {
     "date": "1999-12-01T05:00:00.000Z",
-    "year": "1999",
+    "year": 1999,
     "month": 11,
     "heatDelta": 6.595028,
+    "pauseInsert": false,
     "value": 14.601977000000002
   },
   {
     "date": "2000-03-01T05:00:00.000Z",
-    "year": "2000",
+    "year": 2000,
     "month": 2,
     "heatDelta": 4.844887,
+    "pauseInsert": true,
     "value": 12.851836
   },
   {
     "date": "2000-06-01T04:00:00.000Z",
-    "year": "2000",
+    "year": 2000,
     "month": 5,
     "heatDelta": 5.757782,
+    "pauseInsert": false,
     "value": 13.764731000000001
   },
   {
     "date": "2000-09-01T04:00:00.000Z",
-    "year": "2000",
+    "year": 2000,
     "month": 8,
     "heatDelta": 7.14543,
+    "pauseInsert": false,
     "value": 15.152379
   },
   {
     "date": "2000-12-01T05:00:00.000Z",
-    "year": "2000",
+    "year": 2000,
     "month": 11,
     "heatDelta": 4.938114,
+    "pauseInsert": false,
     "value": 12.945063000000001
   },
   {
     "date": "2001-03-01T05:00:00.000Z",
-    "year": "2001",
+    "year": 2001,
     "month": 2,
     "heatDelta": 3.076658,
+    "pauseInsert": false,
     "value": 11.083607
   },
   {
     "date": "2001-06-01T04:00:00.000Z",
-    "year": "2001",
+    "year": 2001,
     "month": 5,
     "heatDelta": 2.730675,
+    "pauseInsert": false,
     "value": 10.737624
   },
   {
     "date": "2001-09-01T04:00:00.000Z",
-    "year": "2001",
+    "year": 2001,
     "month": 8,
     "heatDelta": 3.21216,
+    "pauseInsert": false,
     "value": 11.219109
   },
   {
     "date": "2001-12-01T05:00:00.000Z",
-    "year": "2001",
+    "year": 2001,
     "month": 11,
     "heatDelta": 7.447564,
+    "pauseInsert": false,
     "value": 15.454513
   },
   {
     "date": "2002-03-01T05:00:00.000Z",
-    "year": "2002",
+    "year": 2002,
     "month": 2,
     "heatDelta": 5.505122,
+    "pauseInsert": false,
     "value": 13.512071
   },
   {
     "date": "2002-06-01T04:00:00.000Z",
-    "year": "2002",
+    "year": 2002,
     "month": 5,
     "heatDelta": 7.580072,
+    "pauseInsert": false,
     "value": 15.587021
   },
   {
     "date": "2002-09-01T04:00:00.000Z",
-    "year": "2002",
+    "year": 2002,
     "month": 8,
     "heatDelta": 7.701444,
+    "pauseInsert": false,
     "value": 15.708393000000001
   },
   {
     "date": "2002-12-01T05:00:00.000Z",
-    "year": "2002",
+    "year": 2002,
     "month": 11,
     "heatDelta": 6.368651,
+    "pauseInsert": false,
     "value": 14.3756
   },
   {
     "date": "2003-03-01T05:00:00.000Z",
-    "year": "2003",
+    "year": 2003,
     "month": 2,
     "heatDelta": 8.746294,
+    "pauseInsert": false,
     "value": 16.753243
   },
   {
     "date": "2003-06-01T04:00:00.000Z",
-    "year": "2003",
+    "year": 2003,
     "month": 5,
     "heatDelta": 9.989262,
+    "pauseInsert": false,
     "value": 17.996211000000002
   },
   {
     "date": "2003-09-01T04:00:00.000Z",
-    "year": "2003",
+    "year": 2003,
     "month": 8,
     "heatDelta": 9.416777,
+    "pauseInsert": false,
     "value": 17.423726000000002
   },
   {
     "date": "2003-12-01T05:00:00.000Z",
-    "year": "2003",
+    "year": 2003,
     "month": 11,
     "heatDelta": 11.65459,
+    "pauseInsert": false,
     "value": 19.661539
   },
   {
     "date": "2004-03-01T05:00:00.000Z",
-    "year": "2004",
+    "year": 2004,
     "month": 2,
     "heatDelta": 11.021722,
+    "pauseInsert": false,
     "value": 19.028671000000003
   },
   {
     "date": "2004-06-01T04:00:00.000Z",
-    "year": "2004",
+    "year": 2004,
     "month": 5,
     "heatDelta": 9.882789,
+    "pauseInsert": false,
     "value": 17.889738
   },
   {
     "date": "2004-09-01T04:00:00.000Z",
-    "year": "2004",
+    "year": 2004,
     "month": 8,
     "heatDelta": 9.770217,
+    "pauseInsert": false,
     "value": 17.777166
   },
   {
     "date": "2004-12-01T05:00:00.000Z",
-    "year": "2004",
+    "year": 2004,
     "month": 11,
     "heatDelta": 10.286994,
+    "pauseInsert": false,
     "value": 18.293943
   },
   {
     "date": "2005-03-01T05:00:00.000Z",
-    "year": "2005",
+    "year": 2005,
     "month": 2,
     "heatDelta": 8.052857,
+    "pauseInsert": false,
     "value": 16.059806000000002
   },
   {
     "date": "2005-06-01T04:00:00.000Z",
-    "year": "2005",
+    "year": 2005,
     "month": 5,
     "heatDelta": 8.463406,
+    "pauseInsert": false,
     "value": 16.470355
   },
   {
     "date": "2005-09-01T04:00:00.000Z",
-    "year": "2005",
+    "year": 2005,
     "month": 8,
     "heatDelta": 7.849959,
+    "pauseInsert": false,
     "value": 15.856908
   },
   {
     "date": "2005-12-01T05:00:00.000Z",
-    "year": "2005",
+    "year": 2005,
     "month": 11,
     "heatDelta": 9.281116,
+    "pauseInsert": false,
     "value": 17.288065000000003
   },
   {
     "date": "2006-03-01T05:00:00.000Z",
-    "year": "2006",
+    "year": 2006,
     "month": 2,
     "heatDelta": 10.343987,
+    "pauseInsert": false,
     "value": 18.350936
   },
   {
     "date": "2006-06-01T04:00:00.000Z",
-    "year": "2006",
+    "year": 2006,
     "month": 5,
     "heatDelta": 9.907466,
+    "pauseInsert": false,
     "value": 17.914414999999998
   },
   {
     "date": "2006-09-01T04:00:00.000Z",
-    "year": "2006",
+    "year": 2006,
     "month": 8,
     "heatDelta": 10.797616,
+    "pauseInsert": false,
     "value": 18.804565
   },
   {
     "date": "2006-12-01T05:00:00.000Z",
-    "year": "2006",
+    "year": 2006,
     "month": 11,
     "heatDelta": 10.671572,
+    "pauseInsert": false,
     "value": 18.678521
   },
   {
     "date": "2007-03-01T05:00:00.000Z",
-    "year": "2007",
+    "year": 2007,
     "month": 2,
     "heatDelta": 9.896998,
+    "pauseInsert": false,
     "value": 17.903947000000002
   },
   {
     "date": "2007-06-01T04:00:00.000Z",
-    "year": "2007",
+    "year": 2007,
     "month": 5,
     "heatDelta": 8.81155,
+    "pauseInsert": false,
     "value": 16.818499000000003
   },
   {
     "date": "2007-09-01T04:00:00.000Z",
-    "year": "2007",
+    "year": 2007,
     "month": 8,
     "heatDelta": 9.61194,
+    "pauseInsert": false,
     "value": 17.618889000000003
   },
   {
     "date": "2007-12-01T05:00:00.000Z",
-    "year": "2007",
+    "year": 2007,
     "month": 11,
     "heatDelta": 9.592806,
+    "pauseInsert": false,
     "value": 17.599755000000002
   },
   {
     "date": "2008-03-01T05:00:00.000Z",
-    "year": "2008",
+    "year": 2008,
     "month": 2,
     "heatDelta": 10.786727,
+    "pauseInsert": false,
     "value": 18.793676
   },
   {
     "date": "2008-06-01T04:00:00.000Z",
-    "year": "2008",
+    "year": 2008,
     "month": 5,
     "heatDelta": 10.336976,
+    "pauseInsert": false,
     "value": 18.343925
   },
   {
     "date": "2008-09-01T04:00:00.000Z",
-    "year": "2008",
+    "year": 2008,
     "month": 8,
     "heatDelta": 10.391797,
+    "pauseInsert": false,
     "value": 18.398746000000003
   },
   {
     "date": "2008-12-01T05:00:00.000Z",
-    "year": "2008",
+    "year": 2008,
     "month": 11,
     "heatDelta": 8.693175,
+    "pauseInsert": false,
     "value": 16.700124000000002
   },
   {
     "date": "2009-03-01T05:00:00.000Z",
-    "year": "2009",
+    "year": 2009,
     "month": 2,
     "heatDelta": 10.176744,
+    "pauseInsert": false,
     "value": 18.183692999999998
   },
   {
     "date": "2009-06-01T04:00:00.000Z",
-    "year": "2009",
+    "year": 2009,
     "month": 5,
     "heatDelta": 9.101278,
+    "pauseInsert": false,
     "value": 17.108227
   },
   {
     "date": "2009-09-01T04:00:00.000Z",
-    "year": "2009",
+    "year": 2009,
     "month": 8,
     "heatDelta": 10.603387,
+    "pauseInsert": false,
     "value": 18.610336
   },
   {
     "date": "2009-12-01T05:00:00.000Z",
-    "year": "2009",
+    "year": 2009,
     "month": 11,
     "heatDelta": 10.623396,
+    "pauseInsert": false,
     "value": 18.630345
   },
   {
     "date": "2010-03-01T05:00:00.000Z",
-    "year": "2010",
+    "year": 2010,
     "month": 2,
     "heatDelta": 11.198472,
+    "pauseInsert": true,
     "value": 19.205421
   },
   {
     "date": "2010-06-01T04:00:00.000Z",
-    "year": "2010",
+    "year": 2010,
     "month": 5,
     "heatDelta": 9.614333,
+    "pauseInsert": false,
     "value": 17.621282
   },
   {
     "date": "2010-09-01T04:00:00.000Z",
-    "year": "2010",
+    "year": 2010,
     "month": 8,
     "heatDelta": 9.911397,
+    "pauseInsert": false,
     "value": 17.918346
   },
   {
     "date": "2010-12-01T05:00:00.000Z",
-    "year": "2010",
+    "year": 2010,
     "month": 11,
     "heatDelta": 10.745736,
+    "pauseInsert": false,
     "value": 18.752685
   },
   {
     "date": "2011-03-01T05:00:00.000Z",
-    "year": "2011",
+    "year": 2011,
     "month": 2,
     "heatDelta": 10.729161,
+    "pauseInsert": false,
     "value": 18.73611
   },
   {
     "date": "2011-06-01T04:00:00.000Z",
-    "year": "2011",
+    "year": 2011,
     "month": 5,
     "heatDelta": 10.042295,
+    "pauseInsert": false,
     "value": 18.049244
   },
   {
     "date": "2011-09-01T04:00:00.000Z",
-    "year": "2011",
+    "year": 2011,
     "month": 8,
     "heatDelta": 12.127405,
+    "pauseInsert": false,
     "value": 20.134354000000002
   },
   {
     "date": "2011-12-01T05:00:00.000Z",
-    "year": "2011",
+    "year": 2011,
     "month": 11,
     "heatDelta": 10.578467,
+    "pauseInsert": false,
     "value": 18.585416000000002
   },
   {
     "date": "2012-03-01T05:00:00.000Z",
-    "year": "2012",
+    "year": 2012,
     "month": 2,
     "heatDelta": 11.747399,
+    "pauseInsert": false,
     "value": 19.754348
   },
   {
     "date": "2012-06-01T04:00:00.000Z",
-    "year": "2012",
+    "year": 2012,
     "month": 5,
     "heatDelta": 10.098619,
+    "pauseInsert": false,
     "value": 18.105567999999998
   },
   {
     "date": "2012-09-01T04:00:00.000Z",
-    "year": "2012",
+    "year": 2012,
     "month": 8,
     "heatDelta": 10.641594,
+    "pauseInsert": false,
     "value": 18.648543
   },
   {
     "date": "2012-12-01T05:00:00.000Z",
-    "year": "2012",
+    "year": 2012,
     "month": 11,
     "heatDelta": 11.275383,
+    "pauseInsert": false,
     "value": 19.282332
   },
   {
     "date": "2013-03-01T05:00:00.000Z",
-    "year": "2013",
+    "year": 2013,
     "month": 2,
     "heatDelta": 13.534068,
+    "pauseInsert": false,
     "value": 21.541017
   },
   {
     "date": "2013-06-01T04:00:00.000Z",
-    "year": "2013",
+    "year": 2013,
     "month": 5,
     "heatDelta": 12.048531,
+    "pauseInsert": false,
     "value": 20.055480000000003
   },
   {
     "date": "2013-09-01T04:00:00.000Z",
-    "year": "2013",
+    "year": 2013,
     "month": 8,
     "heatDelta": 11.164961,
+    "pauseInsert": false,
     "value": 19.17191
   },
   {
     "date": "2013-12-01T05:00:00.000Z",
-    "year": "2013",
+    "year": 2013,
     "month": 11,
     "heatDelta": 13.65546,
+    "pauseInsert": false,
     "value": 21.662409
   },
   {
     "date": "2014-03-01T05:00:00.000Z",
-    "year": "2014",
+    "year": 2014,
     "month": 2,
     "heatDelta": 14.243009,
+    "pauseInsert": false,
     "value": 22.249958
   },
   {
     "date": "2014-06-01T04:00:00.000Z",
-    "year": "2014",
+    "year": 2014,
     "month": 5,
     "heatDelta": 13.165339,
+    "pauseInsert": false,
     "value": 21.172288
   },
   {
     "date": "2014-09-01T04:00:00.000Z",
-    "year": "2014",
+    "year": 2014,
     "month": 8,
     "heatDelta": 11.987585,
+    "pauseInsert": false,
     "value": 19.994534
   },
   {
     "date": "2014-12-01T05:00:00.000Z",
-    "year": "2014",
+    "year": 2014,
     "month": 11,
     "heatDelta": 13.646789,
+    "pauseInsert": false,
     "value": 21.653738
   },
   {
     "date": "2015-03-01T05:00:00.000Z",
-    "year": "2015",
+    "year": 2015,
     "month": 2,
     "heatDelta": 15.84637,
+    "pauseInsert": false,
     "value": 23.853319
   },
   {
     "date": "2015-06-01T04:00:00.000Z",
-    "year": "2015",
+    "year": 2015,
     "month": 5,
     "heatDelta": 14.841905,
+    "pauseInsert": false,
     "value": 22.848854000000003
   },
   {
     "date": "2015-09-01T04:00:00.000Z",
-    "year": "2015",
+    "year": 2015,
     "month": 8,
     "heatDelta": 14.64152,
+    "pauseInsert": false,
     "value": 22.648469
   },
   {
     "date": "2015-12-01T05:00:00.000Z",
-    "year": "2015",
+    "year": 2015,
     "month": 11,
     "heatDelta": 15.156898,
+    "pauseInsert": false,
     "value": 23.163847
   },
   {
     "date": "2016-03-01T05:00:00.000Z",
-    "year": "2016",
+    "year": 2016,
     "month": 2,
     "heatDelta": 15.45853,
+    "pauseInsert": false,
     "value": 23.465479000000002
   },
   {
     "date": "2016-06-01T04:00:00.000Z",
-    "year": "2016",
+    "year": 2016,
     "month": 5,
     "heatDelta": 13.076438,
+    "pauseInsert": false,
     "value": 21.083387000000002
   },
   {
     "date": "2016-09-01T04:00:00.000Z",
-    "year": "2016",
+    "year": 2016,
     "month": 8,
     "heatDelta": 13.078745,
+    "pauseInsert": false,
     "value": 21.085694
   },
   {
     "date": "2016-12-01T05:00:00.000Z",
-    "year": "2016",
+    "year": 2016,
     "month": 11,
     "heatDelta": 14.275308,
+    "pauseInsert": false,
     "value": 22.282257
   },
   {
     "date": "2017-03-01T05:00:00.000Z",
-    "year": "2017",
+    "year": 2017,
     "month": 2,
     "heatDelta": 16.024471,
+    "pauseInsert": false,
     "value": 24.031419999999997
   },
   {
     "date": "2017-06-01T04:00:00.000Z",
-    "year": "2017",
+    "year": 2017,
     "month": 5,
     "heatDelta": 16.228298,
+    "pauseInsert": false,
     "value": 24.235247
   },
   {
     "date": "2017-09-01T04:00:00.000Z",
-    "year": "2017",
+    "year": 2017,
     "month": 8,
     "heatDelta": 14.849831,
+    "pauseInsert": false,
     "value": 22.85678
   },
   {
     "date": "2017-12-01T05:00:00.000Z",
-    "year": "2017",
+    "year": 2017,
     "month": 11,
     "heatDelta": 16.408493,
+    "pauseInsert": false,
     "value": 24.415442
   },
   {
     "date": "2018-03-01T05:00:00.000Z",
-    "year": "2018",
+    "year": 2018,
     "month": 2,
     "heatDelta": 17.503874,
+    "pauseInsert": false,
     "value": 25.510823000000002
   },
   {
     "date": "2018-06-01T04:00:00.000Z",
-    "year": "2018",
+    "year": 2018,
     "month": 5,
     "heatDelta": 15.545946,
+    "pauseInsert": false,
     "value": 23.552895
   },
   {
     "date": "2018-09-01T04:00:00.000Z",
-    "year": "2018",
+    "year": 2018,
     "month": 8,
     "heatDelta": 16.040094,
+    "pauseInsert": false,
     "value": 24.047043000000002
   },
   {
     "date": "2018-12-01T05:00:00.000Z",
-    "year": "2018",
+    "year": 2018,
     "month": 11,
     "heatDelta": 17.797443,
+    "pauseInsert": false,
     "value": 25.804392
   },
   {
     "date": "2019-03-01T05:00:00.000Z",
-    "year": "2019",
+    "year": 2019,
     "month": 2,
     "heatDelta": 18.26557,
+    "pauseInsert": false,
     "value": 26.272519000000003
   },
   {
     "date": "2019-06-01T04:00:00.000Z",
-    "year": "2019",
+    "year": 2019,
     "month": 5,
     "heatDelta": 17.515776,
+    "pauseInsert": false,
     "value": 25.522725
   },
   {
     "date": "2019-09-01T04:00:00.000Z",
-    "year": "2019",
+    "year": 2019,
     "month": 8,
     "heatDelta": 17.219067,
+    "pauseInsert": false,
     "value": 25.226016
   },
   {
     "date": "2019-12-01T05:00:00.000Z",
-    "year": "2019",
+    "year": 2019,
     "month": 11,
     "heatDelta": 17.901997,
+    "pauseInsert": false,
     "value": 25.908946
   },
   {
     "date": "2020-03-01T05:00:00.000Z",
-    "year": "2020",
+    "year": 2020,
     "month": 2,
     "heatDelta": 19.231215,
+    "pauseInsert": true,
     "value": 27.238163999999998
   },
   {
     "date": "2020-06-01T04:00:00.000Z",
-    "year": "2020",
+    "year": 2020,
     "month": 5,
     "heatDelta": 17.286221,
+    "pauseInsert": false,
     "value": 25.293170000000003
   },
   {
     "date": "2020-09-01T04:00:00.000Z",
-    "year": "2020",
+    "year": 2020,
     "month": 8,
     "heatDelta": 15.914822,
+    "pauseInsert": false,
     "value": 23.921771
   },
   {
     "date": "2020-12-01T05:00:00.000Z",
-    "year": "2020",
+    "year": 2020,
     "month": 11,
     "heatDelta": 17.663042,
+    "pauseInsert": false,
     "value": 25.669991000000003
   },
   {
     "date": "2021-03-01T05:00:00.000Z",
-    "year": "2021",
+    "year": 2021,
     "month": 2,
     "heatDelta": 18.986416,
+    "pauseInsert": false,
     "value": 26.993364999999997
   },
   {
     "date": "2021-06-01T04:00:00.000Z",
-    "year": "2021",
+    "year": 2021,
     "month": 5,
     "heatDelta": 18.136728,
+    "pauseInsert": false,
     "value": 26.143677000000004
   },
   {
     "date": "2021-09-01T04:00:00.000Z",
-    "year": "2021",
+    "year": 2021,
     "month": 8,
     "heatDelta": 18.155346,
+    "pauseInsert": false,
     "value": 26.162295
   },
   {
     "date": "2021-12-01T05:00:00.000Z",
-    "year": "2021",
+    "year": 2021,
     "month": 11,
     "heatDelta": 19.661541,
+    "pauseInsert": false,
     "value": 27.66849
   },
   {
     "date": "2022-03-01T05:00:00.000Z",
-    "year": "2022",
+    "year": 2022,
     "month": 2,
     "heatDelta": 20.059818,
+    "pauseInsert": false,
     "value": 28.066767
   },
   {
     "date": "2022-06-01T04:00:00.000Z",
-    "year": "2022",
+    "year": 2022,
     "month": 5,
     "heatDelta": 19.38064,
+    "pauseInsert": false,
     "value": 27.387589
   },
   {
     "date": "2022-09-01T04:00:00.000Z",
-    "year": "2022",
+    "year": 2022,
     "month": 8,
     "heatDelta": 18.949022,
+    "pauseInsert": false,
     "value": 26.955970999999998
   },
   {
     "date": "2022-12-01T05:00:00.000Z",
-    "year": "2022",
+    "year": 2022,
     "month": 11,
     "heatDelta": 20.35737,
+    "pauseInsert": false,
     "value": 28.364319000000002
   },
   {
     "date": "2023-03-01T05:00:00.000Z",
-    "year": "2023",
+    "year": 2023,
     "month": 2,
-    "heatDelta": 20.53422,
-    "value": 28.541169000000004
+    "heatDelta": 20.697466,
+    "pauseInsert": false,
+    "value": 28.704414999999997
   },
   {
     "date": "2023-06-01T04:00:00.000Z",
-    "year": "2023",
+    "year": 2023,
     "month": 5,
-    "heatDelta": 19.86902,
-    "value": 27.875968999999998
+    "heatDelta": 19.992622,
+    "pauseInsert": false,
+    "value": 27.999571000000003
   },
   {
     "date": "2023-09-01T04:00:00.000Z",
-    "year": "2023",
+    "year": 2023,
     "month": 8,
-    "heatDelta": 20.081532,
-    "value": 28.088481
+    "heatDelta": 20.342447,
+    "pauseInsert": false,
+    "value": 28.349396
   },
   {
     "date": "2023-12-01T05:00:00.000Z",
-    "year": "2023",
+    "year": 2023,
     "month": 11,
-    "heatDelta": 22.065022,
-    "value": 30.071970999999998
+    "heatDelta": 21.897306,
+    "pauseInsert": false,
+    "value": 29.904255
+  },
+  {
+    "date": "2024-03-01T05:00:00.000Z",
+    "year": 2024,
+    "month": 2,
+    "heatDelta": 21.961821,
+    "pauseInsert": false,
+    "value": 29.96877
+  },
+  {
+    "date": "2024-06-01T04:00:00.000Z",
+    "year": 2024,
+    "month": 5,
+    "heatDelta": 21.562622,
+    "pauseInsert": false,
+    "value": 29.569571000000003
+  },
+  {
+    "date": "2024-09-01T04:00:00.000Z",
+    "year": 2024,
+    "month": 8,
+    "heatDelta": 21.305883,
+    "pauseInsert": false,
+    "value": 29.312832
+  },
+  {
+    "date": "2024-12-01T05:00:00.000Z",
+    "year": 2024,
+    "month": 11,
+    "heatDelta": 21.045744,
+    "pauseInsert": false,
+    "value": 29.052692999999998
   }
 ]

@@ -33,12 +33,15 @@ fs.writeFileSync(
 
 function parseLine(line) {
   var values = line.split(',');
-  const [year, monthPart] = values[0].split('-');
+  let [year, monthPart] = values[0].split('-');
+  year = +year;
   // JS months are 0-based. NOAA months are 1-based.
   const month = +monthPart - 1;
   var date = new Date(year, month);
-  var heatDelta = +values[1];
-  return { date, year, month, heatDelta };
+  const heatDelta = +values[1];
+  // The month is the end of the three-month period. So, 2 (March — Jan is 0 and Feb. is 1) is the first period of the year.
+  const pauseInsert = year % 10 === 0 && month === 2;
+  return { date, year, month, heatDelta, pauseInsert };
 }
 
 function normalize(row) {
