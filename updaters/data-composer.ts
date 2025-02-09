@@ -1,7 +1,6 @@
 import { range } from 'd3-array';
 import { scalePow } from 'd3-scale';
 // import { scaleLinear } from 'd3-scale';
-import { easeExpIn, easeExpOut } from 'd3-ease';
 import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
@@ -12,8 +11,6 @@ const maxPitchCount = tonalityDiamondPitches.length;
 // const beginningLengthAsAProportion = 0.025;
 const minTickLength = 0.25;
 // const lastEventLengthFactor = 96;
-const durationScaleInOutInflection = 0.7;
-const durationFactor = 10;
 
 //const lowestRatio = tonalityDiamondPitches.reduce(
 //(lowest, current) => (lowest < current ? lowest : current),
@@ -38,7 +35,7 @@ export function DataComposer({
   seed,
   chordScaleExponent,
   chordSizeLengthExp,
-  totalTicks,
+  // totalTicks,
   shouldLoop,
   loopEndSeconds,
   adjustLoopForRate,
@@ -75,7 +72,7 @@ export function DataComposer({
 
   return { getScoreState };
 
-  function getScoreState(tickIndex): ScoreState {
+  function getScoreState(/*tickIndex*/): ScoreState {
     var sourceDatum = data[index];
 
     const tickLength = getTickLength(sourceDatum); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
@@ -83,7 +80,6 @@ export function DataComposer({
       events: [],
       tickIndex: index,
       tickLength,
-      durationTicks: getDurationTicks(tickIndex),
     };
 
     let chordPitchCount = 0;
@@ -203,23 +199,5 @@ export function DataComposer({
     }
 
     return tickLength;
-  }
-
-  function getDurationTicks(tickIndex) {
-    const proportion = tickIndex / totalTicks;
-    let eventSpecificDurationFactor;
-    if (proportion < durationScaleInOutInflection) {
-      eventSpecificDurationFactor = easeExpIn(
-        proportion / durationScaleInOutInflection
-      );
-    } else {
-      eventSpecificDurationFactor =
-        easeExpIn(1) +
-        easeExpOut(
-          (proportion - durationScaleInOutInflection) /
-            (1 - durationScaleInOutInflection)
-        );
-    }
-    return Math.max(1, eventSpecificDurationFactor * durationFactor);
   }
 }
