@@ -2,7 +2,7 @@
 - Visualize heat as speed
 - Cut reverb mix as time goes on?
 - Joule reference scale
-- Try higher trumpet again
+- Pause button
 
 Done:
 
@@ -23,6 +23,7 @@ Done:
 - Piano sample?
 - Turn down marimba or reduce reverb mix
 - Bring back long ending.
+- Try higher trumpet again
 
 Old:
 
