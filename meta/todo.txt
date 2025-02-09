@@ -1,7 +1,6 @@
 - Supplemental page that lets you hear what the different chords sound like.
 - Visualize heat as speed
 - Cut reverb mix as time goes on?
-- Bring back long ending.
 - Joule reference scale
 - Try higher trumpet again
 
@@ -23,6 +22,7 @@ Done:
 - Arbitrary transpose parts, not just low and high.
 - Piano sample?
 - Turn down marimba or reduce reverb mix
+- Bring back long ending.
 
 Old:
 

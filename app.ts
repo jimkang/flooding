@@ -68,6 +68,7 @@ async function followRoute({
   chordSizeLengthExp = 2,
   finalFadeOutLength = 16,
   constantTickLength = false,
+  fixedEndTickLength = 30,
   parts = [
     {
       sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav',
@@ -225,6 +226,7 @@ async function followRoute({
     loopEndSeconds: parts[0].sampleLoopEnd,
     adjustLoopForRate: true,
     constantTickLength,
+    fixedEndTickLength,
   });
   var mainGroupScoreStateObjects: ScoreState[] = preRunComposer({
     composer,

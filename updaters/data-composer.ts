@@ -35,12 +35,13 @@ export function DataComposer({
   seed,
   chordScaleExponent,
   chordSizeLengthExp,
-  // totalTicks,
+  totalTicks,
   shouldLoop,
   loopEndSeconds,
   adjustLoopForRate,
   arpeggiate = false,
   constantTickLength,
+  fixedEndTickLength,
   usePauses = true,
 }: {
   tempoFactor: number;
@@ -57,6 +58,7 @@ export function DataComposer({
   adjustLoopForRate?: boolean;
   arpeggiate?: boolean;
   constantTickLength?: boolean;
+  fixedEndTickLength?: number;
   usePauses?: boolean;
 }) {
   // Testing with equal length of data and piece length right now. Maybe enforce that?
@@ -72,10 +74,15 @@ export function DataComposer({
 
   return { getScoreState };
 
-  function getScoreState(/*tickIndex*/): ScoreState {
+  function getScoreState(tickIndex): ScoreState {
     var sourceDatum = data[index];
 
-    const tickLength = getTickLength(sourceDatum); //(arpeggiate ? chordPitchCount / 8 : 1) * getTickLength();
+    var tickLength = getTickLength(sourceDatum);
+
+    if (!isNaN(fixedEndTickLength) && tickIndex === totalTicks - 1) {
+      tickLength = fixedEndTickLength;
+    }
+
     var scoreState: ScoreState = {
       events: [],
       tickIndex: index,
@@ -132,7 +139,7 @@ export function DataComposer({
             : loopEndSeconds,
         };
       }
-      return {
+      var scoreEvent: ScoreEvent = {
         rate,
         delay: arpeggiate ? arrayIndex * (tickLength / pitches.length) : 0,
         absoluteLengthSeconds: arpeggiate
@@ -147,6 +154,10 @@ export function DataComposer({
         finite: true,
         meta: { sourceDatum },
       };
+      if (!isNaN(fixedEndTickLength) && tickIndex === totalTicks - 1) {
+        scoreEvent.absoluteLengthSeconds = fixedEndTickLength;
+      }
+      return scoreEvent;
     }
   }
 
@@ -177,24 +188,8 @@ export function DataComposer({
     //(0.8 + 0.4 * prob.roll(100)/100);
 
     tickLength *= tempoFactor;
-    // console.log('tempoFactor', tempoFactor, tickLength);
-    // Start slow, then get faster.
-    //const progress = index / data.length;
-    //var progressFactor;
-    ////if (progress > 0.05) {
-    ////progressFactor = 10 * Math.log10(4 * progress + 2.7) + 3;
-    //progressFactor = 5 * Math.pow(Math.exp(-4 * progress), 2) - 0;
-    ////} else {
-    //////progressFactor = 0.5 * Math.cos(2 * Math.PI - Math.PI) + 1;
-    ////progressFactor = 1;
-    ////}
-    //if (progress < beginningLengthAsAProportion) {
-    //  const factorBoost = (1 - progress / beginningLengthAsAProportion) * 10;
-    //  progressFactor += factorBoost;
 
-    //tickLength *= progressFactor;
     if (tickLength < minTickLength) {
-      //console.log('flooring', pastPitchCounts.length);
       tickLength = minTickLength;
     }
 
