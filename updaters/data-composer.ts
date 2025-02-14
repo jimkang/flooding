@@ -164,9 +164,9 @@ export function DataComposer({
   function getPans(chordPitchCount: number): number[] {
     var pans = [0];
     if (chordPitchCount > 1) {
-      const maxWidth = (chordPitchCount / maxPitchCount) * 0.7 + 0.3;
-      const leftmost = -maxWidth;
-      const panIncrement = (2 * maxWidth) / (chordPitchCount - 1);
+      const maxWidth = 0.5 + 1.5 * (chordPitchCount / maxPitchCount);
+      const panIncrement = maxWidth / (chordPitchCount + 1);
+      const leftmost = -1.0 + (2.0 - maxWidth) / 2;
       pans = range(chordPitchCount).map((i) => leftmost + i * panIncrement);
       // Uncomment to check to see if panning is working.
       //pans = range(chordPitchCount).map(i => (leftmost + i * panIncrement) > 0 ? 1 : -1);

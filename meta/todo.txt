@@ -3,6 +3,7 @@
 - Cut reverb mix as time goes on?
 - Joule reference scale
 - Pause button
+- Arpeggiate high trumpet
 
 Done:
 
