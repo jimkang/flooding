@@ -92,7 +92,7 @@ async function followRoute({
       transposeProportion: 0.5,
       transposeFreqFactor: 1,
       pan: 0.2,
-      ampFactor: 2.5,
+      ampFactor: 2,
       envelopeCurve: flatADSR, // [0, 0.1, 0.2, 0.5, 1, 1],
       fadeLengthFactor: 0.05,
       slideMode: false,
