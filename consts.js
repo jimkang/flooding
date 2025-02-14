@@ -40,6 +40,7 @@ export var sampleFilenames = [
   'PianoSoftRoll-D2.wav',
   '205822__xserra__organ-c3-fade-out.wav',
   'organ-d2.wav',
+  'vibraphone-mellower-d3.wav',
 ];
 export var defaultADSRCurve = [
   0, 0.5, 1, 1, 1, 1, 0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0,
