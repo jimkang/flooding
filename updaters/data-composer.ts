@@ -141,6 +141,7 @@ export function DataComposer({
       }
       var scoreEvent: ScoreEvent = {
         rate,
+        // TODO: Support arpeggioRate.
         delay: arpeggiate ? arrayIndex * (tickLength / pitches.length) : 0,
         absoluteLengthSeconds: arpeggiate
           ? (tickLength / pitches.length) * 1.1

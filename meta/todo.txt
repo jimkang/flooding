@@ -3,10 +3,10 @@
 - Cut reverb mix as time goes on?
 - Joule reference scale
 - Pause button
-- Arpeggiate high trumpet
 
 Done:
 
+- Arpeggiate high trumpet - Tried, didn't matter.
 - Pauses between decades. (Used small pause; long pauses lose momentum.)
 - More end intensity might be nice. Maybe fade the pipe organ a bit there?
 - More trumpet thickness somehow.

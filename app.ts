@@ -115,15 +115,18 @@ async function followRoute({
     },
     {
       sample: 'trumpet-D2-eqd.wav',
+      // impulse: 'spacey-impulse.wav',
       loop: true,
       sampleLoopEnd: 2,
       transposeProportion: 0.8,
       transposeFreqFactor: 1.0,
       pan: -0.2,
-      ampFactor: 0.18,
+      ampFactor: 0.2,
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
+      arpeggiate: false,
+      arpeggioRate: 0.125,
       // mute: true,
       // solo: true,
     },
@@ -155,6 +158,9 @@ async function followRoute({
       fadeLengthFactor: 0.1,
       slideMode: false,
       // mute: true,
+      arpeggiate: false,
+      arpeggioRate: 0.25,
+      // solo: true,
     },
     {
       sample: 'chorus-male-d3-PB-loop.wav',
@@ -169,6 +175,7 @@ async function followRoute({
       fadeLengthFactor: 0.1,
       slideMode: false,
       mute: false,
+      // solo: true,
     },
     // {
     //   sample: 'celesta-g4-soft-PB.wav',
@@ -189,9 +196,9 @@ async function followRoute({
       loop: true,
       // impulse: 'echoey-impulse.wav',
       transposeProportion: 0.5,
-      transposeFreqFactor: 9 / 8 / 2,
+      transposeFreqFactor: 9 / 8,
       pan: 0.0,
-      ampFactor: 2.5,
+      ampFactor: 1,
       envelopeCurve: defaultADSRCurve,
       getEnvelopeLengthForScoreEvent(_scoreEvent, tickLength) {
         if (tickLength < 1.0) {
@@ -201,7 +208,6 @@ async function followRoute({
       },
       fadeLengthFactor: 0.1,
       slideMode: false,
-      mute: false,
     },
   ],
 }) {
@@ -284,6 +290,8 @@ async function followRoute({
       sampleLoopStart: 0,
       sampleLoopEnd: +part.sampleLoopEnd,
       panDelta: part.pan,
+      arpeggiate: part.arpeggiate,
+      arpeggioRate: part.arpeggioRate,
     })
   );
 

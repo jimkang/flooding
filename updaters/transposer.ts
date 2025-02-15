@@ -11,6 +11,8 @@ export function Transposer({
   sampleLoopStart,
   sampleLoopEnd,
   panDelta = 0,
+  arpeggiate = false,
+  arpeggioRate = 1.0,
 }: {
   seed: string;
   freqFactor: number;
@@ -19,6 +21,8 @@ export function Transposer({
   sampleLoopStart?: number;
   sampleLoopEnd?: number;
   panDelta: number;
+  arpeggiate?: boolean;
+  arpeggioRate: number;
 }) {
   var random = seedrandom(seed);
   var prob = Probable({ random });
@@ -38,7 +42,11 @@ export function Transposer({
         .map(transposeEvent),
     };
 
-    function transposeEvent(scoreEvent: ScoreEvent): ScoreEvent {
+    function transposeEvent(
+      scoreEvent: ScoreEvent,
+      arrayIndex: number,
+      events: ScoreEvent[]
+    ): ScoreEvent {
       var newEvent = Object.assign({}, scoreEvent);
       if (shouldLoop && !isNaN(sampleLoopStart) && !isNaN(sampleLoopEnd)) {
         newEvent.loop = {
@@ -57,6 +65,15 @@ export function Transposer({
         newPan = Math.min(newPan, 1);
       }
       newEvent.pan = newPan;
+
+      if (arpeggiate) {
+        newEvent.delay =
+          arrayIndex * (refState.tickLength / events.length) * arpeggioRate;
+        if (arpeggioRate >= 0.9) {
+          newEvent.absoluteLengthSeconds =
+            (refState.tickLength / events.length) * 1.1;
+        }
+      }
       return newEvent;
     }
   }
