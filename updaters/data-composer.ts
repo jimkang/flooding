@@ -5,7 +5,7 @@ import { createProbable as Probable } from 'probable';
 import seedrandom from 'seedrandom';
 import { ScoreState, ScoreEvent } from 'synthskel/types';
 import { SubjectDatum } from '../types';
-import { tonalityDiamondPitches } from '../consts';
+import { tonalityDiamondPitches, secondHalfFadeOutCurve } from '../consts';
 
 const maxPitchCount = tonalityDiamondPitches.length;
 // const beginningLengthAsAProportion = 0.025;
@@ -154,6 +154,8 @@ export function DataComposer({
         reverb: true,
         finite: true,
         meta: { sourceDatum },
+        envelopeCurve:
+          tickIndex === data.length - 1 ? secondHalfFadeOutCurve : undefined,
       };
       if (!isNaN(fixedEndTickLength) && tickIndex === totalTicks - 1) {
         scoreEvent.absoluteLengthSeconds = fixedEndTickLength;

@@ -75,7 +75,6 @@ export function ScoreDirector({
     );
     checkExitingPlayEvents(exitingPlayEvents);
     removePlayEventsFromList(exitingPlayEvents, playEvents);
-    var fadeStartOffset = 0;
     var fadeLength = state.tickLength;
     if (fadeLength > 1) {
       fadeLength *= fadeLengthFactor;
@@ -84,7 +83,7 @@ export function ScoreDirector({
       // Stop everything right now.
       fadeLength = state.tickLength;
     }
-    exitingPlayEvents.forEach(curry(fadeToDeath)(fadeStartOffset, fadeLength));
+    exitingPlayEvents.forEach(curry(fadeToDeath)(0, fadeLength));
 
     var newScoreEvents = scoreEventJoiner.enter();
     goodlog(directorName, 'newScoreEvents', newScoreEvents.map(idScoreEvent));
@@ -98,7 +97,8 @@ export function ScoreDirector({
         ctx,
         tickLength: state.tickLength,
         slideMode,
-        envelopeCurve,
+        // Favor any specific envelopeCurve provided by the score.
+        envelopeCurve: scoreEvt.envelopeCurve || envelopeCurve,
         ampFactor,
         getEnvelopeLengthForScoreEvent:
           getEnvelopeLengthForScoreEvent || defaultGetEnvelopeLength,

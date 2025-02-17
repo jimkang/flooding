@@ -46,6 +46,7 @@ export var defaultADSRCurve = [
   0, 0.5, 1, 1, 1, 1, 0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0,
 ];
 export var flatADSR = [1.0, 1.0];
+export var secondHalfFadeOutCurve = [1, 1, 1, 1, 1, 0.8, 0.5, 0.25, 0.1, 0];
 
 function compareDenomSizeAsc(a, b) {
   if (getDenom(a) < getDenom(b)) {
