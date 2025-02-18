@@ -301,11 +301,17 @@ function fadeToDeath(
     }
 
     // TODO: Something else should manage canceling other scheduled events.
-    playEvent.nodes.forEach((node) => node.cancelScheduledRamps());
-    setTimeout(
-      () => envelopeNode.linearRampTo(fadeSeconds, 0),
-      fadeStartOffset * 1000
-    );
+
+    // If there is an explicit envelopeCurve, avoid fighting it with the fade.
+    if (!playEvent.scoreEvent.envelopeCurve) {
+      playEvent.nodes.forEach((node) => node.cancelScheduledRamps());
+      setTimeout(
+        () => envelopeNode.linearRampTo(fadeSeconds, 0),
+        fadeStartOffset * 1000
+      );
+    } else {
+      console.log('Not cancelling ramps or fading for', playEvent);
+    }
   }
   setTimeout(
     () => decommisionNodes(playEvent),
