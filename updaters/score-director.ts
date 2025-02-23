@@ -57,6 +57,7 @@ export function ScoreDirector({
     if (mute) {
       return;
     }
+
     scoreEventJoiner.update(state.events);
     goodlog(
       directorName,

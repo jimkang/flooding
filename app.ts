@@ -14,6 +14,7 @@ import {
   sampleFilenames,
   defaultADSRCurve,
   flatADSR,
+  secondHalfFadeOutCurve,
   tonalityDiamondPitches,
 } from './consts';
 import { preRunComposer } from './updaters/pre-run-composer';
@@ -28,9 +29,9 @@ import { MainOut } from 'synthskel/synths/main-out';
 import { Reverb } from 'synthskel/synths/synth-node';
 import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
-import { enableGoodlog, goodlog } from './tasks/goodlog';
+import { /* enableGoodlog,*/ goodlog } from './tasks/goodlog';
 
-enableGoodlog();
+// enableGoodlog();
 
 var randomId = RandomId();
 var routeState;
@@ -405,6 +406,17 @@ async function followRoute({
       scoreDirectors[i].play(
         Object.assign({ tickLengthSeconds: tickLength }, groupScoreStates[i])
       );
+
+      // Fading everything out is more conveniently done outside of the
+      // scoreDirectors because some directors do not have an outNode with a gain on it.
+      if (ticks === totalTicks - 1) {
+        mainOutNode.cancelScheduledRamps();
+        mainOutNode.node.gain.setValueCurveAtTime(
+          secondHalfFadeOutCurve,
+          ctx.currentTime,
+          tickLength
+        );
+      }
     }
 
     renderVisualizationForTick(mainGroupScoreState);

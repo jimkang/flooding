@@ -87,6 +87,8 @@ export function DataComposer({
       events: [],
       tickIndex: index,
       tickLength,
+      mainEnvelopeCurve:
+        tickIndex === data.length - 1 ? secondHalfFadeOutCurve : undefined,
     };
 
     let chordPitchCount = 0;
