@@ -20,7 +20,10 @@ import {
 import { preRunComposer } from './updaters/pre-run-composer';
 import { RenderTimeSeries } from './renderers/render-time-series';
 import { renderEventDirection } from './renderers/render-event-direction';
-import { renderVisualizationForTick } from './renderers/visualization';
+import {
+  renderVisualizationForTick,
+  renderShader,
+} from './renderers/visualization';
 // import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
 import { ScoreState } from 'synthskel/types';
@@ -420,6 +423,7 @@ async function followRoute({
     }
 
     renderVisualizationForTick(mainGroupScoreState);
+    renderShader();
   }
 
   function onEndOfTicks() {

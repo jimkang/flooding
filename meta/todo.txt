@@ -3,6 +3,8 @@
 - Cut reverb mix as time goes on?
 - Joule reference scale
 - Pause button
+- At tempo factor 20, there is a skip around tick 112.
+- Version that is just a gradual walk up the diamond.
 
 Done:
 
