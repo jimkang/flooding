@@ -423,7 +423,12 @@ async function followRoute({
     }
 
     renderVisualizationForTick(mainGroupScoreState);
-    renderShader();
+    renderShader({
+      density:
+        mainGroupScoreState.meta.chordPitchCount /
+        tonalityDiamondPitches.length,
+      doneness: ticks / mainGroupScoreStateObjects.length,
+    });
   }
 
   function onEndOfTicks() {

@@ -9,6 +9,9 @@ var levelLabel = select('.ohc-level');
 var gl;
 var program;
 var glBuffer;
+var donenessLocation;
+var densityLocation;
+var timeLocation;
 
 export function renderVisualizationForTick(scoreState: ScoreState) {
   var monthDatum = scoreState?.meta?.sourceDatum;
@@ -23,15 +26,27 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
   }
 }
 
-export function renderShader() {
+export function renderShader({ density, doneness }) {
   if (!gl) {
-    gl = getRenderingContext();
+    setUpShaders();
+    window.requestAnimationFrame(renderWithUpdatedTime);
   }
+
+  gl.uniform1f(donenessLocation, doneness);
+  gl.uniform1f(densityLocation, density);
+
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+}
+
+function setUpShaders() {
+  gl = getRenderingContext();
 
   var vertexShader = createShader(vertexShaderSrc, gl.VERTEX_SHADER);
   var fragmentShader = createShader(fragmentShaderSrc, gl.FRAGMENT_SHADER);
 
   program = gl.createProgram();
+
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
   gl.linkProgram(program);
@@ -52,10 +67,11 @@ export function renderShader() {
   initializeGlAttributes();
 
   gl.useProgram(program);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-  cleanup();
+  donenessLocation = gl.getUniformLocation(program, 'u_doneness');
+  densityLocation = gl.getUniformLocation(program, 'u_density');
+  timeLocation = gl.getUniformLocation(program, 'u_time');
+  // cleanup();
 }
 
 function initializeGlAttributes() {
@@ -106,4 +122,10 @@ function createShader(src, shaderType) {
   gl.shaderSource(shader, src);
   gl.compileShader(shader);
   return shader;
+}
+
+function renderWithUpdatedTime(timeStamp) {
+  gl.uniform1f(timeLocation, timeStamp / 1000);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  requestAnimationFrame(renderWithUpdatedTime);
 }
