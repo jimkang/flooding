@@ -21,7 +21,7 @@ function defaultIdScoreEvent(scoreEvent: ScoreEvent) {
 export function ScoreDirector({
   ctx,
   sampleBuffer,
-  outNode,
+  reverbOutMixer,
   ampFactor = 1.0,
   fadeLengthFactor = 2.0,
   envelopeLengthFactor = 1.2,
@@ -107,17 +107,14 @@ export function ScoreDirector({
         // shape: 'triangle',
       })
     );
+
+    // This is where we join new play events to existing play events.
     newPlayEvents.forEach(curry(appendIfNotYetInList)(playEvents));
-    newPlayEvents.forEach(
-      (playEvent) => connectLastToDest(playEvent.nodes)
-      //chain => chain?[chain.length - 1]?.connect({ audioNode: ctx.destination }
-    );
+    newPlayEvents.forEach((playEvent) => connectLastToDest(playEvent.nodes));
 
     const baseStartTime = ctx.currentTime;
     // TODO: parameterize start and end times.
-    newPlayEvents.forEach((playEvent) =>
-      playPlayEvent({ playEvent, startTime: baseStartTime })
-    );
+    newPlayEvents.forEach(playEventWithBaseTime);
 
     goodlog(
       directorName,
@@ -184,13 +181,17 @@ export function ScoreDirector({
       }
       return index;
     }
+
+    function playEventWithBaseTime(playEvent) {
+      playPlayEvent({ playEvent, startTime: baseStartTime });
+    }
   }
 
   function connectLastToDest(chain: SynthNode[]) {
     // TODO: Connect to limiter instead.
     if (chain.length > 0) {
       chain[chain.length - 1].connect({
-        synthNode: outNode,
+        synthNode: reverbOutMixer.inNode,
         audioNode: null,
       });
     }
@@ -271,11 +272,10 @@ export function ScoreDirector({
       pannerNode.params.pan = playEvent.scoreEvent.pan;
       pannerNode.syncToParams();
     }
-    //var envelopeNode: Envelope = playEvent.nodes.find(node => node instanceof Envelope) as Envelope;
-    //if (envelopeNode) {
-    //// TODO: Use current tick size to determine ramp time.
-    //envelopeNode.linearRampTo(0.2, playEvent.scoreEvent.peakGain);
-    //}
+
+    if (!isNaN(playEvent.scoreEvent.reverbMix)) {
+      reverbOutMixer.setWetDryMix(playEvent.scoreEvent.reverbMix);
+    }
   }
 }
 

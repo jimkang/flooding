@@ -141,6 +141,7 @@ export function DataComposer({
             : loopEndSeconds,
         };
       }
+      const chordProportion = chordPitchCount / maxPitchCount;
       var scoreEvent: ScoreEvent = {
         rate,
         // TODO: Support arpeggioRate.
@@ -154,6 +155,10 @@ export function DataComposer({
         // Undefined loopEndSeconds tells the director to play to the end of the sample.
         loop,
         reverb: true,
+        reverbMix: Math.min(
+          1,
+          Math.pow(0.9 - chordProportion, 2 * chordProportion)
+        ),
         finite: true,
         meta: { sourceDatum },
         envelopeCurve:

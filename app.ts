@@ -29,10 +29,10 @@ import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
 import { ScoreState } from 'synthskel/types';
 // import { SubjectDatum } from './types';
 import { MainOut } from 'synthskel/synths/main-out';
-import { Reverb } from 'synthskel/synths/synth-node';
 import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
 import { /* enableGoodlog,*/ goodlog } from './tasks/goodlog';
+import { ReverbMixer } from './tasks/reverb-mixer';
 
 // enableGoodlog();
 
@@ -324,16 +324,17 @@ async function followRoute({
 
   // TODO: Test non-locally.
   function onComplete({ buffersByFilename }) {
-    var partOuts = [];
+    var partOutMixers = [];
 
     for (let i = 0; i < parts.length; ++i) {
-      let partOut = mainOutNode;
       const buffer = buffersByFilename[parts[i].impulse];
-      if (buffer) {
-        partOut = new Reverb(ctx, { buffer });
-        partOut.connect({ synthNode: mainOutNode, audioNode: null });
-      }
-      partOuts.push(partOut);
+      let partOutMixer = ReverbMixer(ctx, {
+        impulseBuffer: buffer,
+        wetGain: 1,
+        dryGain: 0,
+      });
+      partOutMixer.outNode.connect({ synthNode: mainOutNode, audioNode: null });
+      partOutMixers.push(partOutMixer);
     }
 
     var solosExist = parts.some((part) => part.solo);
@@ -343,7 +344,7 @@ async function followRoute({
         directorName: part.sample + ' director',
         ctx,
         sampleBuffer: buffersByFilename[part.sample],
-        outNode: partOuts[i],
+        reverbOutMixer: partOutMixers[i],
         ampFactor: part.ampFactor,
         // constantEnvelopeLength: 1.0,
         envelopeCurve: part.envelopeCurve,
