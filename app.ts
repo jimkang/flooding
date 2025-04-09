@@ -283,7 +283,12 @@ async function followRoute({
     );
   }
 
-  var mainOutNode = MainOut({ ctx, totalSeconds });
+  var mainOutNode = MainOut({
+    ctx,
+    totalSeconds,
+    // ratio: 2,
+    skipCompressor: true,
+  });
 
   var transposers = parts.slice(1).map((part) =>
     Transposer({

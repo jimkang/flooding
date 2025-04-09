@@ -149,7 +149,8 @@ export function DataComposer({
         absoluteLengthSeconds: arpeggiate
           ? (tickLength / pitches.length) * 1.1
           : undefined,
-        peakGain: 1.0 / maxPitchCount,
+        // Allow some distortion.
+        peakGain: 2 / maxPitchCount,
         //ratioToGainAdjScale(tonalityDiamondPitches[chordIndex]) *
         //(1.0 / pitches.length),
         // Undefined loopEndSeconds tells the director to play to the end of the sample.
