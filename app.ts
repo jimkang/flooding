@@ -96,7 +96,7 @@ async function followRoute({
       transposeProportion: 0.5,
       transposeFreqFactor: 1,
       pan: 0.2,
-      ampFactor: 2,
+      ampFactor: 1.25,
       envelopeCurve: flatADSR, // [0, 0.1, 0.2, 0.5, 1, 1],
       fadeLengthFactor: 0.05,
       slideMode: false,
@@ -110,7 +110,7 @@ async function followRoute({
       transposeProportion: 0.25,
       transposeFreqFactor: 0.25,
       pan: -0.2,
-      ampFactor: 0.4, // * 0.5,
+      ampFactor: 0.4,
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
@@ -126,7 +126,7 @@ async function followRoute({
       transposeFreqFactor: 1.0,
       pan: -0.2,
       ampFactor: 0.2,
-      envelopeCurve: flatADSR,
+      envelopeCurve: flatADSR, // TODO: Flat-ish curve
       fadeLengthFactor: 0.01,
       slideMode: false,
       arpeggiate: false,
@@ -134,6 +134,7 @@ async function followRoute({
       // mute: true,
       // solo: true,
     },
+    // This is doubling the above trumpet an octave lower.
     {
       sample: 'trumpet-D2-eqd.wav',
       impulse: 'echoey-impulse.wav',
@@ -142,8 +143,8 @@ async function followRoute({
       transposeProportion: 0.8,
       transposeFreqFactor: 0.5,
       pan: -0.2,
-      ampFactor: 0.25,
-      envelopeCurve: defaultADSRCurve,
+      ampFactor: 0.33,
+      envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
       // mute: true,
@@ -202,7 +203,7 @@ async function followRoute({
       transposeProportion: 0.5,
       transposeFreqFactor: 9 / 8,
       pan: 0.0,
-      ampFactor: 1,
+      ampFactor: 0.75,
       envelopeCurve: defaultADSRCurve,
       getEnvelopeLengthForScoreEvent(_scoreEvent, tickLength) {
         if (tickLength < 1.0) {
@@ -286,8 +287,8 @@ async function followRoute({
   var mainOutNode = MainOut({
     ctx,
     totalSeconds,
-    // ratio: 2,
-    skipCompressor: true,
+    // ratio: 16,
+    skipCompressor: false,
   });
 
   var transposers = parts.slice(1).map((part) =>

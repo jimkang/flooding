@@ -4,11 +4,12 @@
 - Pause button
 - At tempo factor 20, there is a skip around tick 112.
 - Version that is just a gradual walk up the diamond.
-- Turn peak gain up based on pitch density a bit more.
-- Headphone mix. May be too much bass.
+- Alternate heat as speed version.
 
 Done:
 
+- Headphone mix. May be too much bass.
+- Turn peak gain up based on pitch density a bit more.
 - Cut reverb mix as time goes on?
 - Arpeggiate high trumpet - Tried, didn't matter.
 - Pauses between decades. (Used small pause; long pauses lose momentum.)
