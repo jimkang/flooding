@@ -14,7 +14,7 @@ const float lineThickness = .02;
 const float lineBlur = .0025;
 const float baseFrequency = 2.;
 const float bigWaveAmpFactor = .0625;
-const float maxDensity = .7;
+const float maxDensity = .934;
 
 float rand(vec2 st) {
   return fract(

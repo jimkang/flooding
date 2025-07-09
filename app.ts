@@ -441,6 +441,7 @@ async function followRoute({
   function onEndOfTicks() {
     scoreDirectors.forEach((dir) => dir.end());
     mainOutNode.fadeOut(finalFadeOutLength);
+    // TODO: Stop visualization
   }
 
   function getTickLength(ticks) {
