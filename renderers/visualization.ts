@@ -27,6 +27,7 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
 }
 
 export function renderShader({ density, doneness }) {
+  // console.log('density', density, 'doneness', doneness);
   if (!gl) {
     setUpShaders();
     window.requestAnimationFrame(renderWithUpdatedTime);
