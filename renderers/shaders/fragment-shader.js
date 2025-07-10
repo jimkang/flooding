@@ -40,26 +40,29 @@ float hill(float foot1, float peak1, float peak2, float foot2, float x) {
     (1. - smoothstep(peak2, foot2, x));
 }
 
+float wave(float x, float y, float t, float yAdjust) {
+  float bigWavePeriod = pow(1. - u_density/maxDensity, 3.);
+  float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(u_density/maxDensity, 3.)));
+  float horizontalShift = mod(t * 10. * u_density/maxDensity, 2. * PI);
+  float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
+
+  float outY = bigWaveY + yAdjust;
+
+  float bottomEdge = outY - lineThickness;
+  float topEdge = outY + lineThickness;
+  return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
+  + lineBlur, y);
+}
+
 void main() {
   vec2 st = gl_FragCoord.xy/800.;
 
-  float x = st.x;
   float t = u_time;
-  float horizontalShift = mod(t * 10. * u_density/maxDensity, 2. * PI);
 
   float distProp = 0.;
   float dist = distance(st, vec2(.5));
 
-  float bigWavePeriod = pow(1. - u_density/maxDensity, 3.);
-  float bigWaveAmp = bigWaveAmpFactor * cos(u_time * pow(10000., pow(u_density/maxDensity, 3.)));
-  float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
-
-  float y = bigWaveY + 0.5;
-
-  float bottomEdge = y - lineThickness;
-  float topEdge = y + lineThickness;
-  float on = hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
-  + lineBlur, st.y);
+  float on = wave(st.x, st.y, u_time, .5);
 
   outColor = vec4(vec3(on), 1.0);
 }
