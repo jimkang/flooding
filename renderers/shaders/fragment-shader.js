@@ -43,7 +43,7 @@ float hill(float foot1, float peak1, float peak2, float foot2, float x) {
 void main() {
   vec2 st = gl_FragCoord.xy/800.;
 
-  float x = st.x * 2.;
+  float x = st.x;
   float t = u_time;
   float horizontalShift = mod(t * 10. * u_density/maxDensity, 2. * PI);
 
