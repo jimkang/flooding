@@ -12,7 +12,7 @@ out vec4 outColor;
 
 const float lineThickness = .02;
 const float lineBlur = .0025;
-const float baseFrequency = 2.;
+const float baseFrequency = 4.;
 const float bigWaveAmpFactor = .0625;
 const float maxDensity = .934;
 
@@ -45,12 +45,14 @@ void main() {
 
   float x = st.x * 2.;
   float t = u_time;
+  float horizontalShift = mod(t * 10. * u_density/maxDensity, 2. * PI);
 
   float distProp = 0.;
   float dist = distance(st, vec2(.5));
 
-  float bigWaveFrequency = baseFrequency * cos(u_time * pow(10000., pow(u_density/maxDensity, 3.)));
-  float bigWaveY = sin(x * bigWaveFrequency + t) * bigWaveAmpFactor;
+  float bigWavePeriod = pow(1. - u_density/maxDensity, 3.);
+  float bigWaveAmp = bigWaveAmpFactor * cos(u_time * pow(10000., pow(u_density/maxDensity, 3.)));
+  float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
 
   float y = bigWaveY + 0.5;
 
