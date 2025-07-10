@@ -10,6 +10,7 @@ uniform float u_time;
 
 out vec4 outColor;
 
+const float baseWaveSpace = .2; 
 const float lineThickness = .02;
 const float lineBlur = .0025;
 const float baseFrequency = 4.;
@@ -62,7 +63,11 @@ void main() {
   float distProp = 0.;
   float dist = distance(st, vec2(.5));
 
-  float on = wave(st.x, st.y, u_time, .5);
+  float on = 0.;
+
+  for (float i = 0.; i < 1./baseWaveSpace; ++i) {
+    on = max(on, wave(st.x, st.y, u_time, baseWaveSpace/2. + i * baseWaveSpace));
+  }
 
   outColor = vec4(vec3(on), 1.0);
 }
