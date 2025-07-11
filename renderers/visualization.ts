@@ -42,9 +42,6 @@ export function renderShader({ density, doneness }) {
 
   gl.uniform1f(donenessLocation, doneness);
   setDensity(density, 2000);
-
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
 
 function setUpShaders() {
