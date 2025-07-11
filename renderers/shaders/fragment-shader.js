@@ -15,7 +15,6 @@ const float lineThickness = .02;
 const float lineBlur = .0025;
 const float baseFrequency = 4.;
 const float bigWaveAmpFactor = .0625;
-const float maxDensity = .934;
 
 float rand(vec2 st) {
   return fract(
@@ -42,9 +41,9 @@ float hill(float foot1, float peak1, float peak2, float foot2, float x) {
 }
 
 float wave(float x, float y, float t, float yAdjust) {
-  float bigWavePeriod = pow(1. - u_density/maxDensity, 3.);
-  float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(u_density/maxDensity, 3.)));
-  float horizontalShift = mod(t * 10. * u_density/maxDensity, 2. * PI);
+  float bigWavePeriod = pow(1. - u_density, 3.);
+  float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(u_density, 3.)));
+  float horizontalShift = mod(t * 10. * u_density, 2. * PI);
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
 
   float outY = bigWaveY + yAdjust;

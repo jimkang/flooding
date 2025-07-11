@@ -432,8 +432,9 @@ async function followRoute({
     renderVisualizationForTick(mainGroupScoreState);
     renderShader({
       density:
-        mainGroupScoreState.meta.chordPitchCount /
-        tonalityDiamondPitches.length,
+        (mainGroupScoreState.meta.chordPitchCount /
+          tonalityDiamondPitches.length) *
+        0.934, // We never use all of the tonality diamond pitches.
       doneness: ticks / mainGroupScoreStateObjects.length,
     });
   }

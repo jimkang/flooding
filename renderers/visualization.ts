@@ -13,6 +13,13 @@ var donenessLocation;
 var densityLocation;
 var timeLocation;
 
+var densityTransition = {
+  start: 0,
+  end: 0,
+  startTimestamp: 0,
+  transitionLengthInMS: 0,
+};
+
 export function renderVisualizationForTick(scoreState: ScoreState) {
   var monthDatum = scoreState?.meta?.sourceDatum;
   if (monthDatum) {
@@ -30,11 +37,11 @@ export function renderShader({ density, doneness }) {
   // console.log('density', density, 'doneness', doneness);
   if (!gl) {
     setUpShaders();
-    window.requestAnimationFrame(renderWithUpdatedTime);
+    window.requestAnimationFrame(updateShader);
   }
 
   gl.uniform1f(donenessLocation, doneness);
-  gl.uniform1f(densityLocation, density);
+  setDensity(density, 2000);
 
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -125,8 +132,28 @@ function createShader(src, shaderType) {
   return shader;
 }
 
-function renderWithUpdatedTime(timeStamp) {
-  gl.uniform1f(timeLocation, timeStamp / 1000);
+function updateShader(timestamp) {
+  gl.uniform1f(densityLocation, getDensity(timestamp));
+  gl.uniform1f(timeLocation, timestamp / 1000);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-  requestAnimationFrame(renderWithUpdatedTime);
+  requestAnimationFrame(updateShader);
+}
+
+function getDensity(timestamp) {
+  const elapsed = timestamp - densityTransition.startTimestamp;
+  var progress = elapsed / densityTransition.transitionLengthInMS;
+  if (progress > 1) {
+    progress = 1;
+  }
+  const span = densityTransition.end - densityTransition.start;
+  const density = densityTransition.start + progress * span;
+  console.log('density', density);
+  return density;
+}
+
+function setDensity(density, transitionLengthInMS) {
+  densityTransition.start = densityTransition.end;
+  densityTransition.end = density;
+  densityTransition.startTimestamp = performance.now();
+  densityTransition.transitionLengthInMS = transitionLengthInMS;
 }
