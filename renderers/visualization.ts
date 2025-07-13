@@ -18,7 +18,7 @@ var densityTransition = {
   start: 0,
   end: 0,
   transitionLengthInMS: 0,
-  shaderUpdateIntervalInMS: 10,
+  shaderUpdateIntervalInMS: 1,
   lastShaderUpdate: 0,
   inProgress: true,
   completed: false,
@@ -51,7 +51,7 @@ export function renderShader({ density, doneness }) {
   }
 
   gl.uniform1f(donenessLocation, doneness);
-  setDensity(density, 500);
+  setDensity(density, 50);
 }
 
 function setUpShaders() {
