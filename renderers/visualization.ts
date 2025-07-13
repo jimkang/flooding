@@ -2,6 +2,7 @@ import { ScoreState } from 'synthskel/types';
 import { select } from 'd3-selection';
 import vertexShaderSrc from './shaders/vertex-shader';
 import fragmentShaderSrc from './shaders/fragment-shader';
+import { PausableTimer } from '../tasks/pausable-timer';
 
 var monthLabel = select('.month');
 var yearLabel = select('.year');
@@ -16,9 +17,15 @@ var timeLocation;
 var densityTransition = {
   start: 0,
   end: 0,
-  startTimestamp: 0,
   transitionLengthInMS: 0,
+  shaderUpdateIntervalInMS: 10,
+  lastShaderUpdate: 0,
+  inProgress: true,
+  completed: false,
+  timer: null,
 };
+
+var mainTimer;
 
 export function renderVisualizationForTick(scoreState: ScoreState) {
   var monthDatum = scoreState?.meta?.sourceDatum;
@@ -37,11 +44,14 @@ export function renderShader({ density, doneness }) {
   // console.log('density', density, 'doneness', doneness);
   if (!gl) {
     setUpShaders();
-    window.requestAnimationFrame(updateShader);
+    if (!mainTimer) {
+      mainTimer = PausableTimer('main');
+    }
+    requestAnimationFrame(updateShader);
   }
 
   gl.uniform1f(donenessLocation, doneness);
-  setDensity(density, 2000);
+  setDensity(density, 500);
 }
 
 function setUpShaders() {
@@ -129,28 +139,59 @@ function createShader(src, shaderType) {
   return shader;
 }
 
-function updateShader(timestamp) {
-  gl.uniform1f(densityLocation, getDensity(timestamp));
-  gl.uniform1f(timeLocation, timestamp / 1000);
+function updateShader() {
+  const elapsed = mainTimer.getElapsed();
+  console.log('elapsed', elapsed.toFixed(2));
+
+  gl.uniform1f(timeLocation, elapsed / 1000);
+  updateDensity();
+
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   requestAnimationFrame(updateShader);
 }
 
-function getDensity(timestamp) {
-  const elapsed = timestamp - densityTransition.startTimestamp;
-  var progress = elapsed / densityTransition.transitionLengthInMS;
+function updateDensity() {
+  if (!densityTransition.timer) {
+    densityTransition.timer = PausableTimer(
+      'Transition to ' + densityTransition.end
+    );
+    return densityTransition.start;
+  }
+
+  const elapsedTransitionTime = densityTransition.timer.getElapsed();
+  var progress = elapsedTransitionTime / densityTransition.transitionLengthInMS;
   if (progress > 1) {
     progress = 1;
   }
+  densityTransition.inProgress = progress < 1 && progress > 0;
+
+  if (densityTransition.inProgress) {
+    // Changing time while transitioning density will appear to "restart" the
+    // waves so we need to pause the main timer.
+    mainTimer.pause();
+  } else {
+    mainTimer.resume();
+  }
+  if (
+    elapsedTransitionTime - densityTransition.lastShaderUpdate <
+    densityTransition.shaderUpdateIntervalInMS
+  ) {
+    return;
+  }
+
   const span = densityTransition.end - densityTransition.start;
   const density = densityTransition.start + progress * span;
-  console.log('density', density);
-  return density;
+  gl.uniform1f(densityLocation, density);
+  densityTransition.lastShaderUpdate = elapsedTransitionTime;
+  console.log('Set density uniform to', density.toFixed(4));
 }
 
 function setDensity(density, transitionLengthInMS) {
+  if (densityTransition.timer) {
+    densityTransition.timer.end();
+    densityTransition.timer = null;
+  }
   densityTransition.start = densityTransition.end;
   densityTransition.end = density;
-  densityTransition.startTimestamp = performance.now();
   densityTransition.transitionLengthInMS = transitionLengthInMS;
 }
