@@ -40,10 +40,10 @@ float hill(float foot1, float peak1, float peak2, float foot2, float x) {
     (1. - smoothstep(peak2, foot2, x));
 }
 
-float wave(float x, float y, float t, float yAdjust) {
+float wave(float x, float y, float t, float density, float yAdjust) {
   float bigWavePeriod = pow(1. - u_density, 3.);
-  float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(u_density, 3.)));
-  float horizontalShift = mod(t * 10. * u_density, 2. * PI);
+  float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
+  float horizontalShift = mod(t * 10. * density, 2. * PI);
   // horizontalShift = 0.;
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
 
@@ -58,15 +58,14 @@ float wave(float x, float y, float t, float yAdjust) {
 void main() {
   vec2 st = gl_FragCoord.xy/800.;
 
-  float t = u_time;
-
-  float distProp = 0.;
-  float dist = distance(st, vec2(.5));
+  // float distProp = 0.;
+  // float dist = distance(st, vec2(.5));
 
   float on = 0.;
 
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
-    on = max(on, wave(st.x, st.y, u_time, baseWaveSpace/2. + i * baseWaveSpace));
+    on = max(on, wave(st.x, st.y, u_time, u_density,
+      baseWaveSpace/2. + i * baseWaveSpace));
   }
 
   outColor = vec4(vec3(on), 1.0);
