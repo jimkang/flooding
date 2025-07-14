@@ -26,7 +26,6 @@ var densityTransition = {
   shaderUpdateIntervalInMS: 1,
   lastShaderUpdate: 0,
   inProgress: true,
-  completed: false,
   timer: null,
   doneness: 0,
 };
