@@ -56,7 +56,7 @@ export function renderShader({ density, tickLengthInMS, doneness }) {
   }
 
   gl.uniform1f(donenessLocation, doneness);
-  setDensity(density, /*Math.min(1000, tickLengthInMS / 3)*/ 4000, doneness);
+  setDensity(density, Math.min(1000, tickLengthInMS / 3), doneness);
 }
 
 function setUpShaders() {
@@ -147,7 +147,7 @@ function createShader(src, shaderType) {
 
 function updateShader() {
   const elapsed = mainTimer.isPaused() ? 1 : mainTimer.getElapsed();
-  console.log('elapsed', elapsed.toFixed(2));
+  // console.log('elapsed', elapsed.toFixed(2));
 
   gl.uniform1f(timeLocation, elapsed / 1000);
   updateDensity();
@@ -158,7 +158,7 @@ function updateShader() {
     wiggleIndex += 1;
   }
   gl.uniform1f(wiggleLocation, wiggleFactor);
-  console.log('u_wiggle', wiggleFactor);
+  // console.log('u_wiggle', wiggleFactor);
   lastWiggleFactor = wiggleFactor;
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -205,7 +205,7 @@ function updateDensity() {
     );
     densityTransition.lastShaderUpdate = 0;
     gl.uniform1f(densityLocation, densityTransition.start);
-    console.log('Set density uniform to', densityTransition.start.toFixed(4));
+    // console.log('Set density uniform to', densityTransition.start.toFixed(4));
     return densityTransition.start;
   }
 
@@ -226,10 +226,10 @@ function updateDensity() {
     elapsedTransitionTime - densityTransition.lastShaderUpdate <
       densityTransition.shaderUpdateIntervalInMS
   ) {
-    console.log(
-      'Not enough time has passed to update.',
-      elapsedTransitionTime - densityTransition.lastShaderUpdate
-    );
+    // console.log(
+    //   'Not enough time has passed to update.',
+    //   elapsedTransitionTime - densityTransition.lastShaderUpdate
+    // );
     return;
   }
 
@@ -247,12 +247,12 @@ function updateDensity() {
   }
   gl.uniform1f(densityLocation, density);
   densityTransition.lastShaderUpdate = elapsedTransitionTime;
-  console.log(
-    'Set density uniform to',
-    density.toFixed(4),
-    'progress',
-    progress
-  );
+  // console.log(
+  //   'Set density uniform to',
+  //   density.toFixed(4),
+  //   'progress',
+  //   progress
+  // );
   return density;
 }
 
@@ -266,5 +266,5 @@ function setDensity(density, transitionLengthInMS, doneness) {
   densityTransition.end = density;
   densityTransition.transitionLengthInMS = transitionLengthInMS;
   densityTransition.doneness = doneness;
-  console.log('Updated densityTransition', densityTransition);
+  // console.log('Updated densityTransition', densityTransition);
 }
