@@ -4,6 +4,7 @@ export function PausableTimer(name) {
     paused: false,
     lastTime: performance.now(),
     cancelKey: requestAnimationFrame(update),
+    rate: 1.0,
   };
   console.log('Created new', name, 'timer.');
 
@@ -11,8 +12,10 @@ export function PausableTimer(name) {
     pause,
     resume,
     getElapsed,
-    getPaused,
+    isPaused,
+    setRate,
     end,
+    reset,
   };
 
   function update(timestamp) {
@@ -21,12 +24,16 @@ export function PausableTimer(name) {
       console.log(name, 'Skipping update.');
       return;
     }
-    const elapsedDelta = timestamp - state.lastTime;
+    var elapsedDelta = timestamp - state.lastTime;
     // console.log(name, 'elapsedDelta', elapsedDelta.toFixed(2));
 
-    // if (elapsedDelta < 0) {
-    //   console.log(name, 'Negative elapsedDelta', elapsedDelta);
-    // } else {
+    if (elapsedDelta < 0) {
+      console.log(name, 'Negative elapsedDelta', elapsedDelta);
+      elapsedDelta = 0;
+    }
+
+    elapsedDelta *= state.rate;
+
     state.elapsed += elapsedDelta;
     state.lastTime = timestamp;
     // }
@@ -38,7 +45,7 @@ export function PausableTimer(name) {
     if (state.paused) {
       return;
     }
-    console.log(name, 'Pausing');
+    console.log(name, 'pause Pausing');
     state.paused = true;
     cancelAnimationFrame(state.cancelKey);
   }
@@ -47,21 +54,30 @@ export function PausableTimer(name) {
     if (!state.paused) {
       return;
     }
-    console.log(name, 'Resuming');
+    console.log(name, 'pause Resuming');
     state.paused = false;
     state.lastTime = performance.now();
+    state.elapsed = 0;
     state.cancelKey = requestAnimationFrame(update);
+  }
+
+  function setRate(rate) {
+    state.rate = rate;
   }
 
   function getElapsed() {
     return state.elapsed;
   }
 
-  function getPaused() {
+  function isPaused() {
     return state.paused;
   }
 
   function end() {
     cancelAnimationFrame(state.cancelKey);
+  }
+
+  function reset() {
+    state.lastTime = performance.now();
   }
 }

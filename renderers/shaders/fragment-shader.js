@@ -7,6 +7,7 @@ precision highp float;
 uniform float u_density;
 uniform float u_doneness;
 uniform float u_time;
+uniform float u_wiggle;
 
 out vec4 outColor;
 
@@ -40,10 +41,13 @@ float hill(float foot1, float peak1, float peak2, float foot2, float x) {
     (1. - smoothstep(peak2, foot2, x));
 }
 
-float wave(float x, float y, float t, float density, float yAdjust) {
-  float bigWavePeriod = pow(1. - u_density, 3.);
+float wave(float x, float y, float t, float density, float wiggle, float yAdjust) {
+  float bigWavePeriod = pow(1. - density, 3.);
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
-  float horizontalShift = mod(t * 10. * density, 2. * PI);
+  // bigWaveAmp = bigWaveAmpFactor * cos(1. * pow(10000., pow(density, 3.)));
+  float horizontalShift = mod(wiggle/100., 2. * PI);
+  // horizontalShift = wiggle/500.;
+  // horizontalShift = mod(10. * density, 2. * PI);
   // horizontalShift = 0.;
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
 
@@ -64,7 +68,7 @@ void main() {
   float on = 0.;
 
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
-    on = max(on, wave(st.x, st.y, u_time, u_density,
+    on = max(on, wave(st.x, st.y, u_time, u_density, u_wiggle,
       baseWaveSpace/2. + i * baseWaveSpace));
   }
 
