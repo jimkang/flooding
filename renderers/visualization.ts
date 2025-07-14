@@ -243,7 +243,8 @@ function updateDensity() {
   }
   if (progress >= 0.75) {
     density =
-      Math.pow((progress - progress * 0.75) * 4, 2) * densityTransition.end;
+      (1 - Math.pow(1 - (progress - progress * 0.75) * 4, 2)) *
+      densityTransition.end;
   }
   gl.uniform1f(densityLocation, density);
   densityTransition.lastShaderUpdate = elapsedTransitionTime;
