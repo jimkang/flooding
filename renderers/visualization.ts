@@ -236,14 +236,14 @@ function updateDensity() {
   // const span = densityTransition.end - densityTransition.start;
   // First move things to zero, then back up to the destination.
   var density = 0;
-  if (progress <= 0.25) {
+  if (progress <= 0.5) {
     density =
       densityTransition.start -
-      Math.pow(progress * 4, 2) * densityTransition.start;
+      Math.pow(progress * 2, 2) * densityTransition.start;
   }
-  if (progress >= 0.75) {
+  if (progress > 0.5) {
     density =
-      (1 - Math.pow(1 - (progress - progress * 0.75) * 4, 2)) *
+      (1 - Math.pow(1 - (progress - progress * 0.5) * 2, 2)) *
       densityTransition.end;
   }
   gl.uniform1f(densityLocation, density);
