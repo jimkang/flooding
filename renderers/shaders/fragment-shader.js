@@ -41,6 +41,15 @@ float hill(float foot1, float peak1, float peak2, float foot2, float x) {
     (1. - smoothstep(peak2, foot2, x));
 }
 
+vec2 rotate2D(vec2 stIn, float _angle) {
+  vec2 _st = vec2(stIn);
+  _st -= 0.5;
+  _st =  mat2(cos(_angle),-sin(_angle),
+              sin(_angle),cos(_angle)) * _st;
+  _st += 0.5;
+  return _st;
+}
+
 float wave(float x, float y, float t, float density, float wiggle, float yAdjust) {
   float bigWavePeriod = pow(1. - density, 3.);
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
@@ -61,15 +70,22 @@ float wave(float x, float y, float t, float density, float wiggle, float yAdjust
 
 void main() {
   vec2 st = gl_FragCoord.xy/800.;
+  vec2 rotatedSt = rotate2D(st, PI/2.);
 
   // float distProp = 0.;
   // float dist = distance(st, vec2(.5));
 
   float on = 0.;
+  
 
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
-    on = max(on, wave(st.x, st.y, u_time, u_density, u_wiggle,
-      baseWaveSpace/2. + i * baseWaveSpace));
+    float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
+    on = max(on,
+      max(
+        wave(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
+        wave(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
+      )
+    );
   }
 
   outColor = vec4(vec3(on), 1.0);
