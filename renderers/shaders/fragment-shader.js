@@ -71,6 +71,13 @@ float waveLine(float x, float y, float t, float density, float wiggle, float yAd
   + lineBlur, y);
 }
 
+float waveDist(float x, float y, float t, float density, float wiggle, float yAdjust) {
+  float outY = wave(x, y, t, density, wiggle, yAdjust);
+  vec2 distVec = vec2(x,  y - outY);
+  float distSquared = dot(distVec, distVec);
+  return distSquared;
+}
+
 void main() {
   vec2 st = gl_FragCoord.xy/800.;
   vec2 rotatedSt = rotate2D(st, PI/2.);
@@ -81,12 +88,23 @@ void main() {
   float on = 0.;
 
   // Discrete wave lines
+  // for (float i = 0.; i < 1./baseWaveSpace; ++i) {
+  //   float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
+  //   on = max(on,
+  //     max(
+  //       waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
+  //       waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
+  //     )
+  //   );
+  // }
+
+  // Wave distance fields
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
     on = max(on,
       max(
-        waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
-        waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
+        waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
+        waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
       )
     );
   }
