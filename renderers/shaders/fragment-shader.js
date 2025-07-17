@@ -11,6 +11,7 @@ uniform float u_wiggle;
 
 out vec4 outColor;
 
+const float res = 800.;
 const float baseWaveSpace = .2; 
 const float lineThickness = .02;
 const float lineBlur = .0025;
@@ -73,13 +74,14 @@ float waveLine(float x, float y, float t, float density, float wiggle, float yAd
 
 float waveDist(float x, float y, float t, float density, float wiggle, float yAdjust) {
   float outY = wave(x, y, t, density, wiggle, yAdjust);
-  vec2 distVec = vec2(x,  y - outY);
-  float distSquared = dot(distVec, distVec);
-  return distSquared;
+  // vec2 distVec = vec2(x,  y - outY);
+  // float distSquared = dot(distVec, distVec);
+  // return distSquared;
+  return abs(outY - y)/2.;
 }
 
 void main() {
-  vec2 st = gl_FragCoord.xy/800.;
+  vec2 st = gl_FragCoord.xy/res;
   vec2 rotatedSt = rotate2D(st, PI/2.);
 
   // float distProp = 0.;
@@ -101,8 +103,8 @@ void main() {
   // Wave distance fields
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-    on += waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust);// +
-      // waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust);
+    on += waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust)/2.;
+    on += waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)/2.;
     on = min(on, 1.);
   }
 
