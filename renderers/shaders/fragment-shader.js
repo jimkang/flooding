@@ -59,9 +59,12 @@ float wave(float x, float y, float t, float density, float wiggle, float yAdjust
   // horizontalShift = mod(10. * density, 2. * PI);
   // horizontalShift = 0.;
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
-
   float outY = bigWaveY + yAdjust;
+  return outY;
+}
 
+float waveLine(float x, float y, float t, float density, float wiggle, float yAdjust) {
+  float outY = wave(x, y, t, density, wiggle, yAdjust);
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
   return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
@@ -76,17 +79,19 @@ void main() {
   // float dist = distance(st, vec2(.5));
 
   float on = 0.;
-  
 
+  // Discrete wave lines
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
     on = max(on,
       max(
-        wave(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
-        wave(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
+        waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
+        waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
       )
     );
   }
+
+  // Distance from something that is on.
 
   outColor = vec4(vec3(on), 1.0);
 }
