@@ -101,12 +101,9 @@ void main() {
   // Wave distance fields
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-    on = max(on,
-      max(
-        waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
-        waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
-      )
-    );
+    on += waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust);// +
+      // waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust);
+    on = min(on, 1.);
   }
 
   // Distance from something that is on.
