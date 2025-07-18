@@ -101,12 +101,23 @@ void main() {
   // }
 
   // Wave distance fields
-  for (float i = 0.; i < 1./baseWaveSpace; ++i) {
-    float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-    on += waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust)/2.;
-    on += waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)/2.;
-    on = min(on, 1.);
-  }
+  float waveIndex = floor(st.y/baseWaveSpace);
+  float waveLowBound = waveIndex * baseWaveSpace;
+  float waveHighBound = waveLowBound + baseWaveSpace;
+  float yAdjust = baseWaveSpace/2. + waveLowBound;
+  float singleWaveOn = waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust) * 4.;//2.;
+  // singleWaveOn += waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)/2.;
+  on += singleWaveOn;
+  on = min(on, 1.);
+
+//   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
+//     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
+//     // TODO: Actually need the distance to the nearest wave, not the distance to all of them, to avoid the circle.
+//     float singleWaveOn = waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust)/2.;
+//     singleWaveOn += waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)/2.;
+//     on += step(.5, singleWaveOn);
+//     on = min(on, 1.);
+//   }
 
   // Distance from something that is on.
 
