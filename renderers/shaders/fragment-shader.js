@@ -13,8 +13,7 @@ out vec4 outColor;
 
 const float res = 800.;
 const float baseWaveSpace = .2; 
-const float lineThickness = .02;
-const float lineBlur = .0025;
+const float lineThickness = .005;
 const float baseFrequency = 4.;
 const float bigWaveAmpFactor = .0625;
 
@@ -64,7 +63,7 @@ float wave(float x, float y, float t, float density, float wiggle, float yAdjust
   return outY;
 }
 
-float waveLine(float x, float y, float t, float density, float wiggle, float yAdjust) {
+float waveLine(float x, float y, float t, float density, float wiggle, float yAdjust, float lineBlur) {
   float outY = wave(x, y, t, density, wiggle, yAdjust);
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
@@ -77,7 +76,7 @@ float waveDist(float x, float y, float t, float density, float wiggle, float yAd
   // vec2 distVec = vec2(x,  y - outY);
   // float distSquared = dot(distVec, distVec);
   // return distSquared;
-  return abs(outY - y)/2.;
+  return abs(outY - y);
 }
 
 void main() {
@@ -90,37 +89,30 @@ void main() {
   float on = 0.;
 
   // Discrete wave lines
-  // for (float i = 0.; i < 1./baseWaveSpace; ++i) {
-  //   float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-  //   on = max(on,
-  //     max(
-  //       waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust),
-  //       waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)
-  //     )
-  //   );
-  // }
+  for (float i = 0.; i < 1./baseWaveSpace; ++i) {
+    float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
+    on = max(on,
+      max(
+        waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust, baseWaveSpace * .3),
+        waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust, baseWaveSpace *.3)
+      )
+    );
+  }
 
   // Wave distance fields
-  float waveIndex = 0.;//floor(st.y/baseWaveSpace);
-  float waveLowBound = waveIndex * baseWaveSpace;
-  // float waveHighBound = waveLowBound + baseWaveSpace;
-  float yAdjust = baseWaveSpace/2. + waveLowBound;
-  float singleWaveOn = fract(waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust) * 10.);
-  // singleWaveOn += waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)/2.;
-  on += singleWaveOn;
-  on = min(on, 1.);
-
-  // for (float i = 0.; i < 1./baseWaveSpace; ++i) {
-  //   float yAdjust = -.5 + baseWaveSpace/2. + i * baseWaveSpace;
-  //   float singleWaveOn = waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust) * 1.;
-  //   // singleWaveOn += waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust)/2.;
-  //   on += smoothstep(.5, .9, singleWaveOn);
-  //   // on += singleWaveOn;
-  //   on = min(on, 1.);
-  // }
+  // float waveIndex = 0.;//floor(st.y/baseWaveSpace);
+  // float waveLowBound = waveIndex * baseWaveSpace;
+  // // float waveHighBound = waveLowBound + baseWaveSpace;
+  // float yAdjust = baseWaveSpace/2. + waveLowBound;
+  // // Next: The brightest part needs to be in the middle, not at the end. It shouldn't jump from 1. to 0.
+  // // Do we actually want waveLine, with a big hill?
+  // float singleWaveOn = fract(waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust) * 10.);
+  // // singleWaveOn += fract(waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust) * 10.);
+  // on += singleWaveOn;
+  // on = min(on, 1.);
 
   // Distance from something that is on.
 
-  outColor = vec4(vec3(on), 1.0);
+  outColor = vec4(vec3(0., (1. - on) * .8, (1. - on)/3.), 1.0);
 }
 `;
