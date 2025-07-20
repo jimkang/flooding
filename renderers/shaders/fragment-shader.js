@@ -13,7 +13,6 @@ out vec4 outColor;
 
 const float res = 800.;
 const float baseWaveSpace = .2; 
-const float lineThickness = .005;
 const float baseFrequency = 4.;
 const float bigWaveAmpFactor = .0625;
 
@@ -63,7 +62,9 @@ float wave(float x, float y, float t, float density, float wiggle, float yAdjust
   return outY;
 }
 
-float waveLine(float x, float y, float t, float density, float wiggle, float yAdjust, float lineBlur) {
+float waveLine(float x, float y, float t, float density, float wiggle,
+  float yAdjust, float lineBlur, float lineThickness) {
+
   float outY = wave(x, y, t, density, wiggle, yAdjust);
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
@@ -93,8 +94,10 @@ void main() {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
     on = max(on,
       max(
-        waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust, baseWaveSpace * .3),
-        waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust, baseWaveSpace *.3)
+        waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
+          baseWaveSpace * .3, .001 + cos(u_time * i/10.) * .1),
+        waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
+          baseWaveSpace *.3, .001 + sin(u_time) * i/10.)
       )
     );
   }
@@ -113,6 +116,6 @@ void main() {
 
   // Distance from something that is on.
 
-  outColor = vec4(vec3(0., (1. - on) * .8, (1. - on)/3.), 1.0);
+  outColor = vec4(vec3(on), 1.0);
 }
 `;
