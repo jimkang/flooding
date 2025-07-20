@@ -32,12 +32,40 @@ float rand(vec2 st) {
 //          /                \
 // ----foot1                  foot2----
 //
+//
 float hill(float foot1, float peak1, float peak2, float foot2, float x) {
   return smoothstep(foot1, peak1, x) *
     // This smoothstep returns "on" for stuff higher than foot2. But
     // we want the opposite, "off" for stuff higher than foot2. So, we apply
     // the 1. - result modification.
     (1. - smoothstep(peak2, foot2, x));
+}
+
+// Next
+float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
+  if (x < foot1) {
+    return 0.;
+  }
+  if (x > foot2) {
+    return 0.;
+  }
+  if (x > peak1 && x < peak2) {
+    return 1.;
+  }
+
+  float xDelta = 0.;
+  float maxXDelta = 0.;
+  float maxYDelta = 1.;
+  if (x < peak1) {
+    xDelta = x - foot1;
+    maxXDelta = peak1 - foot1;
+  } else {
+    xDelta = foot2 - x;
+    maxXDelta = foot2 - peak2;
+  }
+
+  float slope = maxYDelta/maxXDelta;
+  return slope * xDelta;
 }
 
 vec2 rotate2D(vec2 stIn, float _angle) {
@@ -68,7 +96,8 @@ float waveLine(float x, float y, float t, float density, float wiggle,
   float outY = wave(x, y, t, density, wiggle, yAdjust);
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
-  return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
+  // return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
+  return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
   + lineBlur, y);
 }
 
