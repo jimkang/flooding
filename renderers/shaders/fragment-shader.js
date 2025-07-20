@@ -41,7 +41,6 @@ float hill(float foot1, float peak1, float peak2, float foot2, float x) {
     (1. - smoothstep(peak2, foot2, x));
 }
 
-// Next
 float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
   if (x < foot1) {
     return 0.;
@@ -64,8 +63,12 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
     maxXDelta = foot2 - peak2;
   }
 
+  // Next: Something wavy instead of linear.
   float slope = maxYDelta/maxXDelta;
-  return slope * xDelta;
+  float y = slope * xDelta;
+  // Add noise.
+  y += 1. * sin(40. * xDelta);
+  return y;
 }
 
 vec2 rotate2D(vec2 stIn, float _angle) {
@@ -136,8 +139,6 @@ void main() {
   // float waveLowBound = waveIndex * baseWaveSpace;
   // // float waveHighBound = waveLowBound + baseWaveSpace;
   // float yAdjust = baseWaveSpace/2. + waveLowBound;
-  // // Next: The brightest part needs to be in the middle, not at the end. It shouldn't jump from 1. to 0.
-  // // Do we actually want waveLine, with a big hill?
   // float singleWaveOn = fract(waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust) * 10.);
   // // singleWaveOn += fract(waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust) * 10.);
   // on += singleWaveOn;
