@@ -127,9 +127,9 @@ void main() {
     on = max(on,
       max(
         waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .3, .001 + cos(u_time * i/10.) * .1),
+          baseWaveSpace * .0, .0001),
         waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace *.3, .001 + sin(u_time) * i/10.)
+          baseWaveSpace * .1, .0001)
       )
     );
   }
