@@ -83,7 +83,7 @@ vec2 rotate2D(vec2 stIn, float _angle) {
 }
 
 float repeatedNoise(int repeats, float lacunarity, float gain, float x) {
-  float amplitude = 0.5;
+  float amplitude = 0.05;
   float frequency = 1.;
   float y = 0.;
 
@@ -112,8 +112,9 @@ float wave(float x, float y, float t, float density, float wiggle, float yAdjust
 float waveLine(float x, float y, float t, float density, float wiggle,
   float yAdjust, float lineBlur, float lineThickness) {
 
-  y += repeatedNoise(4, 2., .5, x);
   float outY = wave(x, y, t, density, wiggle, yAdjust);
+  // outY = repeatedNoise(5, 4., .1, outY) + yAdjust;
+  outY += fract(sin(2000. * outY));
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
   // return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
