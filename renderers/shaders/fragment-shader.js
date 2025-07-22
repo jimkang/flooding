@@ -52,6 +52,7 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
     return 1.;
   }
 
+
   float xDelta = 0.;
   float maxXDelta = 0.;
   float maxYDelta = 1.;
@@ -63,11 +64,12 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
     maxXDelta = foot2 - peak2;
   }
 
-  // Next: Something wavy instead of linear.
-  float slope = maxYDelta/maxXDelta;
-  float y = slope * xDelta;
+  float progressTowardPeak = xDelta/maxXDelta;
+  // float y = maxYDelta * progressTowardPeak;
+  // float y = maxYDelta * pow(sin(progressTowardPeak * PI/2.), 4.);
+  float y = maxYDelta * pow(progressTowardPeak, 2.);
   // Add noise.
-  y += 1. * sin(40. * xDelta);
+  y += 1. * sin(40. * progressTowardPeak);
   return y;
 }
 
@@ -127,7 +129,7 @@ void main() {
     on = max(on,
       max(
         waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .0, .0001),
+          baseWaveSpace * .3, .0001),
         waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
           baseWaveSpace * .1, .0001)
       )
