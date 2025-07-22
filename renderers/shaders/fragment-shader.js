@@ -69,7 +69,7 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
   // float y = maxYDelta * pow(sin(progressTowardPeak * PI/2.), 4.);
   float y = maxYDelta * pow(progressTowardPeak, 2.);
   // Add noise.
-  y += 1. * sin(40. * progressTowardPeak);
+  y += maxYDelta/10. * fract(sin(progressTowardPeak) * 4000.);
   return y;
 }
 
