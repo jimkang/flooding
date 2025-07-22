@@ -113,7 +113,7 @@ float waveLine(float x, float y, float t, float density, float wiggle,
   float yAdjust, float lineBlur, float lineThickness) {
 
   float outY = wave(x, y, t, density, wiggle, yAdjust);
-  outY += repeatedNoise(4, 2., .5, y);
+  outY += repeatedNoise(4, 2., .5, outY);
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
   // return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
