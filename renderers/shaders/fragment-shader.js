@@ -112,9 +112,15 @@ float wave(float x, float y, float t, float density, float wiggle, float yAdjust
 float waveLine(float x, float y, float t, float density, float wiggle,
   float yAdjust, float lineBlur, float lineThickness) {
 
+  float frequency = 1.;
   float outY = wave(x, y, t, density, wiggle, yAdjust);
+  outY += sin(x*frequency*02.1 + t)*.45;
+  outY += sin(x*frequency*01.72 + t*1.121)*.40;
+  outY += sin(x*frequency*02.221 + t*0.437)*.50;
+  outY += sin(x*frequency*03.1122+ t*4.269)*.25;
+
   // outY = repeatedNoise(5, 4., .1, outY) + yAdjust;
-  outY += fract(sin(2000. * outY));
+  // outY += .01 * fract(sin(2000. * outY));
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
   // return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
