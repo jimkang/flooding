@@ -113,7 +113,9 @@ float waveLine(float x, float y, float t, float density, float wiggle,
   float yAdjust, float lineBlur, float lineThickness) {
 
   float outY = wave(x, y, t, density, wiggle, yAdjust);
-  outY += sin(16. * x + t);
+
+  // Additoonal wave, makes it more water-like.
+  outY += .02 * sin(16. * x + 2. * t);
   // outY += sin(x*frequency*01.72 + t*1.121)*.040;
   // outY += sin(x*frequency*02.221 + t*0.437)*.050;
   // outY += sin(x*frequency*03.1122+ t*4.269)*.025;
@@ -152,7 +154,7 @@ void main() {
         waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
           baseWaveSpace * .3, .0001),
         waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .1, .0001)
+          baseWaveSpace * .3, .0001)
       )
     );
   }
