@@ -113,20 +113,26 @@ float waveLine(float x, float y, float t, float density, float wiggle,
   float yAdjust, float lineBlur, float lineThickness) {
 
   float outY = wave(x, y, t, density, wiggle, yAdjust);
-
-  // Additoonal wave, makes it more water-like.
-  outY += .02 * sin(16. * x + 2. * t);
-  // outY += sin(x*frequency*01.72 + t*1.121)*.040;
-  // outY += sin(x*frequency*02.221 + t*0.437)*.050;
-  // outY += sin(x*frequency*03.1122+ t*4.269)*.025;
-
-  // outY = repeatedNoise(5, 4., .1, outY) + yAdjust;
-  // outY += .01 * fract(sin(2000. * outY));
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
-  // return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
+  return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
+    + lineBlur, y);
+}
+
+
+
+float noiseWaveLine(float x, float y, float t, float density, float wiggle,
+  float yAdjust, float lineBlur, float lineThickness, float noisePhaseFactor, float noiseAmpFactor) {
+
+  float outY = wave(x, y, t, density, wiggle, yAdjust);
+
+  // Additional wave, makes it more water-like.
+  outY += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
+
+  float bottomEdge = outY - lineThickness;
+  float topEdge = outY + lineThickness;
   return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
-  + lineBlur, y);
+    + lineBlur, y);
 }
 
 float waveDist(float x, float y, float t, float density, float wiggle, float yAdjust) {
@@ -151,10 +157,10 @@ void main() {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
     on = max(on,
       max(
-        waveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .3, .0001),
-        waveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .3, .0001)
+        noiseWaveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
+          baseWaveSpace * .3, .0001, 9., .02),
+        noiseWaveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
+          baseWaveSpace * .3, .0001, 37., .007)
       )
     );
   }
