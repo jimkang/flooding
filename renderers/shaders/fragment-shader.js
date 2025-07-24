@@ -196,8 +196,9 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * .3,
-          .01 * noise(st.x * 128.), // lineThicknessTop Next: We actually need bias up toward the ends of the periods?
-          .01,//.005 * (cos(st.x * 119.) + cos(st.x * 47.)), // lineThicknessBottom
+          // Next: Instead of this, detect when you are near a crossing. Distance field?
+          .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+          .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessBottom
           9.,
           .02,
           4. * st.x
@@ -210,8 +211,8 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * .3,
-          .001,
-          .001,
+          .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+          .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessBottom
           37.,
           .007,
           4. * rotatedSt.x)
