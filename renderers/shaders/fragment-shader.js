@@ -121,18 +121,27 @@ float waveLine(float x, float y, float t, float density, float wiggle,
 
 
 
-float noiseWaveLine(float x, float y, float t, float density, float wiggle,
+float noiseWaveLine(
+  float x,
+  float y,
+  float t,
+  float density,
+  float wiggle,
   float yAdjust,
-  float lineBlur, float lineThickness,
-  float noisePhaseFactor, float noiseAmpFactor, float noiseEdgeFactor) {
+  float lineBlur,
+  float lineThicknessTop,
+  float lineThicknessBottom,
+  float noisePhaseFactor,
+  float noiseAmpFactor,
+  float noiseEdgeFactor) {
 
   float outY = wave(x, y, t, density, wiggle, yAdjust);
 
   // Additional wave, makes it more water-like.
   outY += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
-  float bottomEdge = outY - lineThickness * noiseEdgeFactor * sin(t);
-  float topEdge = outY + lineThickness * noiseEdgeFactor * cos(t);
+  float bottomEdge = outY - lineThicknessBottom * noiseEdgeFactor * sin(t);
+  float topEdge = outY + lineThicknessTop * noiseEdgeFactor * cos(t);
   return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
     + lineBlur, y);
 }
@@ -159,14 +168,33 @@ void main() {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
     on = max(on,
       max(
-        noiseWaveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .3, .001,
-          9., .02,
-          // Next: The thickness variance needs to differ both on the top and bottom.
-          12. * sin(st.x * 77.)),
-        noiseWaveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .3, .001,
-          37., .007, 4. * rotatedSt.x)
+        noiseWaveLine(
+          st.x,
+          st.y,
+          u_time,
+          u_density,
+          u_wiggle,
+          yAdjust,
+          baseWaveSpace * .3,
+          .005 * sin(st.x * 77.), // lineThicknessTop
+          .005 * cos(st.x * 119.), // lineThicknessBottom
+          9.,
+          .02,
+          4. * st.x
+        ),
+        noiseWaveLine(
+          rotatedSt.x,
+          rotatedSt.y,
+          u_time,
+          u_density,
+          u_wiggle,
+          yAdjust,
+          baseWaveSpace * .3,
+          .001,
+          .001,
+          37.,
+          .007,
+          4. * rotatedSt.x)
       )
     );
   }
