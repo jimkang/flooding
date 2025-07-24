@@ -122,15 +122,15 @@ float waveLine(float x, float y, float t, float density, float wiggle,
 
 
 float noiseWaveLine(float x, float y, float t, float density, float wiggle,
-  float yAdjust, float lineBlur, float lineThickness, float noisePhaseFactor, float noiseAmpFactor) {
+  float yAdjust, float lineBlur, float lineThickness, float noisePhaseFactor, float noiseAmpFactor, float noiseEdgeFactor) {
 
   float outY = wave(x, y, t, density, wiggle, yAdjust);
 
   // Additional wave, makes it more water-like.
   outY += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
-  float bottomEdge = outY - lineThickness;
-  float topEdge = outY + lineThickness;
+  float bottomEdge = outY - lineThickness * noiseEdgeFactor * sin(t);
+  float topEdge = outY + lineThickness * noiseEdgeFactor * cos(t);
   return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
     + lineBlur, y);
 }
@@ -152,15 +152,17 @@ void main() {
 
   float on = 0.;
 
-  // Discrete wave lines
+  // Wave lines
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
     on = max(on,
       max(
         noiseWaveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .3, .0001, 9., .02),
+          baseWaveSpace * .3, .001,
+          9., .02, 80. * cos(st.x * u_time)),
         noiseWaveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
-          baseWaveSpace * .3, .0001, 37., .007)
+          baseWaveSpace * .3, .001,
+          37., .007, 4. * rotatedSt.x)
       )
     );
   }
