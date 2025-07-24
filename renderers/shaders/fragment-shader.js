@@ -122,7 +122,9 @@ float waveLine(float x, float y, float t, float density, float wiggle,
 
 
 float noiseWaveLine(float x, float y, float t, float density, float wiggle,
-  float yAdjust, float lineBlur, float lineThickness, float noisePhaseFactor, float noiseAmpFactor, float noiseEdgeFactor) {
+  float yAdjust,
+  float lineBlur, float lineThickness,
+  float noisePhaseFactor, float noiseAmpFactor, float noiseEdgeFactor) {
 
   float outY = wave(x, y, t, density, wiggle, yAdjust);
 
@@ -159,7 +161,9 @@ void main() {
       max(
         noiseWaveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
           baseWaveSpace * .3, .001,
-          9., .02, 80. * cos(10000. * st.x)),
+          9., .02,
+          // Next: The thickness variance needs to differ both on the top and bottom.
+          12. * sin(st.x * 77.)),
         noiseWaveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
           baseWaveSpace * .3, .001,
           37., .007, 4. * rotatedSt.x)
