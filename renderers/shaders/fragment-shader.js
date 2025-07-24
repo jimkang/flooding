@@ -159,7 +159,7 @@ void main() {
       max(
         noiseWaveLine(st.x, st.y, u_time, u_density, u_wiggle, yAdjust,
           baseWaveSpace * .3, .001,
-          9., .02, 80. * cos(st.x * u_time)),
+          9., .02, 80. * cos(2000. * st.x)),
         noiseWaveLine(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust,
           baseWaveSpace * .3, .001,
           37., .007, 4. * rotatedSt.x)
