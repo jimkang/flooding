@@ -26,6 +26,20 @@ float rand(vec2 st) {
   );
 }
 
+// https://www.shadertoy.com/view/4dS3Wd
+// By Morgan McGuire @morgan3d, http://graphicscodex.com
+// Reuse permitted under the BSD license.
+float hash(float p) { p = fract(p * 0.011); p *= p + 7.5; p *= p + p; return fract(p); }
+float hash(vec2 p) {vec3 p3 = fract(vec3(p.xyx) * 0.13); p3 += dot(p3, p3.yzx + 3.333); return fract((p3.x + p3.y) * p3.z); }
+
+float noise(float x) {
+    float i = floor(x);
+    float f = fract(x);
+    float u = f * f * (3.0 - 2.0 * f);
+    return mix(hash(i), hash(i + 1.0), u);
+}
+// End code from https://www.shadertoy.com/view/4dS3Wd
+
 //
 //            peak1----peak2
 //           /              \
@@ -119,7 +133,13 @@ float waveLine(float x, float y, float t, float density, float wiggle,
     + lineBlur, y);
 }
 
-
+// float layerWaves(int layerCount, float amp, float phase, float x) {
+//   float y = 0;
+//   for (int i = 0; i < layerCount; ++i) {
+//     y += amp * (x * phase);
+//   }
+//   return y;
+// }
 
 float noiseWaveLine(
   float x,
@@ -140,8 +160,8 @@ float noiseWaveLine(
   // Additional wave, makes it more water-like.
   outY += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
-  float bottomEdge = outY - lineThicknessBottom * noiseEdgeFactor * sin(t);
-  float topEdge = outY + lineThicknessTop * noiseEdgeFactor * cos(t);
+  float bottomEdge = outY - lineThicknessBottom;// * noiseEdgeFactor * sin(t/8.);
+  float topEdge = outY + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
   return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
     + lineBlur, y);
 }
@@ -176,8 +196,8 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * .3,
-          .005 * sin(st.x * 77.), // lineThicknessTop
-          .005 * cos(st.x * 119.), // lineThicknessBottom
+          .01 * noise(st.x * 128.), // lineThicknessTop Next: We actually need bias up toward the ends of the periods?
+          .01,//.005 * (cos(st.x * 119.) + cos(st.x * 47.)), // lineThicknessBottom
           9.,
           .02,
           4. * st.x
