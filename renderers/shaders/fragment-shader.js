@@ -194,9 +194,8 @@ void main() {
       u_wiggle,
       yAdjust,
       baseWaveSpace * .3,
-      // Next: Instead of this, detect when you are near a crossing. Distance field?
-      .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
-      .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessBottom
+      .01 * pow(sin(1./baseWaveSpace * 1.3 * PI * st.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+      .01 * pow(sin(1./baseWaveSpace * 1.7 * PI * st.x), 4.), // lineThicknessBottom
       9.,
       .02,
       4. * st.x
@@ -209,14 +208,15 @@ void main() {
       u_wiggle,
       yAdjust,
       baseWaveSpace * .3,
-      .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
-      .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessBottom
+      .01 * pow(sin(1./baseWaveSpace * 1.15 * PI * rotatedSt.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+      .01 * pow(sin(1./baseWaveSpace * 2.1 * PI * rotatedSt.x), 4.), // lineThicknessBottom
       37.,
       .007,
       4. * rotatedSt.x
     );
 
-    on = max(on, max(hLineOn, vLineOn));
+    float cornerOn = smoothstep(1., 1.5, hLineOn + vLineOn);
+    on = max(on, max(max(hLineOn, vLineOn), cornerOn));
   }
 
   // Wave distance fields
