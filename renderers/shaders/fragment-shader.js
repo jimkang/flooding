@@ -182,11 +182,14 @@ void main() {
   // float dist = distance(st, vec2(.5));
 
   float on = 0.;
+  float hLineOn = 0.;
+  float vLineOn = 0.;
+  float cornerBoostOn = 0.;
 
   // Wave lines
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-    float hLineOn = noiseWaveLine(
+    hLineOn += noiseWaveLine(
       st.x,
       st.y,
       u_time,
@@ -200,7 +203,7 @@ void main() {
       .02,
       4. * st.x
     );
-    float vLineOn = noiseWaveLine(
+    vLineOn += noiseWaveLine(
       rotatedSt.x,
       rotatedSt.y,
       u_time,
@@ -216,8 +219,8 @@ void main() {
     );
 
     // Next: Why is the cornerBoost only on the diagonal?
-    float cornerBoost = hLineOn - .5 + vLineOn - .5;
-    on = max(on, cornerBoost);
+    cornerBoostOn += hLineOn - .5 + vLineOn - .5;
+    // on = max(on, cornerBoost);
     // on = max(on, min(max(hLineOn, vLineOn) + cornerBoost, 1.));
   }
 
@@ -233,6 +236,7 @@ void main() {
 
   // Distance from something that is on.
 
-  outColor = vec4(vec3(on), 1.0);
+  outColor = vec4(hLineOn, cornerBoostOn, vLineOn, 1.);
+  // outColor = vec4(vec3(on), 1.0);
 }
 `;
