@@ -215,8 +215,10 @@ void main() {
       4. * rotatedSt.x
     );
 
-    float cornerOn = smoothstep(.5, 1., hLineOn + vLineOn);
-    on = max(on, max(max(hLineOn, vLineOn), cornerOn));
+    // Next: Why is the cornerBoost only on the diagonal?
+    float cornerBoost = hLineOn - .5 + vLineOn - .5;
+    on = max(on, cornerBoost);
+    // on = max(on, min(max(hLineOn, vLineOn) + cornerBoost, 1.));
   }
 
   // Wave distance fields
