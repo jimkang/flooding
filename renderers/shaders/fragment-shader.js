@@ -215,7 +215,7 @@ void main() {
       4. * rotatedSt.x
     );
 
-    float cornerOn = smoothstep(1., 1.5, hLineOn + vLineOn);
+    float cornerOn = smoothstep(.5, 1., hLineOn + vLineOn);
     on = max(on, max(max(hLineOn, vLineOn), cornerOn));
   }
 
