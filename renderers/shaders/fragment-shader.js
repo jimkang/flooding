@@ -186,38 +186,37 @@ void main() {
   // Wave lines
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-    on = max(on,
-      max(
-        noiseWaveLine(
-          st.x,
-          st.y,
-          u_time,
-          u_density,
-          u_wiggle,
-          yAdjust,
-          baseWaveSpace * .3,
-          // Next: Instead of this, detect when you are near a crossing. Distance field?
-          .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
-          .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessBottom
-          9.,
-          .02,
-          4. * st.x
-        ),
-        noiseWaveLine(
-          rotatedSt.x,
-          rotatedSt.y,
-          u_time,
-          u_density,
-          u_wiggle,
-          yAdjust,
-          baseWaveSpace * .3,
-          .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
-          .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessBottom
-          37.,
-          .007,
-          4. * rotatedSt.x)
-      )
+    float hLineOn = noiseWaveLine(
+      st.x,
+      st.y,
+      u_time,
+      u_density,
+      u_wiggle,
+      yAdjust,
+      baseWaveSpace * .3,
+      // Next: Instead of this, detect when you are near a crossing. Distance field?
+      .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+      .01 * pow(sin(1./baseWaveSpace * PI * st.x), 4.), // lineThicknessBottom
+      9.,
+      .02,
+      4. * st.x
     );
+    float vLineOn = noiseWaveLine(
+      rotatedSt.x,
+      rotatedSt.y,
+      u_time,
+      u_density,
+      u_wiggle,
+      yAdjust,
+      baseWaveSpace * .3,
+      .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+      .01 * pow(sin(1./baseWaveSpace * PI * rotatedSt.x), 4.), // lineThicknessBottom
+      37.,
+      .007,
+      4. * rotatedSt.x
+    );
+
+    on = max(on, max(hLineOn, vLineOn));
   }
 
   // Wave distance fields
