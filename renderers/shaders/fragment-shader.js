@@ -186,6 +186,8 @@ void main() {
   float vLineOn = 0.;
   float cornerBoostOn = 0.;
 
+  // Origin is at the bottom left.
+  
   // Wave lines
   for (float i = 0.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
@@ -219,7 +221,8 @@ void main() {
     );
 
     // Next: Why is the cornerBoost only on the diagonal?
-    cornerBoostOn += hLineOn - .5 + vLineOn - .5;
+    // Don't ever subtract from cornerBoostOn.
+    cornerBoostOn += max(hLineOn - .5 + vLineOn - .5, 0.);
     // on = max(on, cornerBoost);
     // on = max(on, min(max(hLineOn, vLineOn) + cornerBoost, 1.));
   }
