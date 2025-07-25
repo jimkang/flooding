@@ -176,7 +176,8 @@ float waveDist(float x, float y, float t, float density, float wiggle, float yAd
 
 void main() {
   vec2 st = gl_FragCoord.xy/res;
-  vec2 rotatedSt = rotate2D(st, PI/2.);
+  // vec2 rotatedSt =  rotate2D(st, PI/2.);
+  vec2 rotatedSt = vec2(st.y, 1. - st.x);
 
   // float distProp = 0.;
   // float dist = distance(st, vec2(.5));
@@ -199,8 +200,10 @@ void main() {
       u_wiggle,
       yAdjust,
       baseWaveSpace * .3,
-      .01 * pow(sin(1./baseWaveSpace * 1.3 * PI * st.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
-      .01 * pow(sin(1./baseWaveSpace * 1.7 * PI * st.x), 4.), // lineThicknessBottom
+      .01,
+      .01,
+      // .01 * pow(sin(1./baseWaveSpace * 1.3 * PI * st.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+      // .01 * pow(sin(1./baseWaveSpace * 1.7 * PI * st.x), 4.), // lineThicknessBottom
       9.,
       .02,
       4. * st.x
@@ -213,8 +216,10 @@ void main() {
       u_wiggle,
       yAdjust,
       baseWaveSpace * .3,
-      .01 * pow(sin(1./baseWaveSpace * 1.15 * PI * rotatedSt.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
-      .01 * pow(sin(1./baseWaveSpace * 2.1 * PI * rotatedSt.x), 4.), // lineThicknessBottom
+      .01,
+      .01,
+      // .01 * pow(sin(1./baseWaveSpace * 1.15 * PI * rotatedSt.x), 4.), // lineThicknessTop The ^4 puts things up at the start and end of the period
+      // .01 * pow(sin(1./baseWaveSpace * 2.1 * PI * rotatedSt.x), 4.), // lineThicknessBottom
       37.,
       .007,
       4. * rotatedSt.x
@@ -222,7 +227,9 @@ void main() {
 
     // Next: Why is the cornerBoost only on the diagonal?
     // Don't ever subtract from cornerBoostOn.
-    cornerBoostOn += max(hLineOn - .5 + vLineOn - .5, 0.);
+    // if (hLineOn > .3 && vLineOn > .3) {
+      cornerBoostOn += (hLineOn + vLineOn)/2.;
+    // }
     // on = max(on, cornerBoost);
     // on = max(on, min(max(hLineOn, vLineOn) + cornerBoost, 1.));
   }
@@ -240,6 +247,7 @@ void main() {
   // Distance from something that is on.
 
   outColor = vec4(hLineOn, cornerBoostOn, vLineOn, 1.);
+  // outColor = vec4(hLineOn, 0., vLineOn, 1.);
   // outColor = vec4(vec3(on), 1.0);
 }
 `;
