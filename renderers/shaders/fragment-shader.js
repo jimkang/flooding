@@ -158,12 +158,12 @@ float noiseWaveLine(
   float outY = wave(x, y, t, density, wiggle, yAdjust);
 
   // Additional wave, makes it more water-like.
-  outY += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
+  // outY += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
   float bottomEdge = outY - lineThicknessBottom;// * noiseEdgeFactor * sin(t/8.);
   float topEdge = outY + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
-  return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
-    + lineBlur, y);
+  // return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
+  return hill(bottomEdge, bottomEdge, topEdge, topEdge, y);
 }
 
 float waveDist(float x, float y, float t, float density, float wiggle, float yAdjust) {
