@@ -30,30 +30,33 @@ float rand(vec2 st) {
 // By Morgan McGuire @morgan3d, http://graphicscodex.com
 // Reuse permitted under the BSD license.
 float hash(float p) { p = fract(p * 0.011); p *= p + 7.5; p *= p + p; return fract(p); }
-float hash(vec2 p) {vec3 p3 = fract(vec3(p.xyx) * 0.13); p3 += dot(p3, p3.yzx + 3.333); return fract((p3.x + p3.y) * p3.z); }
+float hash2(float p) { p = fract(p * 0.041); p *= p + 3.7; p *= p + p; return fract(p); }
 
-float noise(float x) {
+float noise(bool useHash2, float x) {
   float i = floor(x);
   float f = fract(x);
   float u = f * f * (3.0 - 2.0 * f);
+  if (useHash2) {
+    return mix(hash2(i), hash2(i + 1.0), u);
+  }
   return mix(hash(i), hash(i + 1.0), u);
 }
 
+// End code from https://www.shadertoy.com/view/4dS3Wd
+
 // Fractal Brownian noise
 float multiGenNoise(int gens, float lacunarity, float gain,
-  float amp, float freq, float x) {
+  float amp, float freq, bool useHash2, float x) {
 
   float y = 0.;
   for (int i = 0; i < gens; ++i) {
-    y += amp * noise(freq * x);
+    y += amp * noise(useHash2, freq * x);
     freq *= lacunarity;
     amp *= gain;
   }
 
   return y;
 }
-  
-// End code from https://www.shadertoy.com/view/4dS3Wd
 
 //
 //            peak1----peak2
@@ -211,8 +214,8 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * .3,
-          .01 * multiGenNoise(1, .5, .5, .5, 128., st.x), // lineThicknessTop 
-          .01,//.005 * (cos(st.x * 119.) + cos(st.x * 47.)), // lineThicknessBottom
+          .01 * multiGenNoise(4, 1.8, .5, .66, 32., false, st.x), // lineThicknessTop 
+          .01 * multiGenNoise(2, 1.8, .5, .66, 32., true, st.x), // lineThicknessBottom
           9.,
           .02,
           4. * st.x
