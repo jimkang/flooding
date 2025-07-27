@@ -128,14 +128,10 @@ float repeatedNoise(int repeats, float lacunarity, float gain, float x) {
   return y;
 }
 
-float wave(float x, float y, float t, float density, float wiggle, float yAdjust) {
+float wave(float x, float t, float density, float wiggle, float yAdjust) {
   float bigWavePeriod = pow(1. - density, 3.);
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
-  // bigWaveAmp = bigWaveAmpFactor * cos(1. * pow(10000., pow(density, 3.)));
   float horizontalShift = mod(wiggle/100., 2. * PI);
-  // horizontalShift = wiggle/500.;
-  // horizontalShift = mod(10. * density, 2. * PI);
-  // horizontalShift = 0.;
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
   float outY = bigWaveY + yAdjust;
   return outY;
@@ -144,7 +140,7 @@ float wave(float x, float y, float t, float density, float wiggle, float yAdjust
 float waveLine(float x, float y, float t, float density, float wiggle,
   float yAdjust, float lineBlur, float lineThickness) {
 
-  float outY = wave(x, y, t, density, wiggle, yAdjust);
+  float outY = wave(x, t, density, wiggle, yAdjust);
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
   return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
@@ -173,19 +169,19 @@ float noiseWaveLine(
   float noiseAmpFactor,
   float noiseEdgeFactor) {
 
-  float outY = wave(x, y, t, density, wiggle, yAdjust);
+  float waveYForX = wave(x, t, density, wiggle, yAdjust);
 
   // Additional wave, makes it more water-like.
-  outY += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
+  waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
-  float bottomEdge = outY - lineThicknessBottom;// * noiseEdgeFactor * sin(t/8.);
-  float topEdge = outY + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
+  float bottomEdge = waveYForX - lineThicknessBottom;// * noiseEdgeFactor * sin(t/8.);
+  float topEdge = waveYForX + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
   return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
     + lineBlur, y);
 }
 
 float waveDist(float x, float y, float t, float density, float wiggle, float yAdjust) {
-  float outY = wave(x, y, t, density, wiggle, yAdjust);
+  float outY = wave(x, t, density, wiggle, yAdjust);
   // vec2 distVec = vec2(x,  y - outY);
   // float distSquared = dot(distVec, distVec);
   // return distSquared;
