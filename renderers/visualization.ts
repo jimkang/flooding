@@ -14,6 +14,7 @@ var donenessLocation;
 var densityLocation;
 var timeLocation;
 var wiggleLocation;
+var resLocation;
 
 var wiggleIndex = 0;
 var lastWiggleFactor = 1;
@@ -56,6 +57,7 @@ export function renderShader({ density, tickLengthInMS, doneness }) {
   }
 
   gl.uniform1f(donenessLocation, doneness);
+  gl.uniform2fv(resLocation, [gl.canvas.width, gl.canvas.height]);
   setDensity(density, Math.min(1000, tickLengthInMS / 3), doneness);
 }
 
@@ -92,6 +94,7 @@ function setUpShaders() {
   densityLocation = gl.getUniformLocation(program, 'u_density');
   timeLocation = gl.getUniformLocation(program, 'u_time');
   wiggleLocation = gl.getUniformLocation(program, 'u_wiggle');
+  resLocation = gl.getUniformLocation(program, 'u_res');
   // cleanup();
 }
 

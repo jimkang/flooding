@@ -8,10 +8,10 @@ uniform float u_density;
 uniform float u_doneness;
 uniform float u_time;
 uniform float u_wiggle;
+uniform vec2 u_res;
 
 out vec4 outColor;
 
-const float res = 800.;
 const float baseWaveSpace = .2; 
 const float baseFrequency = 4.;
 const float bigWaveAmpFactor = .0625;
@@ -193,7 +193,7 @@ float waveDist(float x, float y, float t, float density, float wiggle, float yAd
 }
 
 void main() {
-  vec2 st = gl_FragCoord.xy/res;
+  vec2 st = gl_FragCoord.xy/u_res;
   vec2 rotatedSt = rotate2D(st, PI/2.);
 
   // float distProp = 0.;
