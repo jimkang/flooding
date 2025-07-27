@@ -133,7 +133,7 @@ float wave(float x, float t, float density, float wiggle, float yAdjust) {
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
   float horizontalShift = mod(wiggle/100., 2. * PI);
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
-  bigWaveY += 10. * sin(x * 160.);
+  bigWaveY += .25 * sin(x * 16.);
 
   float outY = bigWaveY + yAdjust;
   return outY;
