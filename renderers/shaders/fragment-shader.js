@@ -133,6 +133,8 @@ float wave(float x, float t, float density, float wiggle, float yAdjust) {
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
   float horizontalShift = mod(wiggle/100., 2. * PI);
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
+  bigWaveY += 10. * sin(x * 160.);
+
   float outY = bigWaveY + yAdjust;
   return outY;
 }
@@ -172,10 +174,11 @@ float noiseWaveLine(
   float waveYForX = wave(x, t, density, wiggle, yAdjust);
 
   // Additional wave, makes it more water-like.
-  waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
+  // waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
   float bottomEdge = waveYForX - lineThicknessBottom;// * noiseEdgeFactor * sin(t/8.);
   float topEdge = waveYForX + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
+  return hill(bottomEdge, bottomEdge, topEdge, topEdge, y);
   return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
     + lineBlur, y);
 }
@@ -210,8 +213,8 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * .3,
-          .01 * multiGenNoise(4, 1.8, .5, .66, 32., false, st.x), // lineThicknessTop 
-          .01 * multiGenNoise(2, 1.8, .5, .66, 32., true, st.x), // lineThicknessBottom
+          .01,//.01 * multiGenNoise(4, 1.8, .5, .66, 32., false, st.x), // lineThicknessTop 
+          .01, //.01 * multiGenNoise(2, 1.8, .5, .66, 32., true, st.x), // lineThicknessBottom
           9.,
           .02,
           4. * st.x
