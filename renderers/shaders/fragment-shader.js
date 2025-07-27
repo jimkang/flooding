@@ -33,11 +33,26 @@ float hash(float p) { p = fract(p * 0.011); p *= p + 7.5; p *= p + p; return fra
 float hash(vec2 p) {vec3 p3 = fract(vec3(p.xyx) * 0.13); p3 += dot(p3, p3.yzx + 3.333); return fract((p3.x + p3.y) * p3.z); }
 
 float noise(float x) {
-    float i = floor(x);
-    float f = fract(x);
-    float u = f * f * (3.0 - 2.0 * f);
-    return mix(hash(i), hash(i + 1.0), u);
+  float i = floor(x);
+  float f = fract(x);
+  float u = f * f * (3.0 - 2.0 * f);
+  return mix(hash(i), hash(i + 1.0), u);
 }
+
+// Fractal Brownian noise
+float multiGenNoise(int gens, float lacunarity, float gain,
+  float amp, float freq, float x) {
+
+  float y = 0.;
+  for (int i = 0; i < gens; ++i) {
+    y += amp * noise(freq * x);
+    freq *= lacunarity;
+    amp *= gain;
+  }
+
+  return y;
+}
+  
 // End code from https://www.shadertoy.com/view/4dS3Wd
 
 //
@@ -196,7 +211,7 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * .3,
-          .01 * noise(st.x * 128.), // lineThicknessTop Next: We actually need bias up toward the ends of the periods?
+          .01 * multiGenNoise(1, .5, .5, .5, 128., st.x), // lineThicknessTop 
           .01,//.005 * (cos(st.x * 119.) + cos(st.x * 47.)), // lineThicknessBottom
           9.,
           .02,
