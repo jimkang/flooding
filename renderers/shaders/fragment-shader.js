@@ -101,7 +101,8 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
   // float y = maxYDelta * pow(sin(progressTowardPeak * PI/2.), 4.);
   float y = maxYDelta * pow(progressTowardPeak, 2.);
   // Add noise.
-  y += maxYDelta/10. * fract(sin(progressTowardPeak) * 4000.);
+  // y += maxYDelta/10. * fract(sin(progressTowardPeak) * 4000.);
+  y = multiGenNoise(4, .8, .5, .5, 16., false, progressTowardPeak);
   return y;
 }
 
@@ -181,9 +182,9 @@ float noiseWaveLine(
   // Additional wave, makes it more water-like.
   // waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
-  float bottomEdge = waveYForX - lineThicknessBottom;// * noiseEdgeFactor * sin(t/8.);
+  float bottomEdge = waveYForX - lineThicknessBottom;// * sin(t/8.) * noiseEdgeFactor;
   float topEdge = waveYForX + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
-  return hill(bottomEdge, bottomEdge, topEdge, topEdge, y);
+  // return hill(bottomEdge, bottomEdge, topEdge, topEdge, y);
   return noiseHill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
     + lineBlur, y);
 }
@@ -222,7 +223,7 @@ void main() {
           .01, //.01 * multiGenNoise(2, 1.8, .5, .66, 32., true, st.x), // lineThicknessBottom
           9.,
           .02,
-          4. * st.x
+          st.x/PI
         ),
         noiseWaveLine(
           rotatedSt.x,
@@ -236,7 +237,7 @@ void main() {
           .001,
           37.,
           .007,
-          4. * rotatedSt.x)
+          rotatedSt.x/PI)
       )
     );
   }
