@@ -102,7 +102,7 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
   float y = maxYDelta * pow(progressTowardPeak, 2.);
   // Add noise.
   // y += maxYDelta/10. * fract(sin(progressTowardPeak) * 4000.);
-  y = multiGenNoise(4, .8, .5, .5, 16., false, progressTowardPeak);
+  y = multiGenNoise(4, .8, .5, .33, 16., false, progressTowardPeak);
   return y;
 }
 
@@ -134,12 +134,12 @@ float wave(float x, float t, float density, float wiggle, float yAdjust) {
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
   float horizontalShift = mod(wiggle/100., 2. * PI);
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
-  bigWaveY += bigWaveAmp/12. * sin(x * 61. * PI * bigWavePeriod);
-  bigWaveY += bigWaveAmp/12. * sin(x * 19. * PI * bigWavePeriod);
-  bigWaveY += bigWaveAmp/16. * sin(x * 99. * PI * bigWavePeriod);
-  bigWaveY += bigWaveAmp/4. * sin(3.7 * x * PI);
+  bigWaveY += bigWaveAmp/31. * sin(x * 61. * PI * bigWavePeriod);
+  bigWaveY += bigWaveAmp/31. * sin(x * 19. * PI * bigWavePeriod);
+  bigWaveY += bigWaveAmp/31. * sin(x * 99. * PI * bigWavePeriod);
+  bigWaveY += bigWaveAmp/7. * sin(3.7 * x * PI);
   // This one will make the waves "tilt".
-  // bigWaveY += 8. * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3);
+  bigWaveY += 8. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3);
 
   float outY = bigWaveY + yAdjust;
   return outY;
@@ -218,7 +218,7 @@ void main() {
           u_density,
           u_wiggle,
           yAdjust,
-          baseWaveSpace * .3,
+          baseWaveSpace * .3, // Next: lineBlur should not be constant.
           .01,//.01 * multiGenNoise(4, 1.8, .5, .66, 32., false, st.x), // lineThicknessTop 
           .01, //.01 * multiGenNoise(2, 1.8, .5, .66, 32., true, st.x), // lineThicknessBottom
           9.,
