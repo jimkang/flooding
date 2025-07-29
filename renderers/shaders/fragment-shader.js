@@ -139,7 +139,7 @@ float wave(float x, float t, float density, float wiggle, float yAdjust) {
   bigWaveY += bigWaveAmp/31. * sin(x * 99. * PI * bigWavePeriod);
   bigWaveY += bigWaveAmp/7. * sin(3.7 * x * PI);
   // This one will make the waves "tilt".
-  bigWaveY += 8. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3);
+  bigWaveY += 2. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3);
 
   float outY = bigWaveY + yAdjust;
   return outY;
@@ -208,6 +208,7 @@ void main() {
 
   float on = 0.;
 
+  // Next: Multiple sets of lines.
   // Wave lines
   for (float i = -2.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
@@ -220,7 +221,7 @@ void main() {
           u_density,
           u_wiggle,
           yAdjust,
-          baseWaveSpace * .3, // Next: lineBlur should not be constant.
+          baseWaveSpace * multiGenNoise(4, .9, .25, .125, 7. * PI, true, st.x), // lineBlur
           .01,//.01 * multiGenNoise(4, 1.8, .5, .66, 32., false, st.x), // lineThicknessTop 
           .01, //.01 * multiGenNoise(2, 1.8, .5, .66, 32., true, st.x), // lineThicknessBottom
           9.,
@@ -234,7 +235,7 @@ void main() {
           u_density,
           u_wiggle,
           yAdjust,
-          baseWaveSpace * .3,
+          baseWaveSpace * multiGenNoise(4, .9, .25, .125, 5. * PI, false, rotatedSt.x), // lineBlur
           .001,
           .001,
           37.,
