@@ -130,11 +130,11 @@ float repeatedNoise(int repeats, float lacunarity, float gain, float x) {
 }
 
 float wave(float x, float t, float density, float wiggle, float yAdjust) {
-  float bigWavePeriod = pow(1. - density, 3.);
+  float bigWavePeriod = 1. - density;
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
   float horizontalShift = mod(wiggle/100., 2. * PI);
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
-  bigWaveY += bigWaveAmp/31. * sin(x * 61. * PI * bigWavePeriod);
+  bigWaveY += bigWaveAmp/31. * sin(x * 41. * PI * bigWavePeriod);
   // bigWaveY += bigWaveAmp/31. * sin(x * 19. * PI * bigWavePeriod);
   // bigWaveY += bigWaveAmp/31. * sin(x * 99. * PI * bigWavePeriod);
   bigWaveY += bigWaveAmp/7. * sin(3.7 * x * PI);
