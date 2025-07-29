@@ -199,6 +199,8 @@ float waveDist(float x, float y, float t, float density, float wiggle, float yAd
 
 void main() {
   vec2 st = gl_FragCoord.xy/u_res;
+  // Translate everything to the left.
+  st.x += .25;
   vec2 rotatedSt = rotate2D(st, PI/2.);
 
   // float distProp = 0.;
@@ -207,7 +209,7 @@ void main() {
   float on = 0.;
 
   // Wave lines
-  for (float i = 0.; i < 1./baseWaveSpace; ++i) {
+  for (float i = -2.; i < 1./baseWaveSpace; ++i) {
     float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
     on = max(on,
       max(
