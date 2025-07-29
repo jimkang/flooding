@@ -135,8 +135,8 @@ float wave(float x, float t, float density, float wiggle, float yAdjust) {
   float horizontalShift = mod(wiggle/100., 2. * PI);
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
   bigWaveY += bigWaveAmp/31. * sin(x * 61. * PI * bigWavePeriod);
-  bigWaveY += bigWaveAmp/31. * sin(x * 19. * PI * bigWavePeriod);
-  bigWaveY += bigWaveAmp/31. * sin(x * 99. * PI * bigWavePeriod);
+  // bigWaveY += bigWaveAmp/31. * sin(x * 19. * PI * bigWavePeriod);
+  // bigWaveY += bigWaveAmp/31. * sin(x * 99. * PI * bigWavePeriod);
   bigWaveY += bigWaveAmp/7. * sin(3.7 * x * PI);
   // This one will make the waves "tilt".
   bigWaveY += 2. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3);
@@ -180,7 +180,7 @@ float noiseWaveLine(
   float waveYForX = wave(x, t, density, wiggle, yAdjust);
 
   // Additional wave, makes it more water-like.
-  // waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
+  waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
 
   float bottomEdge = waveYForX - lineThicknessBottom;// * sin(t/8.) * noiseEdgeFactor;
   float topEdge = waveYForX + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
@@ -222,12 +222,13 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * multiGenNoise(4, .9, .25, .125, 7. * PI, true, st.x), // lineBlur
-          .01,//.01 * multiGenNoise(4, 1.8, .5, .66, 32., false, st.x), // lineThicknessTop 
-          .01, //.01 * multiGenNoise(2, 1.8, .5, .66, 32., true, st.x), // lineThicknessBottom
+          .005, // lineThicknessTop 
+          .005, // lineThicknessBottom
           9.,
           .02,
           st.x/PI
         ),
+        // Next: Noise should reverse amplitude with time.
         noiseWaveLine(
           rotatedSt.x,
           rotatedSt.y,
@@ -236,8 +237,8 @@ void main() {
           u_wiggle,
           yAdjust,
           baseWaveSpace * multiGenNoise(4, .9, .25, .125, 5. * PI, false, rotatedSt.x), // lineBlur
-          .001,
-          .001,
+          .005, // lineThicknessTop 
+          .005, // lineThicknessBottom
           37.,
           .007,
           rotatedSt.x/PI)
