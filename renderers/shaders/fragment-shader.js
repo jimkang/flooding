@@ -15,6 +15,7 @@ out vec4 outColor;
 const float baseWaveSpace = .2; 
 const float baseFrequency = 4.;
 const float bigWaveAmpFactor = .0625;
+const float lineSetCount = 3.;
 
 float rand(vec2 st) {
   return fract(
@@ -208,42 +209,47 @@ void main() {
 
   float on = 0.;
 
-  // Next: Multiple sets of lines.
   // Wave lines
-  for (float i = -2.; i < 1./baseWaveSpace; ++i) {
-    float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-    on = max(on,
-      max(
-        noiseWaveLine(
-          st.x,
-          st.y,
-          u_time,
-          u_density,
-          u_wiggle,
-          yAdjust,
-          baseWaveSpace * multiGenNoise(4, .9, .25, .125, 7. * PI, true, st.x), // lineBlur
-          .005, // lineThicknessTop 
-          .005, // lineThicknessBottom
-          9.,
-          .02,
-          st.x/PI
-        ),
-        // Next: Noise should reverse amplitude with time.
-        noiseWaveLine(
-          rotatedSt.x,
-          rotatedSt.y,
-          u_time,
-          u_density,
-          u_wiggle,
-          yAdjust,
-          baseWaveSpace * multiGenNoise(4, .9, .25, .125, 5. * PI, false, rotatedSt.x), // lineBlur
-          .005, // lineThicknessTop 
-          .005, // lineThicknessBottom
-          37.,
-          .007,
-          rotatedSt.x/PI)
-      )
-    );
+  float offset = 0.;
+
+  // Next: The lines in the set need to differ from each other, both in phase and in color.
+  for (float lineSetIndex = 0.; lineSetIndex < lineSetCount; ++lineSetIndex) {
+    offset += baseWaveSpace/lineSetCount;
+
+    for (float i = -2.; i < 1./baseWaveSpace; ++i) {
+      float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
+      on = max(on,
+        max(
+          noiseWaveLine(
+            st.x,
+            st.y,
+            u_time + offset,
+            u_density,
+            u_wiggle,
+            yAdjust,
+            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur
+            .005, // lineThicknessTop 
+            .005, // lineThicknessBottom
+            9. + offset,
+            .02,
+            (st.x + offset)/PI
+          ),
+          noiseWaveLine(
+            rotatedSt.x,
+            rotatedSt.y,
+            u_time + offset,
+            u_density,
+            u_wiggle,
+            yAdjust,
+            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x + offset), // lineBlur
+            .005, // lineThicknessTop 
+            .005, // lineThicknessBottom
+            37. + offset,
+            .007,
+            (rotatedSt.x + offset)/PI)
+        )
+      );
+    }
   }
 
   // Wave distance fields
