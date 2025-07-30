@@ -2,7 +2,7 @@ import { ScoreState } from 'synthskel/types';
 import { select } from 'd3-selection';
 import vertexShaderSrc from './shaders/vertex-shader';
 import fragmentShaderSrc from './shaders/fragment-shader';
-import { PausableTimer } from '../tasks/pausable-timer';
+import { PausableTimer } from '../tasks/pausable-timer.js';
 
 var monthLabel = select('.month');
 var yearLabel = select('.year');
@@ -189,7 +189,7 @@ function updateDensity() {
   if (!densityTransition.timer) {
     // It actually jitters *after* the start of the transition.
     // It happens if you stop horizontal movement, even.
-    // It doesn't havven if you take time out of the amp calculation.
+    // It doesn't happen if you take time out of the amp calculation.
     //
     // if (mainTimer.getElapsed() % currentPeriod < 0.001) {
     //   console.log('At start of new period, starting density transition.');
