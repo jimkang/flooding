@@ -130,17 +130,17 @@ float repeatedNoise(int repeats, float lacunarity, float gain, float x) {
   return y;
 }
 
-float wave(float x, float t, float density, float wiggle, float yAdjust) {
+float wave(float x, float t, float density, float wiggle, float yAdjust, float extraPhaseShiftFactor) {
   float bigWavePeriod = 1. - density;
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
   float horizontalShift = mod(wiggle/100., 2. * PI);
-  float bigWaveY = sin(x/bigWavePeriod + horizontalShift) * bigWaveAmp;
-  bigWaveY += bigWaveAmp/31. * sin(x * 41. * PI * bigWavePeriod);
-  // bigWaveY += bigWaveAmp/31. * sin(x * 19. * PI * bigWavePeriod);
-  // bigWaveY += bigWaveAmp/31. * sin(x * 99. * PI * bigWavePeriod);
-  bigWaveY += bigWaveAmp/7. * sin(3.7 * x * PI);
+  float bigWaveY = sin(x/bigWavePeriod + horizontalShift * extraPhaseShiftFactor) * bigWaveAmp;
+  float a1 = x * 41. * PI * bigWavePeriod;
+  bigWaveY += bigWaveAmp/31. * sin(a1 + a1 * extraPhaseShiftFactor);
+  float a2 = 3.7 * x * PI;
+  bigWaveY += bigWaveAmp/7. * sin(a2 + a2 * extraPhaseShiftFactor);
   // This one will make the waves "tilt".
-  bigWaveY += 2. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3);
+  bigWaveY += 2. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3 * extraPhaseShiftFactor);
 
   float outY = bigWaveY + yAdjust;
   return outY;
@@ -149,7 +149,7 @@ float wave(float x, float t, float density, float wiggle, float yAdjust) {
 float waveLine(float x, float y, float t, float density, float wiggle,
   float yAdjust, float lineBlur, float lineThickness) {
 
-  float outY = wave(x, t, density, wiggle, yAdjust);
+  float outY = wave(x, t, density, wiggle, yAdjust, 0.);
   float bottomEdge = outY - lineThickness;
   float topEdge = outY + lineThickness;
   return hill(bottomEdge - lineBlur, bottomEdge, topEdge, topEdge 
@@ -176,9 +176,10 @@ float noiseWaveLine(
   float lineThicknessBottom,
   float noisePhaseFactor,
   float noiseAmpFactor,
-  float noiseEdgeFactor) {
+  float noiseEdgeFactor,
+  float extraPhaseShiftFactor) {
 
-  float waveYForX = wave(x, t, density, wiggle, yAdjust);
+  float waveYForX = wave(x, t, density, wiggle, yAdjust, extraPhaseShiftFactor);
 
   // Additional wave, makes it more water-like.
   waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
@@ -191,7 +192,7 @@ float noiseWaveLine(
 }
 
 float waveDist(float x, float y, float t, float density, float wiggle, float yAdjust) {
-  float outY = wave(x, t, density, wiggle, yAdjust);
+  float outY = wave(x, t, density, wiggle, yAdjust, 0.);
   // vec2 distVec = vec2(x,  y - outY);
   // float distSquared = dot(distVec, distVec);
   // return distSquared;
@@ -224,7 +225,7 @@ void main() {
             st.x,
             st.y,
             u_time + offset,
-            u_density,
+            u_density * offset,
             u_wiggle * .5 * (lineSetIndex + 1.),
             yAdjust,
             baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur
@@ -232,7 +233,8 @@ void main() {
             .005, // lineThicknessBottom
             9. + offset,
             .02,
-            (st.x + offset)/PI
+            (st.x + offset)/PI,
+            PI/4. * offset
           ),
           noiseWaveLine(
             rotatedSt.x,
@@ -246,7 +248,9 @@ void main() {
             .005, // lineThicknessBottom
             37. + offset,
             .007,
-            (rotatedSt.x + offset)/PI)
+            (rotatedSt.x + offset)/PI,
+            PI/4. * offset
+          )
         )
       );
     }
