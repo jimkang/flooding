@@ -57,7 +57,6 @@ export function PausableTimer(name) {
     console.log(name, 'pause Resuming');
     state.paused = false;
     state.lastTime = performance.now();
-    state.elapsed = 0;
     state.cancelKey = requestAnimationFrame(update);
   }
 

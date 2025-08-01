@@ -58,7 +58,7 @@ export function renderShader({ density, tickLengthInMS, doneness }) {
 
   gl.uniform1f(donenessLocation, doneness);
   gl.uniform2fv(resLocation, [gl.canvas.width, gl.canvas.height]);
-  setDensity(density, Math.min(1000, tickLengthInMS / 3), doneness);
+  setDensity(density, Math.max(1000, tickLengthInMS / 3), doneness);
 }
 
 function setUpShaders() {
@@ -149,8 +149,8 @@ function createShader(src, shaderType) {
 }
 
 function updateShader() {
-  const elapsed = mainTimer.isPaused() ? 1 : mainTimer.getElapsed();
-  // console.log('elapsed', elapsed.toFixed(2));
+  const elapsed = mainTimer.getElapsed();
+  console.log('elapsed', elapsed.toFixed(2));
 
   gl.uniform1f(timeLocation, elapsed / 1000);
   updateDensity();
