@@ -212,7 +212,7 @@ void main() {
   // Wave lines
   float offset = 0.;
 
-  // Next: The lines in the set need to differ from each other, both in phase and in color.
+  // Next: The lines in the set need to differ from each other, both in phase and in color. Subtask: Extra phase shift param in wave().
   for (float lineSetIndex = 0.; lineSetIndex < lineSetCount; ++lineSetIndex) {
     offset += baseWaveSpace/lineSetCount;
 
@@ -225,7 +225,7 @@ void main() {
             st.y,
             u_time + offset,
             u_density,
-            u_wiggle,
+            u_wiggle * .5 * (lineSetIndex + 1.),
             yAdjust,
             baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur
             .005, // lineThicknessTop 

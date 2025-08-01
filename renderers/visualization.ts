@@ -150,7 +150,7 @@ function createShader(src, shaderType) {
 
 function updateShader() {
   const elapsed = mainTimer.getElapsed();
-  console.log('elapsed', elapsed.toFixed(2));
+  // console.log('elapsed', elapsed.toFixed(2));
 
   gl.uniform1f(timeLocation, elapsed / 1000);
   updateDensity();
