@@ -181,28 +181,7 @@ function updateDensity() {
   }
   densityTransition.inProgress = progress < 1 && progress > 0;
 
-  // if (progress >= 1) {
-  //   currentPeriod = Math.pow(1 - densityTransition.end, 3);
-  //   // TODO: Set uniform with this.
-  // }
-
   if (!densityTransition.timer) {
-    // It actually jitters *after* the start of the transition.
-    // It happens if you stop horizontal movement, even.
-    // It doesn't happen if you take time out of the amp calculation.
-    //
-    // if (mainTimer.getElapsed() % currentPeriod < 0.001) {
-    //   console.log('At start of new period, starting density transition.');
-    // } else {
-    //   console.log(
-    //     'In middle of new period, NOT starting density transition. Mod:',
-    //     mainTimer.getElapsed() % currentPeriod,
-    //     'Current period',
-    //     currentPeriod
-    //   );
-    //   return;
-    // }
-
     densityTransition.timer = PausableTimer(
       'Transition to ' + densityTransition.end
     );
@@ -236,19 +215,10 @@ function updateDensity() {
     return;
   }
 
-  // const span = densityTransition.end - densityTransition.start;
-  // First move things to zero, then back up to the destination.
-  var density = 0;
-  if (progress <= 0.5) {
-    density =
-      densityTransition.start -
-      Math.pow(progress * 2, 2) * densityTransition.start;
-  }
-  if (progress > 0.5) {
-    density =
-      (1 - Math.pow(1 - (progress - progress * 0.5) * 2, 2)) *
-      densityTransition.end;
-  }
+  const density =
+    densityTransition.start +
+    progress * (densityTransition.end - densityTransition.start);
+
   gl.uniform1f(densityLocation, density);
   densityTransition.lastShaderUpdate = elapsedTransitionTime;
   // console.log(
