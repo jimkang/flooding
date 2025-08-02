@@ -240,10 +240,10 @@ void main() {
             rotatedSt.x,
             rotatedSt.y,
             u_time + offset,
-            u_density,
-            u_wiggle,
+            u_density * offset,
+            u_wiggle * .5 * (lineSetIndex + 1.),
             yAdjust,
-            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x + offset), // lineBlur
+            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
             .005, // lineThicknessTop 
             .005, // lineThicknessBottom
             37. + offset,
