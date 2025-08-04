@@ -225,7 +225,7 @@ void main() {
             st.x,
             st.y,
             u_time + offset,
-            u_density * offset,
+            u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
             u_wiggle * .5 * (lineSetIndex + 1.),
             yAdjust,
             baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur
@@ -240,7 +240,7 @@ void main() {
             rotatedSt.x,
             rotatedSt.y,
             u_time + offset,
-            u_density * offset,
+            u_density,
             u_wiggle * .5 * (lineSetIndex + 1.),
             yAdjust,
             baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
