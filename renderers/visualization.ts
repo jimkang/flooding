@@ -172,18 +172,6 @@ function updateDensity() {
     // console.log('Set density uniform to', densityTransition.start.toFixed(4));
     return densityTransition.start;
   }
-  if (!tooFastForTimers) {
-    if (densityTransition.inProgress) {
-      // Changing time while transitioning density will appear to "restart" the
-      // waves so we need to pause the main timer.
-      mainTimer.pause();
-    } else {
-      if (mainTimer.isPaused()) {
-        mainTimer.resume();
-      }
-    }
-  }
-
   if (
     !tooFastForTimers &&
     elapsedTransitionTime - densityTransition.lastShaderUpdate <
