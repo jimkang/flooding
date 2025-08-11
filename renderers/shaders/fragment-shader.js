@@ -5,9 +5,7 @@ precision highp float;
 #define PI 3.141592653589793
 
 uniform float u_density;
-uniform float u_doneness;
 uniform float u_time;
-uniform float u_wiggle;
 uniform vec2 u_res;
 
 out vec4 outColor;
@@ -134,14 +132,13 @@ float wave(float x, float t, float density, float wiggle, float yAdjust, float e
   float bigWavePeriod = 1. - density;
   // TODO: timeVaryingPeriod
   float bigWaveAmp = bigWaveAmpFactor * cos(t * pow(10000., pow(density, 3.)));
-  float horizontalShift = 0.;//mod(wiggle/100., 2. * PI);
+  float horizontalShift = mod(wiggle/100., 2. * PI);
   float bigWaveY = sin(x/bigWavePeriod + horizontalShift * extraPhaseShiftFactor) * bigWaveAmp;
   float a1 = x * 41. * PI * bigWavePeriod;
   bigWaveY += bigWaveAmp/31. * sin(a1 + a1 * extraPhaseShiftFactor);
   float a2 = 3.7 * x * PI;
   bigWaveY += bigWaveAmp/7. * sin(a2 + a2 * extraPhaseShiftFactor);
-  // This one will make the waves "tilt". Also makes discontinuities in
-  // transitions, more obvious.
+  // This one will make the waves "tilt".
   bigWaveY += 2. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3 * extraPhaseShiftFactor);
 
   float outY = bigWaveY + yAdjust;
@@ -230,7 +227,7 @@ void main() {
             // violent shakes happen in the transition, hence the sin.
             sin(u_time + offset),
             u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
-            u_wiggle * .5 * (lineSetIndex + 1.),
+            u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
             baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur
             .005, // lineThicknessTop 
@@ -245,7 +242,7 @@ void main() {
             rotatedSt.y,
             cos(u_time + offset),
             u_density,
-            u_wiggle * .5 * (lineSetIndex + 1.),
+            u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
             baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
             .005, // lineThicknessTop 

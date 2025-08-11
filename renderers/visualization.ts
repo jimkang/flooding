@@ -10,14 +10,10 @@ var levelLabel = select('.ohc-level');
 var gl;
 var program;
 var glBuffer;
-var donenessLocation;
 var densityLocation;
 var timeLocation;
-var wiggleLocation;
 var resLocation;
 
-var wiggleIndex = 0;
-var lastWiggleFactor = 1;
 // var currentPeriod = 2 * Math.PI;
 
 var densityTransition = {
@@ -28,7 +24,6 @@ var densityTransition = {
   lastShaderUpdate: 0,
   inProgress: true,
   timer: null,
-  doneness: 0,
 };
 
 var mainTimer;
@@ -46,8 +41,7 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
   }
 }
 
-export function renderShader({ density, tickLengthInMS, doneness }) {
-  // console.log('density', density, 'doneness', doneness);
+export function renderShader({ density, tickLengthInMS }) {
   if (!gl) {
     setUpShaders();
     if (!mainTimer) {
@@ -56,9 +50,8 @@ export function renderShader({ density, tickLengthInMS, doneness }) {
     requestAnimationFrame(updateShader);
   }
 
-  gl.uniform1f(donenessLocation, doneness);
   gl.uniform2fv(resLocation, [gl.canvas.width, gl.canvas.height]);
-  setDensity(density, Math.min(1500, tickLengthInMS / 3), doneness);
+  setDensity(density, Math.min(1500, tickLengthInMS / 3));
 }
 
 function setUpShaders() {
@@ -90,10 +83,8 @@ function setUpShaders() {
 
   gl.useProgram(program);
 
-  donenessLocation = gl.getUniformLocation(program, 'u_doneness');
   densityLocation = gl.getUniformLocation(program, 'u_density');
   timeLocation = gl.getUniformLocation(program, 'u_time');
-  wiggleLocation = gl.getUniformLocation(program, 'u_wiggle');
   resLocation = gl.getUniformLocation(program, 'u_res');
   // cleanup();
 }
@@ -154,14 +145,6 @@ function updateShader() {
 
   gl.uniform1f(timeLocation, elapsed / 1000);
   updateDensity();
-  var wiggleFactor = lastWiggleFactor;
-  // Don't change the wiggle factor while a transition is happening.
-  if (!densityTransition.inProgress) {
-    wiggleFactor = 1; //densityTransition.doneness;
-  }
-  gl.uniform1f(wiggleLocation, wiggleFactor);
-  // console.log('u_wiggle', wiggleFactor);
-  lastWiggleFactor = wiggleFactor;
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   requestAnimationFrame(updateShader);
@@ -228,7 +211,7 @@ function updateDensity() {
   return density;
 }
 
-function setDensity(density, transitionLengthInMS, doneness) {
+function setDensity(density, transitionLengthInMS) {
   const tooFastForTimers = transitionLengthInMS < 100;
   if (!tooFastForTimers && densityTransition.timer) {
     densityTransition.timer.end();
@@ -237,6 +220,4 @@ function setDensity(density, transitionLengthInMS, doneness) {
   densityTransition.start = densityTransition.end;
   densityTransition.end = density;
   densityTransition.transitionLengthInMS = transitionLengthInMS;
-  densityTransition.doneness = doneness;
-  // console.log('Updated densityTransition', densityTransition);
 }

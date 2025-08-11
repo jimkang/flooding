@@ -436,7 +436,6 @@ async function followRoute({
           tonalityDiamondPitches.length) *
         0.934, // We never use all of the tonality diamond pitches.
       tickLengthInMS: tickLength * 1000,
-      doneness: ticks / mainGroupScoreStateObjects.length,
     });
   }
 
