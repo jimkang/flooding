@@ -157,8 +157,7 @@ function updateShader() {
   var wiggleFactor = lastWiggleFactor;
   // Don't change the wiggle factor while a transition is happening.
   if (!densityTransition.inProgress) {
-    wiggleFactor = wiggleIndex; // * densityTransition.doneness;
-    wiggleIndex += 1;
+    wiggleFactor = 1; //densityTransition.doneness;
   }
   gl.uniform1f(wiggleLocation, wiggleFactor);
   // console.log('u_wiggle', wiggleFactor);
@@ -190,7 +189,6 @@ function updateDensity() {
     // console.log('Set density uniform to', densityTransition.start.toFixed(4));
     return densityTransition.start;
   }
-
   if (!tooFastForTimers) {
     if (densityTransition.inProgress) {
       // Changing time while transitioning density will appear to "restart" the
