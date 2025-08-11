@@ -240,7 +240,7 @@ void main() {
           noiseWaveLine(
             rotatedSt.x,
             rotatedSt.y,
-            cos(u_time + offset),
+            sin(u_time + offset),
             u_density,
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
