@@ -142,7 +142,7 @@ float wave(float x, float t, float density, float wiggle, float yAdjust, float e
   bigWaveY += bigWaveAmp/7. * sin(a2 + a2 * extraPhaseShiftFactor);
   // This one will make the waves "tilt". Also makes discontinuities in
   // transitions, more obvious.
-  // bigWaveY += 2. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3 * extraPhaseShiftFactor);
+  bigWaveY += 2. * density * bigWaveAmp * sin(x * .57 * bigWavePeriod - horizontalShift/2.3 * extraPhaseShiftFactor);
 
   float outY = bigWaveY + yAdjust;
   return outY;
