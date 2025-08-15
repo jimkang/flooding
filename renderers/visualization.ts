@@ -16,16 +16,6 @@ var resLocation;
 
 // var currentPeriod = 2 * Math.PI;
 
-var densityTransition = {
-  start: 0,
-  end: 0,
-  transitionLengthInMS: 0,
-  shaderUpdateIntervalInMS: 1,
-  lastShaderUpdate: 0,
-  inProgress: true,
-  timer: null,
-};
-
 var mainTimer;
 
 export function renderVisualizationForTick(scoreState: ScoreState) {
@@ -41,7 +31,7 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
   }
 }
 
-export function renderShader({ density, tickLengthInMS }) {
+export function renderShader({ density }) {
   if (!gl) {
     setUpShaders();
     if (!mainTimer) {
@@ -51,7 +41,7 @@ export function renderShader({ density, tickLengthInMS }) {
   }
 
   gl.uniform2fv(resLocation, [gl.canvas.width, gl.canvas.height]);
-  setDensity(density, 0); //Math.min(1500, tickLengthInMS / 3));
+  setDensity(density);
 }
 
 function setUpShaders() {
@@ -144,68 +134,11 @@ function updateShader() {
   // console.log('elapsed', elapsed.toFixed(2));
 
   gl.uniform1f(timeLocation, elapsed / 1000);
-  updateDensity();
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   requestAnimationFrame(updateShader);
 }
 
-function updateDensity() {
-  const tooFastForTimers = densityTransition.transitionLengthInMS < 100;
-  var elapsedTransitionTime = 0;
-  var progress = 0;
-  if (!tooFastForTimers && densityTransition.timer) {
-    elapsedTransitionTime = densityTransition.timer.getElapsed();
-    progress = elapsedTransitionTime / densityTransition.transitionLengthInMS;
-    if (progress > 1) {
-      progress = 1;
-    }
-  }
-  densityTransition.inProgress = progress < 1 && progress > 0;
-
-  if (!densityTransition.timer) {
-    densityTransition.timer = PausableTimer(
-      'Transition to ' + densityTransition.end
-    );
-    densityTransition.lastShaderUpdate = 0;
-    gl.uniform1f(densityLocation, densityTransition.start);
-    // console.log('Set density uniform to', densityTransition.start.toFixed(4));
-    return densityTransition.start;
-  }
-  if (
-    !tooFastForTimers &&
-    elapsedTransitionTime - densityTransition.lastShaderUpdate <
-      densityTransition.shaderUpdateIntervalInMS
-  ) {
-    // console.log(
-    //   'Not enough time has passed to update.',
-    //   elapsedTransitionTime - densityTransition.lastShaderUpdate
-    // );
-    return;
-  }
-
-  const density =
-    densityTransition.start +
-    progress * (densityTransition.end - densityTransition.start);
-
+function setDensity(density) {
   gl.uniform1f(densityLocation, density);
-  densityTransition.lastShaderUpdate = elapsedTransitionTime;
-  // console.log(
-  //   'Set density uniform to',
-  //   density.toFixed(4),
-  //   'progress',
-  //   progress
-  // );
-  return density;
-}
-
-function setDensity(density, transitionLengthInMS) {
-  const tooFastForTimers = transitionLengthInMS < 100;
-  if (!tooFastForTimers && densityTransition.timer) {
-    densityTransition.timer.end();
-    densityTransition.timer = null;
-  }
-  densityTransition.start = densityTransition.end;
-  densityTransition.end = density;
-  densityTransition.transitionLengthInMS = transitionLengthInMS;
 }
