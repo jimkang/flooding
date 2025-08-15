@@ -51,7 +51,7 @@ export function renderShader({ density, tickLengthInMS }) {
   }
 
   gl.uniform2fv(resLocation, [gl.canvas.width, gl.canvas.height]);
-  setDensity(density, Math.min(1500, tickLengthInMS / 3));
+  setDensity(density, 0); //Math.min(1500, tickLengthInMS / 3));
 }
 
 function setUpShaders() {
