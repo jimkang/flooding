@@ -3,6 +3,7 @@ export default `#version 300 es
 precision highp float;
 
 #define PI 3.141592653589793
+#define LINE_SET_COUNT 3
 
 uniform float u_density;
 uniform float u_time;
@@ -13,7 +14,7 @@ out vec4 outColor;
 const float baseWaveSpace = .2; 
 const float baseFrequency = 4.;
 const float bigWaveAmpFactor = .0625;
-const float lineSetCount = 3.;
+const float fLineSetCount = float(LINE_SET_COUNT);
 
 float rand(vec2 st) {
   return fract(
@@ -209,16 +210,22 @@ void main() {
 
   float on = 0.;
 
+  float onSet[LINE_SET_COUNT];
+  for (int i = 0; i < LINE_SET_COUNT; ++i) {
+    onSet[i] = 0.;
+  }
+
   // Wave lines
   float offset = 0.;
 
   // Next: The lines in the set need to differ from each other, both in phase and in color. Subtask: Extra phase shift param in wave().
-  for (float lineSetIndex = 0.; lineSetIndex < lineSetCount; ++lineSetIndex) {
-    offset += baseWaveSpace/lineSetCount;
+  for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
+    offset += baseWaveSpace/fLineSetCount;
 
     for (float i = -2.; i < 1./baseWaveSpace; ++i) {
       float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-      on = max(on,
+      int iLineSetIndex = int(lineSetIndex);
+      onSet[iLineSetIndex] = max(onSet[iLineSetIndex],
         max(
           noiseWaveLine(
             st.x,
@@ -229,7 +236,7 @@ void main() {
             u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
-            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur
+            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
             .005, // lineThicknessTop 
             .005, // lineThicknessBottom
             9. + offset,
@@ -269,6 +276,7 @@ void main() {
 
   // Distance from something that is on.
 
-  outColor = vec4(vec3(on), 1.0);
+  // TODO: Different color mapping?
+  outColor = vec4(onSet[0], onSet[1], onSet[2], 1.0);
 }
 `;
