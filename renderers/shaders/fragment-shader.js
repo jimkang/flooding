@@ -218,7 +218,6 @@ void main() {
   // Wave lines
   float offset = 0.;
 
-  // Next: The lines in the set need to differ from each other, both in phase and in color. Subtask: Extra phase shift param in wave().
   for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
     offset += baseWaveSpace/fLineSetCount;
 
@@ -242,7 +241,7 @@ void main() {
             9. + offset,
             .02,
             (st.x + offset)/PI,
-            PI/4. * offset
+            PI/4. * float(iLineSetIndex) // extraPhaseShiftFactor
           ),
           noiseWaveLine(
             rotatedSt.x,
@@ -257,7 +256,7 @@ void main() {
             37. + offset,
             .007,
             (rotatedSt.x + offset)/PI,
-            PI/4. * offset
+            PI/4. * float(iLineSetIndex) // extraPhaseShiftFactor
           )
         )
       );
