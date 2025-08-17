@@ -235,7 +235,7 @@ void main() {
             u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
-            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
+            4. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
             .005, // lineThicknessTop 
             .005, // lineThicknessBottom
             9. + offset,
@@ -250,7 +250,7 @@ void main() {
             u_density,
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
-            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
+            4. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
             .005, // lineThicknessTop 
             .005, // lineThicknessBottom
             37. + offset,
