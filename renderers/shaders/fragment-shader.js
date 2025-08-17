@@ -84,7 +84,6 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
     return 1.;
   }
 
-
   float xDelta = 0.;
   float maxXDelta = 0.;
   float maxYDelta = 1.;
@@ -102,7 +101,7 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
   float y = maxYDelta * pow(progressTowardPeak, 2.);
   // Add noise.
   // y += maxYDelta/10. * fract(sin(progressTowardPeak) * 4000.);
-  y = multiGenNoise(4, .8, .5, .33, 16., false, progressTowardPeak);
+  // y = multiGenNoise(4, .8, .5, .33, 16., false, progressTowardPeak);
   return y;
 }
 
@@ -235,7 +234,7 @@ void main() {
             u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
-            4. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
+            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
             .005, // lineThicknessTop 
             .005, // lineThicknessBottom
             9. + offset,
@@ -250,7 +249,7 @@ void main() {
             u_density,
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
-            4. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
+            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
             .005, // lineThicknessTop 
             .005, // lineThicknessBottom
             37. + offset,
