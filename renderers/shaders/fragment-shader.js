@@ -241,7 +241,7 @@ void main() {
             9. + offset,
             .02,
             (st.x + offset)/PI,
-            PI/4. * float(iLineSetIndex) // extraPhaseShiftFactor
+            PI/16. * float(iLineSetIndex) // extraPhaseShiftFactor
           ),
           noiseWaveLine(
             rotatedSt.x,
@@ -256,7 +256,7 @@ void main() {
             37. + offset,
             .007,
             (rotatedSt.x + offset)/PI,
-            PI/4. * float(iLineSetIndex) // extraPhaseShiftFactor
+            PI/8. * float(iLineSetIndex) // extraPhaseShiftFactor
           )
         )
       );
