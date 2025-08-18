@@ -96,12 +96,13 @@ float noiseHill(float foot1, float peak1, float peak2, float foot2, float x) {
   }
 
   float progressTowardPeak = xDelta/maxXDelta;
+  float y = 0.;
   // float y = maxYDelta * progressTowardPeak;
   // float y = maxYDelta * pow(sin(progressTowardPeak * PI/2.), 4.);
   // float y = maxYDelta * pow(progressTowardPeak, 2.);
   // Add noise.
-  // y += maxYDelta/10. * fract(sin(progressTowardPeak) * 4000.);
-  float y = multiGenNoise(4, .8, .5, .33, 16., false, progressTowardPeak);
+  // y += progressTowardPeak;// * fract(sin(progressTowardPeak) * 4000.);
+  y += multiGenNoise(4, .8, .5, .33, 16., false, progressTowardPeak);
   return y;
 }
 
@@ -224,7 +225,7 @@ void main() {
       float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
       int iLineSetIndex = int(lineSetIndex);
       onSet[iLineSetIndex] = max(onSet[iLineSetIndex],
-        max(
+        min(
           noiseWaveLine(
             st.x,
             st.y,
@@ -234,9 +235,9 @@ void main() {
             u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
-            2. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
-            2. * baseWaveSpace * multiGenNoise(4, .99, .01, .02, (5. + offset) * PI, false, st.x), // lineThicknessTop
-            2. * baseWaveSpace * multiGenNoise(2, .99, .01, .02, (4. + offset) * PI, false, st.x), // lineThicknessBottom
+            8. * baseWaveSpace, // * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
+            .005, // lineThicknessTop
+            .005, // lineThicknessBottom
             9. + offset,
             .02,
             (st.x + offset)/PI,
@@ -249,9 +250,9 @@ void main() {
             u_density,
             u_density * .5 * (lineSetIndex + 1.),
             yAdjust,
-            baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
-            2. * baseWaveSpace * multiGenNoise(4, .99, .01, .02, (3. + offset) * PI, false, rotatedSt.x), // lineThicknessTop
-            2. * baseWaveSpace * multiGenNoise(2, .99, .01, .02, (8. + offset) * PI, false, rotatedSt.x), // lineThicknessBottom
+            8. * baseWaveSpace, // * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
+            .005, // lineThicknessTop
+            .005, // lineThicknessBottom
             37. + offset,
             .007,
             (rotatedSt.x + offset)/PI,
@@ -259,6 +260,7 @@ void main() {
           )
         )
       );
+      // Next: "Following" lines that are random distances from the previous line.
     }
   }
 
