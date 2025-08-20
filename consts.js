@@ -8,6 +8,7 @@ const tolerance = 1 / 10000;
 export var tonalityDiamondPitches = getTonalityDiamond({ diamondLimit }).sort(
   compareDenomSizeAsc
 );
+console.log('tonalityDiamondPitches', tonalityDiamondPitches);
 
 export var sampleFilenames = [
   '1921-1930.wav',

@@ -7,8 +7,7 @@ function range(start, len, step = 1) {
 }
 
 function fitToOctave(n) {
-  // We're allowing the octave, even though the official tonality diamond doesn't.
-  if (n > 2.0) {
+  if (n >= 2.0) {
     return fitToOctave(n / 2);
   }
   if (n < 1.0) {
@@ -36,29 +35,30 @@ export function getTonalityDiamond({ diamondLimit }) {
 
   var oddFactors = range(1, factorCount, 2).map(fitToOctave).sort(compareAsc);
 
-  var reciprocalFactors = [1].concat(
-    range(3, factorCount - 1, 2)
-      .map((n) => 1 / n)
-      .map(fitToOctave)
-      .sort(compareDesc)
-  );
+  // The reciprocal factors are sorted in descending size, except the 1 at the
+  // start, which is necessary to create the diagonal of 1s in the table.
+  var reciprocalFactors = range(3, factorCount - 1, 2)
+    .map((n) => 1 / n)
+    .map(fitToOctave)
+    .sort(compareDesc);
+  reciprocalFactors = [1].concat(reciprocalFactors);
+  console.log('oddFactors', oddFactors);
+  console.log('reciprocalFactors', reciprocalFactors);
 
-  // console.log('oddFactors', oddFactors);
-  // console.log('reciprocalFactors', reciprocalFactors);
+  var diamondTable = [];
 
-  var diamondTable = [oddFactors];
-
-  for (let rowIndex = 1; rowIndex < oddFactors.length; ++rowIndex) {
-    let row = [reciprocalFactors[rowIndex]];
-    for (let colIndex = 1; colIndex < reciprocalFactors.length; ++colIndex) {
+  for (let rowIndex = 0; rowIndex < oddFactors.length; ++rowIndex) {
+    let row = [];
+    for (let colIndex = 0; colIndex < reciprocalFactors.length; ++colIndex) {
       row.push(fitToOctave(oddFactors[colIndex] * reciprocalFactors[rowIndex]));
     }
     diamondTable.push(row);
   }
 
-  // console.table(diamondTable);
+  console.table(diamondTable);
 
-  // Is it a mistake to get rid of redundancies?
+  // Get rid of redundancies to avoid a really root-heavy set of pitches
+  // that ends up sounding like a foghorn.
   var diamondRatioSet = new Set();
 
   for (let row = 0; row < diamondTable.length; ++row) {
