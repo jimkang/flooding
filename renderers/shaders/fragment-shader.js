@@ -199,11 +199,52 @@ float waveDist(float x, float y, float t, float density, float wiggle, float yAd
   return abs(outY - y);
 }
 
+float waveXYOn(float x, float y, float t, float density, float wiggle,
+  float yAdjust, float offset, float extraPhaseShift) {
+
+  vec2 rotatedSt = rotate2D(vec2(x, y), PI/2.);
+
+  return max(
+    noiseWaveLine(
+      x,
+      y,
+      // We don't want the t param to get really big because then 
+      // violent shakes happen in the transition, hence the sin.
+      sin(t + offset),
+      density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
+      wiggle,
+      yAdjust,
+      8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, x), // lineBlur TODO: Make this thicker.
+      .005, // lineThicknessTop
+      .005, // lineThicknessBottom
+      9. + offset,
+      .02,
+      (x + offset)/PI,
+      extraPhaseShift
+    ) 
+    ,
+    noiseWaveLine(
+      rotatedSt.x,
+      rotatedSt.y,
+      sin(t + offset),
+      density,
+      wiggle,
+      yAdjust,
+      8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
+      .005, // lineThicknessTop
+      .005, // lineThicknessBottom
+      37. + offset,
+      .007,
+      (rotatedSt.x + offset)/PI,
+      extraPhaseShift * 2.
+    )
+  );
+}
+
 void main() {
   vec2 st = gl_FragCoord.xy/u_res;
   // Translate everything to the left.
   st.x += .25;
-  vec2 rotatedSt = rotate2D(st, PI/2.);
 
   // float distProp = 0.;
   // float dist = distance(st, vec2(.5));
@@ -221,42 +262,18 @@ void main() {
   for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
     float yAdjust = 0.;//baseWaveSpace/2. + i * baseWaveSpace;
     int iLineSetIndex = int(lineSetIndex);
-    baseOnSet[iLineSetIndex] = max(baseOnSet[iLineSetIndex],
-      max(
-        noiseWaveLine(
-          st.x,
-          st.y,
-          // We don't want the t param to get really big because then 
-          // violent shakes happen in the transition, hence the sin.
-          sin(u_time + offset),
-          u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
-          u_density * .5 * (lineSetIndex + 1.),
-          yAdjust,
-          8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
-          .005, // lineThicknessTop
-          .005, // lineThicknessBottom
-          9. + offset,
-          .02,
-          (st.x + offset)/PI,
-          PI/16. * float(iLineSetIndex) // extraPhaseShiftFactor
-        ) 
-        ,
-        noiseWaveLine(
-          rotatedSt.x,
-          rotatedSt.y,
-          sin(u_time + offset),
-          u_density,
-          u_density * .5 * (lineSetIndex + 1.),
-          yAdjust,
-          8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
-          .005, // lineThicknessTop
-          .005, // lineThicknessBottom
-          37. + offset,
-          .007,
-          (rotatedSt.x + offset)/PI,
-          PI/8. * float(iLineSetIndex) // extraPhaseShiftFactor
-        )
-      ) 
+    baseOnSet[iLineSetIndex] = max(
+      baseOnSet[iLineSetIndex],
+      waveXYOn(
+        st.x,
+        st.y,
+        u_time,
+        u_density,
+        u_density * .5 * (lineSetIndex + 1.), // wiggle
+        yAdjust,
+        offset,
+        PI/16. * float(lineSetIndex) // extraPhaseShift
+      )
     );
     // Next: "Following" lines that are random distances from the previous line.
   }
