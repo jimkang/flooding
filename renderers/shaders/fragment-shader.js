@@ -210,59 +210,55 @@ void main() {
 
   float on = 0.;
 
-  float onSet[LINE_SET_COUNT];
+  float baseOnSet[LINE_SET_COUNT];
   for (int i = 0; i < LINE_SET_COUNT; ++i) {
-    onSet[i] = 0.;
+    baseOnSet[i] = 0.;
   }
 
   // Wave lines
   float offset = 0.;
 
   for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
-    offset += baseWaveSpace/fLineSetCount;
-
-    for (float i = -2.; i < 1./baseWaveSpace; ++i) {
-      float yAdjust = baseWaveSpace/2. + i * baseWaveSpace;
-      int iLineSetIndex = int(lineSetIndex);
-      onSet[iLineSetIndex] = max(onSet[iLineSetIndex],
-        max(
-          noiseWaveLine(
-            st.x,
-            st.y,
-            // We don't want the t param to get really big because then 
-            // violent shakes happen in the transition, hence the sin.
-            sin(u_time + offset),
-            u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
-            u_density * .5 * (lineSetIndex + 1.),
-            yAdjust,
-            8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
-            .005, // lineThicknessTop
-            .005, // lineThicknessBottom
-            9. + offset,
-            .02,
-            (st.x + offset)/PI,
-            PI/16. * float(iLineSetIndex) // extraPhaseShiftFactor
-          ) 
-          ,
-          noiseWaveLine(
-            rotatedSt.x,
-            rotatedSt.y,
-            sin(u_time + offset),
-            u_density,
-            u_density * .5 * (lineSetIndex + 1.),
-            yAdjust,
-            8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
-            .005, // lineThicknessTop
-            .005, // lineThicknessBottom
-            37. + offset,
-            .007,
-            (rotatedSt.x + offset)/PI,
-            PI/8. * float(iLineSetIndex) // extraPhaseShiftFactor
-          )
+    float yAdjust = 0.;//baseWaveSpace/2. + i * baseWaveSpace;
+    int iLineSetIndex = int(lineSetIndex);
+    baseOnSet[iLineSetIndex] = max(baseOnSet[iLineSetIndex],
+      max(
+        noiseWaveLine(
+          st.x,
+          st.y,
+          // We don't want the t param to get really big because then 
+          // violent shakes happen in the transition, hence the sin.
+          sin(u_time + offset),
+          u_density, // Offset is between 0 and 1, and multiplying the density by it results in less change.
+          u_density * .5 * (lineSetIndex + 1.),
+          yAdjust,
+          8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (7. + offset) * PI, true, st.x), // lineBlur TODO: Make this thicker.
+          .005, // lineThicknessTop
+          .005, // lineThicknessBottom
+          9. + offset,
+          .02,
+          (st.x + offset)/PI,
+          PI/16. * float(iLineSetIndex) // extraPhaseShiftFactor
         ) 
-      );
-      // Next: "Following" lines that are random distances from the previous line.
-    }
+        ,
+        noiseWaveLine(
+          rotatedSt.x,
+          rotatedSt.y,
+          sin(u_time + offset),
+          u_density,
+          u_density * .5 * (lineSetIndex + 1.),
+          yAdjust,
+          8. * baseWaveSpace * multiGenNoise(4, .9, .25, .125, (5. + offset) * PI, false, rotatedSt.x), // lineBlur
+          .005, // lineThicknessTop
+          .005, // lineThicknessBottom
+          37. + offset,
+          .007,
+          (rotatedSt.x + offset)/PI,
+          PI/8. * float(iLineSetIndex) // extraPhaseShiftFactor
+        )
+      ) 
+    );
+    // Next: "Following" lines that are random distances from the previous line.
   }
 
   // Wave distance fields
@@ -278,6 +274,6 @@ void main() {
   // Distance from something that is on.
 
   // TODO: Different color mapping?
-  outColor = vec4(onSet[0], onSet[1], onSet[2], 1.0);
+  outColor = vec4(baseOnSet[0], baseOnSet[1], baseOnSet[2], 1.0);
 }
 `;
