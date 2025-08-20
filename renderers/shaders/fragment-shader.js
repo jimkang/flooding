@@ -206,26 +206,21 @@ void main() {
   st.x += .25;
   vec2 rotatedSt = rotate2D(st, PI/2.);
 
-  // float distProp = 0.;
-  // float dist = distance(st, vec2(.5));
-
-  float on = 0.;
-
-  vec3 onSet[1 + echoSetCount];
-  for (int i = 0; i < echoSetCount; ++i) {
-    onSet[i] = vec3(0.);
-  }
+  // vec3 onSet[1 + echoSetCount];
+  // for (int i = 0; i < echoSetCount; ++i) {
+  //   onSet[i] = vec3(0.);
+  // }
 
   // Wave lines
-  float offset = 0.;
   vec3 baseOnSet = vec3(0.);
+  float offset = .5;
   float yAdjust = 0.;
 
   for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
     int iLineSetIndex = int(lineSetIndex);
 
-    onSet[0][iLineSetIndex] = max(
-      onSet[0][iLineSetIndex],
+    baseOnSet[iLineSetIndex] = max(
+      baseOnSet[iLineSetIndex],
       max(
         noiseWaveLine(
           st.x,
@@ -279,6 +274,6 @@ void main() {
   // Distance from something that is on.
 
   // TODO: Different color mapping?
-  outColor = vec4(onSet[0][0], onSet[0][1], onSet[0][2], 1.0);
+  outColor = vec4(baseOnSet.x, baseOnSet.y, baseOnSet.z, 1.0);
 }
 `;
