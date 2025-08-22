@@ -4,6 +4,7 @@ precision highp float;
 
 #define PI 3.141592653589793
 #define LINE_SET_COUNT 3
+#define ECHO_COUNT 2
 
 uniform float u_density;
 uniform float u_time;
@@ -256,10 +257,17 @@ void main() {
     baseOnSet[i] = 0.;
   }
 
+  float echoSets[ECHO_COUNT * LINE_SET_COUNT];
+  for (int i = 0; i < ECHO_COUNT; ++i) {
+    for (int j = 0; j < LINE_SET_COUNT; ++j) {
+      echoSets[i * LINE_SET_COUNT + j] = 0.;
+    }
+  }
+
   // Wave lines
   float offset = 0.;
 
-  for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
+  for (float lineSetIndex = 0.; lineSetIndex < 1.; ++lineSetIndex) {
     float yAdjust = 0.;//baseWaveSpace/2. + i * baseWaveSpace;
     int iLineSetIndex = int(lineSetIndex);
     baseOnSet[iLineSetIndex] = max(
@@ -270,27 +278,49 @@ void main() {
         u_time,
         u_density,
         u_density * .5 * (lineSetIndex + 1.), // wiggle
-        yAdjust,
-        offset,
-        PI/16. * float(lineSetIndex) // extraPhaseShift
+        0.,//yAdjust,
+        0.,//offset,
+        0. //PI/16. * float(lineSetIndex) // extraPhaseShift
       )
     );
     // Next: "Following" lines that are random distances from the previous line.
   }
 
-  // Wave distance fields
-  // float waveIndex = 0.;//floor(st.y/baseWaveSpace);
-  // float waveLowBound = waveIndex * baseWaveSpace;
-  // // float waveHighBound = waveLowBound + baseWaveSpace;
-  // float yAdjust = baseWaveSpace/2. + waveLowBound;
-  // float singleWaveOn = fract(waveDist(st.x, st.y, u_time, u_density, u_wiggle, yAdjust) * 10.);
-  // // singleWaveOn += fract(waveDist(rotatedSt.x, rotatedSt.y, u_time, u_density, u_wiggle, yAdjust) * 10.);
-  // on += singleWaveOn;
-  // on = min(on, 1.);
-
-  // Distance from something that is on.
-
   // TODO: Different color mapping?
   outColor = vec4(baseOnSet[0], baseOnSet[1], baseOnSet[2], 1.0);
+  // outColor = vec4(0., 0., 0., 1.);
+
+  for (int echoIndex = 0; echoIndex < 1; ++echoIndex) {
+
+    // for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
+    //   int iLineSetIndex = int(lineSetIndex);
+      float adjust = .1;//.2 * float(1 + echoIndex);
+
+      echoSets[echoIndex * LINE_SET_COUNT + 0] = max(
+        echoSets[echoIndex * LINE_SET_COUNT + 0],
+        // .5 
+        waveXYOn(
+          st.x,
+          st.y,
+          u_time,
+          u_density,
+          u_density * .5 * (0. + 1.), // wiggle
+          adjust,
+          0.,
+          0.//PI/16. * float(0.) // extraPhaseShift
+        )
+      );
+      // Next: "Following" lines that are random distances from the previous line.
+    // }
+  }
+
+  // This works. So something must be wrong with the waveXYOn call.
+  // echoSets[0].x = .5;
+  for (int echoIndex = 0; echoIndex < 1; ++echoIndex) {
+    outColor.x = max(outColor.x, echoSets[echoIndex * LINE_SET_COUNT + 0]);
+    outColor.y = max(outColor.y, echoSets[echoIndex * LINE_SET_COUNT + 0]);
+    outColor.z = max(outColor.z, echoSets[echoIndex * LINE_SET_COUNT + 0]);
+    // outColor = max(outColor, echoSets[echoIndex]);
+  }
 }
 `;
