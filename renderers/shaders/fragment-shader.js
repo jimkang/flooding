@@ -294,7 +294,7 @@ void main() {
 
     for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
       int iLineSetIndex = int(lineSetIndex);
-      float adjust = .15 * float(1 + echoIndex);
+      float adjust = .025 * float(1 + echoIndex) + noise(false, lineSetIndex);
 
       echoSets[echoIndex * LINE_SET_COUNT + iLineSetIndex] = max(
         echoSets[echoIndex * LINE_SET_COUNT + iLineSetIndex],
