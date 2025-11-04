@@ -1,7 +1,7 @@
 import { ScoreState } from 'synthskel/types';
 import { select } from 'd3-selection';
 import vertexShaderSrc from './shaders/vertex-shader';
-import fragmentShaderSrc from './shaders/fragment-shader';
+import fragmentShaderSrc from './shaders/flood-noise-fragment-shader.js';
 import { PausableTimer } from '../tasks/pausable-timer.js';
 
 var monthLabel = select('.month');
