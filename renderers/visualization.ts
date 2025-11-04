@@ -75,7 +75,7 @@ function setUpShaders() {
 
   densityLocation = gl.getUniformLocation(program, 'u_density');
   timeLocation = gl.getUniformLocation(program, 'u_time');
-  resLocation = gl.getUniformLocation(program, 'u_res');
+  resLocation = gl.getUniformLocation(program, 'u_resolution');
   // cleanup();
 }
 
