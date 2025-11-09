@@ -31,7 +31,7 @@ import { ScoreState } from 'synthskel/types';
 import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
-import { /* enableGoodlog,*/ goodlog } from './tasks/goodlog';
+import { enableGoodlog, goodlog } from './tasks/goodlog';
 import { ReverbMixer } from './tasks/reverb-mixer';
 
 // enableGoodlog();
@@ -73,6 +73,7 @@ async function followRoute({
   finalFadeOutLength = 16,
   constantTickLength = false,
   fixedEndTickLength = 30,
+  debug = false,
   parts = [
     {
       sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav',
@@ -217,6 +218,10 @@ async function followRoute({
     },
   ],
 }) {
+  if (debug) {
+    enableGoodlog();
+  }
+
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
