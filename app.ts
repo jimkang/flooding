@@ -86,7 +86,7 @@ async function followRoute({
       slideMode: false,
       pan: -0.1,
       solo: false,
-      // mute: true,
+      mute: true,
     },
     {
       sample: 'vibraphone-mellower-d3.wav', // 'Vibraphone.sustain.ff.D3.wav',
@@ -100,7 +100,7 @@ async function followRoute({
       envelopeCurve: flatADSR, // [0, 0.1, 0.2, 0.5, 1, 1],
       fadeLengthFactor: 0.05,
       slideMode: false,
-      // mute: true,
+      mute: true,
       // solo: true,
     },
     {
@@ -131,7 +131,7 @@ async function followRoute({
       slideMode: false,
       arpeggiate: false,
       arpeggioRate: 0.125,
-      // mute: true,
+      mute: true,
       // solo: true,
     },
     // This is doubling the above trumpet an octave lower.
@@ -162,7 +162,7 @@ async function followRoute({
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 0.1,
       slideMode: false,
-      // mute: true,
+      mute: true,
       arpeggiate: false,
       arpeggioRate: 0.25,
       // solo: true,
@@ -179,7 +179,7 @@ async function followRoute({
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.1,
       slideMode: false,
-      mute: false,
+      mute: true,
       // solo: true,
     },
     // {
@@ -213,6 +213,7 @@ async function followRoute({
       },
       fadeLengthFactor: 0.1,
       slideMode: false,
+      // mute: true,
     },
   ],
 }) {
