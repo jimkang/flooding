@@ -82,6 +82,16 @@ svg {
   font-weight: bold;
 }
 
+.debug-only {
+  display: none;
+  visibility: hidden;
+}
+
+.debug .debug-only {
+  display: block;
+  visibility: visible;
+}
+
 @media all and (max-height: 568px) {
   body {
     font-size: 18px;

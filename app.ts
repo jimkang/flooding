@@ -33,6 +33,7 @@ import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
 import { enableGoodlog, goodlog } from './tasks/goodlog';
 import { ReverbMixer } from './tasks/reverb-mixer';
+import { select } from 'd3-selection';
 
 // enableGoodlog();
 
@@ -221,6 +222,7 @@ async function followRoute({
   if (debug) {
     enableGoodlog();
   }
+  select('body').classed('debug', debug);
 
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
@@ -386,37 +388,42 @@ async function followRoute({
     if (!isNaN(mainGroupScoreState.tickLength)) {
       tickLength = mainGroupScoreState.tickLength;
     }
-    renderEventDirection({
-      tickIndex: ticks,
-      tickLength,
-      chordSize: mainGroupScoreState.meta.chordPitchCount,
-    });
 
-    renderDensity({
-      valueOverTimeArray: mainGroupScoreStateObjects.map(
-        ({ tickLength, meta }) => ({
-          time: tickLength,
-          value: meta.chordPitchCount,
-        })
-      ),
-      totalTime: totalSeconds,
-      valueMax: tonalityDiamondPitches.length,
-      currentTick: ticks,
-    });
+    if (debug) {
+      renderEventDirection({
+        tickIndex: ticks,
+        tickLength,
+        chordSize: mainGroupScoreState.meta.chordPitchCount,
+      });
 
-    renderTickLengths({
-      valueOverTimeArray: mainGroupScoreStateObjects.map(({ tickLength }) => ({
-        time: 1,
-        value: tickLength,
-      })),
-      totalTime: mainGroupScoreStateObjects.length,
-      valueMax: mainGroupScoreStateObjects.reduce(
-        (max, direction) =>
-          direction.tickLength > max ? direction.tickLength : max,
-        0
-      ),
-      currentTick: ticks,
-    });
+      renderDensity({
+        valueOverTimeArray: mainGroupScoreStateObjects.map(
+          ({ tickLength, meta }) => ({
+            time: tickLength,
+            value: meta.chordPitchCount,
+          })
+        ),
+        totalTime: totalSeconds,
+        valueMax: tonalityDiamondPitches.length,
+        currentTick: ticks,
+      });
+
+      renderTickLengths({
+        valueOverTimeArray: mainGroupScoreStateObjects.map(
+          ({ tickLength }) => ({
+            time: 1,
+            value: tickLength,
+          })
+        ),
+        totalTime: mainGroupScoreStateObjects.length,
+        valueMax: mainGroupScoreStateObjects.reduce(
+          (max, direction) =>
+            direction.tickLength > max ? direction.tickLength : max,
+          0
+        ),
+        currentTick: ticks,
+      });
+    }
 
     for (let i = 0; i < scoreDirectors.length; ++i) {
       scoreDirectors[i].play(
