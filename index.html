@@ -7,45 +7,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <div id="status-message" class="hidden"></div>
-
-    <section class="debug-only">
-      <div class="intro-description">Let's flood!</div>
-
-      <label for="piece-length-field">Length of piece in ticks:</label><input id="piece-length-field" type="number">
-      <label for="tempo-factor-field">Tempo factor:</label><input id="tempo-factor-field" type="number" step="0.1">
-
-      <div class="current-info">
-        <div><span>Current tick:</span> <span id="current-tick-field"></span></div>
-        <div><span>Current tick length:</span> <span id="current-tick-length-field"></span></div>
-        <div><span>Current chord size:</span> <span id="current-chord-size-field"></span></div>
-      </div>
-    </section>
-
-    <div class="text-labels">
-      <div class="month"></div>
-      <div class="year"></div>
-      <div class="water-level">Heat in the oceans over the level at the end of 1955: <span class="ohc-level"></span> 10<sup>22</sup> joules</div>
-    </div>
-
-    <div class="graph-info debug-only">
-    </div>
-    <button id="start-button" disabled="true">Flood</button>
-
     <canvas id="shader-canvas" width="600" height="600"></canvas>
 
-    <div class="graphs debug-only">
-      <div class="graph">
-        <h2>Density over time</h2>
-        <svg id="density-canvas" width="1000" height="600"><g class="root"></g></svg>
-      </div>
-      <div class="graph">
-        <h2>Tick lengths</h2>
-        <svg id="ticklength-canvas" width="1000" height="600"><g class="root"></g></svg>
-      </div>
-    </div>
+    <section class="non-shader">
+      <div id="status-message" class="hidden"></div>
 
-    <div id="version-info"></div>
+      <section class="debug-only">
+        <div class="intro-description">Let's flood!</div>
+
+        <label for="piece-length-field">Length of piece in ticks:</label><input id="piece-length-field" type="number">
+        <label for="tempo-factor-field">Tempo factor:</label><input id="tempo-factor-field" type="number" step="0.1">
+
+        <div class="current-info">
+          <div><span>Current tick:</span> <span id="current-tick-field"></span></div>
+          <div><span>Current tick length:</span> <span id="current-tick-length-field"></span></div>
+          <div><span>Current chord size:</span> <span id="current-chord-size-field"></span></div>
+        </div>
+      </section>
+
+      <div class="text-labels">
+        <div class="month"></div>
+        <div class="year"></div>
+        <div class="water-level">Heat in the oceans over the level at the end of 1955: <span class="ohc-level"></span> 10<sup>22</sup> joules</div>
+      </div>
+
+      <div class="graph-info debug-only">
+      </div>
+      <button id="start-button" disabled="true">Flood</button>
+
+
+      <div class="graphs debug-only">
+        <div class="graph">
+          <h2>Density over time</h2>
+          <svg id="density-canvas" width="1000" height="600"><g class="root"></g></svg>
+        </div>
+        <div class="graph">
+          <h2>Tick lengths</h2>
+          <svg id="ticklength-canvas" width="1000" height="600"><g class="root"></g></svg>
+        </div>
+      </div>
+
+      <div id="version-info"></div>
+    </section> <!-- nonshader -->
 
     <script src="index.js"></script>
   </body>
