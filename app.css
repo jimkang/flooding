@@ -4,7 +4,6 @@ body {
   background: #fff;
   color: #333;
   margin: 0;
-  margin-bottom: 2rem;
 }
 
 .invisible {
@@ -90,6 +89,22 @@ svg {
 .debug .debug-only {
   display: block;
   visibility: visible;
+}
+
+#shader-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.text-labels {
+  position: fixed;
+  top: 10%;
+  color: white;
+}
+
+#start-button {
+  position: fixed;
+  top: 20%;
 }
 
 @media all and (max-height: 568px) {

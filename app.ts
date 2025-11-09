@@ -23,6 +23,7 @@ import { renderEventDirection } from './renderers/render-event-direction';
 import {
   renderVisualizationForTick,
   renderShader,
+  initCanvas,
 } from './renderers/visualization';
 // import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
@@ -223,6 +224,7 @@ async function followRoute({
     enableGoodlog();
   }
   select('body').classed('debug', debug);
+  initCanvas();
 
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });

@@ -18,6 +18,12 @@ var resLocation;
 
 var mainTimer;
 
+export function initCanvas() {
+  var canvasSel = select('#shader-canvas');
+  var rect = canvasSel.node().getBoundingClientRect();
+  canvasSel.attr('width', rect.width).attr('height', rect.height);
+}
+
 export function renderVisualizationForTick(scoreState: ScoreState) {
   var monthDatum = scoreState?.meta?.sourceDatum;
   if (monthDatum) {
