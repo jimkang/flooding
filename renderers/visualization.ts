@@ -11,6 +11,8 @@ var gl;
 var program;
 var glBuffer;
 var densityLocation;
+var ampChangeFreqMultLocation;
+var ampChangeMultLocation;
 var timeLocation;
 var resLocation;
 
@@ -34,10 +36,13 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
     monthLabel.text(month);
     yearLabel.text(monthDatum.year);
     levelLabel.text(monthDatum.value.toFixed(2));
+
+    // d = w/f
+    // const metersMoved = monthDatum.value * Math.pow(10, 22) /
   }
 }
 
-export function renderShader({ density }) {
+export function renderShader({ density, ampChangeMult, ampFreqChangeMult }) {
   if (!gl) {
     setUpShaders();
     if (!mainTimer) {
@@ -47,7 +52,9 @@ export function renderShader({ density }) {
   }
 
   gl.uniform2fv(resLocation, [gl.canvas.width, gl.canvas.height]);
-  setDensity(density);
+  gl.uniform1f(densityLocation, density);
+  gl.uniform1f(ampChangeMultLocation, ampChangeMult);
+  gl.uniform1f(ampChangeFreqMultLocation, ampFreqChangeMult);
 }
 
 function setUpShaders() {
@@ -80,6 +87,11 @@ function setUpShaders() {
   gl.useProgram(program);
 
   densityLocation = gl.getUniformLocation(program, 'u_density');
+  ampChangeMultLocation = gl.getUniformLocation(program, 'u_ampChangeMult');
+  ampChangeFreqMultLocation = gl.getUniformLocation(
+    program,
+    'u_ampChangeFreqMult'
+  );
   timeLocation = gl.getUniformLocation(program, 'u_time');
   resLocation = gl.getUniformLocation(program, 'u_resolution');
   // cleanup();
@@ -143,8 +155,4 @@ function updateShader() {
 
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   requestAnimationFrame(updateShader);
-}
-
-function setDensity(density) {
-  gl.uniform1f(densityLocation, density);
 }

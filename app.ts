@@ -445,12 +445,13 @@ async function followRoute({
     }
 
     renderVisualizationForTick(mainGroupScoreState);
+    const density =
+      mainGroupScoreState.meta.chordPitchCount / tonalityDiamondPitches.length;
     renderShader({
-      density:
-        (mainGroupScoreState.meta.chordPitchCount /
-          tonalityDiamondPitches.length) *
-        0.934, // We never use all of the tonality diamond pitches.
+      density: density * 0.934, // We never use all of the tonality diamond pitches.
       // tickLengthInMS: tickLength * 1000,
+      ampChangeMult: 0.4,
+      ampFreqChangeMult: 0.5,
     });
   }
 

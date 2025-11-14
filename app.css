@@ -108,7 +108,7 @@ svg {
 
 .text-labels {
   top: 10%;
-  color: white;
+  color: hsl(0, 0%, 100%, .8);
 }
 
 #start-button {
