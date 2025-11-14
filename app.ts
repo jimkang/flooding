@@ -450,7 +450,7 @@ async function followRoute({
     renderShader({
       density: density * 0.934, // We never use all of the tonality diamond pitches.
       // tickLengthInMS: tickLength * 1000,
-      ampChangeMult: 0.4,
+      ampChangeMult: density,
       ampFreqChangeMult: 0.5,
     });
   }
