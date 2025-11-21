@@ -307,7 +307,7 @@ async function followRoute({
     Transposer({
       seed,
       freqFactor: +part.transposeFreqFactor,
-      eventProportionToTranspose: part.transposeFreqFactor,
+      eventProportionToTranspose: part.transposeProportion,
       shouldLoop: part.loop,
       loopStartSeconds: 0,
       loopEndSeconds: +part.loopEndSeconds,
