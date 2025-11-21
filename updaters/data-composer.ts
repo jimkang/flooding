@@ -153,7 +153,6 @@ export function DataComposer({
         peakGain: (chordProportion * chordProportion) / 1.6,
         //ratioToGainAdjScale(tonalityDiamondPitches[chordIndex]) *
         //(1.0 / pitches.length),
-        // Undefined loopEndSeconds tells the director to play to the end of the sample.
         loop,
         reverb: true,
         reverbMix: Math.min(
