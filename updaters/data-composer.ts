@@ -198,7 +198,8 @@ export function DataComposer({
     //(0.8 + 0.4 * prob.roll(100)/100);
 
     tickLength *= tempoFactor;
-    const acclimatizationFactor = 1.0 - tickIndex / totalTicks / 2;
+    // Acclimatize the listener to changes, then back off.
+    const acclimatizationFactor = 1.0 - Math.pow(1 - tickIndex / totalTicks, 2);
     tickLength *= acclimatizationFactor;
 
     if (tickLength < minTickLength) {
