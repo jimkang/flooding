@@ -77,7 +77,7 @@ export function DataComposer({
   function getScoreState(tickIndex): ScoreState {
     var sourceDatum = data[index];
 
-    var tickLength = getTickLength(sourceDatum);
+    var tickLength = getTickLength(sourceDatum, tickIndex);
 
     if (!isNaN(fixedEndTickLength) && tickIndex === totalTicks - 1) {
       tickLength = fixedEndTickLength;
@@ -185,7 +185,7 @@ export function DataComposer({
     return pans;
   }
 
-  function getTickLength(currentDatum) {
+  function getTickLength(currentDatum, tickIndex) {
     var tickLength = 1;
 
     if (constantTickLength) {
@@ -198,6 +198,8 @@ export function DataComposer({
     //(0.8 + 0.4 * prob.roll(100)/100);
 
     tickLength *= tempoFactor;
+    const acclimatizationFactor = 1.0 - tickIndex / totalTicks / 2;
+    tickLength *= acclimatizationFactor;
 
     if (tickLength < minTickLength) {
       tickLength = minTickLength;
