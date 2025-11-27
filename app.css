@@ -100,10 +100,18 @@ svg {
   pointer-events: none;
 }
 
+.debug #shader-canvas {
+  position: static;
+}
+
 .non-shader {
   position: fixed;
   top: 0;
   left: 0;
+}
+
+.debug .non-shader {
+  position: static;
 }
 
 .text-labels {
