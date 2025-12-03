@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "Flooding-driven audio piece",
   "main": "index.js",
-  "prifloodinge": true,
+  "private": true,
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w"

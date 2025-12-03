@@ -69,7 +69,7 @@ async function followRoute({
   seed,
   totalTicks,
   tempoFactor = defaultSecondsPerTick,
-  startTick = 0,
+  startTick = 62,
   chordScaleExponent = 1,
   chordSizeLengthExp = 2,
   finalFadeOutLength = 16,
