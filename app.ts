@@ -467,7 +467,7 @@ async function followRoute({
       density: density * 0.934, // We never use all of the tonality diamond pitches.
       // tickLengthInMS: tickLength * 1000,
       ampChangeMult: density,
-      ampFreqChangeMult: 0.5,
+      ampFreqChangeMult: 1 / tickLength,
     });
   }
 
