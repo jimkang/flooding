@@ -109,8 +109,8 @@ async function followRoute({
       // solo: true,
     },
     {
-      // sample: '2_D-PB.wav.wav',
-      sample: 'trumpet-D2-eqd.wav.wav',
+      // sample: '2_D-PB.wav',
+      sample: 'trumpet-D2-eqd.wav',
       loop: true,
       loopStartSeconds: 0,
       loopEndSeconds: 2,
@@ -126,8 +126,8 @@ async function followRoute({
       // solo: true,
     },
     {
-      // sample: '2_D-PB.wav.wav',
-      sample: 'trumpet-D2-eqd.wav.wav',
+      // sample: '2_D-PB.wav',
+      sample: 'trumpet-D2-eqd.wav',
       // impulse: 'spacey-impulse.wav',
       loop: true,
       loopStartSeconds: 0,
@@ -147,7 +147,7 @@ async function followRoute({
     },
     // This is doubling the above trumpet an octave lower.
     {
-      sample: '2_D-PB.wav.wav',
+      sample: '2_D-PB.wav',
       impulse: 'echoey-impulse.wav',
       loop: true,
       loopStartSeconds: 0,
