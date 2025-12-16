@@ -1,10 +1,9 @@
 body {
   font-size: 24px;
   font-family: Helvetica, sans-serif;
-  background: #fff;
+  background: #000;
   color: #333;
   margin: 0;
-  margin-bottom: 2rem;
 }
 
 .invisible {
@@ -80,6 +79,48 @@ svg {
 .ohc-level {
   font-size: larger;
   font-weight: bold;
+}
+
+.debug-only {
+  display: none;
+  visibility: hidden;
+}
+
+.debug .debug-only {
+  display: block;
+  visibility: visible;
+}
+
+#shader-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.debug #shader-canvas {
+  position: static;
+}
+
+.non-shader {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.debug .non-shader {
+  position: static;
+}
+
+.text-labels {
+  top: 10%;
+  color: hsl(0, 0%, 100%, .8);
+}
+
+#start-button {
+  top: 20%;
 }
 
 @media all and (max-height: 568px) {

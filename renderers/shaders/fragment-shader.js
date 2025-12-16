@@ -4,7 +4,7 @@ precision highp float;
 
 #define PI 3.141592653589793
 #define LINE_SET_COUNT 3
-#define ECHO_COUNT 2
+#define ECHO_COUNT 10
 
 uniform float u_density;
 uniform float u_time;
@@ -183,7 +183,10 @@ float noiseWaveLine(
   float waveYForX = wave(x, t, density, wiggle, yAdjust, extraPhaseShiftFactor);
 
   // Additional wave, makes it more water-like.
-  waveYForX += noiseAmpFactor * sin(noisePhaseFactor * x + 2. * t);
+  for (int echoIndex = 0; echoIndex < ECHO_COUNT; ++echoIndex) {
+    // waveYForX += noiseAmpFactor * float(echoIndex) * sin(noisePhaseFactor * x + 2. * t);
+    waveYForX += sin(x * float(echoIndex) * PI / 4.);
+  }
 
   float bottomEdge = waveYForX - lineThicknessBottom;// * sin(t/8.) * noiseEdgeFactor;
   float topEdge = waveYForX + lineThicknessTop;// * noiseEdgeFactor * cos(t/8.);
@@ -268,7 +271,7 @@ void main() {
   float offset = 0.;
 
   for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
-    float yAdjust = 0.;//baseWaveSpace/2. + lineSetIndex * baseWaveSpace;
+    float yAdjust = baseWaveSpace/4. + lineSetIndex * baseWaveSpace;
     int iLineSetIndex = int(lineSetIndex);
     baseOnSet[iLineSetIndex] = max(
       baseOnSet[iLineSetIndex],
@@ -294,20 +297,21 @@ void main() {
 
     for (float lineSetIndex = 0.; lineSetIndex < fLineSetCount; ++lineSetIndex) {
       int iLineSetIndex = int(lineSetIndex);
-      float adjust = .15 * float(1 + echoIndex);
+      // float adjust = .025 * float(1 + echoIndex) + noise(false, lineSetIndex);
+      float adjust = noise(false, lineSetIndex);
 
       echoSets[echoIndex * LINE_SET_COUNT + iLineSetIndex] = max(
         echoSets[echoIndex * LINE_SET_COUNT + iLineSetIndex],
         // .5 
         waveXYOn(
-          st.x,
-          st.y,
+          st.x + sin(float(echoIndex)/float(ECHO_COUNT)),
+          st.y, // + sin(float(echoIndex)/float(ECHO_COUNT)),
           u_time,
           u_density,
           u_density * .5 * (lineSetIndex + 1.), // wiggle
           adjust,
-          PI * float(echoIndex), //offset
-          PI/16. * float(lineSetIndex) // extraPhaseShift
+          0.,// PI * float(echoIndex), //offset
+          0.//PI/16. * float(lineSetIndex) // extraPhaseShift
         )
       );
       // Next: "Following" lines that are random distances from the previous line.
@@ -317,9 +321,9 @@ void main() {
   // This works. So something must be wrong with the waveXYOn call.
   // echoSets[0].x = .5;
   for (int echoIndex = 0; echoIndex < ECHO_COUNT; ++echoIndex) {
-    outColor.x = max(outColor.x, echoSets[echoIndex * LINE_SET_COUNT + 0]);
-    outColor.y = max(outColor.y, echoSets[echoIndex * LINE_SET_COUNT + 1]);
-    outColor.z = max(outColor.z, echoSets[echoIndex * LINE_SET_COUNT + 2]);
+    // outColor.x = max(outColor.x, echoSets[echoIndex * LINE_SET_COUNT + 0]);
+    // outColor.y = max(outColor.y, echoSets[echoIndex * LINE_SET_COUNT + 1]);
+    // outColor.z = max(outColor.z, echoSets[echoIndex * LINE_SET_COUNT + 2]);
   }
 }
 `;

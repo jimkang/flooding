@@ -8,8 +8,9 @@ export function Transposer({
   freqFactor,
   eventProportionToTranspose,
   shouldLoop,
-  sampleLoopStart,
-  sampleLoopEnd,
+  loopStartSeconds,
+  loopEndSeconds,
+  adjustLoopForRate,
   panDelta = 0,
   arpeggiate = false,
   arpeggioRate = 1.0,
@@ -18,8 +19,9 @@ export function Transposer({
   freqFactor: number;
   eventProportionToTranspose: number;
   shouldLoop?: boolean;
-  sampleLoopStart?: number;
-  sampleLoopEnd?: number;
+  loopStartSeconds?: number;
+  loopEndSeconds?: number;
+  adjustLoopForRate?: boolean;
   panDelta: number;
   arpeggiate?: boolean;
   arpeggioRate: number;
@@ -48,10 +50,13 @@ export function Transposer({
       events: ScoreEvent[]
     ): ScoreEvent {
       var newEvent = Object.assign({}, scoreEvent);
-      if (shouldLoop && !isNaN(sampleLoopStart) && !isNaN(sampleLoopEnd)) {
+      if (shouldLoop && !isNaN(loopStartSeconds) && !isNaN(loopEndSeconds)) {
+        // The actual loop length is affected by the playbackRate.
         newEvent.loop = {
-          loopStartSeconds: sampleLoopStart,
-          loopEndSeconds: sampleLoopEnd,
+          loopStartSeconds: loopStartSeconds,
+          loopEndSeconds: adjustLoopForRate
+            ? loopEndSeconds * scoreEvent.rate
+            : loopEndSeconds,
         };
       } else {
         delete newEvent.loop;

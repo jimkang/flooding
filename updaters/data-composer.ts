@@ -77,7 +77,7 @@ export function DataComposer({
   function getScoreState(tickIndex): ScoreState {
     var sourceDatum = data[index];
 
-    var tickLength = getTickLength(sourceDatum);
+    var tickLength = getTickLength(sourceDatum, tickIndex);
 
     if (!isNaN(fixedEndTickLength) && tickIndex === totalTicks - 1) {
       tickLength = fixedEndTickLength;
@@ -153,7 +153,6 @@ export function DataComposer({
         peakGain: (chordProportion * chordProportion) / 1.6,
         //ratioToGainAdjScale(tonalityDiamondPitches[chordIndex]) *
         //(1.0 / pitches.length),
-        // Undefined loopEndSeconds tells the director to play to the end of the sample.
         loop,
         reverb: true,
         reverbMix: Math.min(
@@ -186,7 +185,8 @@ export function DataComposer({
     return pans;
   }
 
-  function getTickLength(currentDatum) {
+  function getTickLength(currentDatum, tickIndex) {
+    //, tickIndex) {
     var tickLength = 1;
 
     if (constantTickLength) {
@@ -199,6 +199,9 @@ export function DataComposer({
     //(0.8 + 0.4 * prob.roll(100)/100);
 
     tickLength *= tempoFactor;
+    const progress = tickIndex / totalTicks;
+    const acclimatizationFactor = 1 - Math.pow(progress, 2);
+    tickLength *= acclimatizationFactor;
 
     if (tickLength < minTickLength) {
       tickLength = minTickLength;

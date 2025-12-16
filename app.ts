@@ -23,6 +23,7 @@ import { renderEventDirection } from './renderers/render-event-direction';
 import {
   renderVisualizationForTick,
   renderShader,
+  initCanvas,
 } from './renderers/visualization';
 // import bostonMSL from './data/rlr_monthly/json-data/235.json';
 import ohcByQuarter from './data/ohc_levitus_climdash_seasonal.json';
@@ -31,10 +32,11 @@ import { ScoreState } from 'synthskel/types';
 import { MainOut } from 'synthskel/synths/main-out';
 import { Transposer } from './updaters/transposer';
 // import { NarrationDataComposer } from './updaters/narration-data-composer';
-import { /* enableGoodlog,*/ goodlog } from './tasks/goodlog';
+import { enableGoodlog, goodlog } from './tasks/goodlog';
 import { ReverbMixer } from './tasks/reverb-mixer';
+import { select } from 'd3-selection';
 
-// enableGoodlog();
+enableGoodlog();
 
 var randomId = RandomId();
 var routeState;
@@ -67,36 +69,39 @@ async function followRoute({
   seed,
   totalTicks,
   tempoFactor = defaultSecondsPerTick,
-  startTick = 0,
+  startTick = 62,
   chordScaleExponent = 1,
   chordSizeLengthExp = 2,
   finalFadeOutLength = 16,
   constantTickLength = false,
   fixedEndTickLength = 30,
+  debug = false,
   parts = [
-    {
-      sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav',
-      impulse: 'spacey-impulse.wav',
-      loop: false,
-      sampleLoopEnd: 0,
-      ampFactor: 0.5,
-      // constantEnvelopeLength: 1.0,
-      envelopeCurve: flatADSR,
-      fadeLengthFactor: 0.01,
-      slideMode: false,
-      pan: -0.1,
-      solo: false,
-      // mute: true,
-    },
+    //   {
+    //     sample: 'RoboRhode-D2.wav', // 'PianoSoftRoll-D2.wav',
+    //     impulse: 'spacey-impulse.wav',
+    //     loop: false,
+    //     loopEndSeconds: 0,
+    //     ampFactor: 0.5,
+    //     // constantEnvelopeLength: 1.0,
+    //     envelopeCurve: flatADSR,
+    //     fadeLengthFactor: 0.01,
+    //     slideMode: false,
+    //     pan: -0.1,
+    //     solo: false,
+    //     mute: true,
+    //   },
     {
       sample: 'vibraphone-mellower-d3.wav', // 'Vibraphone.sustain.ff.D3.wav',
-      impulse: 'echoey-impulse.wav',
-      loop: false,
-      sampleLoopEnd: 1,
+      // impulse: 'echoey-impulse.wav',
+      loop: true,
+      loopStartSeconds: 0,
+      loopEndSeconds: 8,
+      adjustLoopForRate: true,
       transposeProportion: 0.5,
       transposeFreqFactor: 1,
       pan: 0.2,
-      ampFactor: 1.25,
+      ampFactor: 2.5,
       envelopeCurve: flatADSR, // [0, 0.1, 0.2, 0.5, 1, 1],
       fadeLengthFactor: 0.05,
       slideMode: false,
@@ -104,13 +109,16 @@ async function followRoute({
       // solo: true,
     },
     {
+      // sample: '2_D-PB.wav',
       sample: 'trumpet-D2-eqd.wav',
       loop: true,
-      sampleLoopEnd: 2,
+      loopStartSeconds: 0,
+      loopEndSeconds: 2,
+      adjustLoopForRate: true,
       transposeProportion: 0.25,
       transposeFreqFactor: 0.25,
       pan: -0.2,
-      ampFactor: 0.4,
+      ampFactor: 0.7,
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
@@ -118,14 +126,17 @@ async function followRoute({
       // solo: true,
     },
     {
+      // sample: '2_D-PB.wav',
       sample: 'trumpet-D2-eqd.wav',
       // impulse: 'spacey-impulse.wav',
       loop: true,
-      sampleLoopEnd: 2,
+      loopStartSeconds: 0,
+      loopEndSeconds: 2,
+      adjustLoopForRate: true,
       transposeProportion: 0.8,
-      transposeFreqFactor: 1.0,
+      transposeFreqFactor: 0.5,
       pan: -0.2,
-      ampFactor: 0.2,
+      ampFactor: 0.33,
       envelopeCurve: flatADSR, // TODO: Flat-ish curve
       fadeLengthFactor: 0.01,
       slideMode: false,
@@ -134,16 +145,34 @@ async function followRoute({
       // mute: true,
       // solo: true,
     },
-    // This is doubling the above trumpet an octave lower.
     {
-      sample: 'trumpet-D2-eqd.wav',
+      sample: '2_D-PB.wav',
       impulse: 'echoey-impulse.wav',
       loop: true,
-      sampleLoopEnd: 2,
+      loopStartSeconds: 0,
+      loopEndSeconds: 2,
+      adjustLoopForRate: true,
+      transposeProportion: 1.0,
+      transposeFreqFactor: 1,
+      pan: -0.2,
+      ampFactor: 1,
+      envelopeCurve: flatADSR,
+      fadeLengthFactor: 0.01,
+      slideMode: false,
+      // mute: true,
+      // solo: true,
+    },
+    {
+      sample: '2_D-PB.wav',
+      // impulse: 'echoey-impulse.wav',
+      loop: true,
+      loopStartSeconds: 0,
+      loopEndSeconds: 2,
+      adjustLoopForRate: true,
       transposeProportion: 0.8,
       transposeFreqFactor: 0.5,
-      pan: -0.2,
-      ampFactor: 0.33,
+      pan: 0.2,
+      ampFactor: 2,
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
@@ -154,38 +183,40 @@ async function followRoute({
       sample: 'cor_anglais-d4-PB-loop.wav',
       impulse: 'echoey-impulse.wav',
       loop: true,
-      sampleLoopEnd: 2,
+      loopStartSeconds: 0,
+      loopEndSeconds: 3,
+      adjustLoopForRate: true,
       transposeProportion: 1,
       transposeFreqFactor: 2,
       pan: 0.0,
-      ampFactor: 0.5,
+      ampFactor: 8.0,
       envelopeCurve: defaultADSRCurve,
       fadeLengthFactor: 0.1,
       slideMode: false,
-      // mute: true,
+      mute: true,
       arpeggiate: false,
       arpeggioRate: 0.25,
       // solo: true,
     },
-    {
-      sample: 'chorus-male-d3-PB-loop.wav',
-      impulse: 'spacey-impulse.wav',
-      loop: true,
-      sampleLoopEnd: 0.5,
-      transposeProportion: 0.75,
-      transposeFreqFactor: 2,
-      pan: 0.5,
-      ampFactor: 0.5,
-      envelopeCurve: flatADSR,
-      fadeLengthFactor: 0.1,
-      slideMode: false,
-      mute: false,
-      // solo: true,
-    },
+    // {
+    //   sample: 'chorus-male-d3-PB-loop.wav',
+    //   impulse: 'spacey-impulse.wav',
+    //   loop: true,
+    //   loopEndSeconds: 0.5,
+    //   transposeProportion: 0.75,
+    //   transposeFreqFactor: 2,
+    //   pan: 0.5,
+    //   ampFactor: 0.5,
+    //   envelopeCurve: flatADSR,
+    //   fadeLengthFactor: 0.1,
+    //   slideMode: false,
+    //   mute: true,
+    //   // solo: true,
+    // },
     // {
     //   sample: 'celesta-g4-soft-PB.wav',
     //   impulse: 'spacey-impulse.wav',
-    //   sampleLoopEnd: 5,
+    //   loopEndSeconds: 5,
     //   transposeProportion: 0.75,
     //   transposeFreqFactor: 1,
     //   pan: 0,
@@ -199,11 +230,14 @@ async function followRoute({
       sample: '205822__xserra__organ-c3-fade-out.wav',
       // sample: 'organ-d2.wav',
       loop: true,
+      // loopStartSeconds: 0,
+      // loopEndSeconds: 4,
+      // adjustLoopForRate: true,
       // impulse: 'echoey-impulse.wav',
       transposeProportion: 0.5,
-      transposeFreqFactor: 9 / 8,
+      transposeFreqFactor: 9 / 8 / 4,
       pan: 0.0,
-      ampFactor: 0.75,
+      ampFactor: 1,
       envelopeCurve: defaultADSRCurve,
       getEnvelopeLengthForScoreEvent(_scoreEvent, tickLength) {
         if (tickLength < 1.0) {
@@ -213,9 +247,17 @@ async function followRoute({
       },
       fadeLengthFactor: 0.1,
       slideMode: false,
+      // mute: true,
+      // solo: true,
     },
   ],
 }) {
+  if (debug) {
+    enableGoodlog();
+  }
+  select('body').classed('debug', debug);
+  initCanvas();
+
   if (!seed) {
     routeState.addToRoute({ seed: randomId(8) });
     return;
@@ -248,8 +290,9 @@ async function followRoute({
     chordSizeLengthExp: +chordSizeLengthExp,
     seed,
     totalTicks,
+    // Loop isn't respected per part. TODO
     shouldLoop: parts[0].loop,
-    loopEndSeconds: parts[0].sampleLoopEnd,
+    loopEndSeconds: parts[0].loopEndSeconds,
     adjustLoopForRate: true,
     constantTickLength,
     fixedEndTickLength,
@@ -295,10 +338,11 @@ async function followRoute({
     Transposer({
       seed,
       freqFactor: +part.transposeFreqFactor,
-      eventProportionToTranspose: part.transposeFreqFactor,
+      eventProportionToTranspose: part.transposeProportion,
       shouldLoop: part.loop,
-      sampleLoopStart: 0,
-      sampleLoopEnd: +part.sampleLoopEnd,
+      loopStartSeconds: 0,
+      loopEndSeconds: +part.loopEndSeconds,
+      adjustLoopForRate: part.adjustLoopForRate,
       panDelta: part.pan,
       arpeggiate: part.arpeggiate,
       arpeggioRate: part.arpeggioRate,
@@ -380,37 +424,42 @@ async function followRoute({
     if (!isNaN(mainGroupScoreState.tickLength)) {
       tickLength = mainGroupScoreState.tickLength;
     }
-    renderEventDirection({
-      tickIndex: ticks,
-      tickLength,
-      chordSize: mainGroupScoreState.meta.chordPitchCount,
-    });
 
-    renderDensity({
-      valueOverTimeArray: mainGroupScoreStateObjects.map(
-        ({ tickLength, meta }) => ({
-          time: tickLength,
-          value: meta.chordPitchCount,
-        })
-      ),
-      totalTime: totalSeconds,
-      valueMax: tonalityDiamondPitches.length,
-      currentTick: ticks,
-    });
+    if (debug) {
+      renderEventDirection({
+        tickIndex: ticks,
+        tickLength,
+        chordSize: mainGroupScoreState.meta.chordPitchCount,
+      });
 
-    renderTickLengths({
-      valueOverTimeArray: mainGroupScoreStateObjects.map(({ tickLength }) => ({
-        time: 1,
-        value: tickLength,
-      })),
-      totalTime: mainGroupScoreStateObjects.length,
-      valueMax: mainGroupScoreStateObjects.reduce(
-        (max, direction) =>
-          direction.tickLength > max ? direction.tickLength : max,
-        0
-      ),
-      currentTick: ticks,
-    });
+      renderDensity({
+        valueOverTimeArray: mainGroupScoreStateObjects.map(
+          ({ tickLength, meta }) => ({
+            time: tickLength,
+            value: meta.chordPitchCount,
+          })
+        ),
+        totalTime: totalSeconds,
+        valueMax: tonalityDiamondPitches.length,
+        currentTick: ticks,
+      });
+
+      renderTickLengths({
+        valueOverTimeArray: mainGroupScoreStateObjects.map(
+          ({ tickLength }) => ({
+            time: 1,
+            value: tickLength,
+          })
+        ),
+        totalTime: mainGroupScoreStateObjects.length,
+        valueMax: mainGroupScoreStateObjects.reduce(
+          (max, direction) =>
+            direction.tickLength > max ? direction.tickLength : max,
+          0
+        ),
+        currentTick: ticks,
+      });
+    }
 
     for (let i = 0; i < scoreDirectors.length; ++i) {
       scoreDirectors[i].play(
@@ -430,12 +479,13 @@ async function followRoute({
     }
 
     renderVisualizationForTick(mainGroupScoreState);
+    const density =
+      mainGroupScoreState.meta.chordPitchCount / tonalityDiamondPitches.length;
     renderShader({
-      density:
-        (mainGroupScoreState.meta.chordPitchCount /
-          tonalityDiamondPitches.length) *
-        0.934, // We never use all of the tonality diamond pitches.
-      tickLengthInMS: tickLength * 1000,
+      density: density * 0.934, // We never use all of the tonality diamond pitches.
+      // tickLengthInMS: tickLength * 1000,
+      ampChangeMult: density,
+      ampFreqChangeMult: 1 / tickLength,
     });
   }
 
