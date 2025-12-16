@@ -7,7 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <canvas id="shader-canvas" width="600" height="600"></canvas>
+    <div class="visuals-container">
+      <canvas id="shader-canvas" width="600" height="600"></canvas>
+
+      <div class="visuals-text centered">
+        <div class="date centered">
+          <div class="month"></div>
+          <div class="year"></div>
+        </div>
+        <div class="energy-info centered">
+          <div class="anomaly-joules"><abbr title="Energy absorbed by the oceans (beyond the energy that was already in the oceans in 1955) from heat">Ocean energy anomaly</abbr></div>
+          <div class="ohc-level"></div>
+          <div><abbr title="10^21 joules">zettajoules</abbr></div>
+        </div>
+
+        <button id="start-button" disabled="true">Start</button>
+      </div>
+    </div><!-- visuals-container -->
 
     <section class="non-shader">
       <div id="status-message" class="hidden"></div>
@@ -25,15 +41,8 @@
         </div>
       </section><!-- debug-only -->
 
-      <div class="text-labels">
-        <div class="month"></div>
-        <div class="year"></div>
-        <div class="anomaly-joules">Ocean energy anomaly: <span class="ohc-level"></span> 10<sup>22</sup> joules</div>
-      </div>
-
       <div class="graph-info debug-only">
       </div>
-      <button id="start-button" disabled="true">Start</button>
 
       <div class="graphs debug-only">
         <div class="graph">

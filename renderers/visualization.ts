@@ -35,7 +35,8 @@ export function renderVisualizationForTick(scoreState: ScoreState) {
     const month = date.toLocaleString({}, { month: 'long' });
     monthLabel.text(month);
     yearLabel.text(monthDatum.year);
-    levelLabel.text(monthDatum.value.toFixed(2));
+    // OHC value is in 10x22 joules. A zettajoule is 10x21 joules.
+    levelLabel.text((monthDatum.value * 10).toFixed(2));
 
     // d = w/f
     // const metersMoved = monthDatum.value * Math.pow(10, 22) /

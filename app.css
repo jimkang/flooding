@@ -33,6 +33,12 @@ button {
   min-width: 44px;
 }
 
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .outer-container {
   display: flex;
 }
@@ -91,6 +97,11 @@ svg {
   visibility: visible;
 }
 
+.visuals-container > * {
+  position: absolute;
+  z-index: 1;
+}
+
 #shader-canvas {
   position: fixed;
   top: 0;
@@ -104,6 +115,19 @@ svg {
   position: static;
 }
 
+.visuals-text {
+  justify-content: center;
+  gap: 1.5em;
+  width: 100%;
+  height: 100%;
+  font-size: 60px;
+  color: hsl(0, 0%, 100%, .8);
+}
+
+#start-button {
+  top: 20%;
+}
+
 .non-shader {
   position: fixed;
   top: 0;
@@ -114,14 +138,6 @@ svg {
   position: static;
 }
 
-.text-labels {
-  top: 10%;
-  color: hsl(0, 0%, 100%, .8);
-}
-
-#start-button {
-  top: 20%;
-}
 
 @media all and (max-height: 568px) {
   body {
