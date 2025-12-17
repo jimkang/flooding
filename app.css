@@ -1,6 +1,20 @@
+@font-face {
+  font-family: Atkinson;
+  src: url('fonts/AtkinsonHyperlegibleNext-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Atkinson;
+  src: url('fonts/AtkinsonHyperlegibleNext-ExtraBold.woff2') format('woff2');
+  font-weight: 900;
+  font-style: bold;
+}
+
 body {
   font-size: 24px;
-  font-family: Helvetica, sans-serif;
+  font-family: eurostile, Atkinson, Helvetica, sans-serif;
   background: #000;
   color: #333;
   margin: 0;
@@ -22,14 +36,19 @@ ul {
 }
 
 button {
-  font-size: 1.2em;
+  text-transform: uppercase;
+  font-family: Atkinson, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 0.75em;
   cursor: pointer;
-  padding: 0.5em;
-  border-radius: 0.5em;
-  border-width: 8px;
-  border-color: #333;
+  padding: 0.33em;
+  padding-top: 0.4em;
   border-style: solid;
-  background-color: #fff;
+  border-width: 2px;
+  border-radius: 0.25em;
+  border-color: white;
+  color: white;
+  background-color: hsla(0, 0%, 0%, 0.4);
   min-width: 44px;
 }
 
@@ -122,6 +141,11 @@ svg {
   height: 100%;
   font-size: 60px;
   color: hsl(0, 0%, 100%, .8);
+}
+
+.ohc-level {
+  font-size: 120px;
+  font-weight: 900;
 }
 
 #start-button {
