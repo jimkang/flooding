@@ -174,7 +174,7 @@ async function followRoute({
       transposeFreqFactor: 0.5,
       pan: 0.2,
       ampFactor: 2,
-      envelopeCurve: fastInOutCurve,
+      envelopeCurve: flatADSR,
       fadeLengthFactor: 0.01,
       slideMode: false,
       // mute: true,
