@@ -15,6 +15,7 @@ import {
   defaultADSRCurve,
   flatADSR,
   secondHalfFadeOutCurve,
+  fastInOutCurve,
   tonalityDiamondPitches,
 } from './consts';
 import { preRunComposer } from './updaters/pre-run-composer';
@@ -163,17 +164,17 @@ async function followRoute({
       // solo: true,
     },
     {
-      sample: '2_D-PB.wav',
+      sample: '2_D-PB-fade-out.wav',
       // impulse: 'echoey-impulse.wav',
       loop: true,
       loopStartSeconds: 0,
-      loopEndSeconds: 2,
+      loopEndSeconds: 4.992,
       adjustLoopForRate: true,
       transposeProportion: 0.8,
       transposeFreqFactor: 0.5,
       pan: 0.2,
       ampFactor: 2,
-      envelopeCurve: flatADSR,
+      envelopeCurve: fastInOutCurve,
       fadeLengthFactor: 0.01,
       slideMode: false,
       // mute: true,

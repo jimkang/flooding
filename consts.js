@@ -1,4 +1,6 @@
 import { getTonalityDiamond } from './tonality-diamond';
+import { range } from 'd3-array';
+
 export const defaultSecondsPerTick = 15;
 export const diamondLimit = 11;
 
@@ -42,12 +44,18 @@ export var sampleFilenames = [
   'organ-d2.wav',
   'vibraphone-mellower-d3.wav',
   '2_D-PB.wav',
+  '2_D-PB-fade-out.wav',
 ];
 export var defaultADSRCurve = [
   0, 0.5, 1, 1, 1, 1, 0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0,
 ];
 export var flatADSR = [1.0, 1.0];
 export var secondHalfFadeOutCurve = [1, 1, 1, 1, 1, 0.8, 0.5, 0.25, 0.1, 0];
+export var fadeOutCurve = [1, 0.8, 0.5, 0.25, 0.1, 0];
+export var fastInOutCurve = [0, 0.5]
+  .concat(range(25).map(() => 1))
+  .concat([0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0]);
+export const minFadeSeconds = 1;
 
 function compareDenomSizeAsc(a, b) {
   if (getDenom(a) < getDenom(b)) {
