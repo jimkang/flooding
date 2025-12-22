@@ -50,10 +50,10 @@ export function Transposer({
       events: ScoreEvent[]
     ): ScoreEvent {
       var newEvent = Object.assign({}, scoreEvent);
-      if (shouldLoop && !isNaN(loopStartSeconds) && !isNaN(loopEndSeconds)) {
+      if (shouldLoop && !isNaN(loopEndSeconds)) {
         // The actual loop length is affected by the playbackRate.
         newEvent.loop = {
-          loopStartSeconds: loopStartSeconds,
+          loopStartSeconds: 0,
           loopEndSeconds: adjustLoopForRate
             ? loopEndSeconds * scoreEvent.rate
             : loopEndSeconds,
