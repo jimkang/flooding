@@ -346,13 +346,14 @@ function fadeToDeath(
       console.log('Not cancelling ramps or fading for', playEvent);
     }
   }
-  // setTimeout(
-  //   () => decommisionNodes(playEvent),
-  //   (fadeStartOffset + fadeSeconds + 1) * 1000
-  // );
+  setTimeout(
+    () => decommisionNodes(playEvent),
+    (fadeStartOffset + fadeSeconds + 1) * 1000
+  );
 }
 
-// TODO: Find out if this is even necessary.
+// This is necessary; they won't get garbage-collected themselves and will cause
+// pops.
 function decommisionNodes(playEvent: PlayEvent) {
   try {
     playEvent.nodes.forEach(decommisionNode);
