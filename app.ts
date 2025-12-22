@@ -146,11 +146,11 @@ async function followRoute({
       // solo: true,
     },
     {
-      sample: '2_D-PB.wav',
+      sample: '2_D-PB-fade-out.wav',
       impulse: 'echoey-impulse.wav',
       loop: true,
       loopStartSeconds: 0,
-      loopEndSeconds: 2,
+      loopEndSeconds: 4.992,
       adjustLoopForRate: true,
       transposeProportion: 1.0,
       transposeFreqFactor: 1,
