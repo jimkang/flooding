@@ -302,11 +302,21 @@ function fadeToDeath(
     if (!envelopeNode) {
       throw new Error("Can't fade this. It's missing a Envelope synth node!");
     }
+    var samplerNode: Sampler = playEvent.nodes.find(
+      (node) => node instanceof Sampler
+    ) as Sampler;
+    if (!samplerNode) {
+      throw new Error("Can't fade this. It's missing a Sampler synth node!");
+    }
+    // Turn off loop.
+    samplerNode.node.loop = false;
 
     // TODO: Something else should manage canceling other scheduled events.
 
     // If there is an explicit envelopeCurve, avoid fighting it with the fade.
-    if (!playEvent.scoreEvent.envelopeCurve) {
+    if (playEvent.scoreEvent.envelopeCurve) {
+      console.log('Not cancelling ramps or fading for', playEvent);
+    } else {
       playEvent.nodes.forEach((node) => node.cancelScheduledRamps());
       // cancelScheduledValues doesn't work in Firefox:
       // https://bugzilla.mozilla.org/show_bug.cgi?id=1752775
@@ -342,10 +352,9 @@ function fadeToDeath(
           );
         }
       }
-    } else {
-      console.log('Not cancelling ramps or fading for', playEvent);
     }
   }
+
   setTimeout(
     () => decommisionNodes(playEvent),
     (fadeStartOffset + fadeSeconds + 1) * 1000
