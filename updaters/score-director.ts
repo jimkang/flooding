@@ -84,7 +84,7 @@ export function ScoreDirector({
       // Stop everything right now.
       fadeLength = state.tickLength;
     }
-    exitingPlayEvents.forEach(curry(fadeToDeath)(0, fadeLength));
+    exitingPlayEvents.forEach(curry(fadeToDeath)(0, fadeLength, ctx, 0));
 
     var newScoreEvents = scoreEventJoiner.enter();
     goodlog(directorName, 'newScoreEvents', newScoreEvents.map(idScoreEvent));
@@ -282,6 +282,8 @@ export function ScoreDirector({
 function fadeToDeath(
   fadeStartOffset: number,
   defaultFadeSeconds: number,
+  ctx: AudioContext,
+  attemptCount = 0,
   playEvent: PlayEvent
 ) {
   // Respect absoluteLengthSeconds if it's there.
@@ -293,7 +295,7 @@ function fadeToDeath(
     fadeSeconds = defaultFadeSeconds;
   }
   if (!playEvent.rest) {
-    goodlog('Fading', playEvent.scoreEvent.rate);
+    goodlog('Fading to death', playEvent.scoreEvent.rate);
     var envelopeNode: Envelope = playEvent.nodes.find(
       (node) => node instanceof Envelope
     ) as Envelope;
@@ -306,18 +308,48 @@ function fadeToDeath(
     // If there is an explicit envelopeCurve, avoid fighting it with the fade.
     if (!playEvent.scoreEvent.envelopeCurve) {
       playEvent.nodes.forEach((node) => node.cancelScheduledRamps());
-      setTimeout(
-        () => envelopeNode.linearRampTo(fadeSeconds, 0),
-        fadeStartOffset * 1000
-      );
+      // cancelScheduledValues doesn't work in Firefox:
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=1752775
+      envelopeNode.node.gain.cancelScheduledValues(0);
+      try {
+        envelopeNode.node.gain.exponentialRampToValueAtTime(
+          0.0001,
+          ctx.currentTime + fadeSeconds
+        );
+      } catch (error) {
+        goodlog(
+          'exponentialRampToValueAtTime failed. attemptCount',
+          attemptCount
+        );
+        if (
+          error.name === 'NotSupportedError' &&
+          error.message.startsWith(
+            "AudioParam.exponentialRampToValueAtTime: Can't add events during a curve event" &&
+              attemptCount < 10
+          )
+        ) {
+          // Try again.
+          setTimeout(
+            () =>
+              fadeToDeath(
+                fadeStartOffset,
+                defaultFadeSeconds,
+                ctx,
+                attemptCount + 1,
+                playEvent
+              ),
+            500
+          );
+        }
+      }
     } else {
       console.log('Not cancelling ramps or fading for', playEvent);
     }
   }
-  setTimeout(
-    () => decommisionNodes(playEvent),
-    (fadeStartOffset + fadeSeconds + 1) * 1000
-  );
+  // setTimeout(
+  //   () => decommisionNodes(playEvent),
+  //   (fadeStartOffset + fadeSeconds + 1) * 1000
+  // );
 }
 
 // TODO: Find out if this is even necessary.
