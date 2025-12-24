@@ -45,6 +45,8 @@ export var sampleFilenames = [
   'vibraphone-mellower-d3.wav',
   '2_D-PB.wav',
   '2_D-PB-fade-out.wav',
+  'ak-trumpet-d-1.wav',
+  'ak-trumpet-d-2.wav',
 ];
 export var defaultADSRCurve = [
   0, 0.5, 1, 1, 1, 1, 0.95, 0.9, 0.8, 0.72, 0.6, 0.3, 0.1, 0,
