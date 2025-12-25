@@ -181,6 +181,25 @@ async function followRoute({
       // mute: true,
       // solo: true,
     },
+    // High cello
+    {
+      sample: 'ak-cello-d3-1.wav',
+      // impulse: 'echoey-impulse.wav',
+      loop: true,
+      loopStartSeconds: 0,
+      loopEndSeconds: 4.692,
+      adjustLoopForRate: true,
+      transposeProportion: 0.5,
+      transposeFreqFactor: 1.0,
+      pan: 0,
+      ampFactor: 1,
+      envelopeCurve: flatADSR,
+      fadeLengthFactor: 0.1,
+      // slideMode: true,
+      // mute: true,
+      // solo: true,
+    },
+
     // {
     //   sample: 'cor_anglais-d4-PB-loop.wav',
     //   impulse: 'echoey-impulse.wav',
@@ -248,7 +267,7 @@ async function followRoute({
         return tickLength;
       },
       fadeLengthFactor: 0.1,
-      slideMode: false,
+      // slideMode: true,
       // mute: true,
       // solo: true,
     },
