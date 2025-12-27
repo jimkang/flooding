@@ -195,7 +195,7 @@ async function followRoute({
       ampFactor: 1,
       envelopeCurve: flatADSR,
       fadeLengthFactor: 0.1,
-      // slideMode: true,
+      slideMode: false,
       // mute: true,
       // solo: true,
     },
