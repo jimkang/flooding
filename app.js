@@ -14,7 +14,7 @@ import { ChordPlayer } from './updaters/chord-player';
 import { getChord } from './updaters/get-chord';
 import { RenderTimeControlGraph } from './renderers/render-time-control-graph';
 import { tonalityDiamondPitches } from './tonality-diamond';
-import { defaultTotalTicks, defaultSecondsPerTick, maxTickLength } from './consts';
+import { defaultTotalTicks, defaultSecondsPerTick, maxTickLength, maxTempo } from './consts';
 import { Undoer } from './updaters/undoer';
 
 var randomId = RandomId();
