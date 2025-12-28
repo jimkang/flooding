@@ -7,8 +7,8 @@ export function Transposer({
   seed,
   freqFactor,
   eventProportionToTranspose,
+  transposeChordSizeThreshold = 0,
   shouldLoop,
-  loopStartSeconds,
   loopEndSeconds,
   adjustLoopForRate,
   panDelta = 0,
@@ -18,6 +18,7 @@ export function Transposer({
   seed: string;
   freqFactor: number;
   eventProportionToTranspose: number;
+  transposeChordSizeThreshold: number;
   shouldLoop?: boolean;
   loopStartSeconds?: number;
   loopEndSeconds?: number;
@@ -32,17 +33,22 @@ export function Transposer({
   return { getScoreState };
 
   function getScoreState(refState: ScoreState): ScoreState {
-    return {
+    var state = {
       tickIndex: refState.tickIndex,
       tickLength: refState.tickLength,
       meta: cloneDeep(refState.meta),
-      events: prob
+      events: [],
+    };
+
+    if (refState.events.length >= transposeChordSizeThreshold) {
+      state.events = prob
         .sample(
           refState.events,
           Math.max(1, refState.events.length * eventProportionToTranspose)
         )
-        .map(transposeEvent),
-    };
+        .map(transposeEvent);
+    }
+    return state;
 
     function transposeEvent(
       scoreEvent: ScoreEvent,
