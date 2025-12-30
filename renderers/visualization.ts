@@ -20,10 +20,15 @@ var resLocation;
 
 var mainTimer;
 
-export function initCanvas() {
+export function initVisualization() {
   var canvasSel = select('#shader-canvas');
   var rect = canvasSel.node().getBoundingClientRect();
   canvasSel.attr('width', rect.width).attr('height', rect.height);
+}
+
+export function startVisualization() {
+  select('.energy-info').classed('hidden', false);
+  select('#start-button').text('Pause');
 }
 
 export function renderVisualizationForTick(scoreState: ScoreState) {
