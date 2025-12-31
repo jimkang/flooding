@@ -90,8 +90,8 @@ async function followRoute({
       transposeFreqFactor: 1,
       pan: 0.2,
       ampFactor: 0.67,
-      envelopeCurve: flatADSR, // [0, 0.1, 0.2, 0.5, 1, 1],
-      fadeLengthFactor: 0.05,
+      envelopeCurve: fastInOutCurve, // Reduce pops around 250.
+      fadeLengthFactor: 0.1,
       slideMode: false,
       // mute: true,
       // solo: true,
@@ -125,7 +125,7 @@ async function followRoute({
       transposeFreqFactor: 0.5,
       pan: -0.2,
       ampFactor: 0.33,
-      envelopeCurve: flatADSR, // TODO: Flat-ish curve
+      envelopeCurve: fastInOutCurve, // Removes pop at 225
       fadeLengthFactor: 0.01,
       slideMode: false,
       arpeggiate: false,
@@ -144,7 +144,7 @@ async function followRoute({
       transposeFreqFactor: 1,
       pan: -0.2,
       ampFactor: 1,
-      envelopeCurve: flatADSR,
+      envelopeCurve: fastInOutCurve, // Removes pop at 225
       fadeLengthFactor: 0.1,
       slideMode: false,
       // mute: true,
@@ -161,7 +161,7 @@ async function followRoute({
       transposeFreqFactor: 0.5,
       pan: 0.2,
       ampFactor: 2,
-      envelopeCurve: flatADSR,
+      envelopeCurve: fastInOutCurve, // Removes pops at 72 and 78
       fadeLengthFactor: 0.1,
       slideMode: false,
       // mute: true,
@@ -199,7 +199,7 @@ async function followRoute({
       transposeChordSizeThreshold: 13,
       transposeFreqFactor: 0.5,
       pan: -0.2,
-      ampFactor: 0.25,
+      ampFactor: 0.125,
       envelopeCurve: fastInOutCurve,
       fadeLengthFactor: 0.01,
       slideMode: false,
@@ -216,7 +216,7 @@ async function followRoute({
       transposeChordSizeThreshold: 9,
       transposeFreqFactor: 0.5,
       pan: 0.2,
-      ampFactor: 0.5,
+      ampFactor: 0.25,
       envelopeCurve: fastInOutCurve,
       fadeLengthFactor: 0.01,
       slideMode: false,

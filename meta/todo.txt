@@ -1,6 +1,9 @@
+Album seed: dXLHqEOi
+
+- Tick 98? 123
+
+
 - Supplemental page that lets you hear what the different chords sound like.
-- Visualize heat as speed
-- Joule reference scale
 - Pause button
 - At tempo factor 20, there is a skip around tick 112.
 - Version that is just a gradual walk up the diamond.
@@ -8,6 +11,9 @@
 
 Done:
 
+- Pops: 72, 77, 78, 98, 120, 132, 148, 151, 153, 158, 193,
+- Is the high trumpet around tick 90 funny? Is that good? Gets very interesting around 98.
+- Even in old commit (aeba), pop at 72
 - Headphone mix. May be too much bass.
 - Turn peak gain up based on pitch density a bit more.
 - Cut reverb mix as time goes on?
@@ -70,6 +76,8 @@ These aren't really an issue, it turns out:
 - Vary loop lengths.
 - More pops around 145, possibly in bass. Also 55, 270, 520, 720
 - Narration is too loud.
+- Visualize heat as speed
+- Joule reference scale
 
 Can't repro:
 

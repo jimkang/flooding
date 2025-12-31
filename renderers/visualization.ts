@@ -26,7 +26,7 @@ export function initVisualization() {
   canvasSel.attr('width', rect.width).attr('height', rect.height);
 }
 
-export function startVisualization() {
+export function toggleStartButton() {
   select('.energy-info').classed('hidden', false);
   select('#start-button').text('Pause');
 }
